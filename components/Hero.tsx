@@ -10,6 +10,94 @@ interface HeroProps {
   hero: HeroContent;
 }
 
+// ── Typewriter hook — types `text` one character at a time ─────────────────
+function useTypewriter(text: string, charDelayMs = 20, startDelayMs = 0): string {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setCount(0);
+    if (!text) return;
+    let i = 0;
+    let intervalId: number | undefined;
+    const delayId = window.setTimeout(() => {
+      intervalId = window.setInterval(() => {
+        i += 1;
+        setCount(i);
+        if (i >= text.length) clearInterval(intervalId);
+      }, charDelayMs);
+    }, startDelayMs);
+    return () => {
+      clearTimeout(delayId);
+      clearInterval(intervalId);
+    };
+  }, [text, charDelayMs, startDelayMs]);
+
+  return text.slice(0, count);
+}
+
+// ── TypewriterLines — types an array of strings sequentially ───────────────
+function TypewriterLines({
+  lines,
+  charDelayMs = 12,
+  lineGapMs = 120,
+}: {
+  lines: string[];
+  charDelayMs?: number;
+  lineGapMs?: number;
+}): React.JSX.Element {
+  const [state, setState] = useState({ lineIndex: 0, charCount: 0 });
+
+  useEffect(() => {
+    let lineIndex = 0;
+    let charCount = 0;
+    let intervalId: number | undefined;
+    let timeoutId: number | undefined;
+    setState({ lineIndex: 0, charCount: 0 });
+
+    function typeCurrentLine(): void {
+      if (lineIndex >= lines.length) return;
+      const line = lines[lineIndex];
+      charCount = 0;
+      intervalId = window.setInterval(() => {
+        charCount += 1;
+        setState({ lineIndex, charCount });
+        if (charCount >= line.length) {
+          clearInterval(intervalId);
+          if (lineIndex < lines.length - 1) {
+            timeoutId = window.setTimeout(() => {
+              lineIndex += 1;
+              typeCurrentLine();
+            }, lineGapMs);
+          }
+        }
+      }, charDelayMs);
+    }
+
+    typeCurrentLine();
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
+  }, [lines, charDelayMs, lineGapMs]);
+
+  const { lineIndex, charCount } = state;
+  return (
+    <>
+      {lines.slice(0, lineIndex).map((line, i) => (
+        <p className={i === 2 ? "text-accent-strong" : ""} key={i}>
+          {line}
+        </p>
+      ))}
+      {lineIndex < lines.length && (
+        <p className={lineIndex === 2 ? "text-accent-strong" : ""}>
+          {lines[lineIndex].slice(0, charCount)}
+          <span className="animate-pulse opacity-60">▋</span>
+        </p>
+      )}
+    </>
+  );
+}
+
 // Layer 3 — background panel frame (last to appear)
 const panelVariants: Variants = {
   initial: { opacity: 0, y: 14 },
@@ -20,8 +108,9 @@ const panelVariants: Variants = {
   },
   exit: {
     opacity: 0,
-    y: -16,
-    transition: { duration: 0.4, ease: [0.4, 0, 1, 1] },
+    y: -28,
+    scale: 0.97,
+    transition: { duration: 0.45, ease: [0.4, 0, 1, 1] },
   },
 };
 
@@ -135,17 +224,7 @@ function RawStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
         <span>jsonl</span>
       </div>
       <div className="space-y-3 font-mono leading-7 text-secondary">
-        {stage.rawLines?.map((line, index) => (
-          <motion.p
-            animate={{ opacity: 1, y: 0 }}
-            className={index === 2 ? "text-accent-strong" : ""}
-            initial={{ opacity: 0, y: 16 }}
-            key={`${stage.id}-${index}`}
-            transition={itemTransition(index)}
-          >
-            {line}
-          </motion.p>
-        ))}
+        <TypewriterLines lines={stage.rawLines ?? []} charDelayMs={12} lineGapMs={120} />
       </div>
     </div>
   );
@@ -182,6 +261,11 @@ function CommandPaletteStage({
 }: {
   stage: HeroShellStage;
 }): React.JSX.Element {
+  const query = stage.paletteQuery ?? "";
+  // Start typing 600 ms after mount so the palette overlay finishes animating in
+  const typedQuery = useTypewriter(query, 45, 600);
+  const queryDone = typedQuery.length >= query.length;
+
   return (
     <div className="relative flex min-h-62.5 items-end rounded-3xl border border-white/6 bg-[linear-gradient(180deg,rgba(8,13,22,0.98),rgba(9,14,24,0.92))] p-5">
       <div className="grid w-full gap-4 opacity-35 md:grid-cols-3">
@@ -207,27 +291,40 @@ function CommandPaletteStage({
           initial={{ opacity: 0, y: 16 }}
           transition={itemTransition(0)}
         >
-          &gt; {stage.paletteQuery}
+          &gt; {typedQuery}
+          {!queryDone && <span className="animate-pulse opacity-70">▋</span>}
         </motion.div>
-        <div className="mt-4 space-y-3">
-          {stage.paletteOptions?.map((option, index) => (
+
+        <AnimatePresence>
+          {queryDone && (
             <motion.div
-              animate={{ opacity: 1, y: 0 }}
-              className={`rounded-2xl border px-4 py-3 ${index === 0
-                ? "border-accent/40 bg-accent/10"
-                : "border-white/6 bg-white/3"
-                }`}
-              initial={{ opacity: 0, y: 16 }}
-              key={option.label}
-              transition={itemTransition(index + 1)}
+              animate={{ opacity: 1 }}
+              className="mt-4 space-y-3"
+              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
-              <p className="font-medium text-primary">
-                {option.label}
-              </p>
-              <p className="mt-1 text-muted">{option.meta}</p>
+              {/* Results appear after queryDone, so stagger starts fresh from index 0 — no +1 offset needed */}
+              {stage.paletteOptions?.map((option, index) => (
+                <motion.div
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`rounded-2xl border px-4 py-3 ${index === 0
+                    ? "border-accent/40 bg-accent/10"
+                    : "border-white/6 bg-white/3"
+                    }`}
+                  initial={{ opacity: 0, y: 16 }}
+                  key={option.label}
+                  transition={itemTransition(index)}
+                >
+                  <p className="font-medium text-primary">
+                    {option.label}
+                  </p>
+                  <p className="mt-1 text-muted">{option.meta}</p>
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -416,13 +513,14 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
         >
           {hero.ctas.map((cta) => (
             <Button
-              asChild
+              render={<a href={cta.href} />}
+              nativeButton={false}
               className="min-w-50"
               key={cta.label}
               size="lg"
               variant={cta.variant === "primary" ? "primary" : "outline"}
             >
-              <a href={cta.href}>{cta.label}</a>
+              {cta.label}
             </Button>
           ))}
         </motion.div>
@@ -444,6 +542,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               <span className="h-2 w-2 rounded-full bg-accent" />
               <span className="h-2 w-2 rounded-full bg-white/35" />
               <span className="ml-2">{hero.shellTitle}</span>
+              <span className="ml-1 animate-pulse opacity-50">▋</span>
             </div>
             <WorkflowSteps
               activeIndex={activeStage.workflowActiveIndex}
@@ -472,7 +571,15 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                     key={activeStage.id}
                     variants={panelVariants}
                   >
-                    <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(99,179,255,0.8),transparent)]" />
+                    <motion.div
+                      animate={{ scaleX: 1, opacity: 0.55 }}
+                      className="absolute inset-x-0 top-0 h-px origin-left bg-[linear-gradient(90deg,transparent_10%,rgba(99,179,255,0.9)_50%,transparent_90%)]"
+                      initial={{ scaleX: 0, opacity: 1 }}
+                      transition={{
+                        duration: (activeStage.durationMs ?? 6000) / 1000,
+                        ease: "linear",
+                      }}
+                    />
                     <div className="app-grid absolute inset-0 opacity-30" />
 
                     {/* Layer 2: header text — second */}

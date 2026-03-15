@@ -46,7 +46,7 @@ describe("Home", () => {
         screen.getByRole("heading", { name: platform.name }),
       ).toBeInTheDocument();
       expect(
-        screen.getAllByRole("link", { name: platform.ctaLabel }).length,
+        screen.getAllByRole("button", { name: platform.ctaLabel }).length,
       ).toBeGreaterThan(0);
     }
 

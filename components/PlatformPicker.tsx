@@ -84,8 +84,8 @@ export function PlatformPicker({
                     <span className="text-muted">
                       {platform.meta}
                     </span>
-                    <Button asChild size="sm" variant="outline">
-                      <a href={platform.ctaHref}>{platform.ctaLabel}</a>
+                    <Button render={<a href={platform.ctaHref} />} nativeButton={false} size="sm" variant="outline">
+                      {platform.ctaLabel}
                     </Button>
                   </div>
                 </CardContent>
