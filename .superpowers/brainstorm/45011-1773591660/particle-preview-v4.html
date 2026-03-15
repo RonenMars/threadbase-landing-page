@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Hex Preview v4</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #070b11;
+    color: #f4f8ff;
+    font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", sans-serif;
+    overflow: hidden;
+  }
+  canvas { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+  .top-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(7,11,17,0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(116,151,199,0.14);
+    padding: 9px 18px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .top-bar-title { font-size: 13px; font-weight: 600; }
+  .top-bar-sub   { font-size: 11px; color: #607089; margin-top: 1px; }
+  .controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .cg { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #9fb0c9; }
+  input[type=range] {
+    padding: 0; width: 70px; accent-color: #63b3ff; cursor: pointer;
+  }
+
+  .hero {
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 48px 24px; pointer-events: none;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 14px; border-radius: 999px;
+    border: 1px solid rgba(99,179,255,0.28); background: rgba(99,179,255,0.07);
+    font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: #b5e3ff; margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 600;
+    letter-spacing: -0.06em; line-height: 1.05; color: #f4f8ff;
+    max-width: 760px; margin-bottom: 20px;
+  }
+  h1 span { color: #63b3ff; }
+  .sub { font-size: 1.05rem; color: #9fb0c9; max-width: 520px; line-height: 1.7; margin-bottom: 36px; }
+  .btns { display: flex; gap: 12px; pointer-events: all; }
+  .btn-p { padding: 11px 26px; background: #63b3ff; color: #070b11; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-s { padding: 11px 26px; background: transparent; color: #f4f8ff; border: 1px solid rgba(116,151,199,0.3); border-radius: 10px; font-size: 14px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <div class="top-bar-title">Center outward · Blue + Orange · Low opacity</div>
+    <div class="top-bar-sub">Lines radiate from screen center and die at the edges</div>
+  </div>
+  <div class="controls">
+    <div class="cg">
+      <label>Lines</label>
+      <input type="range" id="slCount" min="30" max="160" value="80" oninput="rebuild()">
+      <span id="lblCount">80</span>
+    </div>
+    <div class="cg">
+      <label>Glow</label>
+      <input type="range" id="slGlow" min="1" max="12" value="3" oninput="rebuild()">
+      <span id="lblGlow">3</span>
+    </div>
+    <div class="cg">
+      <label>Fade</label>
+      <input type="range" id="slFade" min="2" max="14" value="5" oninput="rebuild()">
+      <span id="lblFade">5</span>
+    </div>
+    <div class="cg">
+      <label>Speed</label>
+      <input type="range" id="slSpeed" min="5" max="25" value="13" oninput="rebuild()">
+      <span id="lblSpeed">13</span>
+    </div>
+  </div>
+</div>
+
+<canvas id="c"></canvas>
+
+<div class="hero">
+  <div class="eyebrow">Claude Code · Session Storage</div>
+  <h1>Your AI conversations,<br><span>stored and searchable</span></h1>
+  <p class="sub">ThreadBase captures every Claude session in structured JSONL — browse, search, and resume past work in seconds.</p>
+  <div class="btns">
+    <button class="btn-p">Get started free</button>
+    <button class="btn-s">See how it works</button>
+  </div>
+</div>
+
+<script>
+var c   = document.getElementById('c');
+var ctx = c.getContext('2d');
+var w, h, dieX, dieY;
+
+var opts = {
+  len:           20,
+  count:         80,
+  baseTime:      12,
+  addedTime:     12,
+  dieChance:     0.01,   // very low → lines travel far before dying
+  spawnChance:   1,
+  sparkChance:   0.06,
+  sparkDist:     8,
+  sparkSize:     2,
+  baseLight:     52,
+  addedLight:    14,
+  shadowMult:    3,
+  repaintAlpha:  0.05,
+  baseLightMult: 0.01,
+  addedLightMult:0.02,
+};
+
+var BLUE_HUE   = 210;
+var ORANGE_HUE = 32;
+var SAT        = 82;
+
+var tick  = 0;
+var lines = [];
+var baseRad = Math.PI * 2 / 6;
+
+function resize() {
+  w = c.width  = window.innerWidth;
+  h = c.height = window.innerHeight;
+  // die boundary = screen edge (this.x is in "len" units from center)
+  dieX = w / 2 / opts.len;
+  dieY = h / 2 / opts.len;
+  ctx.fillStyle = 'rgb(7,11,17)';
+  ctx.fillRect(0, 0, w, h);
+}
+
+function Line() { this.reset(); }
+
+Line.prototype.reset = function() {
+  // Start exactly at screen center
+  this.x = 0;
+  this.y = 0;
+  this.addedX = 0;
+  this.addedY = 0;
+  this.rad = 0;
+
+  // Blue ~55 %, orange ~45 %
+  this.hue = Math.random() < 0.55 ? BLUE_HUE : ORANGE_HUE;
+  this.lightMult = opts.baseLightMult + opts.addedLightMult * Math.random();
+  this.cumulativeTime = 0;
+  this.beginPhase();
+};
+
+Line.prototype.beginPhase = function() {
+  this.x += this.addedX;
+  this.y += this.addedY;
+  this.time = 0;
+  this.targetTime = (opts.baseTime + opts.addedTime * Math.random()) | 0;
+  this.rad += baseRad * (Math.random() < 0.5 ? 1 : -1);
+  this.addedX = Math.cos(this.rad);
+  this.addedY = Math.sin(this.rad);
+
+  // Die only when reaching screen edge (or rarely by chance)
+  if (Math.random() < opts.dieChance ||
+      this.x > dieX || this.x < -dieX ||
+      this.y > dieY || this.y < -dieY)
+    this.reset();
+};
+
+Line.prototype.step = function() {
+  ++this.time;
+  ++this.cumulativeTime;
+  if (this.time >= this.targetTime) this.beginPhase();
+
+  var prop  = this.time / this.targetTime;
+  var wave  = Math.sin(prop * Math.PI / 2);
+  var px    = w / 2 + (this.x + this.addedX * wave) * opts.len;
+  var py    = h / 2 + (this.y + this.addedY * wave) * opts.len;
+
+  var hue   = this.hue + 8 * Math.sin(this.cumulativeTime * 0.03);
+  var light = opts.baseLight + opts.addedLight * Math.sin(this.cumulativeTime * this.lightMult);
+  var col   = 'hsl(' + hue + ',' + SAT + '%,' + light + '%)';
+
+  ctx.shadowBlur = prop * opts.shadowMult;
+  ctx.fillStyle  = ctx.shadowColor = col;
+  ctx.fillRect(px, py, 2, 2);
+
+  if (Math.random() < opts.sparkChance) {
+    var sd = opts.sparkDist, ss = opts.sparkSize;
+    ctx.fillRect(
+      px + Math.random() * sd * (Math.random() < .5 ? 1 : -1) - ss / 2,
+      py + Math.random() * sd * (Math.random() < .5 ? 1 : -1) - ss / 2,
+      ss, ss
+    );
+  }
+};
+
+function loop() {
+  requestAnimationFrame(loop);
+  ++tick;
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.shadowBlur = 0;
+  ctx.fillStyle  = 'rgba(7,11,17,' + opts.repaintAlpha + ')';
+  ctx.fillRect(0, 0, w, h);
+  ctx.globalCompositeOperation = 'lighter';
+
+  if (lines.length < opts.count && Math.random() < opts.spawnChance)
+    lines.push(new Line());
+
+  lines.forEach(function(l) { l.step(); });
+}
+
+function rebuild() {
+  var count = +document.getElementById('slCount').value;
+  var glow  = +document.getElementById('slGlow').value;
+  var fade  = +document.getElementById('slFade').value;
+  var spd   = +document.getElementById('slSpeed').value;
+  document.getElementById('lblCount').textContent = count;
+  document.getElementById('lblGlow').textContent  = glow;
+  document.getElementById('lblFade').textContent  = fade;
+  document.getElementById('lblSpeed').textContent = spd;
+  opts.count        = count;
+  opts.shadowMult   = glow;
+  opts.repaintAlpha = fade / 100;
+  opts.baseTime     = Math.round(25 - spd);
+  opts.addedTime    = Math.round(25 - spd);
+  while (lines.length > opts.count) lines.pop();
+}
+
+window.addEventListener('resize', resize);
+resize();
+loop();
+</script>
+</body>
+</html>

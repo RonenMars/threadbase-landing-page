@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neon Hex Particle Preview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #070b11;
+    color: #f4f8ff;
+    font-family: "SF Pro Display", "Segoe UI", "Helvetica Neue", sans-serif;
+    overflow: hidden;
+  }
+
+  canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(7,11,17,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(116,151,199,0.15);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .top-bar-title { font-size: 13px; font-weight: 600; color: #f4f8ff; }
+  .top-bar-sub { font-size: 12px; color: #607089; margin-top: 1px; }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #9fb0c9;
+  }
+
+  select, input[type=range] {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(116,151,199,0.2);
+    color: #f4f8ff;
+    border-radius: 6px;
+    padding: 3px 7px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  input[type=range] {
+    padding: 0;
+    width: 72px;
+    accent-color: #63b3ff;
+  }
+
+  /* Hero overlay */
+  .hero-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(99,179,255,0.3);
+    background: rgba(99,179,255,0.08);
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #b5e3ff;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 1.05;
+    color: #f4f8ff;
+    max-width: 760px;
+    margin-bottom: 20px;
+  }
+
+  h1 span { color: #63b3ff; }
+
+  .sub {
+    font-size: 1.05rem;
+    color: #9fb0c9;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+  }
+
+  .btns {
+    display: flex;
+    gap: 12px;
+    pointer-events: all;
+  }
+
+  .btn-primary {
+    padding: 11px 26px;
+    background: #63b3ff;
+    color: #070b11;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-secondary {
+    padding: 11px 26px;
+    background: transparent;
+    color: #f4f8ff;
+    border: 1px solid rgba(116,151,199,0.3);
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .badge {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #607089;
+    background: rgba(7,11,17,0.8);
+    padding: 5px 13px;
+    border-radius: 999px;
+    border: 1px solid rgba(116,151,199,0.12);
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <div class="top-bar-title">Neon Hex Particle Preview — actual CodePen algorithm</div>
+    <div class="top-bar-sub">Tune the color mode and intensity to match your taste</div>
+  </div>
+  <div class="controls">
+    <div class="control-group">
+      <label>Color</label>
+      <select id="colorMode" onchange="applySettings()">
+        <option value="blue">Blue only</option>
+        <option value="blueshift">Blue shifting</option>
+        <option value="dual">Blue + Orange</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Count</label>
+      <input type="range" id="countSlider" min="20" max="120" value="50" oninput="applySettings()">
+    </div>
+    <div class="control-group">
+      <label>Intensity</label>
+      <input type="range" id="intensitySlider" min="1" max="10" value="4" oninput="applySettings()">
+    </div>
+    <div class="control-group">
+      <label>Fade</label>
+      <input type="range" id="fadeSlider" min="1" max="12" value="4" oninput="applySettings()">
+    </div>
+  </div>
+</div>
+
+<canvas id="c"></canvas>
+
+<div class="hero-overlay">
+  <div class="eyebrow">Claude Code · Session Storage</div>
+  <h1>Your AI conversations,<br><span>stored and searchable</span></h1>
+  <p class="sub">ThreadBase captures every Claude session in structured JSONL format — browse, search, and resume past work in seconds.</p>
+  <div class="btns">
+    <button class="btn-primary">Get started free</button>
+    <button class="btn-secondary">See how it works</button>
+  </div>
+</div>
+
+<div class="badge" id="badge">Blue only · 50 lines · Intensity 4</div>
+
+<script>
+var canvas = document.getElementById('c');
+var w = canvas.width = window.innerWidth;
+var h = canvas.height = window.innerHeight;
+var ctx = canvas.getContext('2d');
+
+// ── Color modes ──────────────────────────────────────────────────────────────
+// Website palette:
+//   blue accent:   hsl(210, 100%, 69%)  →  #63b3ff
+//   orange accent: hsl(32, 86%, 54%)    →  #f08a24
+//   background:    #070b11
+
+var COLOR_MODES = {
+  // Fixed at website blue, no hue drift
+  blue: {
+    baseHue: 210,
+    hueChange: 0,
+    saturation: 100,
+    baseLight: 65,
+    addedLight: 12,
+    bgR: 7, bgG: 11, bgB: 17,   // #070b11
+  },
+  // Slow drift within a cool blue-cyan band
+  blueshift: {
+    baseHue: 200,
+    hueChange: 0.03,
+    saturation: 100,
+    baseLight: 65,
+    addedLight: 14,
+    bgR: 7, bgG: 11, bgB: 17,
+  },
+  // Alternates between blue and orange by varying hue quickly
+  dual: {
+    baseHue: 210,
+    hueChange: 0.25,   // fast enough to sweep between ~210 and ~32
+    saturation: 95,
+    baseLight: 62,
+    addedLight: 13,
+    bgR: 7, bgG: 11, bgB: 17,
+  },
+};
+
+var opts = {
+  len: 20,
+  count: 50,
+  baseTime: 10,
+  addedTime: 10,
+  dieChance: 0.05,
+  spawnChance: 1,
+  sparkChance: 0.1,
+  sparkDist: 10,
+  sparkSize: 2,
+
+  // color template — filled in by applySettings()
+  color: 'hsl(hue,sat%,light%)',
+  saturation: 100,
+  baseLight: 65,
+  addedLight: 12,
+  shadowToTimePropMult: 6,
+  baseLightInputMultiplier: 0.01,
+  addedLightInputMultiplier: 0.02,
+
+  cx: w / 2,
+  cy: h / 2,
+  repaintAlpha: 0.04,
+  hueChange: 0,
+  baseHue: 210,
+
+  bgR: 7, bgG: 11, bgB: 17,
+};
+
+var tick = 0;
+var lines = [];
+var dieX = w / 2 / opts.len;
+var dieY = h / 2 / opts.len;
+var baseRad = Math.PI * 2 / 6;
+
+// initial fill
+ctx.fillStyle = 'rgb(7,11,17)';
+ctx.fillRect(0, 0, w, h);
+
+function applySettings() {
+  var mode = COLOR_MODES[document.getElementById('colorMode').value];
+  var count = parseInt(document.getElementById('countSlider').value);
+  var intensity = parseInt(document.getElementById('intensitySlider').value);
+  var fade = parseInt(document.getElementById('fadeSlider').value);
+
+  opts.baseHue      = mode.baseHue;
+  opts.hueChange    = mode.hueChange;
+  opts.saturation   = mode.saturation;
+  opts.baseLight    = mode.baseLight;
+  opts.addedLight   = mode.addedLight;
+  opts.bgR          = mode.bgR;
+  opts.bgG          = mode.bgG;
+  opts.bgB          = mode.bgB;
+  opts.count        = count;
+  opts.shadowToTimePropMult = intensity * 1.5;
+  opts.repaintAlpha = fade / 100;
+
+  var modeLabel = document.getElementById('colorMode').options[document.getElementById('colorMode').selectedIndex].text;
+  document.getElementById('badge').textContent =
+    modeLabel + ' · ' + count + ' lines · Intensity ' + intensity;
+}
+
+function Line() { this.reset(); }
+
+Line.prototype.reset = function() {
+  this.x = 0; this.y = 0;
+  this.addedX = 0; this.addedY = 0;
+  this.rad = 0;
+  this.lightInputMultiplier = opts.baseLightInputMultiplier + opts.addedLightInputMultiplier * Math.random();
+  this.cumulativeTime = 0;
+  this.beginPhase();
+};
+
+Line.prototype.beginPhase = function() {
+  this.x += this.addedX;
+  this.y += this.addedY;
+  this.time = 0;
+  this.targetTime = (opts.baseTime + opts.addedTime * Math.random()) | 0;
+  this.rad += baseRad * (Math.random() < 0.5 ? 1 : -1);
+  this.addedX = Math.cos(this.rad);
+  this.addedY = Math.sin(this.rad);
+  if (Math.random() < opts.dieChance || this.x > dieX || this.x < -dieX || this.y > dieY || this.y < -dieY)
+    this.reset();
+};
+
+Line.prototype.step = function() {
+  ++this.time;
+  ++this.cumulativeTime;
+  if (this.time >= this.targetTime) this.beginPhase();
+
+  var prop = this.time / this.targetTime;
+  var wave = Math.sin(prop * Math.PI / 2);
+  var x = this.addedX * wave;
+  var y = this.addedY * wave;
+
+  var currentHue = opts.baseHue + tick * opts.hueChange;
+  var lightVal = opts.baseLight + opts.addedLight * Math.sin(this.cumulativeTime * this.lightInputMultiplier);
+  var colorStr = 'hsl(' + currentHue + ',' + opts.saturation + '%,' + lightVal + '%)';
+
+  ctx.shadowBlur = prop * opts.shadowToTimePropMult;
+  ctx.fillStyle = ctx.shadowColor = colorStr;
+  ctx.fillRect(opts.cx + (this.x + x) * opts.len, opts.cy + (this.y + y) * opts.len, 2, 2);
+
+  if (Math.random() < opts.sparkChance) {
+    ctx.fillRect(
+      opts.cx + (this.x + x) * opts.len + Math.random() * opts.sparkDist * (Math.random() < 0.5 ? 1 : -1) - opts.sparkSize / 2,
+      opts.cy + (this.y + y) * opts.len + Math.random() * opts.sparkDist * (Math.random() < 0.5 ? 1 : -1) - opts.sparkSize / 2,
+      opts.sparkSize, opts.sparkSize
+    );
+  }
+};
+
+function loop() {
+  window.requestAnimationFrame(loop);
+  ++tick;
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = 'rgba(' + opts.bgR + ',' + opts.bgG + ',' + opts.bgB + ',' + opts.repaintAlpha + ')';
+  ctx.fillRect(0, 0, w, h);
+  ctx.globalCompositeOperation = 'lighter';
+
+  if (lines.length < opts.count && Math.random() < opts.spawnChance)
+    lines.push(new Line());
+
+  lines.forEach(function(line) { line.step(); });
+}
+
+window.addEventListener('resize', function() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+  ctx.fillStyle = 'rgb(' + opts.bgR + ',' + opts.bgG + ',' + opts.bgB + ')';
+  ctx.fillRect(0, 0, w, h);
+  opts.cx = w / 2;
+  opts.cy = h / 2;
+  dieX = w / 2 / opts.len;
+  dieY = h / 2 / opts.len;
+});
+
+loop();
+</script>
+</body>
+</html>

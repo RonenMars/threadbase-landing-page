@@ -65,13 +65,12 @@ function WorkflowSteps({
             return (
               <li
                 aria-current={isActive ? "step" : undefined}
-                className={`rounded-2xl border px-3 py-3 text-left transition-colors ${
-                  isActive
+                className={`rounded-2xl border px-3 py-3 text-left transition-colors ${isActive
                     ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
                     : isComplete
                       ? "border-white/8 bg-white/4 text-primary"
                       : "border-white/6 bg-white/2 text-secondary"
-                }`}
+                  }`}
                 key={`compact-${step}`}
               >
                 <p className="text-xs uppercase tracking-[0.2em] text-muted">
@@ -99,22 +98,20 @@ function WorkflowSteps({
           return (
             <li
               aria-current={isActive ? "step" : undefined}
-              className={`rounded-2xl border px-4 py-3 transition-colors ${
-                isActive
+              className={`rounded-2xl border px-4 py-3 transition-colors ${isActive
                   ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
                   : isComplete
                     ? "border-white/8 bg-white/4 text-primary"
                     : "border-white/6 bg-white/2 text-secondary"
-              }`}
+                }`}
               key={step}
             >
               <div className="flex items-start gap-3">
                 <span
-                  className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border text-xs ${
-                    isActive || isComplete
+                  className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border text-xs ${isActive || isComplete
                       ? "border-accent/40 bg-accent/10 text-accent-strong"
                       : "border-white/10 bg-white/4 text-muted"
-                  }`}
+                    }`}
                 >
                   {index + 1}
                 </span>
@@ -217,8 +214,8 @@ function CommandPaletteStage({
             <motion.div
               animate={{ opacity: 1, y: 0 }}
               className={`rounded-2xl border px-4 py-3 ${index === 0
-                  ? "border-accent/40 bg-accent/10"
-                  : "border-white/6 bg-white/3"
+                ? "border-accent/40 bg-accent/10"
+                : "border-white/6 bg-white/3"
                 }`}
               initial={{ opacity: 0, y: 16 }}
               key={option.label}
@@ -441,7 +438,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             },
           }}
         >
-          <div className="screenshot-shell relative mx-auto flex h-105 w-full max-w-6xl flex-col overflow-hidden rounded-4xl border border-dashed border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-4 shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:h-120">
+          <div id="screenshot-shell" className="screenshot-shell relative mx-auto flex h-105 w-full max-w-6xl flex-col overflow-hidden rounded-4xl border border-dashed border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-4 shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:h-120">
             <div className="mb-4 flex items-center gap-2 rounded-full border border-white/8 bg-white/3 px-4 py-2 text-left text-xs uppercase tracking-[0.22em] text-muted">
               <span className="h-2 w-2 rounded-full bg-accent-secondary" />
               <span className="h-2 w-2 rounded-full bg-accent" />
