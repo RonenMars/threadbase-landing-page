@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Transition, type Variants } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,30 +10,125 @@ interface HeroProps {
   hero: HeroContent;
 }
 
-const stageTransition: Transition = {
-  duration: 0.45,
-  ease: [0.22, 1, 0.36, 1],
-};
-
-const stageVariants: Variants = {
-  initial: {
-    opacity: 0,
-    y: 12,
-  },
+// Layer 3 — background panel frame (last to appear)
+const panelVariants: Variants = {
+  initial: { opacity: 0, y: 14 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: stageTransition,
+    transition: { duration: 0.75, delay: 0.36, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
-    y: -12,
-    transition: {
-      duration: 0.28,
-      ease: [0.4, 0, 1, 1],
-    },
+    y: -16,
+    transition: { duration: 0.4, ease: [0.4, 0, 1, 1] },
   },
 };
+
+// Layer 2 — panel header text (second)
+const headerVariants: Variants = {
+  initial: { opacity: 0, y: 18 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+// Layer 1 — individual items inside stage body (first, staggered per index)
+function itemTransition(index: number) {
+  return { duration: 0.55, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as const };
+}
+
+function WorkflowSteps({
+  activeIndex,
+  compact = false,
+  steps,
+  title,
+}: {
+  activeIndex: number;
+  compact?: boolean;
+  steps: string[];
+  title: string;
+}): React.JSX.Element {
+  if (compact) {
+    return (
+      <div className="mb-4 lg:hidden">
+        <p className="mb-3 text-left text-xs uppercase tracking-[0.24em] text-accent-strong">
+          {title}
+        </p>
+        <ol className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {steps.map((step, index) => {
+            const isActive = index === activeIndex;
+            const isComplete = index < activeIndex;
+
+            return (
+              <li
+                aria-current={isActive ? "step" : undefined}
+                className={`rounded-2xl border px-3 py-3 text-left transition-colors ${
+                  isActive
+                    ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
+                    : isComplete
+                      ? "border-white/8 bg-white/4 text-primary"
+                      : "border-white/6 bg-white/2 text-secondary"
+                }`}
+                key={`compact-${step}`}
+              >
+                <p className="text-xs uppercase tracking-[0.2em] text-muted">
+                  {index + 1}
+                </p>
+                <p className="mt-2 leading-6">{step}</p>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <p className="text-xs uppercase tracking-[0.24em] text-accent-strong">
+        {title}
+      </p>
+      <ol className="space-y-3">
+        {steps.map((step, index) => {
+          const isActive = index === activeIndex;
+          const isComplete = index < activeIndex;
+
+          return (
+            <li
+              aria-current={isActive ? "step" : undefined}
+              className={`rounded-2xl border px-4 py-3 transition-colors ${
+                isActive
+                  ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
+                  : isComplete
+                    ? "border-white/8 bg-white/4 text-primary"
+                    : "border-white/6 bg-white/2 text-secondary"
+              }`}
+              key={step}
+            >
+              <div className="flex items-start gap-3">
+                <span
+                  className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border text-xs ${
+                    isActive || isComplete
+                      ? "border-accent/40 bg-accent/10 text-accent-strong"
+                      : "border-white/10 bg-white/4 text-muted"
+                  }`}
+                >
+                  {index + 1}
+                </span>
+                <div>
+                  <p className="leading-6">{step}</p>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
 
 function RawStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
@@ -44,12 +139,15 @@ function RawStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
       </div>
       <div className="space-y-3 font-mono leading-7 text-secondary">
         {stage.rawLines?.map((line, index) => (
-          <p
+          <motion.p
+            animate={{ opacity: 1, y: 0 }}
             className={index === 2 ? "text-accent-strong" : ""}
+            initial={{ opacity: 0, y: 16 }}
             key={`${stage.id}-${index}`}
+            transition={itemTransition(index)}
           >
             {line}
-          </p>
+          </motion.p>
         ))}
       </div>
     </div>
@@ -59,10 +157,13 @@ function RawStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
 function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
-      {stage.decodedCards?.map((card) => (
-        <div
+      {stage.decodedCards?.map((card, index) => (
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
           className="rounded-6 border border-white/8 bg-white/4 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+          initial={{ opacity: 0, y: 20 }}
           key={card.title}
+          transition={itemTransition(index)}
         >
           <p className="text-xs uppercase tracking-[0.24em] text-accent-strong">
             {card.meta}
@@ -73,7 +174,7 @@ function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
           <p className="mt-3 leading-7 text-secondary">
             {card.description}
           </p>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
@@ -103,23 +204,31 @@ function CommandPaletteStage({
       </div>
 
       <div className="absolute inset-x-8 top-8 rounded-6 border border-border-strong bg-[linear-gradient(180deg,rgba(16,28,44,0.98),rgba(11,19,31,0.96))] p-5 shadow-[0_20px_60px_rgba(1,6,14,0.55)]">
-        <div className="rounded-2xl border border-white/8 bg-black/25 px-4 py-3 font-mono text-primary">
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-2xl border border-white/8 bg-black/25 px-4 py-3 font-mono text-primary"
+          initial={{ opacity: 0, y: 16 }}
+          transition={itemTransition(0)}
+        >
           &gt; {stage.paletteQuery}
-        </div>
+        </motion.div>
         <div className="mt-4 space-y-3">
           {stage.paletteOptions?.map((option, index) => (
-            <div
+            <motion.div
+              animate={{ opacity: 1, y: 0 }}
               className={`rounded-2xl border px-4 py-3 ${index === 0
                   ? "border-accent/40 bg-accent/10"
                   : "border-white/6 bg-white/3"
                 }`}
+              initial={{ opacity: 0, y: 16 }}
               key={option.label}
+              transition={itemTransition(index + 1)}
             >
               <p className="font-medium text-primary">
                 {option.label}
               </p>
               <p className="mt-1 text-muted">{option.meta}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -130,7 +239,12 @@ function CommandPaletteStage({
 function DeepViewStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-      <div className="rounded-6 border border-white/6 bg-black/28 p-4">
+      <motion.div
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-6 border border-white/6 bg-black/28 p-4"
+        initial={{ opacity: 0, y: 20 }}
+        transition={itemTransition(0)}
+      >
         <div className="rounded-2xl border border-accent/35 bg-accent/10 px-4 py-3">
           <p className="text-xs uppercase tracking-[0.22em] text-accent-strong">
             {stage.browserProject}
@@ -148,9 +262,14 @@ function DeepViewStage({ stage }: { stage: HeroShellStage }): React.JSX.Element 
             {stage.browserHighlight}
           </p>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="rounded-6 border border-white/6 bg-white/3 p-4">
+      <motion.div
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-6 border border-white/6 bg-white/3 p-4"
+        initial={{ opacity: 0, y: 20 }}
+        transition={itemTransition(1)}
+      >
         <div className="flex items-center justify-between border-b border-white/6 pb-3">
           <p className="text-xs uppercase tracking-[0.22em] text-accent-strong">
             Conversation Browser
@@ -170,7 +289,7 @@ function DeepViewStage({ stage }: { stage: HeroShellStage }): React.JSX.Element 
             {stage.browserTerminal}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -198,8 +317,6 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
   useEffect(() => {
     let elapsedMs = 0;
     const timeoutIds: number[] = [];
-
-    setActiveStageIndex(0);
 
     hero.shellStages.forEach((stage, index) => {
       if (index >= lastStageIndex || stage.durationMs === undefined) {
@@ -331,61 +448,60 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               <span className="h-2 w-2 rounded-full bg-white/35" />
               <span className="ml-2">{hero.shellTitle}</span>
             </div>
+            <WorkflowSteps
+              activeIndex={activeStage.workflowActiveIndex}
+              compact
+              steps={hero.workflowSteps}
+              title={hero.workflowTitle}
+            />
             <div className="grid h-full gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
               <div className="hidden rounded-6 border border-white/6 bg-white/3 p-4 lg:block">
-                <motion.div
-                  animate="animate"
-                  className="space-y-4"
-                  initial="initial"
-                  key={`sidebar-${activeStage.id}`}
-                  variants={stageVariants}
-                >
-                  <p className="text-xs uppercase tracking-[0.24em] text-accent-strong">
-                    {activeStage.sidebarTitle}
-                  </p>
-                  <div className="space-y-3">
-                    {activeStage.sidebarItems.map((item, index) => (
-                      <div
-                        className={`rounded-2xl border px-4 py-3 transition-colors ${index === activeStage.sidebarActiveIndex
-                            ? "border-accent/40 bg-accent/10 text-primary"
-                            : "border-white/6 bg-white/2 text-secondary"
-                          }`}
-                        key={`${activeStage.id}-${item}`}
-                      >
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
+                <WorkflowSteps
+                  activeIndex={activeStage.workflowActiveIndex}
+                  steps={hero.workflowSteps}
+                  title={hero.workflowTitle}
+                />
               </div>
 
-              <div className="relative flex h-full flex-col rounded-6 border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6">
-                <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(99,179,255,0.8),transparent)]" />
-                <div className="app-grid absolute inset-0 opacity-30" />
+              {/* Outer container clips overflow from sliding children */}
+              <div className="relative overflow-hidden">
+                <AnimatePresence mode="sync">
+                  {/* Layer 3: background panel frame — last to appear */}
+                  <motion.div
+                    animate="animate"
+                    className="absolute inset-0 flex flex-col overflow-hidden rounded-6 border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6"
+                    exit="exit"
+                    initial="initial"
+                    key={activeStage.id}
+                    variants={panelVariants}
+                  >
+                    <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(99,179,255,0.8),transparent)]" />
+                    <div className="app-grid absolute inset-0 opacity-30" />
 
-                <motion.div
-                  animate="animate"
-                  className="relative flex h-full flex-col"
-                  initial="initial"
-                  key={activeStage.id}
-                  variants={stageVariants}
-                >
-                  <div className="mb-6 space-y-3 border-b border-white/6 pb-5 text-left">
-                    <p className="text-xs uppercase tracking-[0.26em] text-accent-strong">
-                      {activeStage.panelEyebrow}
-                    </p>
-                    <p className="text-2xl font-semibold tracking-[-0.04em] text-primary">
-                      {activeStage.panelTitle}
-                    </p>
-                    <p className="max-w-3xl leading-7 text-secondary">
-                      {activeStage.panelBody}
-                    </p>
-                  </div>
+                    {/* Layer 2: header text — second */}
+                    <motion.div
+                      animate="animate"
+                      className="relative mb-6 space-y-3 border-b border-white/6 pb-5 text-left"
+                      initial="initial"
+                      variants={headerVariants}
+                    >
+                      <p className="text-xs uppercase tracking-[0.26em] text-accent-strong">
+                        {activeStage.panelEyebrow}
+                      </p>
+                      <p className="text-2xl font-semibold tracking-[-0.04em] text-primary">
+                        {activeStage.panelTitle}
+                      </p>
+                      <p className="max-w-3xl leading-7 text-secondary">
+                        {activeStage.panelBody}
+                      </p>
+                    </motion.div>
 
-                  <div className="my-auto">
-                    <StageBody stage={activeStage} />
-                  </div>
-                </motion.div>
+                    {/* Layer 1: stage body items — first (staggered inside each component) */}
+                    <div className="relative my-auto">
+                      <StageBody stage={activeStage} />
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </div>

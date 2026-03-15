@@ -20,6 +20,8 @@ export interface HeroContent {
   badges: HeroBadge[];
   ctas: HeroCta[];
   shellTitle: string;
+  workflowTitle: string;
+  workflowSteps: string[];
   shellStages: HeroShellStage[];
 }
 
@@ -37,9 +39,7 @@ export interface HeroPaletteOption {
 export interface HeroShellStage {
   id: "raw-jsonl" | "decoded" | "command-palette" | "deep-view";
   durationMs?: number;
-  sidebarTitle: string;
-  sidebarItems: string[];
-  sidebarActiveIndex: number;
+  workflowActiveIndex: number;
   panelEyebrow: string;
   panelTitle: string;
   panelBody: string;
@@ -149,13 +149,18 @@ export const HERO: HeroContent = {
     },
   ],
   shellTitle: "Local Session Inspector",
+  workflowTitle: "Recovery flow",
+  workflowSteps: [
+    "Decode JSONL",
+    "Inspect structure",
+    "Search sessions",
+    "Resume thread",
+  ],
   shellStages: [
     {
       id: "raw-jsonl",
-      durationMs: 1500,
-      sidebarTitle: "Decode",
-      sidebarItems: ["Sessions", "Tool Calls", "Diffs", "Bash", "Files"],
-      sidebarActiveIndex: 1,
+      durationMs: 5500,
+      workflowActiveIndex: 0,
       panelEyebrow: "Decoding local session history",
       panelTitle: "session_014.jsonl",
       panelBody:
@@ -170,10 +175,8 @@ export const HERO: HeroContent = {
     },
     {
       id: "decoded",
-      durationMs: 1700,
-      sidebarTitle: "Structure",
-      sidebarItems: ["Sessions", "Tool Calls", "Diffs", "Bash", "Files"],
-      sidebarActiveIndex: 2,
+      durationMs: 6500,
+      workflowActiveIndex: 1,
       panelEyebrow: "Structured automatically",
       panelTitle: "Same history. Finally readable.",
       panelBody:
@@ -200,16 +203,8 @@ export const HERO: HeroContent = {
     },
     {
       id: "command-palette",
-      durationMs: 1700,
-      sidebarTitle: "Actions",
-      sidebarItems: [
-        "Search",
-        "Filter by project",
-        "Open result",
-        "Export",
-        "Resume",
-      ],
-      sidebarActiveIndex: 0,
+      durationMs: 6500,
+      workflowActiveIndex: 2,
       panelEyebrow: "Keyboard-first workflow",
       panelTitle: "Command Palette",
       panelBody:
@@ -232,15 +227,7 @@ export const HERO: HeroContent = {
     },
     {
       id: "deep-view",
-      sidebarTitle: "Actions",
-      sidebarItems: [
-        "Search",
-        "Filter by project",
-        "Open result",
-        "Export",
-        "Resume",
-      ],
-      sidebarActiveIndex: 4,
+      workflowActiveIndex: 3,
       panelEyebrow: "Deep view",
       panelTitle: "Recovered auth fix",
       panelBody:
