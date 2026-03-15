@@ -1,0 +1,516 @@
+export interface SiteMetadata {
+  title: string;
+  description: string;
+}
+
+export interface HeroBadge {
+  label: string;
+}
+
+export interface HeroCta {
+  label: string;
+  href: string;
+  variant: "primary" | "outline";
+}
+
+export interface HeroContent {
+  eyebrow: string;
+  headline: string;
+  subheadline: string;
+  badges: HeroBadge[];
+  ctas: HeroCta[];
+  shellTitle: string;
+  shellStages: HeroShellStage[];
+}
+
+export interface HeroDecodedCard {
+  title: string;
+  meta: string;
+  description: string;
+}
+
+export interface HeroPaletteOption {
+  label: string;
+  meta: string;
+}
+
+export interface HeroShellStage {
+  id: "raw-jsonl" | "decoded" | "command-palette" | "deep-view";
+  durationMs?: number;
+  sidebarTitle: string;
+  sidebarItems: string[];
+  sidebarActiveIndex: number;
+  panelEyebrow: string;
+  panelTitle: string;
+  panelBody: string;
+  rawLines?: string[];
+  decodedCards?: HeroDecodedCard[];
+  paletteQuery?: string;
+  paletteOptions?: HeroPaletteOption[];
+  browserProject?: string;
+  browserSession?: string;
+  browserMeta?: string;
+  browserHighlight?: string;
+  browserTerminal?: string;
+}
+
+export interface ProblemItem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface FeatureItem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+export interface PlatformItem {
+  id: "desktop" | "vscode" | "intellij";
+  icon: string;
+  name: string;
+  meta: string;
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+  badge?: string;
+}
+
+export interface ScreenshotSlot {
+  caption: string;
+  description: string;
+  placeholderLabel: string;
+}
+
+export interface HonestCon {
+  title: string;
+  description: string;
+}
+
+export interface QuickStartBlock {
+  platformId: PlatformItem["id"];
+  platformName: string;
+  accentColor: string;
+  steps: string[];
+}
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterContent {
+  productName: string;
+  licenseText: string;
+  tagline: string;
+  disclaimer: string;
+  githubUrl: string;
+  links: FooterLink[];
+}
+
+export interface SectionContent {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+}
+
+export const SITE_METADATA: SiteMetadata = {
+  title: "Claude Code History Browser",
+  description:
+    "Claude Code History Browser turns raw Claude session files into a searchable local knowledge base across desktop and IDE workflows.",
+};
+
+export const HERO: HeroContent = {
+  eyebrow: "Developer Tool",
+  headline: "Your Claude Code history is a goldmine. Start mining it.",
+  subheadline:
+    "Claude Code History Browser turns the raw JSONL session files on your disk into a searchable, navigable knowledge base across desktop and IDE workflows.",
+  badges: [
+    { label: "Desktop app" },
+    { label: "VS Code extension" },
+    { label: "IntelliJ plugin" },
+  ],
+  ctas: [
+    {
+      label: "Download for Desktop",
+      href: "#platform-picker",
+      variant: "primary",
+    },
+    {
+      label: "Install VS Code Extension",
+      href: "#platform-picker",
+      variant: "outline",
+    },
+    {
+      label: "Get IntelliJ Plugin",
+      href: "#platform-picker",
+      variant: "outline",
+    },
+  ],
+  shellTitle: "Local Session Inspector",
+  shellStages: [
+    {
+      id: "raw-jsonl",
+      durationMs: 1500,
+      sidebarTitle: "Decode",
+      sidebarItems: ["Sessions", "Tool Calls", "Diffs", "Bash", "Files"],
+      sidebarActiveIndex: 1,
+      panelEyebrow: "Decoding local session history",
+      panelTitle: "session_014.jsonl",
+      panelBody:
+        "Claude keeps the truth on disk, but not in a format you want to browse under pressure.",
+      rawLines: [
+        "{\"type\":\"assistant\",\"message\":\"Need to debug the auth refresh loop before release.\"}",
+        "{\"type\":\"tool_use\",\"name\":\"Bash\",\"input\":{\"command\":\"pnpm test auth-refresh\"}}",
+        "{\"type\":\"tool_result\",\"tool\":\"Bash\",\"output\":\"FAIL token retries exceeded\"}",
+        "{\"type\":\"tool_use\",\"name\":\"Edit\",\"input\":{\"file\":\"src/auth.ts\",\"patch\":\"extract refresh helper\"}}",
+        "{\"type\":\"tool_result\",\"tool\":\"Edit\",\"diff\":\"+ renewRefreshToken()\\n- inline retry logic\"}",
+      ],
+    },
+    {
+      id: "decoded",
+      durationMs: 1700,
+      sidebarTitle: "Structure",
+      sidebarItems: ["Sessions", "Tool Calls", "Diffs", "Bash", "Files"],
+      sidebarActiveIndex: 2,
+      panelEyebrow: "Structured automatically",
+      panelTitle: "Same history. Finally readable.",
+      panelBody:
+        "Tool calls, diffs, and shell output turn into purpose-built cards you can scan in seconds.",
+      decodedCards: [
+        {
+          title: "Conversation Summary",
+          meta: "42 messages · threadbase-web",
+          description:
+            "Auth refresh loop traced to shared retry logic in src/auth.ts.",
+        },
+        {
+          title: "Unified Diff",
+          meta: "Edit tool",
+          description:
+            "Extracted renewRefreshToken() and routed retries through a dedicated helper.",
+        },
+        {
+          title: "Terminal Output",
+          meta: "Bash tool",
+          description: "pnpm test auth-refresh now passes with zero retry exhaustion.",
+        },
+      ],
+    },
+    {
+      id: "command-palette",
+      durationMs: 1700,
+      sidebarTitle: "Actions",
+      sidebarItems: [
+        "Search",
+        "Filter by project",
+        "Open result",
+        "Export",
+        "Resume",
+      ],
+      sidebarActiveIndex: 0,
+      panelEyebrow: "Keyboard-first workflow",
+      panelTitle: "Command Palette",
+      panelBody:
+        "Search across sessions, filter by project, and jump straight to the exact thread you need.",
+      paletteQuery: "auth refresh handler",
+      paletteOptions: [
+        {
+          label: "Open result · Recovered auth fix",
+          meta: "threadbase-web · 3 weeks ago",
+        },
+        {
+          label: "Filter by project · threadbase-web",
+          meta: "14 matching conversations",
+        },
+        {
+          label: "Resume latest related session",
+          meta: "continue from terminal state",
+        },
+      ],
+    },
+    {
+      id: "deep-view",
+      sidebarTitle: "Actions",
+      sidebarItems: [
+        "Search",
+        "Filter by project",
+        "Open result",
+        "Export",
+        "Resume",
+      ],
+      sidebarActiveIndex: 4,
+      panelEyebrow: "Deep view",
+      panelTitle: "Recovered auth fix",
+      panelBody:
+        "Open the winning conversation, inspect the diff, and resume without starting from scratch.",
+      browserProject: "threadbase-web",
+      browserSession: "Auth refresh loop fixed",
+      browserMeta: "3 weeks ago · 42 messages · claude-3.7-sonnet",
+      browserHighlight:
+        "Extracted refresh token renewal into a dedicated helper and updated the retry path.",
+      browserTerminal: "claude resume session_014",
+    },
+  ],
+};
+
+export const PROBLEM_SECTION: SectionContent = {
+  heading: "Claude Code is powerful. Finding what you built last week isn't.",
+};
+
+export const PROBLEM_ITEMS: ProblemItem[] = [
+  {
+    icon: "🗄",
+    title: "Sessions pile up",
+    description:
+      "Every Claude Code session lives as a JSONL file in ~/.claude/projects/. After a few weeks of active use, you have hundreds of them with no practical way to find anything.",
+  },
+  {
+    icon: "🧾",
+    title: "Raw JSONL is unreadable",
+    description:
+      "Opening a session file in a text editor gives you a wall of escaped JSON where tool calls, diffs, and terminal output all blur together.",
+  },
+  {
+    icon: "⛓",
+    title: "Context gets lost",
+    description:
+      "You solved this exact problem a few weeks ago, but without a way to search the history, the path back to that solution disappears.",
+  },
+];
+
+export const FEATURES: FeatureItem[] = [
+  {
+    icon: "⌕",
+    title: "Full-text search",
+    description:
+      "Search every conversation, session name, and project with results that appear as you type.",
+  },
+  {
+    icon: "🗂",
+    title: "Project-grouped browser",
+    description:
+      "Browse conversations grouped by project directory and sorted by recency with useful filters.",
+  },
+  {
+    icon: "⋇",
+    title: "Rich tool result cards",
+    description:
+      "Read diffs, terminal output, file reads, and search results in specialized cards instead of raw JSON.",
+  },
+  {
+    icon: "◫",
+    title: "Multi-profile support",
+    description:
+      "Index multiple Claude config directories side by side with profile-level usage and recency stats.",
+  },
+  {
+    icon: "⇪",
+    title: "Export anywhere",
+    description:
+      "Export any conversation to Markdown, plain text, or JSON and copy individual messages cleanly.",
+  },
+  {
+    icon: "▣",
+    title: "Resume sessions",
+    description:
+      "The desktop app can relaunch or continue prior work without leaving the history browser.",
+  },
+];
+
+export const FEATURES_SECTION: SectionContent = {
+  eyebrow: "Searchable by design",
+  heading: "Everything you need. Nothing you don't.",
+  description:
+    "Search, browse, export, and resume the conversations that already contain your best debugging work.",
+};
+
+export const PLATFORMS: PlatformItem[] = [
+  {
+    id: "desktop",
+    icon: "🖥",
+    name: "Desktop App",
+    meta: "macOS · Windows · Linux",
+    description:
+      "The full experience with embedded terminal workflows, profile dashboards, and large-history browsing.",
+    ctaLabel: "Download Desktop App",
+    ctaHref: "#quick-start",
+    badge: "Most Features",
+  },
+  {
+    id: "vscode",
+    icon: "🧩",
+    name: "VS Code Extension",
+    meta: "VS Code Marketplace",
+    description:
+      "A native IDE workflow with project-scoped browsing, QuickPick search, and sidebar navigation.",
+    ctaLabel: "Install VS Code Extension",
+    ctaHref: "#quick-start",
+    badge: "Native IDE Feel",
+  },
+  {
+    id: "intellij",
+    icon: "☕",
+    name: "IntelliJ Plugin",
+    meta: "JetBrains Marketplace",
+    description:
+      "A JetBrains-native history browser built for developers who live inside IntelliJ-based IDEs.",
+    ctaLabel: "Get IntelliJ Plugin",
+    ctaHref: "#quick-start",
+    badge: "In Progress",
+  },
+];
+
+export const PLATFORM_SECTION: SectionContent = {
+  eyebrow: "Choose your environment",
+  heading: "Three platforms. One history.",
+  description:
+    "Choose the surface that fits how you work. The archive stays local, searchable, and immediately usable.",
+};
+
+export const SCREENSHOTS: ScreenshotSlot[] = [
+  {
+    caption: "Conversation Browser",
+    description:
+      "Browse every Claude Code session grouped by project, sorted by recency, and framed by the context you need to resume work quickly.",
+    placeholderLabel:
+      "[Screenshot: Conversation browser - project-grouped sidebar with searchable history list]",
+  },
+  {
+    caption: "Full-Text Search",
+    description:
+      "Search for an error, a function name, or a library and jump directly into the exact sessions where it appeared.",
+    placeholderLabel:
+      "[Screenshot: Search results - query 'useEffect' showing matching sessions and snippets]",
+  },
+  {
+    caption: "Tool Result Cards",
+    description:
+      "Read Claude's tool activity in the format it deserves, including diffs, bash output, and structured file operations.",
+    placeholderLabel:
+      "[Screenshot: Tool result cards - unified diff and terminal output displayed side by side]",
+  },
+];
+
+export const SCREENSHOTS_SECTION: SectionContent = {
+  eyebrow: "Product walkthrough",
+  heading: "See it in action",
+};
+
+export const HONEST_CONS: HonestCon[] = [
+  {
+    title: "Claude Code users only",
+    description:
+      "This product is valuable if you use Claude Code seriously and want to mine your own local history.",
+  },
+  {
+    title: "Quality depends on your sessions",
+    description:
+      "The better your existing sessions are, the more useful the archive becomes when you need to search and reuse them.",
+  },
+  {
+    title: "IDE plugins track IDE versions",
+    description:
+      "Extensions need to keep up with host IDE release cycles, so compatibility matters on very new beta builds.",
+  },
+  {
+    title: "IntelliJ plugin is still in progress",
+    description:
+      "Core functionality exists, but some higher-level workflow features are still being completed.",
+  },
+  {
+    title: "No cloud sync",
+    description:
+      "History stays on disk by design. There is no hosted sync layer or remote storage abstraction.",
+  },
+];
+
+export const HONEST_CONS_SECTION: SectionContent = {
+  heading: "Good to know",
+  description:
+    "We'd rather you know this upfront than be disappointed after installing.",
+};
+
+export const QUICK_START: QuickStartBlock[] = [
+  {
+    platformId: "desktop",
+    platformName: "Desktop App",
+    accentColor: "orange",
+    steps: [
+      "# 1. Clone and enter",
+      "cd claude-search",
+      "",
+      "# 2. Install dependencies",
+      "pnpm install",
+      "",
+      "# 3. Run in dev mode",
+      "pnpm run dev",
+      "",
+      "# Or build a distributable",
+      "pnpm run package",
+    ],
+  },
+  {
+    platformId: "vscode",
+    platformName: "VS Code Extension",
+    accentColor: "blue",
+    steps: [
+      "# 1. Enter the extension directory",
+      "cd vscode-claude-code-manager",
+      "",
+      "# 2. Install dependencies",
+      "npm install",
+      "",
+      "# 3. Build the extension",
+      "npm run build",
+      "",
+      "# 4. Open in VS Code and press F5",
+      "# The Claude History panel appears in the Activity Bar",
+    ],
+  },
+  {
+    platformId: "intellij",
+    platformName: "IntelliJ Plugin",
+    accentColor: "violet",
+    steps: [
+      "# 1. Enter the plugin directory",
+      "cd intellij-claude-code-manager",
+      "",
+      "# 2. Launch with plugin loaded",
+      "./gradlew runIde",
+      "",
+      "# The Claude History tool window",
+      "# appears in the IDE sidebar",
+    ],
+  },
+];
+
+export const QUICK_START_SECTION: SectionContent = {
+  eyebrow: "Installation",
+  heading: "Get started in under a minute",
+};
+
+export const FOOTER: FooterContent = {
+  productName: "Claude Code History Browser",
+  licenseText: "MIT License",
+  tagline:
+    "Built by developers, for developers who use Claude Code seriously.",
+  disclaimer:
+    "Not affiliated with Anthropic. Claude Code is a product of Anthropic.",
+  githubUrl: "https://github.com/ronen/cc-history",
+  links: [
+    {
+      label: "GitHub",
+      href: "https://github.com/ronen/cc-history",
+    },
+    {
+      label: "Report an Issue",
+      href: "https://github.com/ronen/cc-history/issues",
+    },
+    {
+      label: "Changelog",
+      href: "https://github.com/ronen/cc-history/releases",
+    },
+  ],
+};

@@ -1,0 +1,138 @@
+@import "tailwindcss";
+@plugin "tailwindcss-motion";
+
+:root {
+  --bg-primary: #070b11;
+  --bg-secondary: #0b1320;
+  --bg-tertiary: #111c2d;
+  --accent: #63b3ff;
+  --accent-strong: #b5e3ff;
+  --accent-hover: #8ed1ff;
+  --accent-secondary: #f08a24;
+  --accent-secondary-hover: #ffab52;
+  --text-primary: #f4f8ff;
+  --text-secondary: #9fb0c9;
+  --text-muted: #607089;
+  --border: rgba(116, 151, 199, 0.18);
+  --border-strong: rgba(120, 188, 255, 0.28);
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+}
+
+@theme inline {
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-4.5: 22px;
+  --radius-5: 20px;
+  --radius-6: 24px;
+  --radius-7: 28px;
+  --radius-8: 32px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(99, 179, 255, 0.28);
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  position: relative;
+  background:
+    radial-gradient(circle at top left, rgba(99, 179, 255, 0.16), transparent 32%),
+    radial-gradient(circle at top right, rgba(240, 138, 36, 0.12), transparent 22%),
+    linear-gradient(180deg, #04070d 0%, #060b12 30%, #060b12 100%);
+}
+
+.app-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-position: center;
+  background-size: 48px 48px;
+}
+
+.hero-mesh {
+  background:
+    linear-gradient(135deg, rgba(99, 179, 255, 0.06), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 50%);
+}
+
+.container-shell {
+  margin-inline: auto;
+  max-width: 78rem;
+}
+
+.section-kicker {
+  letter-spacing: 0.26em;
+}
+
+.tech-card {
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
+}
+
+.tech-card:hover {
+  border-color: rgba(133, 203, 255, 0.46);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 24px 60px rgba(5, 10, 18, 0.5),
+    0 0 0 1px rgba(88, 163, 255, 0.08);
+  transform: translateY(-4px);
+}
+
+.screenshot-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.screenshot-shell::before {
+  background:
+    radial-gradient(circle at top, rgba(99, 179, 255, 0.18), transparent 45%),
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.terminal-block {
+  background:
+    linear-gradient(180deg, rgba(7, 12, 22, 0.98), rgba(6, 9, 17, 0.98)),
+    rgba(6, 9, 17, 0.98);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.floating-orb {
+  pointer-events: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
