@@ -62,7 +62,7 @@ export function QuickStart({
                   </p>
                 </div>
 
-                <pre className="terminal-block overflow-x-auto rounded-6 border border-white/6 p-5 leading-7 text-primary">
+                <pre className="terminal-block overflow-x-auto rounded-3xl border border-white/6 p-5 leading-7 text-primary">
                   <code className="font-mono">
                     {block.steps.map((line, index) => {
                       if (line.length === 0) {

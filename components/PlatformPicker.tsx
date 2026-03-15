@@ -80,7 +80,7 @@ export function PlatformPicker({
                   <p className="leading-7 text-secondary">
                     {platform.description}
                   </p>
-                  <div className="mt-auto flex items-center justify-between gap-4 rounded-4.5 border border-border bg-black/20 px-4 py-4">
+                  <div className="mt-auto flex items-center justify-between gap-4 rounded-4-5xl border border-border bg-black/20 px-4 py-4">
                     <span className="text-muted">
                       {platform.meta}
                     </span>

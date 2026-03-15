@@ -49,7 +49,7 @@ export function Screenshots({
             >
               <div
                 className={cn(
-                  "flex h-full flex-col justify-center rounded-7 border border-border bg-white/3 p-8",
+                  "flex h-full flex-col justify-center rounded-7xl border border-border bg-white/3 p-8",
                   index % 2 === 1 ? "lg:order-2" : "",
                 )}
               >

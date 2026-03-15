@@ -25,7 +25,7 @@ export function HonestCons({
       ref={ref}
       variants={fadeUp}
     >
-      <div className="mx-auto max-w-3xl rounded-8 border border-border bg-[linear-gradient(180deg,rgba(14,19,29,0.92),rgba(10,15,23,0.9))] p-8 shadow-[0_18px_45px_rgba(3,7,14,0.34)]">
+      <div className="mx-auto max-w-3xl rounded-4xl border border-border bg-[linear-gradient(180deg,rgba(14,19,29,0.92),rgba(10,15,23,0.9))] p-8 shadow-[0_18px_45px_rgba(3,7,14,0.34)]">
         <h2 className="text-2xl font-semibold tracking-[-0.04em] text-secondary sm:text-3xl">
           {section.heading}
         </h2>
@@ -38,7 +38,7 @@ export function HonestCons({
         <motion.ul className="mt-8 space-y-5" variants={staggerContainer}>
           {items.map((item) => (
             <motion.li
-              className="flex gap-4 rounded-4.5 border border-white/6 bg-white/2 px-5 py-4"
+              className="flex gap-4 rounded-4-5xl border border-white/6 bg-white/2 px-5 py-4"
               key={item.title}
               variants={staggerItem}
             >

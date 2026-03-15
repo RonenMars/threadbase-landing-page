@@ -4,7 +4,7 @@ export default function NotFound(): React.JSX.Element {
   return (
     <div className="app-shell min-h-screen">
       <main className="container-shell flex min-h-screen items-center justify-center px-6 py-24 sm:px-8 lg:px-10">
-        <section className="screenshot-shell relative w-full max-w-3xl overflow-hidden rounded-8 border border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-8 text-center shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:p-12">
+        <section className="screenshot-shell relative w-full max-w-3xl overflow-hidden rounded-4xl border border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-8 text-center shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:p-12">
           <div className="app-grid absolute inset-0 opacity-20" />
           <div className="relative space-y-6">
             <p className="text-xs uppercase tracking-[0.26em] text-accent-strong">

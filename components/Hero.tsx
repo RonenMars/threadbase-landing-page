@@ -132,7 +132,7 @@ function WorkflowSteps({
 
 function RawStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
-    <div className="rounded-6 border border-white/6 bg-black/28 p-4">
+    <div className="rounded-3xl border border-white/6 bg-black/28 p-4">
       <div className="mb-4 flex items-center justify-between border-b border-white/6 pb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted">
         <span>local session file</span>
         <span>jsonl</span>
@@ -160,7 +160,7 @@ function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
       {stage.decodedCards?.map((card, index) => (
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-6 border border-white/8 bg-white/4 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+          className="rounded-3xl border border-white/8 bg-white/4 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
           initial={{ opacity: 0, y: 20 }}
           key={card.title}
           transition={itemTransition(index)}
@@ -186,9 +186,9 @@ function CommandPaletteStage({
   stage: HeroShellStage;
 }): React.JSX.Element {
   return (
-    <div className="relative flex min-h-62.5 items-end rounded-6 border border-white/6 bg-[linear-gradient(180deg,rgba(8,13,22,0.98),rgba(9,14,24,0.92))] p-5">
+    <div className="relative flex min-h-62.5 items-end rounded-3xl border border-white/6 bg-[linear-gradient(180deg,rgba(8,13,22,0.98),rgba(9,14,24,0.92))] p-5">
       <div className="grid w-full gap-4 opacity-35 md:grid-cols-3">
-        <div className="rounded-5 border border-white/6 bg-white/3 p-4">
+        <div className="rounded-5xl border border-white/6 bg-white/3 p-4">
           <p className="text-xs uppercase tracking-[0.2em] text-muted">
             Conversation
           </p>
@@ -199,11 +199,11 @@ function CommandPaletteStage({
             Retry logic isolated and token renewal extracted into a helper.
           </p>
         </div>
-        <div className="rounded-5 border border-white/6 bg-white/3 p-4" />
-        <div className="rounded-5 border border-white/6 bg-white/3 p-4" />
+        <div className="rounded-5xl border border-white/6 bg-white/3 p-4" />
+        <div className="rounded-5xl border border-white/6 bg-white/3 p-4" />
       </div>
 
-      <div className="absolute inset-x-8 top-8 rounded-6 border border-border-strong bg-[linear-gradient(180deg,rgba(16,28,44,0.98),rgba(11,19,31,0.96))] p-5 shadow-[0_20px_60px_rgba(1,6,14,0.55)]">
+      <div className="absolute inset-x-8 top-8 rounded-3xl border border-border-strong bg-[linear-gradient(180deg,rgba(16,28,44,0.98),rgba(11,19,31,0.96))] p-5 shadow-[0_20px_60px_rgba(1,6,14,0.55)]">
         <motion.div
           animate={{ opacity: 1, y: 0 }}
           className="rounded-2xl border border-white/8 bg-black/25 px-4 py-3 font-mono text-primary"
@@ -241,7 +241,7 @@ function DeepViewStage({ stage }: { stage: HeroShellStage }): React.JSX.Element 
     <div className="grid gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-6 border border-white/6 bg-black/28 p-4"
+        className="rounded-3xl border border-white/6 bg-black/28 p-4"
         initial={{ opacity: 0, y: 20 }}
         transition={itemTransition(0)}
       >
@@ -266,7 +266,7 @@ function DeepViewStage({ stage }: { stage: HeroShellStage }): React.JSX.Element 
 
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-6 border border-white/6 bg-white/3 p-4"
+        className="rounded-3xl border border-white/6 bg-white/3 p-4"
         initial={{ opacity: 0, y: 20 }}
         transition={itemTransition(1)}
       >
@@ -441,7 +441,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             },
           }}
         >
-          <div className="screenshot-shell relative mx-auto flex h-105 w-full max-w-6xl flex-col overflow-hidden rounded-8 border border-dashed border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-4 shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:h-120">
+          <div className="screenshot-shell relative mx-auto flex h-105 w-full max-w-6xl flex-col overflow-hidden rounded-4xl border border-dashed border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-4 shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:h-120">
             <div className="mb-4 flex items-center gap-2 rounded-full border border-white/8 bg-white/3 px-4 py-2 text-left text-xs uppercase tracking-[0.22em] text-muted">
               <span className="h-2 w-2 rounded-full bg-accent-secondary" />
               <span className="h-2 w-2 rounded-full bg-accent" />
@@ -455,7 +455,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               title={hero.workflowTitle}
             />
             <div className="grid h-full gap-4 lg:grid-cols-[320px_minmax(0,1fr)]">
-              <div className="hidden rounded-6 border border-white/6 bg-white/3 p-4 lg:block">
+              <div className="hidden rounded-3xl border border-white/6 bg-white/3 p-4 lg:block">
                 <WorkflowSteps
                   activeIndex={activeStage.workflowActiveIndex}
                   steps={hero.workflowSteps}
@@ -469,7 +469,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                   {/* Layer 3: background panel frame — last to appear */}
                   <motion.div
                     animate="animate"
-                    className="absolute inset-0 flex flex-col overflow-hidden rounded-6 border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6"
+                    className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6"
                     exit="exit"
                     initial="initial"
                     key={activeStage.id}

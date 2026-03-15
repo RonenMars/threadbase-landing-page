@@ -35,11 +35,9 @@
   --color-foreground: var(--foreground);
   --font-sans: "SF Pro Display", "Segoe UI", "Helvetica Neue", sans-serif;
   --font-mono: "SF Mono", "JetBrains Mono", "Fira Code", monospace;
-  --radius-4.5: 22px;
-  --radius-5: 20px;
-  --radius-6: 24px;
-  --radius-7: 28px;
-  --radius-8: 32px;
+  --radius-4-5xl: 22px;
+  --radius-5xl: 20px;
+  --radius-7xl: 28px;
 }
 
 body {
