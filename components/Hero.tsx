@@ -108,6 +108,18 @@ const panelVariants: Variants = {
   },
 };
 
+// Decoded stage panel: exit propagates to card children via staggerChildren
+const decodedPanelVariants: Variants = {
+  initial: { y: 14 },
+  animate: {
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+  exit: {
+    transition: { staggerChildren: 0.25, when: "afterChildren" },
+  },
+};
+
 // Layer 1 — individual items inside stage body (first, staggered per index)
 function itemTransition(index: number) {
   return { duration: 0.75, delay: index * 0.13, ease: [0.16, 1, 0.3, 1] as const };
@@ -141,10 +153,10 @@ function WorkflowSteps({
               <li
                 aria-current={isActive ? "step" : undefined}
                 className={`rounded-2xl border px-3 py-3 text-left transition-colors ${onStepClick ? "cursor-pointer" : ""} ${isActive
-                    ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
-                    : isComplete
-                      ? "border-white/8 bg-white/4 text-primary"
-                      : "border-white/6 bg-white/2 text-secondary"
+                  ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
+                  : isComplete
+                    ? "border-white/8 bg-white/4 text-primary"
+                    : "border-white/6 bg-white/2 text-secondary"
                   }`}
                 key={`compact-${step}`}
                 onClick={() => onStepClick?.(index)}
@@ -175,10 +187,10 @@ function WorkflowSteps({
             <li
               aria-current={isActive ? "step" : undefined}
               className={`rounded-2xl border px-4 py-3 transition-colors ${onStepClick ? "cursor-pointer" : ""} ${isActive
-                  ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
-                  : isComplete
-                    ? "border-white/8 bg-white/4 text-primary"
-                    : "border-white/6 bg-white/2 text-secondary"
+                ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
+                : isComplete
+                  ? "border-white/8 bg-white/4 text-primary"
+                  : "border-white/6 bg-white/2 text-secondary"
                 }`}
               key={step}
               onClick={() => onStepClick?.(index)}
@@ -186,8 +198,8 @@ function WorkflowSteps({
               <div className="flex items-start gap-3">
                 <span
                   className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-full border text-xs ${isActive || isComplete
-                      ? "border-accent/40 bg-accent/10 text-accent-strong"
-                      : "border-white/10 bg-white/4 text-muted"
+                    ? "border-accent/40 bg-accent/10 text-accent-strong"
+                    : "border-white/10 bg-white/4 text-muted"
                     }`}
                 >
                   {index + 1}
@@ -236,7 +248,18 @@ function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       {stage.decodedCards?.map((card, index) => (
-        <div key={card.title} className="relative rounded-3xl">
+        <motion.div
+          key={card.title}
+          className="relative rounded-3xl"
+          variants={{
+            exit: {
+              opacity: 0,
+              y: -32,
+              scale: 0.95,
+              transition: { duration: 1.4, ease: [0.4, 0, 1, 1] as const },
+            },
+          }}
+        >
           {/* Step 2: card container materialises after content */}
           <motion.div
             animate={{ opacity: 1, y: 0 }}
@@ -261,7 +284,7 @@ function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
               {card.description}
             </p>
           </motion.div>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
@@ -452,11 +475,11 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
 
   // Generate a fresh random exit animation each time the active stage changes
   const exitAnimation = useMemo(() => {
-    const y = -(40 + Math.random() * 40);
-    const x = (Math.random() - 0.5) * 40;
-    const rotate = (Math.random() - 0.5) * 10;
+    const y = -(22 + Math.random() * 18);
+    const x = (Math.random() - 0.5) * 16;
+    const rotate = (Math.random() - 0.5) * 5;
     const scale = 0.93 + Math.random() * 0.05;
-    const duration = 2.0 + Math.random() * 1.0;
+    const duration = 0.55 + Math.random() * 0.15;
     return {
       opacity: 0,
       y,
@@ -620,15 +643,15 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
 
               {/* Outer container clips overflow from sliding children */}
               <div className="relative overflow-hidden">
-                <AnimatePresence mode="sync">
+                <AnimatePresence mode="wait">
                   {/* Panel layout container — y-only animation so children are visible from mount */}
                   <motion.div
                     animate="animate"
                     className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6"
-                    exit={exitAnimation}
+                    exit={activeStage.id === "decoded" ? "exit" : exitAnimation}
                     initial="initial"
                     key={activeStage.id}
-                    variants={panelVariants}
+                    variants={activeStage.id === "decoded" ? decodedPanelVariants : panelVariants}
                   >
                     <div className="app-grid absolute inset-0 opacity-30" />
 
