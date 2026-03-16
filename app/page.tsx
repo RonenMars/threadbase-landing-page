@@ -10,7 +10,7 @@ import { PlatformPicker } from "@/components/PlatformPicker";
 import { ProblemSection } from "@/components/ProblemSection";
 import { QuickStart } from "@/components/QuickStart";
 import { Screenshots } from "@/components/Screenshots";
-// import { RoadmapTeaser } from "@/components/RoadmapTeaser";
+import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import {
   FEATURES,
   FEATURES_SECTION,
@@ -67,7 +67,7 @@ export default function Home(): React.JSX.Element {
           platformLabels={SCREENSHOTS_PLATFORM_LABELS}
         />
         <HonestCons items={HONEST_CONS} section={HONEST_CONS_SECTION} />
-        {/* <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} /> */}
+        <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />
         <div ref={quickStartRef}>
           <QuickStart
             blocks={QUICK_START}
