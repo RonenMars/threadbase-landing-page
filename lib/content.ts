@@ -133,35 +133,31 @@ export interface RoadmapMilestone {
 export type SelectedPlatform = PlatformItem["id"] | null;
 
 export const SITE_METADATA: SiteMetadata = {
-  title: "Claude Code History Browser",
+  title: "Threadbase",
   description:
-    "Claude Code History Browser turns raw Claude session files into a searchable local knowledge base across desktop and IDE workflows.",
+    "Threadbase turns raw AI session files on your disk into a searchable, navigable knowledge base across desktop, IDE, and terminal.",
 };
 
 export const HERO: HeroContent = {
-  eyebrow: "Developer Tool",
-  headline: "Your Claude Code history is a goldmine. Start mining it.",
+  eyebrow: "AI Session Browser",
+  headline: "Your AI session history is a goldmine. Start mining it.",
   subheadline:
-    "Claude Code History Browser turns the raw JSONL session files on your disk into a searchable, navigable knowledge base across desktop and IDE workflows.",
+    "Threadbase turns raw AI session files on your disk into a searchable, navigable knowledge base — across desktop, IDE, and terminal.",
   badges: [
-    { label: "Desktop app" },
-    { label: "VS Code extension" },
-    { label: "IntelliJ plugin" },
+    { label: "Desktop App" },
+    { label: "VS Code" },
+    { label: "IntelliJ" },
+    { label: "CLI (cch)" },
   ],
   ctas: [
     {
-      label: "Download for Desktop",
+      label: "Choose your platform ↓",
       href: "#platform-picker",
       variant: "primary",
     },
     {
-      label: "Install VS Code Extension",
-      href: "#platform-picker",
-      variant: "outline",
-    },
-    {
-      label: "Get IntelliJ Plugin",
-      href: "#platform-picker",
+      label: "View on GitHub",
+      href: "https://github.com/ronen/cc-history",
       variant: "outline",
     },
   ],
@@ -290,36 +286,56 @@ export const FEATURES: FeatureItem[] = [
     title: "Full-text search",
     description:
       "Search every conversation, session name, and project with results that appear as you type.",
+    platforms: ["desktop", "vscode", "intellij", "cli"],
   },
   {
     icon: "🗂",
     title: "Project-grouped browser",
     description:
       "Browse conversations grouped by project directory and sorted by recency with useful filters.",
+    platforms: ["desktop", "vscode", "intellij"],
   },
   {
     icon: "⋇",
     title: "Rich tool result cards",
     description:
       "Read diffs, terminal output, file reads, and search results in specialized cards instead of raw JSON.",
+    platforms: ["desktop", "vscode", "intellij"],
   },
   {
     icon: "◫",
     title: "Multi-profile support",
     description:
       "Index multiple Claude config directories side by side with profile-level usage and recency stats.",
+    platforms: ["desktop"],
   },
   {
     icon: "⇪",
     title: "Export anywhere",
     description:
       "Export any conversation to Markdown, plain text, or JSON and copy individual messages cleanly.",
+    platforms: ["desktop", "vscode"],
   },
   {
     icon: "▣",
     title: "Resume sessions",
     description:
       "The desktop app can relaunch or continue prior work without leaving the history browser.",
+    platforms: ["desktop", "cli"],
+  },
+  {
+    icon: "⌨",
+    title: "Terminal-native CLI",
+    description:
+      "cch brings full-text search and session browsing to the terminal with a fast, keyboard-driven interface.",
+    platforms: ["cli"],
+  },
+  {
+    icon: "↺",
+    title: "Cross-assistant ready",
+    description:
+      "Built to expand beyond Claude Code — same local-first approach, same searchable history, more AI tools soon.",
+    platforms: ["desktop", "vscode", "intellij", "cli"],
   },
 ];
 
@@ -362,13 +378,22 @@ export const PLATFORMS: PlatformItem[] = [
       "A JetBrains-native history browser built for developers who live inside IntelliJ-based IDEs.",
     ctaLabel: "Get IntelliJ Plugin",
     ctaHref: "#quick-start",
-    badge: "In Progress",
+  },
+  {
+    id: "cli",
+    icon: "⌨",
+    name: "CLI (cch)",
+    meta: "Terminal · All platforms",
+    description:
+      "The fastest way to search your session history without leaving the terminal.",
+    ctaLabel: "Install cch",
+    ctaHref: "#quick-start",
   },
 ];
 
 export const PLATFORM_SECTION: SectionContent = {
   eyebrow: "Choose your environment",
-  heading: "Three platforms. One history.",
+  heading: "Four platforms. One history.",
   description:
     "Choose the surface that fits how you work. The archive stays local, searchable, and immediately usable.",
 };
@@ -404,7 +429,7 @@ export const SCREENSHOTS_SECTION: SectionContent = {
 
 export const HONEST_CONS: HonestCon[] = [
   {
-    title: "Claude Code users only",
+    title: "Currently Claude Code sessions only",
     description:
       "This product is valuable if you use Claude Code seriously and want to mine your own local history.",
   },
@@ -418,11 +443,7 @@ export const HONEST_CONS: HonestCon[] = [
     description:
       "Extensions need to keep up with host IDE release cycles, so compatibility matters on very new beta builds.",
   },
-  {
-    title: "IntelliJ plugin is still in progress",
-    description:
-      "Core functionality exists, but some higher-level workflow features are still being completed.",
-  },
+
   {
     title: "No cloud sync",
     description:
@@ -488,6 +509,24 @@ export const QUICK_START: QuickStartBlock[] = [
       "# appears in the IDE sidebar",
     ],
   },
+  {
+    platformId: "cli",
+    platformName: "CLI (cch)",
+    accentColor: "green",
+    steps: [
+      "# 1. Install cch globally",
+      "npm install -g cch",
+      "",
+      "# 2. Search your session history",
+      "cch search \"auth refresh handler\"",
+      "",
+      "# 3. Browse all sessions",
+      "cch browse",
+      "",
+      "# 4. Open a specific session",
+      "cch open session_014",
+    ],
+  },
 ];
 
 export const QUICK_START_SECTION: SectionContent = {
@@ -496,25 +535,79 @@ export const QUICK_START_SECTION: SectionContent = {
 };
 
 export const FOOTER: FooterContent = {
-  productName: "Claude Code History Browser",
+  productName: "Threadbase",
   licenseText: "MIT License",
   tagline:
-    "Built by developers, for developers who use Claude Code seriously.",
+    "Built for developers who use AI coding assistants seriously.",
   disclaimer:
     "Not affiliated with Anthropic. Claude Code is a product of Anthropic.",
   githubUrl: "https://github.com/ronen/cc-history",
   links: [
-    {
-      label: "GitHub",
-      href: "https://github.com/ronen/cc-history",
-    },
-    {
-      label: "Report an Issue",
-      href: "https://github.com/ronen/cc-history/issues",
-    },
-    {
-      label: "Changelog",
-      href: "https://github.com/ronen/cc-history/releases",
-    },
+    { label: "GitHub",        href: "https://github.com/ronen/cc-history" },
+    { label: "Report an Issue", href: "https://github.com/ronen/cc-history/issues" },
+    { label: "Changelog",     href: "https://github.com/ronen/cc-history/releases" },
   ],
+};
+
+export const ROADMAP_SECTION: SectionContent = {
+  eyebrow: "What's coming",
+  heading: "Beyond Claude Code.",
+  description:
+    "Threadbase is expanding to support every major AI coding assistant. Your history. Your tools. Not locked to one.",
+};
+
+export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
+  {
+    timeLabel: "Now",
+    status: "shipped",
+    title: "Claude Code",
+    providers: [
+      { name: "Desktop App", type: "Electron · All platforms", icon: "🖥" },
+      { name: "VS Code",     type: "Marketplace",              icon: "🔷" },
+      { name: "IntelliJ",   type: "JetBrains",                icon: "☕" },
+      { name: "CLI (cch)",  type: "Terminal",                  icon: "⌨" },
+    ],
+    detail:
+      "Full Milestone 1 shipped across all four surfaces. Searchable history, tool result cards, project-grouped browser, and session resume.",
+  },
+  {
+    timeLabel: "Month 1–2",
+    status: "soon",
+    title: "Coming soon",
+    providers: [
+      { name: "Codex CLI",    type: "OpenAI",      icon: "⬛" },
+      { name: "Continue.dev", type: "Open source", icon: "🔗" },
+    ],
+    detail:
+      "Expanding the session parser to support OpenAI Codex CLI and Continue.dev session formats. Same local-first approach — no cloud required.",
+  },
+  {
+    timeLabel: "Month 3–4",
+    status: "planned",
+    title: "Planned",
+    providers: [
+      { name: "OpenCode", type: "Open source", icon: "🟢" },
+      { name: "Amazon Q", type: "AWS",         icon: "🟡" },
+    ],
+    detail:
+      "Roadmap items confirmed based on user demand. Timeline subject to change.",
+  },
+  {
+    timeLabel: "Month 5–6",
+    status: "future",
+    title: "Future",
+    providers: [
+      { name: "Aider",  type: "Open source",  icon: "⚡" },
+      { name: "+ more", type: "Vote on GitHub", icon: "🗳" },
+    ],
+    detail:
+      "Additional assistants based on community votes. Open an issue on GitHub to request your preferred tool.",
+  },
+];
+
+export const SCREENSHOTS_PLATFORM_LABELS: Partial<Record<PlatformItem["id"], string>> = {
+  desktop:  "Desktop App walkthrough",
+  vscode:   "VS Code extension walkthrough",
+  intellij: "IntelliJ plugin walkthrough",
+  cli:      "CLI (cch) walkthrough",
 };
