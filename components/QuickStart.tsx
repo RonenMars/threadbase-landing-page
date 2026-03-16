@@ -14,8 +14,9 @@ interface QuickStartProps {
 
 const accentMap: Record<QuickStartBlock["accentColor"], string> = {
   orange: "bg-accent-secondary",
-  blue: "bg-accent",
+  blue:   "bg-accent",
   violet: "bg-violet-400",
+  green:  "bg-green-400",
 };
 
 export function QuickStart({

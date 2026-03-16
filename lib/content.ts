@@ -64,10 +64,11 @@ export interface FeatureItem {
   icon: string;
   title: string;
   description: string;
+  platforms?: Array<PlatformItem["id"]>;
 }
 
 export interface PlatformItem {
-  id: "desktop" | "vscode" | "intellij";
+  id: "desktop" | "vscode" | "intellij" | "cli";
   icon: string;
   name: string;
   meta: string;
@@ -91,7 +92,7 @@ export interface HonestCon {
 export interface QuickStartBlock {
   platformId: PlatformItem["id"];
   platformName: string;
-  accentColor: string;
+  accentColor: "orange" | "blue" | "violet" | "green";
   steps: string[];
 }
 
@@ -114,6 +115,22 @@ export interface SectionContent {
   heading: string;
   description?: string;
 }
+
+export interface RoadmapProvider {
+  name: string;
+  type: string;
+  icon: string;
+}
+
+export interface RoadmapMilestone {
+  timeLabel: string;
+  status: "shipped" | "soon" | "planned" | "future";
+  title: string;
+  providers: RoadmapProvider[];
+  detail: string;
+}
+
+export type SelectedPlatform = PlatformItem["id"] | null;
 
 export const SITE_METADATA: SiteMetadata = {
   title: "Claude Code History Browser",
