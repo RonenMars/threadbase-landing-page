@@ -13,16 +13,16 @@ import {
 
 describe("content", () => {
   it("exports the full landing page content model", () => {
-    expect(SITE_METADATA.title).toBe("Claude Code History Browser");
+    expect(SITE_METADATA.title).toBe("Threadbase");
     expect(HERO.headline).toBe(
-      "Your Claude Code history is a goldmine. Start mining it.",
+      "Your AI session history is a goldmine. Start mining it.",
     );
     expect(PROBLEM_ITEMS).toHaveLength(3);
-    expect(FEATURES).toHaveLength(6);
-    expect(PLATFORMS).toHaveLength(3);
+    expect(FEATURES).toHaveLength(8);
+    expect(PLATFORMS).toHaveLength(4);
     expect(SCREENSHOTS).toHaveLength(3);
-    expect(HONEST_CONS).toHaveLength(5);
-    expect(QUICK_START).toHaveLength(3);
+    expect(HONEST_CONS).toHaveLength(4);
+    expect(QUICK_START).toHaveLength(4);
     expect(FOOTER.githubUrl).toContain("github.com");
   });
 

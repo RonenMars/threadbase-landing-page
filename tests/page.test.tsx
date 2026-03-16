@@ -9,7 +9,7 @@ describe("Home", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: "Your Claude Code history is a goldmine. Start mining it.",
+        name: "Your AI session history is a goldmine. Start mining it.",
       }),
     ).toBeInTheDocument();
     expect(
@@ -24,8 +24,11 @@ describe("Home", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", {
-        name: "Three platforms. One history.",
+        name: "Four platforms. One history.",
       }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Beyond Claude Code." }),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "See it in action" }),
@@ -41,23 +44,22 @@ describe("Home", () => {
   it("renders install choices and quick-start commands from content", () => {
     render(<Home />);
 
+    // Platform picker buttons are present
     for (const platform of PLATFORMS) {
-      expect(
-        screen.getByRole("heading", { name: platform.name }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getAllByRole("button", { name: platform.ctaLabel }).length,
-      ).toBeGreaterThan(0);
+      const escapedName = platform.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      expect(screen.getAllByRole("button", { name: new RegExp(escapedName, "i") }).length).toBeGreaterThan(0);
     }
 
+    // QuickStart tab bar renders all tab labels
     for (const block of QUICK_START) {
-      expect(screen.getAllByText(block.platformName).length).toBeGreaterThan(0);
-      for (const line of block.steps) {
-        if (line.length === 0) {
-          continue;
-        }
-        expect(screen.getAllByText(line).length).toBeGreaterThan(0);
-      }
+      expect(screen.getAllByRole("button", { name: block.platformName }).length).toBeGreaterThan(0);
+    }
+
+    // Active tab (desktop by default) content is visible
+    const desktopBlock = QUICK_START.find((b) => b.platformId === "desktop")!;
+    for (const line of desktopBlock.steps) {
+      if (line.length === 0) continue;
+      expect(screen.getAllByText(line).length).toBeGreaterThan(0);
     }
   });
 });
