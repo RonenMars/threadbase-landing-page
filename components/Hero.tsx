@@ -452,11 +452,11 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
 
   // Generate a fresh random exit animation each time the active stage changes
   const exitAnimation = useMemo(() => {
-    const y = -(22 + Math.random() * 18);
-    const x = (Math.random() - 0.5) * 16;
-    const rotate = (Math.random() - 0.5) * 5;
+    const y = -(40 + Math.random() * 40);
+    const x = (Math.random() - 0.5) * 40;
+    const rotate = (Math.random() - 0.5) * 10;
     const scale = 0.93 + Math.random() * 0.05;
-    const duration = 0.55 + Math.random() * 0.15;
+    const duration = 2.0 + Math.random() * 1.0;
     return {
       opacity: 0,
       y,
