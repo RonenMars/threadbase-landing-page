@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { HeroContent, HeroShellStage } from "@/lib/content";
@@ -98,29 +98,19 @@ function TypewriterLines({
   );
 }
 
-// Layer 3 — background panel frame (last to appear)
+// Panel container — only slides (no opacity), so children are visible from mount.
+// Each inner layer controls its own opacity independently.
 const panelVariants: Variants = {
-  initial: { opacity: 0, y: 14 },
+  initial: { y: 14 },
   animate: {
-    opacity: 1,
     y: 0,
-    transition: { duration: 0.75, delay: 0.36, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
     y: -28,
     scale: 0.97,
     transition: { duration: 0.45, ease: [0.4, 0, 1, 1] },
-  },
-};
-
-// Layer 2 — panel header text (second)
-const headerVariants: Variants = {
-  initial: { opacity: 0, y: 18 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
@@ -132,11 +122,13 @@ function itemTransition(index: number) {
 function WorkflowSteps({
   activeIndex,
   compact = false,
+  onStepClick,
   steps,
   title,
 }: {
   activeIndex: number;
   compact?: boolean;
+  onStepClick?: (index: number) => void;
   steps: string[];
   title: string;
 }): React.JSX.Element {
@@ -154,13 +146,14 @@ function WorkflowSteps({
             return (
               <li
                 aria-current={isActive ? "step" : undefined}
-                className={`rounded-2xl border px-3 py-3 text-left transition-colors ${isActive
+                className={`rounded-2xl border px-3 py-3 text-left transition-colors ${onStepClick ? "cursor-pointer" : ""} ${isActive
                     ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
                     : isComplete
                       ? "border-white/8 bg-white/4 text-primary"
                       : "border-white/6 bg-white/2 text-secondary"
                   }`}
                 key={`compact-${step}`}
+                onClick={() => onStepClick?.(index)}
               >
                 <p className="text-xs uppercase tracking-[0.2em] text-muted">
                   {index + 1}
@@ -187,13 +180,14 @@ function WorkflowSteps({
           return (
             <li
               aria-current={isActive ? "step" : undefined}
-              className={`rounded-2xl border px-4 py-3 transition-colors ${isActive
+              className={`rounded-2xl border px-4 py-3 transition-colors ${onStepClick ? "cursor-pointer" : ""} ${isActive
                   ? "border-accent/40 bg-accent/10 text-primary shadow-[0_0_0_1px_rgba(76,184,255,0.08)]"
                   : isComplete
                     ? "border-white/8 bg-white/4 text-primary"
                     : "border-white/6 bg-white/2 text-secondary"
                 }`}
               key={step}
+              onClick={() => onStepClick?.(index)}
             >
               <div className="flex items-start gap-3">
                 <span
@@ -234,23 +228,32 @@ function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       {stage.decodedCards?.map((card, index) => (
-        <motion.div
-          animate={{ opacity: 1, y: 0 }}
-          className="rounded-3xl border border-white/8 bg-white/4 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
-          initial={{ opacity: 0, y: 20 }}
-          key={card.title}
-          transition={itemTransition(index)}
-        >
-          <p className="text-xs uppercase tracking-[0.24em] text-accent-strong">
-            {card.meta}
-          </p>
-          <p className="mt-4 text-lg font-semibold tracking-[-0.03em] text-primary">
-            {card.title}
-          </p>
-          <p className="mt-3 leading-7 text-secondary">
-            {card.description}
-          </p>
-        </motion.div>
+        <div key={card.title} className="relative rounded-3xl">
+          {/* Step 2: card container materialises after content */}
+          <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            className="absolute inset-0 rounded-3xl border border-white/8 bg-white/4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+            initial={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.5, delay: 0.35 + index * 0.1, ease: [0.16, 1, 0.3, 1] as const }}
+          />
+          {/* Step 1: card content slides up first */}
+          <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            className="relative p-4"
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.55, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            <p className="text-xs uppercase tracking-[0.24em] text-accent-strong">
+              {card.meta}
+            </p>
+            <p className="mt-4 text-lg font-semibold tracking-[-0.03em] text-primary">
+              {card.title}
+            </p>
+            <p className="mt-3 leading-7 text-secondary">
+              {card.description}
+            </p>
+          </motion.div>
+        </div>
       ))}
     </div>
   );
@@ -407,6 +410,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const lastStageIndex = hero.shellStages.length - 1;
   const activeStage = hero.shellStages[activeStageIndex];
+  const timeoutIdsRef = useRef<number[]>([]);
 
   useEffect(() => {
     let elapsedMs = 0;
@@ -426,12 +430,20 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
       timeoutIds.push(timeoutId);
     });
 
+    timeoutIdsRef.current = timeoutIds;
+
     return () => {
       timeoutIds.forEach((timeoutId) => {
         window.clearTimeout(timeoutId);
       });
     };
   }, [hero.shellStages, lastStageIndex]);
+
+  function handleStepClick(stepIndex: number): void {
+    timeoutIdsRef.current.forEach((id) => window.clearTimeout(id));
+    timeoutIdsRef.current = [];
+    setActiveStageIndex(stepIndex);
+  }
 
   return (
     <motion.section
@@ -547,6 +559,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             <WorkflowSteps
               activeIndex={activeStage.workflowActiveIndex}
               compact
+              onStepClick={handleStepClick}
               steps={hero.workflowSteps}
               title={hero.workflowTitle}
             />
@@ -554,6 +567,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               <div className="hidden rounded-3xl border border-white/6 bg-white/3 p-4 lg:block">
                 <WorkflowSteps
                   activeIndex={activeStage.workflowActiveIndex}
+                  onStepClick={handleStepClick}
                   steps={hero.workflowSteps}
                   title={hero.workflowTitle}
                 />
@@ -562,15 +576,16 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               {/* Outer container clips overflow from sliding children */}
               <div className="relative overflow-hidden">
                 <AnimatePresence mode="sync">
-                  {/* Layer 3: background panel frame — last to appear */}
+                  {/* Panel layout container — y-only animation so children are visible from mount */}
                   <motion.div
                     animate="animate"
-                    className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6"
+                    className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl p-6"
                     exit="exit"
                     initial="initial"
                     key={activeStage.id}
                     variants={panelVariants}
                   >
+                    {/* Progress bar */}
                     <motion.div
                       animate={{ scaleX: 1, opacity: 0.55 }}
                       className="absolute inset-x-0 top-0 h-px origin-left bg-[linear-gradient(90deg,transparent_10%,rgba(99,179,255,0.9)_50%,transparent_90%)]"
@@ -580,14 +595,38 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                         ease: "linear",
                       }}
                     />
-                    <div className="app-grid absolute inset-0 opacity-30" />
 
-                    {/* Layer 2: header text — second */}
+                    {/* Panel visual background — decoded: materialises last (step 5); others: immediate */}
                     <motion.div
-                      animate="animate"
+                      animate={{ opacity: 1 }}
+                      className="absolute inset-0 border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))]"
+                      initial={{ opacity: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: activeStage.id === "decoded" ? 1.1 : 0,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
+                    />
+                    <motion.div
+                      animate={{ opacity: 0.3 }}
+                      className="app-grid absolute inset-0"
+                      initial={{ opacity: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: activeStage.id === "decoded" ? 1.1 : 0,
+                      }}
+                    />
+
+                    {/* Header — decoded: after cards (step 3); others: early */}
+                    <motion.div
+                      animate={{ opacity: 1, y: 0 }}
                       className="relative mb-6 space-y-3 border-b border-white/6 pb-5 text-left"
-                      initial="initial"
-                      variants={headerVariants}
+                      initial={{ opacity: 0, y: 18 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: activeStage.id === "decoded" ? 0.65 : 0.2,
+                        ease: [0.16, 1, 0.3, 1],
+                      }}
                     >
                       <p className="text-xs uppercase tracking-[0.26em] text-accent-strong">
                         {activeStage.panelEyebrow}
@@ -600,7 +639,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                       </p>
                     </motion.div>
 
-                    {/* Layer 1: stage body items — first (staggered inside each component) */}
+                    {/* Body — decoded: cards handle their own layered timing */}
                     <div className="relative my-auto">
                       <StageBody stage={activeStage} />
                     </div>
