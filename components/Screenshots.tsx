@@ -5,20 +5,25 @@ import { useRef } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import type { ScreenshotSlot, SectionContent } from "@/lib/content";
+import type { ScreenshotSlot, SelectedPlatform, SectionContent, PlatformItem } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 interface ScreenshotsProps {
   section: SectionContent;
   shots: ScreenshotSlot[];
+  selectedPlatform: SelectedPlatform;
+  platformLabels: Partial<Record<PlatformItem["id"], string>>;
 }
 
 export function Screenshots({
   section,
   shots,
+  selectedPlatform,
+  platformLabels,
 }: ScreenshotsProps): React.JSX.Element {
   const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
+  const platformLabel = selectedPlatform ? platformLabels[selectedPlatform] : null;
 
   return (
     <motion.section
@@ -39,6 +44,12 @@ export function Screenshots({
             {section.heading}
           </h2>
         </div>
+
+        {platformLabel && (
+          <p className="mb-6 text-xs font-bold uppercase tracking-[0.2em] text-accent-strong">
+            {platformLabel}
+          </p>
+        )}
 
         <motion.div className="space-y-6" variants={staggerContainer}>
           {shots.map((shot, index) => (
