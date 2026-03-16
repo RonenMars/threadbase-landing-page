@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, type Variants } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { HeroContent, HeroShellStage } from "@/lib/content";
@@ -99,24 +99,18 @@ function TypewriterLines({
 }
 
 // Panel container — only slides (no opacity), so children are visible from mount.
-// Each inner layer controls its own opacity independently.
+// Each inner layer controls its own opacity independently. Exit is randomised per stage.
 const panelVariants: Variants = {
   initial: { y: 14 },
   animate: {
     y: 0,
-    transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
-  },
-  exit: {
-    opacity: 0,
-    y: -28,
-    scale: 0.97,
-    transition: { duration: 0.45, ease: [0.4, 0, 1, 1] },
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
 // Layer 1 — individual items inside stage body (first, staggered per index)
 function itemTransition(index: number) {
-  return { duration: 0.55, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] as const };
+  return { duration: 0.75, delay: index * 0.13, ease: [0.16, 1, 0.3, 1] as const };
 }
 
 function WorkflowSteps({
@@ -212,13 +206,27 @@ function WorkflowSteps({
 
 function RawStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
-    <div className="rounded-3xl border border-white/6 bg-black/28 p-4">
-      <div className="mb-4 flex items-center justify-between border-b border-white/6 pb-3 font-mono text-xs uppercase tracking-[0.2em] text-muted">
+    <div className="relative rounded-3xl">
+      {/* Step 2: container border/bg materialises after header */}
+      <motion.div
+        animate={{ opacity: 1 }}
+        className="absolute inset-0 rounded-3xl border border-white/6 bg-black/28"
+        initial={{ opacity: 0 }}
+        transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
+      />
+      {/* Step 1: terminal header slides up first */}
+      <motion.div
+        animate={{ opacity: 1, y: 0 }}
+        className="relative mb-4 flex items-center justify-between border-b border-white/6 px-4 pb-3 pt-4 font-mono text-xs uppercase tracking-[0.2em] text-muted"
+        initial={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
+      >
         <span>local session file</span>
         <span>jsonl</span>
-      </div>
-      <div className="space-y-3 font-mono leading-7 text-secondary">
-        <TypewriterLines lines={stage.rawLines ?? []} charDelayMs={12} lineGapMs={120} />
+      </motion.div>
+      {/* Lines type within the container */}
+      <div className="relative space-y-3 px-4 pb-4 font-mono leading-7 text-secondary">
+        <TypewriterLines lines={stage.rawLines ?? []} charDelayMs={14} lineGapMs={130} />
       </div>
     </div>
   );
@@ -234,14 +242,14 @@ function DecodedStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
             animate={{ opacity: 1, y: 0 }}
             className="absolute inset-0 rounded-3xl border border-white/8 bg-white/4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
             initial={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.5, delay: 0.35 + index * 0.1, ease: [0.16, 1, 0.3, 1] as const }}
+            transition={{ duration: 0.7, delay: 0.45 + index * 0.13, ease: [0.16, 1, 0.3, 1] as const }}
           />
           {/* Step 1: card content slides up first */}
           <motion.div
             animate={{ opacity: 1, y: 0 }}
             className="relative p-4"
             initial={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.55, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] as const }}
+            transition={{ duration: 0.75, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] as const }}
           >
             <p className="text-xs uppercase tracking-[0.24em] text-accent-strong">
               {card.meta}
@@ -265,13 +273,19 @@ function CommandPaletteStage({
   stage: HeroShellStage;
 }): React.JSX.Element {
   const query = stage.paletteQuery ?? "";
-  // Start typing 600 ms after mount so the palette overlay finishes animating in
-  const typedQuery = useTypewriter(query, 45, 600);
+  // Start typing 900 ms after mount so the palette overlay finishes animating in
+  const typedQuery = useTypewriter(query, 45, 900);
   const queryDone = typedQuery.length >= query.length;
 
   return (
     <div className="relative flex min-h-62.5 items-end rounded-3xl border border-white/6 bg-[linear-gradient(180deg,rgba(8,13,22,0.98),rgba(9,14,24,0.92))] p-5">
-      <div className="grid w-full gap-4 opacity-35 md:grid-cols-3">
+      {/* Step 1: background cards slide up at 35% opacity */}
+      <motion.div
+        animate={{ opacity: 0.35, y: 0 }}
+        className="grid w-full gap-4 md:grid-cols-3"
+        initial={{ opacity: 0, y: 14 }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
+      >
         <div className="rounded-5xl border border-white/6 bg-white/3 p-4">
           <p className="text-xs uppercase tracking-[0.2em] text-muted">
             Conversation
@@ -285,9 +299,15 @@ function CommandPaletteStage({
         </div>
         <div className="rounded-5xl border border-white/6 bg-white/3 p-4" />
         <div className="rounded-5xl border border-white/6 bg-white/3 p-4" />
-      </div>
+      </motion.div>
 
-      <div className="absolute inset-x-8 top-8 rounded-3xl border border-border-strong bg-[linear-gradient(180deg,rgba(16,28,44,0.98),rgba(11,19,31,0.96))] p-5 shadow-[0_20px_60px_rgba(1,6,14,0.55)]">
+      {/* Step 2: overlay panel materialises with delay */}
+      <motion.div
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        className="absolute inset-x-8 top-8 rounded-3xl border border-border-strong bg-[linear-gradient(180deg,rgba(16,28,44,0.98),rgba(11,19,31,0.96))] p-5 shadow-[0_20px_60px_rgba(1,6,14,0.55)]"
+        initial={{ opacity: 0, y: 14, scale: 0.97 }}
+        transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
+      >
         <motion.div
           animate={{ opacity: 1, y: 0 }}
           className="rounded-2xl border border-white/8 bg-black/25 px-4 py-3 font-mono text-primary"
@@ -305,9 +325,9 @@ function CommandPaletteStage({
               className="mt-4 space-y-3"
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.25 }}
             >
-              {/* Results appear after queryDone, so stagger starts fresh from index 0 — no +1 offset needed */}
+              {/* Results appear after queryDone, stagger starts fresh from index 0 */}
               {stage.paletteOptions?.map((option, index) => (
                 <motion.div
                   animate={{ opacity: 1, y: 0 }}
@@ -328,7 +348,7 @@ function CommandPaletteStage({
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </div>
   );
 }
@@ -336,57 +356,75 @@ function CommandPaletteStage({
 function DeepViewStage({ stage }: { stage: HeroShellStage }): React.JSX.Element {
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-      <motion.div
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl border border-white/6 bg-black/28 p-4"
-        initial={{ opacity: 0, y: 20 }}
-        transition={itemTransition(0)}
-      >
-        <div className="rounded-2xl border border-accent/35 bg-accent/10 px-4 py-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-accent-strong">
-            {stage.browserProject}
-          </p>
-          <p className="mt-3 font-semibold text-primary">
-            {stage.browserSession}
-          </p>
-          <p className="mt-2 text-muted">{stage.browserMeta}</p>
-        </div>
-        <div className="mt-4 rounded-2xl border border-white/6 bg-white/3 px-4 py-4">
-          <p className="font-medium text-primary">
-            Highlighted Result
-          </p>
-          <p className="mt-3 leading-7 text-secondary">
-            {stage.browserHighlight}
-          </p>
-        </div>
-      </motion.div>
-
-      <motion.div
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl border border-white/6 bg-white/3 p-4"
-        initial={{ opacity: 0, y: 20 }}
-        transition={itemTransition(1)}
-      >
-        <div className="flex items-center justify-between border-b border-white/6 pb-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-accent-strong">
-            Conversation Browser
-          </p>
-          <p className="text-muted">Ready to resume</p>
-        </div>
-        <div className="mt-4 space-y-4">
-          <div className="rounded-2xl border border-white/6 bg-black/20 px-4 py-3">
-            <p className="font-medium text-primary">
-              Search result selected
+      {/* Left card — content first, container second */}
+      <div className="relative rounded-3xl">
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute inset-0 rounded-3xl border border-white/6 bg-black/28"
+          initial={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.65, delay: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
+        />
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          className="relative p-4"
+          initial={{ opacity: 0, y: 22 }}
+          transition={{ duration: 0.75, delay: 0.0, ease: [0.16, 1, 0.3, 1] as const }}
+        >
+          <div className="rounded-2xl border border-accent/35 bg-accent/10 px-4 py-3">
+            <p className="text-xs uppercase tracking-[0.22em] text-accent-strong">
+              {stage.browserProject}
             </p>
-            <p className="mt-2 leading-7 text-secondary">
+            <p className="mt-3 font-semibold text-primary">
+              {stage.browserSession}
+            </p>
+            <p className="mt-2 text-muted">{stage.browserMeta}</p>
+          </div>
+          <div className="mt-4 rounded-2xl border border-white/6 bg-white/3 px-4 py-4">
+            <p className="font-medium text-primary">
+              Highlighted Result
+            </p>
+            <p className="mt-3 leading-7 text-secondary">
               {stage.browserHighlight}
             </p>
           </div>
-          <div className="rounded-2xl border border-white/6 bg-black/35 px-4 py-3 font-mono text-accent-strong">
-            {stage.browserTerminal}
+        </motion.div>
+      </div>
+
+      {/* Right card — content first, container second */}
+      <div className="relative rounded-3xl">
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute inset-0 rounded-3xl border border-white/6 bg-white/3"
+          initial={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.65, delay: 0.45, ease: [0.16, 1, 0.3, 1] as const }}
+        />
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          className="relative p-4"
+          initial={{ opacity: 0, y: 22 }}
+          transition={{ duration: 0.75, delay: 0.1, ease: [0.16, 1, 0.3, 1] as const }}
+        >
+          <div className="flex items-center justify-between border-b border-white/6 pb-3">
+            <p className="text-xs uppercase tracking-[0.22em] text-accent-strong">
+              Conversation Browser
+            </p>
+            <p className="text-muted">Ready to resume</p>
           </div>
-        </div>
-      </motion.div>
+          <div className="mt-4 space-y-4">
+            <div className="rounded-2xl border border-white/6 bg-black/20 px-4 py-3">
+              <p className="font-medium text-primary">
+                Search result selected
+              </p>
+              <p className="mt-2 leading-7 text-secondary">
+                {stage.browserHighlight}
+              </p>
+            </div>
+            <div className="rounded-2xl border border-white/6 bg-black/35 px-4 py-3 font-mono text-accent-strong">
+              {stage.browserTerminal}
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 }
@@ -410,38 +448,45 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const lastStageIndex = hero.shellStages.length - 1;
   const activeStage = hero.shellStages[activeStageIndex];
-  const timeoutIdsRef = useRef<number[]>([]);
+  const isFirstRender = useRef(true);
+
+  // Generate a fresh random exit animation each time the active stage changes
+  const exitAnimation = useMemo(() => {
+    const y = -(22 + Math.random() * 18);
+    const x = (Math.random() - 0.5) * 16;
+    const rotate = (Math.random() - 0.5) * 5;
+    const scale = 0.93 + Math.random() * 0.05;
+    const duration = 0.55 + Math.random() * 0.15;
+    return {
+      opacity: 0,
+      y,
+      x,
+      rotate,
+      scale,
+      transition: { duration, ease: [0.4, 0, 1, 1] as const },
+    };
+  }, [activeStageIndex]);
 
   useEffect(() => {
-    let elapsedMs = 0;
-    const timeoutIds: number[] = [];
+    const currentStage = hero.shellStages[activeStageIndex];
+    if (activeStageIndex >= lastStageIndex || currentStage.durationMs === undefined) {
+      return;
+    }
 
-    hero.shellStages.forEach((stage, index) => {
-      if (index >= lastStageIndex || stage.durationMs === undefined) {
-        return;
-      }
+    // On first render, wait for the hero entry animation to finish before starting
+    const initialDelay = isFirstRender.current ? 1500 : 0;
+    isFirstRender.current = false;
 
-      elapsedMs += stage.durationMs;
-
-      const timeoutId = window.setTimeout(() => {
-        setActiveStageIndex(index + 1);
-      }, elapsedMs);
-
-      timeoutIds.push(timeoutId);
-    });
-
-    timeoutIdsRef.current = timeoutIds;
+    const timeoutId = window.setTimeout(() => {
+      setActiveStageIndex((i) => i + 1);
+    }, currentStage.durationMs + initialDelay);
 
     return () => {
-      timeoutIds.forEach((timeoutId) => {
-        window.clearTimeout(timeoutId);
-      });
+      window.clearTimeout(timeoutId);
     };
-  }, [hero.shellStages, lastStageIndex]);
+  }, [activeStageIndex, hero.shellStages, lastStageIndex]);
 
   function handleStepClick(stepIndex: number): void {
-    timeoutIdsRef.current.forEach((id) => window.clearTimeout(id));
-    timeoutIdsRef.current = [];
     setActiveStageIndex(stepIndex);
   }
 
@@ -579,43 +624,13 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                   {/* Panel layout container — y-only animation so children are visible from mount */}
                   <motion.div
                     animate="animate"
-                    className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl p-6"
-                    exit="exit"
+                    className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))] p-6"
+                    exit={exitAnimation}
                     initial="initial"
                     key={activeStage.id}
                     variants={panelVariants}
                   >
-                    {/* Progress bar */}
-                    <motion.div
-                      animate={{ scaleX: 1, opacity: 0.55 }}
-                      className="absolute inset-x-0 top-0 h-px origin-left bg-[linear-gradient(90deg,transparent_10%,rgba(99,179,255,0.9)_50%,transparent_90%)]"
-                      initial={{ scaleX: 0, opacity: 1 }}
-                      transition={{
-                        duration: (activeStage.durationMs ?? 6000) / 1000,
-                        ease: "linear",
-                      }}
-                    />
-
-                    {/* Panel visual background — decoded: materialises last (step 5); others: immediate */}
-                    <motion.div
-                      animate={{ opacity: 1 }}
-                      className="absolute inset-0 border border-white/8 bg-[linear-gradient(180deg,rgba(14,24,40,0.96),rgba(6,11,19,0.94))]"
-                      initial={{ opacity: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: activeStage.id === "decoded" ? 1.1 : 0,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                    />
-                    <motion.div
-                      animate={{ opacity: 0.3 }}
-                      className="app-grid absolute inset-0"
-                      initial={{ opacity: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: activeStage.id === "decoded" ? 1.1 : 0,
-                      }}
-                    />
+                    <div className="app-grid absolute inset-0 opacity-30" />
 
                     {/* Header — decoded: after cards (step 3); others: early */}
                     <motion.div
@@ -623,8 +638,8 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                       className="relative mb-6 space-y-3 border-b border-white/6 pb-5 text-left"
                       initial={{ opacity: 0, y: 18 }}
                       transition={{
-                        duration: 0.6,
-                        delay: activeStage.id === "decoded" ? 0.65 : 0.2,
+                        duration: 0.7,
+                        delay: activeStage.id === "decoded" ? 0.85 : 0.15,
                         ease: [0.16, 1, 0.3, 1],
                       }}
                     >
@@ -643,6 +658,17 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                     <div className="relative my-auto">
                       <StageBody stage={activeStage} />
                     </div>
+
+                    {/* Progress bar — rendered last so it sits on top of all content */}
+                    <motion.div
+                      animate={{ scaleX: 1, opacity: 0.55 }}
+                      className="absolute inset-x-0 top-0 h-px origin-left bg-[linear-gradient(90deg,transparent_10%,rgba(99,179,255,0.9)_50%,transparent_90%)]"
+                      initial={{ scaleX: 0, opacity: 1 }}
+                      transition={{
+                        duration: (activeStage.durationMs ?? 6000) / 1000,
+                        ease: "linear",
+                      }}
+                    />
                   </motion.div>
                 </AnimatePresence>
               </div>

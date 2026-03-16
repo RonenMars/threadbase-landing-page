@@ -156,6 +156,7 @@ a {
     linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
   content: "";
   inset: 0;
+  pointer-events: none;
   position: absolute;
 }
 
