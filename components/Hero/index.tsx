@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
+import { GlitchTitle } from "./GlitchTitle";
 import { StageBody } from "./StageBody";
 import { WorkflowSteps } from "./WorkflowSteps";
 import { panelVariants, decodedPanelVariants } from "./heroVariants";
@@ -118,11 +119,12 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             },
           }}
         >
-          <h1 className="text-balance text-5xl font-semibold tracking-[-0.06em] text-primary sm:text-6xl lg:text-7xl">
-            {hero.headline}
-          </h1>
-          <p className="mx-auto max-w-3xl text-lg leading-8 text-secondary sm:text-xl">
-            {hero.subheadline}
+          <GlitchTitle
+            text={hero.headline}
+            className="glitch-title text-balance text-5xl font-semibold tracking-[-0.06em] text-primary sm:text-6xl lg:text-7xl"
+          />
+          <p className="mx-auto max-w-3xl mt-2.5 text-[1.2rem] text-white">
+            // {hero.subheadline}
           </p>
         </motion.div>
 

@@ -151,7 +151,7 @@ export const HERO: HeroContent = {
   ],
   ctas: [
     {
-      label: "Choose your platform ↓",
+      label: "Choose your platform",
       href: "#platform-picker",
       variant: "primary",
     },

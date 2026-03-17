@@ -174,3 +174,21 @@ a {
 .text-balance {
   text-wrap: balance;
 }
+
+.glitch-title {
+  position: relative;
+}
+
+.glitch-title::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 1px;
+  top: 0;
+  width: 100%;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  overflow: hidden;
+  clip: rect(var(--gt, 0px), 9999px, var(--gb, 0px), 0);
+  text-shadow: -1px 0 rgba(255, 60, 60, 0.35);
+  pointer-events: none;
+}
