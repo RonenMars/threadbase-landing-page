@@ -182,13 +182,13 @@ a {
 .glitch-title::before {
   content: attr(data-text);
   position: absolute;
-  left: 1px;
+  left: 2px;
   top: 0;
   width: 100%;
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background: rgba(36, 48, 58, 0.5);
   overflow: hidden;
   clip: rect(var(--gt, 0px), 9999px, var(--gb, 0px), 0);
-  text-shadow: -1px 0 rgba(255, 60, 60, 0.35);
+  text-shadow: -2px 0 rgba(255, 50, 50, 0.7), 2px 0 rgba(0, 180, 255, 0.4);
   pointer-events: none;
 }

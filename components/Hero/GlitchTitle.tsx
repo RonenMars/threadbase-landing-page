@@ -29,8 +29,8 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
       el.style.setProperty("--gb", `${Math.round(b)}px`);
     };
 
-    const SPEED_MIN = 0.06;
-    const SPEED_MAX = 0.22;
+    const SPEED_MIN = 0.21;
+    const SPEED_MAX = 0.37;
     const BAND_MIN  = 12;
     const BAND_MAX  = 40;
 
