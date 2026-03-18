@@ -31,8 +31,8 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
 
     const SPEED_MIN = 0.21;
     const SPEED_MAX = 0.37;
-    const BAND_MIN  = 12;
-    const BAND_MAX  = 40;
+    const BAND_MIN  = 4;
+    const BAND_MAX  = 8;
 
     let top    = 0;
     let bandH  = BAND_MAX;
