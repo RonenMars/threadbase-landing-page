@@ -29,10 +29,15 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
       el.style.setProperty("--gb", `${Math.round(b)}px`);
     };
 
-    const SPEED_MIN = 0.21;
-    const SPEED_MAX = 0.37;
-    const BAND_MIN  = 4;
-    const BAND_MAX  = 8;
+    const SPEED_MIN = 0.32;
+    const SPEED_MAX = 0.52;
+    const BAND_MIN  = 6;
+    const BAND_MAX  = 12;
+
+    const BURST_SPEED_MIN = 1.4;
+    const BURST_SPEED_MAX = 2.4;
+    const BURST_DURATION  = 1800; // ms
+    let burstUntil = 0;
 
     let top    = 0;
     let bandH  = BAND_MAX;
@@ -61,10 +66,18 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
       }
     };
 
+    const isBurst = () => performance.now() < burstUntil;
+
     const handleExit = (nextMustExitBottom: boolean) => {
-      speed = rand(SPEED_MIN, SPEED_MAX);
-      bandH = rand(BAND_MIN, BAND_MAX);
-      if (Math.random() < 0.35) hiddenFrames = Math.round(rand(30, 110));
+      if (isBurst()) {
+        speed = rand(BURST_SPEED_MIN, BURST_SPEED_MAX);
+        bandH = rand(BAND_MIN, BAND_MAX);
+        hiddenFrames = 0;
+      } else {
+        speed = rand(SPEED_MIN, SPEED_MAX);
+        bandH = rand(BAND_MIN, BAND_MAX);
+        if (Math.random() < 0.35) hiddenFrames = Math.round(rand(20, 75));
+      }
 
       mustExitBottom = nextMustExitBottom;
       if (nextMustExitBottom) {
@@ -120,6 +133,8 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
     };
 
     const timeoutId = window.setTimeout(() => {
+      burstUntil     = performance.now() + BURST_DURATION;
+      speed          = rand(BURST_SPEED_MIN, BURST_SPEED_MAX);
       top            = -bandH;
       dir            = 1;
       mustExitBottom = true;
