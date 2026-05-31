@@ -546,6 +546,7 @@ export const FOOTER: FooterContent = {
     { label: "GitHub",        href: "https://github.com/ronen/cc-history" },
     { label: "Report an Issue", href: "https://github.com/ronen/cc-history/issues" },
     { label: "Changelog",     href: "https://github.com/ronen/cc-history/releases" },
+    { label: "Privacy",       href: "/privacy" },
   ],
 };
 
