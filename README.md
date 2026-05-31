@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# threadbase-landing-page
 
-## Getting Started
+Marketing site for the [Threadbase](https://threadbase.sh/) project. Built with [Next.js](https://nextjs.org/).
 
-First, run the development server:
+## Develop
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+npm run build
+npm start
+```
 
-## Learn More
+## Related
 
-To learn more about Next.js, take a look at the following resources:
+- [`threadbase-mobile`](https://github.com/RonenMars/threadbase-mobile) — iOS + Android client
+- [`threadbase-electron`](https://github.com/RonenMars/threadbase-electron) — Desktop client
+- [`threadbase-vscode`](https://github.com/RonenMars/threadbase-vscode) — VS Code extension
+- [`threadbase-intellij`](https://github.com/RonenMars/threadbase-intellij) — JetBrains plugin
+- [`threadbase-ui`](https://github.com/RonenMars/threadbase-ui) — Shared React components
+- [`threadbase-core`](https://github.com/RonenMars/threadbase-core) — Shared TypeScript provider abstractions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[MIT](LICENSE)
