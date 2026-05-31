@@ -14,26 +14,33 @@ interface HeroProps {
   hero: HeroContent;
 }
 
+// Deterministic pseudo-random in [0, 1) seeded by an integer.
+// Used to give each stage transition a slightly different exit feel
+// without violating React 19's purity rule (no Math.random in render).
+function seededFraction(seed: number, salt: number): number {
+  const x = Math.sin(seed * 9301 + salt * 49297) * 233280;
+  return x - Math.floor(x);
+}
+
 export function Hero({ hero }: HeroProps): React.JSX.Element {
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const lastStageIndex = hero.shellStages.length - 1;
   const activeStage = hero.shellStages[activeStageIndex];
   const isFirstRender = useRef(true);
 
-  // Generate a fresh random exit animation each time the active stage changes
+  // Fresh exit animation per stage; deterministic so render is pure.
   const exitAnimation = useMemo(() => {
-    const y = -(22 + Math.random() * 18);
-    const x = (Math.random() - 0.5) * 16;
-    const rotate = (Math.random() - 0.5) * 5;
-    const scale = 0.93 + Math.random() * 0.05;
-    const duration = 0.55 + Math.random() * 0.15;
+    const seed = activeStageIndex + 1;
     return {
       opacity: 0,
-      y,
-      x,
-      rotate,
-      scale,
-      transition: { duration, ease: [0.4, 0, 1, 1] as const },
+      y: -(22 + seededFraction(seed, 1) * 18),
+      x: (seededFraction(seed, 2) - 0.5) * 16,
+      rotate: (seededFraction(seed, 3) - 0.5) * 5,
+      scale: 0.93 + seededFraction(seed, 4) * 0.05,
+      transition: {
+        duration: 0.55 + seededFraction(seed, 5) * 0.15,
+        ease: [0.4, 0, 1, 1] as const,
+      },
     };
   }, [activeStageIndex]);
 
@@ -124,7 +131,8 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             className="glitch-title text-balance text-5xl font-semibold tracking-[-0.06em] text-primary sm:text-6xl lg:text-7xl"
           />
           <p className="mx-auto max-w-3xl mt-2.5 text-[1.2rem] text-white">
-            // {hero.subheadline}
+            {"// "}
+            {hero.subheadline}
           </p>
         </motion.div>
 

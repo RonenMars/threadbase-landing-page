@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { fadeUp } from "@/components/motion";
 import { Badge } from "@/components/ui/badge";
 import type { QuickStartBlock, SelectedPlatform, SectionContent } from "@/lib/content";
@@ -17,15 +17,13 @@ interface QuickStartProps {
 export function QuickStart({ section, blocks, selectedPlatform }: QuickStartProps): React.JSX.Element {
   const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
-  const [activeId, setActiveId] = useState<string>(blocks[0]?.platformId ?? "desktop");
+  const [userSelectedId, setUserSelectedId] = useState<string>(blocks[0]?.platformId ?? "desktop");
 
-  useEffect(() => {
-    if (selectedPlatform !== null) {
-      const match = blocks.find((b) => b.platformId === selectedPlatform);
-      if (match) setActiveId(match.platformId);
-    }
-  }, [selectedPlatform, blocks]);
-
+  const externalMatch =
+    selectedPlatform !== null
+      ? blocks.find((b) => b.platformId === selectedPlatform)
+      : undefined;
+  const activeId = externalMatch ? externalMatch.platformId : userSelectedId;
   const activeBlock = blocks.find((b) => b.platformId === activeId) ?? blocks[0];
 
   return (
@@ -48,7 +46,7 @@ export function QuickStart({ section, blocks, selectedPlatform }: QuickStartProp
             {section.heading}
           </h2>
         </div>
-        <QuickStartTabBar blocks={blocks} activeId={activeId} onTabChange={setActiveId} />
+        <QuickStartTabBar blocks={blocks} activeId={activeId} onTabChange={setUserSelectedId} />
         {activeBlock && <QuickStartCodePanel block={activeBlock} />}
       </div>
     </motion.section>
