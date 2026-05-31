@@ -106,7 +106,7 @@ export const SITE_METADATA: SiteMetadata = {
 
 export const HERO: HeroContent = {
   eyebrow: "Claude Code, untethered",
-  headline: "Your terminal. In your pocket. Live.",
+  headline: "Your terminal. Live. In your pocket.",
   subheadline: "",
   badges: [
     { label: "iOS · TestFlight beta" },

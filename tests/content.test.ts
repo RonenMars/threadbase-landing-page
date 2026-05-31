@@ -14,7 +14,7 @@ import {
 
 describe("lib/content.ts", () => {
   it("exposes the new tagline in HERO.headline", () => {
-    expect(HERO.headline).toBe("Your terminal. In your pocket. Live.");
+    expect(HERO.headline).toBe("Your terminal. Live. In your pocket.");
   });
 
   it("HERO.subheadline exists as a string (empty allowed)", () => {

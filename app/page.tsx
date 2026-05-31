@@ -1,4 +1,5 @@
 import { FeaturesGrid } from "@/components/FeaturesGrid";
+import { FloatingDock } from "@/components/FloatingDock";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { HonestCons } from "@/components/HonestCons";
@@ -6,7 +7,6 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { ProblemSection } from "@/components/ProblemSection";
 import { PullQuote } from "@/components/PullQuote";
 import { QuickStart } from "@/components/QuickStart";
-import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import {
   FEATURES,
   FEATURES_SECTION,
@@ -19,8 +19,6 @@ import {
   PROBLEM_SECTION,
   PULL_QUOTE,
   QUICK_START,
-  ROADMAP_MILESTONES,
-  ROADMAP_SECTION,
 } from "@/lib/content";
 
 export default function Home(): React.JSX.Element {
@@ -40,6 +38,7 @@ export default function Home(): React.JSX.Element {
         <QuickStart content={QUICK_START} />
       </main>
       <Footer footer={FOOTER} />
+      <FloatingDock />
     </div>
   );
 }
