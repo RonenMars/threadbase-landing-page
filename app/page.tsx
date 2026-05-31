@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { HonestCons } from "@/components/HonestCons";
 import { ProblemSection } from "@/components/ProblemSection";
+import { PullQuote } from "@/components/PullQuote";
 import { QuickStart } from "@/components/QuickStart";
 import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import {
@@ -66,20 +67,7 @@ export default function Home(): React.JSX.Element {
 
         <FeaturesGrid features={FEATURES} section={FEATURES_SECTION} />
 
-        {/* Milestone 5 will replace this stub with the real PullQuote component */}
-        <section
-          aria-label="Testimonial"
-          className="bg-bg-primary py-20"
-        >
-          <div className="mx-auto max-w-2xl px-6 text-center">
-            <hr className="mx-auto w-80 border-border" />
-            <p className="mt-6 text-2xl italic text-secondary">
-              "{PULL_QUOTE.body}"
-            </p>
-            <p className="mt-4 text-sm text-muted">{PULL_QUOTE.attribution}</p>
-            <hr className="mx-auto mt-6 w-80 border-border" />
-          </div>
-        </section>
+        <PullQuote content={PULL_QUOTE} />
 
         <HonestCons items={HONEST_CONS} section={HONEST_CONS_SECTION} />
         <RoadmapTeaser
