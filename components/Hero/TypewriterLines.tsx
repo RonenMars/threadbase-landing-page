@@ -7,7 +7,6 @@ export function useTypewriter(text: string, charDelayMs = 20, startDelayMs = 0):
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    setCount(0);
     if (!text) return;
     let i = 0;
     let intervalId: number | undefined;
@@ -44,7 +43,6 @@ export function TypewriterLines({
     let charCount = 0;
     let intervalId: number | undefined;
     let timeoutId: number | undefined;
-    setState({ lineIndex: 0, charCount: 0 });
 
     function typeCurrentLine(): void {
       if (lineIndex >= lines.length) return;

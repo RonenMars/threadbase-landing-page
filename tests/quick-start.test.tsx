@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { QuickStart } from "@/components/QuickStart";
 import { QUICK_START, QUICK_START_SECTION } from "@/lib/content";
