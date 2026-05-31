@@ -5,18 +5,16 @@ import { useRef } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { FeatureItem, SelectedPlatform, SectionContent } from "@/lib/content";
+import type { FeatureItem, SectionContent } from "@/lib/content";
 
 interface FeaturesGridProps {
-  section: SectionContent;
   features: FeatureItem[];
-  selectedPlatform: SelectedPlatform;
+  section: SectionContent;
 }
 
 export function FeaturesGrid({
   section,
   features,
-  selectedPlatform,
 }: FeaturesGridProps): React.JSX.Element {
   const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
@@ -50,41 +48,27 @@ export function FeaturesGrid({
           className="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
           variants={staggerContainer}
         >
-          {features.map((feature) => {
-            const isHighlighted =
-              selectedPlatform !== null &&
-              (feature.platforms?.includes(selectedPlatform) ?? false);
-            const isDimmed =
-              selectedPlatform !== null &&
-              !(feature.platforms?.includes(selectedPlatform) ?? false);
-
-            return (
-              <div
-                key={feature.title}
-                className={`transition-opacity duration-200 ${isDimmed ? "opacity-40" : "opacity-100"}`}
-              >
-                <motion.div variants={staggerItem}>
-                  <Card className={`tech-card h-full transition-colors ${
-                    isHighlighted ? "border-accent/30 bg-accent/6" : ""
-                  }`}>
-                    <CardHeader className="gap-4">
-                      <div className="flex items-center gap-3">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border-strong bg-accent/12 text-xl text-accent-strong">
-                          {feature.icon}
-                        </span>
-                      </div>
-                      <CardTitle>{feature.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="leading-7 text-secondary">
-                        {feature.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </div>
-            );
-          })}
+          {features.map((feature) => (
+            <div key={feature.title}>
+              <motion.div variants={staggerItem}>
+                <Card className="tech-card h-full transition-colors">
+                  <CardHeader className="gap-4">
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border-strong bg-accent/12 text-xl text-accent-strong">
+                        {feature.icon}
+                      </span>
+                    </div>
+                    <CardTitle>{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="leading-7 text-secondary">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+          ))}
         </motion.div>
       </div>
     </motion.section>

@@ -1,15 +1,9 @@
-"use client";
-
-import { useRef, useState } from "react";
-import type { SelectedPlatform } from "@/lib/content";
 import { FeaturesGrid } from "@/components/FeaturesGrid";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { HonestCons } from "@/components/HonestCons";
-import { PlatformPicker } from "@/components/PlatformPicker";
 import { ProblemSection } from "@/components/ProblemSection";
 import { QuickStart } from "@/components/QuickStart";
-import { Screenshots } from "@/components/Screenshots";
 import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import {
   FEATURES,
@@ -18,63 +12,81 @@ import {
   HERO,
   HONEST_CONS,
   HONEST_CONS_SECTION,
-  PLATFORMS,
-  PLATFORM_SECTION,
+  HOW_IT_WORKS,
   PROBLEM_ITEMS,
   PROBLEM_SECTION,
+  PULL_QUOTE,
   QUICK_START,
-  QUICK_START_SECTION,
   ROADMAP_MILESTONES,
   ROADMAP_SECTION,
-  SCREENSHOTS,
-  SCREENSHOTS_PLATFORM_LABELS,
-  SCREENSHOTS_SECTION,
 } from "@/lib/content";
 
 export default function Home(): React.JSX.Element {
-  const [selectedPlatform, setSelectedPlatform] = useState<SelectedPlatform>(null);
-  const quickStartRef = useRef<HTMLDivElement>(null);
-
-  function handlePlatformSelect(id: SelectedPlatform): void {
-    setSelectedPlatform(id);
-    if (id !== null) {
-      setTimeout(() => {
-        quickStartRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 300);
-    }
-  }
-
   return (
     <div className="app-shell min-h-screen">
       <main>
         <Hero hero={HERO} />
         <ProblemSection items={PROBLEM_ITEMS} section={PROBLEM_SECTION} />
-        <PlatformPicker
-          platforms={PLATFORMS}
-          section={PLATFORM_SECTION}
-          selected={selectedPlatform}
-          onSelect={handlePlatformSelect}
-        />
-        <FeaturesGrid
-          features={FEATURES}
-          section={FEATURES_SECTION}
-          selectedPlatform={selectedPlatform}
-        />
-        <Screenshots
-          section={SCREENSHOTS_SECTION}
-          shots={SCREENSHOTS}
-          selectedPlatform={selectedPlatform}
-          platformLabels={SCREENSHOTS_PLATFORM_LABELS}
-        />
+
+        {/* Milestone 6 will replace this stub with the real HowItWorks component */}
+        <section
+          id="how-it-works"
+          aria-labelledby="how-it-works-heading"
+          className="bg-bg-primary py-24"
+        >
+          <div className="mx-auto max-w-3xl px-6 text-center">
+            <p className="mb-3 text-xs uppercase tracking-[0.18em] text-muted">
+              {HOW_IT_WORKS.eyebrow}
+            </p>
+            <h2
+              id="how-it-works-heading"
+              className="text-3xl font-semibold text-primary sm:text-4xl"
+            >
+              {HOW_IT_WORKS.heading}
+            </h2>
+            <ol className="mt-10 space-y-6 text-left text-secondary">
+              {HOW_IT_WORKS.steps.map((step, i) => (
+                <li key={step.title}>
+                  <p className="font-mono text-xs text-accent-primary">
+                    {i + 1}
+                  </p>
+                  <p className="mt-1 text-lg text-primary">{step.title}</p>
+                  <p className="mt-1">{step.description}</p>
+                  {step.postscript ? (
+                    <p className="mt-2 italic text-muted">{step.postscript}</p>
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+            <p className="mt-10 text-sm italic text-muted">
+              {HOW_IT_WORKS.trustNote}
+            </p>
+          </div>
+        </section>
+
+        <FeaturesGrid features={FEATURES} section={FEATURES_SECTION} />
+
+        {/* Milestone 5 will replace this stub with the real PullQuote component */}
+        <section
+          aria-label="Testimonial"
+          className="bg-bg-primary py-20"
+        >
+          <div className="mx-auto max-w-2xl px-6 text-center">
+            <hr className="mx-auto w-80 border-border" />
+            <p className="mt-6 text-2xl italic text-secondary">
+              "{PULL_QUOTE.body}"
+            </p>
+            <p className="mt-4 text-sm text-muted">{PULL_QUOTE.attribution}</p>
+            <hr className="mx-auto mt-6 w-80 border-border" />
+          </div>
+        </section>
+
         <HonestCons items={HONEST_CONS} section={HONEST_CONS_SECTION} />
-        <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />
-        <div ref={quickStartRef}>
-          <QuickStart
-            blocks={QUICK_START}
-            section={QUICK_START_SECTION}
-            selectedPlatform={selectedPlatform}
-          />
-        </div>
+        <RoadmapTeaser
+          milestones={ROADMAP_MILESTONES}
+          section={ROADMAP_SECTION}
+        />
+        <QuickStart content={QUICK_START} />
       </main>
       <Footer footer={FOOTER} />
     </div>
