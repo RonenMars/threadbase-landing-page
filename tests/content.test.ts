@@ -17,9 +17,8 @@ describe("lib/content.ts", () => {
     expect(HERO.headline).toBe("Your terminal. In your pocket. Live.");
   });
 
-  it("HERO.subheadline is a code-comment styled string", () => {
-    expect(HERO.subheadline.startsWith("//")).toBe(true);
-    expect(HERO.subheadline).toContain("Your Claude Code sessions");
+  it("HERO.subheadline exists as a string (empty allowed)", () => {
+    expect(typeof HERO.subheadline).toBe("string");
   });
 
   it("HERO has exactly 3 platform badges", () => {

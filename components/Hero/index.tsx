@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
-import { DeviceMesh } from "./DeviceMesh";
 import { GlitchTitle } from "./GlitchTitle";
 
 interface HeroProps {
@@ -24,7 +23,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
       animate="visible"
       role="banner"
       aria-labelledby="hero-headline"
-      className="relative overflow-hidden px-6 pb-24 pt-10 sm:px-8 lg:px-10 lg:pb-32 lg:pt-14"
+      className="relative h-screen flex items-center justify-center overflow-hidden px-6 pb-24 pt-10 sm:px-8 lg:px-10 lg:pb-32 lg:pt-14"
       initial="hidden"
       variants={{
         hidden: {},
@@ -77,9 +76,11 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             text={hero.headline}
             className="glitch-title text-balance text-5xl font-semibold tracking-[-0.06em] text-primary sm:text-6xl lg:text-7xl"
           />
-          <p className="mx-auto max-w-3xl mt-2.5 text-[1.2rem] text-white">
-            // {hero.subheadline}
-          </p>
+          {hero.subheadline ? (
+            <p className="mx-auto max-w-3xl mt-2.5 text-[1.2rem] text-white">
+              {hero.subheadline}
+            </p>
+          ) : null}
         </motion.div>
 
         <motion.ul
@@ -135,21 +136,6 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               </Button>
             ),
           )}
-        </motion.div>
-
-        <motion.div
-          id="hero-centerpiece"
-          className="mt-8 w-full"
-          variants={{
-            hidden: { opacity: 0, y: 28 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-            },
-          }}
-        >
-          <DeviceMesh />
         </motion.div>
       </div>
     </motion.section>

@@ -37,10 +37,6 @@ export default function Home(): React.JSX.Element {
         <PullQuote content={PULL_QUOTE} />
 
         <HonestCons items={HONEST_CONS} section={HONEST_CONS_SECTION} />
-        <RoadmapTeaser
-          milestones={ROADMAP_MILESTONES}
-          section={ROADMAP_SECTION}
-        />
         <QuickStart content={QUICK_START} />
       </main>
       <Footer footer={FOOTER} />

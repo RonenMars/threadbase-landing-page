@@ -17,13 +17,6 @@ describe("Hero", () => {
     expect(screen.getByText(/claude code, untethered/i)).toBeInTheDocument();
   });
 
-  it("renders the code-comment subheadline", () => {
-    render(<Hero hero={HERO} />);
-    expect(
-      screen.getByText(/\/\/ Your Claude Code sessions/i),
-    ).toBeInTheDocument();
-  });
-
   it("renders 3 platform badges", () => {
     render(<Hero hero={HERO} />);
     expect(screen.getByText(/iOS · TestFlight beta/)).toBeInTheDocument();
