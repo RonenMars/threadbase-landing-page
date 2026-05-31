@@ -1,58 +1,60 @@
-import { act, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 import { Hero } from "@/components/Hero";
 import { HERO } from "@/lib/content";
 
-function expectWorkflowStepActive(label: string): void {
-  const matchingLabels = screen.getAllByText(label);
-  const hasActiveMatch = matchingLabels.some(
-    (element) => element.closest('[aria-current="step"]') !== null,
-  );
-
-  expect(hasActiveMatch).toBe(true);
-}
-
-afterEach(() => {
-  vi.useRealTimers();
-});
-
 describe("Hero", () => {
-  it("moves through a slower continuous recovery workflow", () => {
-    vi.useFakeTimers();
-
+  it("renders the new headline text", () => {
     render(<Hero hero={HERO} />);
+    const root = screen.getByRole("banner") ?? document.body;
+    expect(root.textContent).toContain("Your terminal.");
+    expect(root.textContent).toContain("In your pocket.");
+    expect(root.textContent).toContain("Live.");
+  });
 
-    expect(screen.getByText("session_014.jsonl")).toBeInTheDocument();
-    expectWorkflowStepActive("Decode JSONL");
+  it("renders the eyebrow", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.getByText(/claude code, untethered/i)).toBeInTheDocument();
+  });
 
-    act(() => {
-      vi.advanceTimersByTime(2000);
-    });
+  it("renders the code-comment subheadline", () => {
+    render(<Hero hero={HERO} />);
+    expect(
+      screen.getByText(/\/\/ Your Claude Code sessions/i),
+    ).toBeInTheDocument();
+  });
 
-    expect(screen.getByText("session_014.jsonl")).toBeInTheDocument();
-    expectWorkflowStepActive("Decode JSONL");
+  it("renders 3 platform badges", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.getByText(/iOS · TestFlight beta/)).toBeInTheDocument();
+    expect(screen.getByText(/Android · coming days/)).toBeInTheDocument();
+    expect(screen.getByText(/macOS · Linux · Windows streamer/)).toBeInTheDocument();
+  });
 
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+  it("renders both CTAs", () => {
+    render(<Hero hero={HERO} />);
+    expect(
+      screen.getByRole("link", { name: /Join TestFlight/i }) ??
+        screen.getByRole("button", { name: /Join TestFlight/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/brew install threadbase-streamer/)).toBeInTheDocument();
+  });
 
-    expect(screen.getByText("Same history. Finally readable.")).toBeInTheDocument();
-    expectWorkflowStepActive("Inspect structure");
+  it("does NOT render the old workflow steps or shell stages", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.queryByText(/Decode JSONL/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Command Palette/i)).not.toBeInTheDocument();
+  });
 
-    act(() => {
-      vi.advanceTimersByTime(2400);
-    });
-
-    expect(screen.getByText("Command Palette")).toBeInTheDocument();
-    expectWorkflowStepActive("Search sessions");
-
-    act(() => {
-      vi.advanceTimersByTime(2400);
-    });
-
-    expectWorkflowStepActive("Resume thread");
-    expect(screen.getByText("Ready to resume")).toBeInTheDocument();
-    expect(screen.getByText("claude resume session_014")).toBeInTheDocument();
-    expect(screen.getByText("Recovered auth fix")).toBeInTheDocument();
+  it("renders the 'Live.' word with the accent-secondary color class", () => {
+    const { container } = render(<Hero hero={HERO} />);
+    // Find an element whose text is exactly "Live." that has the orange accent class.
+    const liveElements = Array.from(container.querySelectorAll("*")).filter(
+      (el) => el.textContent === "Live.",
+    );
+    expect(liveElements.length).toBeGreaterThanOrEqual(1);
+    expect(
+      liveElements.some((el) => /accent-secondary/.test(el.className.toString())),
+    ).toBe(true);
   });
 });
