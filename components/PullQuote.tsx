@@ -10,20 +10,18 @@ interface PullQuoteProps {
 
 export function PullQuote({ content }: PullQuoteProps): React.JSX.Element {
   return (
-    <section className="bg-bg-primary py-20" aria-label="Testimonial">
+    <section className="px-6 py-20 sm:px-8 lg:px-10" aria-label="Testimonial">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
         variants={fadeUp}
-        className="mx-auto max-w-2xl px-6 text-center"
+        className="container-shell max-w-2xl text-center"
       >
-        <hr className="mx-auto w-80 border-border" />
-        <blockquote className="mt-6 text-2xl italic leading-relaxed text-secondary sm:text-[1.75rem]">
+        <blockquote className="text-lg leading-8 text-secondary sm:text-xl">
           {content.body}
         </blockquote>
         <p className="mt-4 text-sm text-muted">{content.attribution}</p>
-        <hr className="mx-auto mt-6 w-80 border-border" />
       </motion.div>
     </section>
   );

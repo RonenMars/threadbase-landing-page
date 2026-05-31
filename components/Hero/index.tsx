@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
-import { staggerContainer, staggerItem } from "@/components/motion";
 import { DeviceMesh } from "./DeviceMesh";
 import { GlitchTitle } from "./GlitchTitle";
 
@@ -19,89 +20,138 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
   }
 
   return (
-    <section
+    <motion.section
+      animate="visible"
       role="banner"
       aria-labelledby="hero-headline"
-      className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-bg-primary px-6 py-24"
+      className="relative overflow-hidden px-6 pb-24 pt-10 sm:px-8 lg:px-10 lg:pb-32 lg:pt-14"
+      initial="hidden"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.2,
+          },
+        },
+      }}
     >
-      {/* Background orbs — kept here; will be scoped page-wide in Milestone 9 */}
+      <div className="hero-mesh absolute inset-0 opacity-90" aria-hidden="true" />
       <div
+        className="floating-orb motion-preset-float-sm absolute -left-32 top-24 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(89,191,255,0.3),rgba(89,191,255,0))] blur-3xl"
         aria-hidden="true"
-        className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-accent-primary opacity-35 blur-3xl"
       />
       <div
+        className="floating-orb motion-preset-float-sm absolute -right-24 top-16 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(240,138,36,0.22),rgba(240,138,36,0))] blur-3xl"
         aria-hidden="true"
-        className="pointer-events-none absolute -right-32 -top-16 h-96 w-96 rounded-full bg-accent-secondary opacity-35 blur-3xl"
       />
 
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-        className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center"
-      >
-        <motion.p
-          variants={staggerItem}
-          className="mb-6 inline-flex items-center rounded-full border border-border bg-bg-tertiary/40 px-3 py-1 text-xs uppercase tracking-[0.18em] text-secondary"
+      <div className="container-shell relative z-10 flex flex-col items-center gap-8 text-center">
+        <motion.div
+          className="flex flex-col items-center gap-4"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
         >
-          {hero.eyebrow}
-        </motion.p>
-
-        <motion.div variants={staggerItem} className="w-full">
-          <GlitchTitle text={hero.headline} />
+          <Badge className="section-kicker" variant="secondary">
+            {hero.eyebrow}
+          </Badge>
         </motion.div>
 
-        <motion.p
-          variants={staggerItem}
-          className="mt-6 font-mono text-sm text-accent-strong sm:text-base"
+        <motion.div
+          className="max-w-5xl space-y-6"
+          variants={{
+            hidden: { opacity: 0, y: 24 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
         >
-          {hero.subheadline}
-        </motion.p>
+          <GlitchTitle
+            text={hero.headline}
+            className="glitch-title text-balance text-5xl font-semibold tracking-[-0.06em] text-primary sm:text-6xl lg:text-7xl"
+          />
+          <p className="mx-auto max-w-3xl mt-2.5 text-[1.2rem] text-white">
+            // {hero.subheadline}
+          </p>
+        </motion.div>
 
         <motion.ul
-          variants={staggerItem}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
+          className="flex flex-wrap items-center justify-center gap-3"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
         >
           {hero.badges.map((badge) => (
-            <li
-              key={badge.label}
-              className="rounded-full border border-border bg-bg-tertiary/30 px-3 py-1 text-xs text-secondary"
-            >
-              {badge.label}
+            <li key={badge.label}>
+              <Badge variant="neutral">{badge.label}</Badge>
             </li>
           ))}
         </motion.ul>
 
         <motion.div
-          variants={staggerItem}
-          className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:gap-4"
+          className="flex flex-col items-center justify-center gap-3 sm:flex-row"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
         >
           {hero.ctas.map((cta) =>
             cta.variant === "primary" ? (
-              <Link
+              <Button
                 key={cta.label}
-                href={cta.href}
-                className="rounded-full bg-accent-primary px-6 py-3 text-sm font-semibold text-bg-primary transition-transform hover:scale-[1.02]"
+                render={<Link href={cta.href} />}
+                nativeButton={false}
+                className="min-w-50"
+                size="lg"
+                variant="primary"
               >
                 {cta.label}
-              </Link>
+              </Button>
             ) : (
-              <button
+              <Button
                 key={cta.label}
-                type="button"
                 onClick={() => handleCopyOutlineCta(cta.label)}
-                className="rounded-full border border-border bg-bg-tertiary/40 px-6 py-3 font-mono text-sm text-primary transition-colors hover:border-accent-primary"
+                className="min-w-50"
+                size="lg"
+                variant="outline"
               >
                 {cta.label}
-              </button>
+              </Button>
             ),
           )}
         </motion.div>
 
-        <div id="hero-centerpiece" className="mt-16 w-full">
+        <motion.div
+          id="hero-centerpiece"
+          className="mt-8 w-full"
+          variants={{
+            hidden: { opacity: 0, y: 28 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
+        >
           <DeviceMesh />
-        </div>
-      </motion.div>
-    </section>
+        </motion.div>
+      </div>
+    </motion.section>
   );
 }

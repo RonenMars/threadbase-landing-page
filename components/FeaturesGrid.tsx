@@ -64,20 +64,7 @@ export function FeaturesGrid({
             return (
               <div key={feature.title}>
                 <motion.div variants={staggerItem}>
-                  <Card className="tech-card relative h-full transition-colors">
-                    <div className="absolute right-4 top-4 flex items-center gap-1">
-                      {feature.surfaceTags.map((tagName) => {
-                        const TagIcon = resolveIcon(tagName);
-                        return TagIcon ? (
-                          <TagIcon
-                            key={tagName}
-                            className="text-secondary"
-                            size={14}
-                            weight="regular"
-                          />
-                        ) : null;
-                      })}
-                    </div>
+                  <Card className="tech-card h-full transition-colors">
                     <CardHeader className="gap-4">
                       <div className="flex items-center gap-3">
                         <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border-strong bg-accent/12 text-xl text-accent-strong">

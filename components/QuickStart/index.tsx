@@ -4,42 +4,63 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import type { QuickStartContent } from "@/lib/content";
 import { fadeUp } from "@/components/motion";
+import { Card } from "@/components/ui/card";
 
 interface QuickStartProps {
   content: QuickStartContent;
 }
 
 export function QuickStart({ content }: QuickStartProps): React.JSX.Element {
-  const codeBody = content.steps.join("\n");
-
   return (
     <section
       id="quick-start"
-      className="bg-bg-secondary py-24 sm:py-32"
+      className="px-6 py-24 sm:px-8 lg:px-10"
       aria-labelledby="quick-start-heading"
     >
-      <div className="mx-auto max-w-3xl px-6">
+      <div className="container-shell">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={fadeUp}
+          className="mx-auto max-w-3xl"
         >
           {content.eyebrow ? (
-            <p className="mb-3 text-xs uppercase tracking-[0.18em] text-muted">
+            <p className="mb-3 text-xs uppercase tracking-[0.26em] text-muted">
               {content.eyebrow}
             </p>
           ) : null}
           <h2
             id="quick-start-heading"
-            className="text-3xl font-semibold text-primary sm:text-4xl"
+            className="text-balance text-3xl font-semibold tracking-[-0.05em] text-primary sm:text-4xl lg:text-5xl"
           >
             {content.heading}
           </h2>
 
-          <pre className="mt-10 overflow-x-auto rounded-2xl border border-border bg-bg-tertiary p-6 font-mono text-sm leading-relaxed text-primary">
-            <code>{codeBody}</code>
-          </pre>
+          <Card className="tech-card mt-10 p-6">
+            <pre className="terminal-block overflow-x-auto rounded-3xl border border-white/6 p-5 leading-7 text-primary">
+              <code className="font-mono">
+                {content.steps.map((line, index) => {
+                  if (line.length === 0) {
+                    return (
+                      <span className="block h-4" key={`qs-${index}`} />
+                    );
+                  }
+                  const lineClassName = line.startsWith("#")
+                    ? "text-emerald-300/80"
+                    : "text-primary";
+                  return (
+                    <span
+                      className={`block whitespace-pre-wrap ${lineClassName}`}
+                      key={`qs-${index}`}
+                    >
+                      {line}
+                    </span>
+                  );
+                })}
+              </code>
+            </pre>
+          </Card>
 
           <ul className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-secondary">
             {content.links.map((link) => (

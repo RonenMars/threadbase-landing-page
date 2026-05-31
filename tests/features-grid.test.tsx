@@ -21,13 +21,12 @@ describe("FeaturesGrid", () => {
     expect(screen.getByText(/Voice prompts/i)).toBeInTheDocument();
   });
 
-  it("renders main icons + surface tags as SVGs (Phosphor)", () => {
+  it("renders main icons as SVGs (Phosphor)", () => {
     const { container } = render(
       <FeaturesGrid features={FEATURES} section={FEATURES_SECTION} />,
     );
-    // 6 main icons + at least 1 surface tag per card = at least 12 SVGs.
     const svgs = container.querySelectorAll("svg");
-    expect(svgs.length).toBeGreaterThanOrEqual(FEATURES.length * 2);
+    expect(svgs.length).toBeGreaterThanOrEqual(FEATURES.length);
   });
 
   it("does NOT render emoji strings in feature cards", () => {

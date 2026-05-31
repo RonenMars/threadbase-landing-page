@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface GlitchTitleProps {
   text: string;
@@ -11,32 +11,8 @@ function rand(min: number, max: number) {
   return min + Math.random() * (max - min);
 }
 
-/**
- * Split a headline like "Your terminal. In your pocket. Live." into
- * ["Your terminal.", "In your pocket.", "Live."]. Sentences are matched
- * greedily up to and including a trailing period; trailing whitespace is
- * trimmed.
- */
-function splitSentences(text: string): string[] {
-  const matches = text.match(/[^.]+\./g);
-  if (matches) {
-    return matches.map((s) => s.trim()).filter(Boolean);
-  }
-  return [text];
-}
-
 export function GlitchTitle({ text, className }: GlitchTitleProps) {
   const elRef = useRef<HTMLHeadingElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mq = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
 
   useEffect(() => {
     const el = elRef.current;
@@ -53,7 +29,6 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
       el.style.setProperty("--gb", `${Math.round(b)}px`);
     };
 
-    // TODO(post-M7): bump sweep speed for new short headline
     const SPEED_MIN = 0.32;
     const SPEED_MAX = 0.52;
     const BAND_MIN  = 6;
@@ -177,9 +152,6 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
     };
   }, []);
 
-  const sentences = splitSentences(text);
-  const lastIndex = sentences.length - 1;
-
   return (
     <h1
       ref={elRef}
@@ -188,16 +160,7 @@ export function GlitchTitle({ text, className }: GlitchTitleProps) {
       data-text={text}
       style={{ "--gt": "0px", "--gb": "0px" } as React.CSSProperties}
     >
-      {sentences.map((sentence, i) => {
-        const isLast = i === lastIndex;
-        const spanClass = isLast ? "text-accent-secondary" : undefined;
-        return (
-          <span key={`${sentence}-${i}`}>
-            <span className={spanClass}>{sentence}</span>
-            {i < lastIndex && (isMobile ? <br /> : <span> </span>)}
-          </span>
-        );
-      })}
+      {text}
     </h1>
   );
 }

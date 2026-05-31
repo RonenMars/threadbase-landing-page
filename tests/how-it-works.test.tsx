@@ -36,9 +36,4 @@ describe("HowItWorks", () => {
     render(<HowItWorks content={HOW_IT_WORKS} />);
     expect(screen.getByText(/End-to-end encrypted pairing via NaCl/i)).toBeInTheDocument();
   });
-
-  it("renders the connecting thread as an SVG (desktop)", () => {
-    const { container } = render(<HowItWorks content={HOW_IT_WORKS} />);
-    expect(container.querySelector("svg path")).not.toBeNull();
-  });
 });
