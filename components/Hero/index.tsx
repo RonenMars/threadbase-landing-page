@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import type { HeroContent } from "@/lib/content";
 import { staggerContainer, staggerItem } from "@/components/motion";
+import { DeviceMesh } from "./DeviceMesh";
 import { GlitchTitle } from "./GlitchTitle";
 
 interface HeroProps {
@@ -97,12 +98,9 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
           )}
         </motion.div>
 
-        {/* Milestone 8 will mount the DeviceMesh below the CTAs */}
-        <div
-          id="hero-centerpiece"
-          aria-hidden="true"
-          className="mt-16 h-px w-full"
-        />
+        <div id="hero-centerpiece" className="mt-16 w-full">
+          <DeviceMesh />
+        </div>
       </motion.div>
     </section>
   );
