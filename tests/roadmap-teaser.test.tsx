@@ -7,15 +7,14 @@ import { ROADMAP_MILESTONES, ROADMAP_SECTION } from "@/lib/content";
 describe("RoadmapTeaser", () => {
   it("renders all milestone titles", () => {
     render(<RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />);
-    expect(screen.getByText("Claude Code")).toBeInTheDocument();
-    expect(screen.getByText("Coming soon")).toBeInTheDocument();
-    expect(screen.getByText("Planned")).toBeInTheDocument();
-    expect(screen.getByText("Future")).toBeInTheDocument();
+    for (const milestone of ROADMAP_MILESTONES) {
+      expect(screen.getByText(milestone.title)).toBeInTheDocument();
+    }
   });
 
   it("renders the section heading", () => {
     render(<RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />);
-    expect(screen.getByRole("heading", { name: "Beyond Claude Code." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: ROADMAP_SECTION.heading })).toBeInTheDocument();
   });
 
   it("renders the waitlist form", () => {
