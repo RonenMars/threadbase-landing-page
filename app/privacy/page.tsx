@@ -68,10 +68,10 @@ function DataTable({
   rows: string[][];
 }): React.JSX.Element {
   return (
-    <div className="mt-6 overflow-x-auto rounded-4-5xl border border-white/6 bg-white/2">
-      <table className="w-full border-collapse text-left text-sm">
+    <div className="mt-6 rounded-4-5xl border border-white/6 bg-white/2">
+      <table className="block w-full border-collapse text-left text-sm md:table">
         <caption className="sr-only">{caption}</caption>
-        <thead>
+        <thead className="sr-only md:not-sr-only md:table-header-group">
           <tr className="border-b border-white/6">
             {headers.map((header) => (
               <th
@@ -84,21 +84,24 @@ function DataTable({
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="block md:table-row-group">
           {rows.map((row, rowIndex) => (
             <tr
-              className="border-b border-white/6 last:border-b-0"
+              className="block border-b border-white/6 last:border-b-0 md:table-row"
               key={row[0]}
             >
               {row.map((cell, cellIndex) => (
                 <td
                   className={
                     cellIndex === 0
-                      ? "px-5 py-4 align-top font-medium text-primary"
-                      : "px-5 py-4 align-top leading-7 text-secondary"
+                      ? "block px-5 pt-5 pb-1 align-top font-medium text-primary md:table-cell md:py-4"
+                      : "block px-5 pt-3 pb-1 align-top leading-7 text-secondary last:pb-5 md:table-cell md:py-4"
                   }
                   key={`${rowIndex}-${cellIndex}`}
                 >
+                  <span className="section-kicker mb-1 block text-[10px] font-semibold uppercase text-muted md:hidden">
+                    {headers[cellIndex]}
+                  </span>
                   {cell}
                 </td>
               ))}
