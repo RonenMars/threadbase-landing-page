@@ -16,12 +16,20 @@ export function Footer({ footer }: FooterProps): React.JSX.Element {
   return (
     <motion.footer
       animate={inView ? "visible" : "hidden"}
-      className="border-t border-white/6 bg-bg-secondary px-6 py-12 sm:px-8 lg:px-10"
+      className="relative isolate overflow-hidden border-t border-white/6 bg-bg-secondary px-6 py-12 sm:px-8 lg:px-10"
       initial="hidden"
       ref={ref}
       variants={fadeUp}
     >
-      <div className="container-shell space-y-8">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 -left-32 h-72 w-72 rounded-full bg-accent-primary opacity-25 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-16 -right-32 h-72 w-72 rounded-full bg-accent-secondary opacity-25 blur-3xl"
+      />
+      <div className="container-shell relative z-10 space-y-8">
         <div className="flex flex-col gap-3 text-left sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-3 text-secondary">
             <span className="text-base font-semibold tracking-tight text-primary">
