@@ -29,4 +29,22 @@ describe("RoadmapTeaser", () => {
     await user.click(screen.getByRole("button", { name: "Notify me" }));
     expect(screen.getByText(/you're on the list/i)).toBeInTheDocument();
   });
+
+  it("renders status icons as SVG (Phosphor)", () => {
+    const { container } = render(
+      <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />,
+    );
+    // Each milestone gets one status icon SVG on its node.
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs.length).toBeGreaterThanOrEqual(ROADMAP_MILESTONES.length);
+  });
+
+  it("does NOT render emoji status glyphs", () => {
+    const { container } = render(
+      <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />,
+    );
+    const text = container.textContent ?? "";
+    // eslint-disable-next-line no-control-regex
+    expect(text).not.toMatch(/[\u{1F300}-\u{1FAFF}]/u);
+  });
 });
