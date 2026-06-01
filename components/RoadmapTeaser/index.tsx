@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { fadeUp } from "@/components/motion";
 import { Badge } from "@/components/ui/badge";
-import type { RoadmapMilestone, SectionContent } from "@/lib/content";
+import type { RoadmapMilestone, RoadmapStatus, SectionContent } from "@/lib/content";
 import { RoadmapMilestoneCard } from "./RoadmapMilestoneCard";
 import { RoadmapMilestoneNode } from "./RoadmapMilestoneNode";
 import { WaitlistForm } from "./WaitlistForm";
@@ -13,6 +13,14 @@ interface RoadmapTeaserProps {
   milestones: RoadmapMilestone[];
   section: SectionContent;
 }
+
+const STATUS_LABEL: Record<RoadmapStatus, string> = {
+  shipped: "Shipped",
+  "this-week": "This week",
+  next: "Next",
+  later: "Later",
+  future: "Future",
+};
 
 export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): React.JSX.Element {
   const ref = useRef<HTMLElement | null>(null);
@@ -64,7 +72,7 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
               const isLeft = index % 2 === 0;
               const isOpen = openIndex === index;
               return (
-                <div key={milestone.timeLabel} className="relative grid grid-cols-[1fr_56px_1fr] items-center gap-4">
+                <div key={milestone.title} className="relative grid grid-cols-[1fr_56px_1fr] items-center gap-4">
                   {/* Left slot */}
                   <div className={isLeft ? "text-right" : ""}>
                     {isLeft ? (
@@ -75,7 +83,7 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
                       />
                     ) : (
                       <p className="text-right text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                        {milestone.timeLabel}
+                        {STATUS_LABEL[milestone.status]}
                       </p>
                     )}
                   </div>
@@ -99,7 +107,7 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
                       />
                     ) : (
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                        {milestone.timeLabel}
+                        {STATUS_LABEL[milestone.status]}
                       </p>
                     )}
                   </div>

@@ -1,58 +1,58 @@
-import { act, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { Hero } from "@/components/Hero";
 import { HERO } from "@/lib/content";
 
-function expectWorkflowStepActive(label: string): void {
-  const matchingLabels = screen.getAllByText(label);
-  const hasActiveMatch = matchingLabels.some(
-    (element) => element.closest('[aria-current="step"]') !== null,
-  );
-
-  expect(hasActiveMatch).toBe(true);
-}
-
-afterEach(() => {
-  vi.useRealTimers();
-});
-
 describe("Hero", () => {
-  it("moves through a slower continuous recovery workflow", () => {
-    vi.useFakeTimers();
+  it("renders the new headline text", () => {
+    render(<Hero hero={HERO} />);
+    const root = screen.getByRole("banner") ?? document.body;
+    expect(root.textContent).toContain("Your terminal.");
+    expect(root.textContent).toContain("In your pocket.");
+    expect(root.textContent).toContain("Live.");
+  });
+
+  it("renders the eyebrow", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.getByText(/claude code, untethered/i)).toBeInTheDocument();
+  });
+
+  it("renders 3 platform badges", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.getByText(/iOS · TestFlight beta/)).toBeInTheDocument();
+    expect(screen.getByText(/Android · coming days/)).toBeInTheDocument();
+    expect(screen.getByText(/macOS · Linux · Windows streamer/)).toBeInTheDocument();
+  });
+
+  it("renders both CTAs", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.getByText(/Join TestFlight/i)).toBeInTheDocument();
+    expect(screen.getByText(/brew install threadbase-streamer/)).toBeInTheDocument();
+  });
+
+  it("does NOT render the old workflow steps or shell stages", () => {
+    render(<Hero hero={HERO} />);
+    expect(screen.queryByText(/Decode JSONL/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Command Palette/i)).not.toBeInTheDocument();
+  });
+
+  it("copies the brew install command to the clipboard when the outline CTA is clicked", () => {
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText },
+      configurable: true,
+    });
 
     render(<Hero hero={HERO} />);
-
-    expect(screen.getByText("session_014.jsonl")).toBeInTheDocument();
-    expectWorkflowStepActive("Decode JSONL");
-
-    act(() => {
-      vi.advanceTimersByTime(2000);
+    const copyBtn = screen.getByRole("button", {
+      name: /^copy: brew install threadbase-streamer$/i,
     });
+    fireEvent.click(copyBtn);
 
-    expect(screen.getByText("session_014.jsonl")).toBeInTheDocument();
-    expectWorkflowStepActive("Decode JSONL");
-
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
-
-    expect(screen.getByText("Same history. Finally readable.")).toBeInTheDocument();
-    expectWorkflowStepActive("Inspect structure");
-
-    act(() => {
-      vi.advanceTimersByTime(2400);
-    });
-
-    expect(screen.getByText("Command Palette")).toBeInTheDocument();
-    expectWorkflowStepActive("Search sessions");
-
-    act(() => {
-      vi.advanceTimersByTime(2400);
-    });
-
-    expectWorkflowStepActive("Resume thread");
-    expect(screen.getByText("Ready to resume")).toBeInTheDocument();
-    expect(screen.getByText("claude resume session_014")).toBeInTheDocument();
-    expect(screen.getByText("Recovered auth fix")).toBeInTheDocument();
+    expect(writeText).toHaveBeenCalledWith("brew install threadbase-streamer");
+    // After click, the aria-label flips to indicate the copied state.
+    expect(
+      screen.getByRole("button", { name: /copied to clipboard/i }),
+    ).toBeInTheDocument();
   });
 });

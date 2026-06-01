@@ -9,6 +9,7 @@ export default defineConfig([
   ...tailwindCanonicalClasses.configs["flat/recommended"],
   globalIgnores([
     ".next/**",
+    ".claude/**",
     "node_modules/**",
     ".vercel/**",
     "dist/**",

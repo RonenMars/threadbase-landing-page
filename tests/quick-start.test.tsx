@@ -1,33 +1,32 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { QuickStart } from "@/components/QuickStart";
-import { QUICK_START, QUICK_START_SECTION } from "@/lib/content";
+import { QUICK_START } from "@/lib/content";
 
 describe("QuickStart", () => {
-  it("shows desktop tab content by default", () => {
-    render(
-      <QuickStart blocks={QUICK_START} section={QUICK_START_SECTION} selectedPlatform={null} />
-    );
-    expect(screen.getByText("pnpm run dev")).toBeInTheDocument();
+  it("renders the single code block with the new heading", () => {
+    render(<QuickStart content={QUICK_START} />);
+    expect(
+      screen.getByRole("heading", { name: /under a minute/i }),
+    ).toBeInTheDocument();
   });
 
-  it("switches tab when selectedPlatform changes", () => {
-    const { rerender } = render(
-      <QuickStart blocks={QUICK_START} section={QUICK_START_SECTION} selectedPlatform={null} />
-    );
-    rerender(
-      <QuickStart blocks={QUICK_START} section={QUICK_START_SECTION} selectedPlatform="cli" />
-    );
-    expect(screen.getByText("cch browse")).toBeInTheDocument();
+  it("renders the brew install line", () => {
+    render(<QuickStart content={QUICK_START} />);
+    expect(screen.getByText(/brew install threadbase-streamer/)).toBeInTheDocument();
   });
 
-  it("renders all 4 tab labels", () => {
-    render(
-      <QuickStart blocks={QUICK_START} section={QUICK_START_SECTION} selectedPlatform={null} />
-    );
-    expect(screen.getByRole("button", { name: "Desktop App" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "VS Code Extension" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "IntelliJ Plugin" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "CLI (cch)" })).toBeInTheDocument();
+  it("renders Linux, Windows, and Android inline links below the code block", () => {
+    render(<QuickStart content={QUICK_START} />);
+    expect(screen.getByRole("link", { name: /^linux$/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^windows$/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /android.*coming this week/i }),
+    ).toBeInTheDocument();
+  });
+
+  it("does NOT render the platform tab bar", () => {
+    render(<QuickStart content={QUICK_START} />);
+    expect(screen.queryByRole("tablist")).not.toBeInTheDocument();
   });
 });

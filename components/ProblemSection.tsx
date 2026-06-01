@@ -1,10 +1,17 @@
 "use client";
 
+import { Bell, Coffee, type Icon, MapPin } from "@phosphor-icons/react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProblemItem, SectionContent } from "@/lib/content";
+
+const ICON_MAP: Record<string, Icon> = {
+  Coffee,
+  Bell,
+  MapPin,
+};
 
 interface ProblemSectionProps {
   section: SectionContent;
@@ -42,7 +49,16 @@ export function ProblemSection({
               <Card className="tech-card h-full">
                 <CardHeader className="gap-5">
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border-strong bg-white/4 text-xl">
-                    {item.icon}
+                    {(() => {
+                      const IconComp = ICON_MAP[item.icon];
+                      return IconComp ? (
+                        <IconComp
+                          className="text-accent-strong"
+                          size={24}
+                          weight="regular"
+                        />
+                      ) : null;
+                    })()}
                   </span>
                   <CardTitle>{item.title}</CardTitle>
                 </CardHeader>

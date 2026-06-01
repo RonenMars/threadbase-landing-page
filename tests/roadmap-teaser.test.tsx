@@ -7,15 +7,14 @@ import { ROADMAP_MILESTONES, ROADMAP_SECTION } from "@/lib/content";
 describe("RoadmapTeaser", () => {
   it("renders all milestone titles", () => {
     render(<RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />);
-    expect(screen.getByText("Claude Code")).toBeInTheDocument();
-    expect(screen.getByText("Coming soon")).toBeInTheDocument();
-    expect(screen.getByText("Planned")).toBeInTheDocument();
-    expect(screen.getByText("Future")).toBeInTheDocument();
+    for (const milestone of ROADMAP_MILESTONES) {
+      expect(screen.getByText(milestone.title)).toBeInTheDocument();
+    }
   });
 
   it("renders the section heading", () => {
     render(<RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />);
-    expect(screen.getByRole("heading", { name: "Beyond Claude Code." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: ROADMAP_SECTION.heading })).toBeInTheDocument();
   });
 
   it("renders the waitlist form", () => {
@@ -29,5 +28,22 @@ describe("RoadmapTeaser", () => {
     render(<RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />);
     await user.click(screen.getByRole("button", { name: "Notify me" }));
     expect(screen.getByText(/you're on the list/i)).toBeInTheDocument();
+  });
+
+  it("renders status icons as SVG (Phosphor)", () => {
+    const { container } = render(
+      <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />,
+    );
+    // Each milestone gets one status icon SVG on its node.
+    const svgs = container.querySelectorAll("svg");
+    expect(svgs.length).toBeGreaterThanOrEqual(ROADMAP_MILESTONES.length);
+  });
+
+  it("does NOT render emoji status glyphs", () => {
+    const { container } = render(
+      <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />,
+    );
+    const text = container.textContent ?? "";
+    expect(text).not.toMatch(/[\u{1F300}-\u{1FAFF}]/u);
   });
 });
