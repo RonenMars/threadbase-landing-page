@@ -31,12 +31,10 @@ export function HonestCons({
   const listRef = useRef<HTMLUListElement | null>(null);
   const listInView = useInView(listRef, { once: false, amount: 0.3 });
   const [activeCon, setActiveCon] = useState<number>(-1);
+  const displayActive = reducedMotion || !listInView ? -1 : activeCon;
 
   useEffect(() => {
-    if (reducedMotion || !listInView) {
-      setActiveCon(-1);
-      return;
-    }
+    if (reducedMotion || !listInView) return;
     // Sequence per slot: hold the badge active for STEP_MS, then go dark for
     // DARK_MS, then advance to the next slot. Start fresh from slot 0 every
     // time the list scrolls into view.
@@ -86,7 +84,7 @@ export function HonestCons({
           variants={staggerContainer}
         >
           {items.map((item, i) => {
-            const isActive = i === activeCon;
+            const isActive = i === displayActive;
             return (
               <motion.li
                 className="flex gap-4 rounded-4-5xl border border-white/6 bg-white/2 px-5 py-4"

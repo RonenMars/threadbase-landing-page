@@ -29,12 +29,11 @@ export function QuickStart({
   const stepsRef = useRef<HTMLDivElement | null>(null);
   const stepsInView = useInView(stepsRef, { once: false, amount: 0.3 });
   const [activeStep, setActiveStep] = useState<number>(-1);
+  const displayActive =
+    reducedMotion || !howItWorks || !stepsInView ? -1 : activeStep;
 
   useEffect(() => {
-    if (reducedMotion || !howItWorks || !stepsInView) {
-      setActiveStep(-1);
-      return;
-    }
+    if (reducedMotion || !howItWorks || !stepsInView) return;
     // Sequence per slot: hold the badge active for STEP_MS, then go dark for
     // DARK_MS, then advance to the next slot. Start fresh from slot 0 every
     // time the steps section scrolls into view.
@@ -91,7 +90,7 @@ export function QuickStart({
               </h2>
               <ol className="mt-5 grid gap-3 sm:grid-cols-3">
                 {howItWorks.steps.map((step, i) => {
-                  const isActive = i === activeStep;
+                  const isActive = i === displayActive;
                   return (
                     <li
                       key={step.title}
