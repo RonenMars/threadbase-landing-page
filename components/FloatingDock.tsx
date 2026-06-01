@@ -7,23 +7,18 @@ import { GithubLogo } from "@phosphor-icons/react";
 
 const THREADBASE_REPO = "https://github.com/RonenMars/threadbase";
 
+const SCROLL_THRESHOLD_PX = 80;
+
 export function FloatingDock(): React.JSX.Element {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Show the dock once the hero section has scrolled out of view.
-    const hero = document.querySelector('[role="banner"]');
-    if (!hero) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setVisible(!entry.isIntersecting);
-      },
-      { threshold: 0 },
-    );
-
-    observer.observe(hero);
-    return () => observer.disconnect();
+    const update = () => {
+      setVisible(window.scrollY > SCROLL_THRESHOLD_PX);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
 
   return (
