@@ -6,8 +6,9 @@ import Link from "next/link";
 import type { HowItWorksContent, QuickStartContent } from "@/lib/content";
 import { fadeUp } from "@/components/motion";
 import {
+  GLOW_LOOP_DARK_MS,
   GLOW_LOOP_EASE,
-  GLOW_LOOP_FADE_S,
+  GLOW_LOOP_FADE_MS,
   GLOW_LOOP_STEP_MS,
 } from "@/lib/glow-loop";
 import { Card } from "@/components/ui/card";
@@ -34,14 +35,29 @@ export function QuickStart({
       setActiveStep(-1);
       return;
     }
-    // Start fresh from step 0 every time the steps section scrolls into view.
-    setActiveStep(STEP_PINGPONG[0]);
+    // Sequence per slot: hold the badge active for STEP_MS, then go dark for
+    // DARK_MS, then advance to the next slot. Start fresh from slot 0 every
+    // time the steps section scrolls into view.
     let i = 0;
-    const id = window.setInterval(() => {
-      i = (i + 1) % STEP_PINGPONG.length;
+    const timers: number[] = [];
+    const schedule = () => {
       setActiveStep(STEP_PINGPONG[i]);
-    }, GLOW_LOOP_STEP_MS);
-    return () => window.clearInterval(id);
+      timers.push(
+        window.setTimeout(() => {
+          setActiveStep(-1);
+          timers.push(
+            window.setTimeout(() => {
+              i = (i + 1) % STEP_PINGPONG.length;
+              schedule();
+            }, GLOW_LOOP_DARK_MS),
+          );
+        }, GLOW_LOOP_STEP_MS),
+      );
+    };
+    schedule();
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+    };
   }, [reducedMotion, howItWorks, stepsInView]);
   return (
     <section
@@ -95,7 +111,7 @@ export function QuickStart({
                             : "rgba(116,151,199,0.18)",
                         }}
                         transition={{
-                          duration: GLOW_LOOP_FADE_S,
+                          duration: GLOW_LOOP_FADE_MS / 1000,
                           ease: GLOW_LOOP_EASE,
                         }}
                       >

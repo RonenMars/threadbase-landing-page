@@ -7,10 +7,13 @@
  */
 
 /** Dwell time on each step before handing off the glow to the next. */
-export const GLOW_LOOP_STEP_MS = 4000;
+export const GLOW_LOOP_STEP_MS = 1800;
 
-/** Duration (seconds) of the active/inactive crossfade on each badge. */
-export const GLOW_LOOP_FADE_S = 1.0;
+/** Duration (ms) of the active/inactive crossfade on each badge. */
+export const GLOW_LOOP_FADE_MS = 3200;
+
+/** Pause with NO badge active, between one un-glow and the next glow. */
+export const GLOW_LOOP_DARK_MS = 1600;
 
 /** Easing curve for the glow crossfade. Matches the project's base ease. */
-export const GLOW_LOOP_EASE = [0.22, 1, 0.36, 1] as const;
+export const GLOW_LOOP_EASE = [0.22, 1, 1.5, 1] as const;

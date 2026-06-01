@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import type { HonestCon, SectionContent } from "@/lib/content";
 import {
+  GLOW_LOOP_DARK_MS,
   GLOW_LOOP_EASE,
-  GLOW_LOOP_FADE_S,
+  GLOW_LOOP_FADE_MS,
   GLOW_LOOP_STEP_MS,
 } from "@/lib/glow-loop";
 
@@ -36,14 +37,29 @@ export function HonestCons({
       setActiveCon(-1);
       return;
     }
-    // Start fresh from the first item every time the list scrolls into view.
-    setActiveCon(PINGPONG_4[0]);
+    // Sequence per slot: hold the badge active for STEP_MS, then go dark for
+    // DARK_MS, then advance to the next slot. Start fresh from slot 0 every
+    // time the list scrolls into view.
     let i = 0;
-    const id = window.setInterval(() => {
-      i = (i + 1) % PINGPONG_4.length;
+    const timers: number[] = [];
+    const schedule = () => {
       setActiveCon(PINGPONG_4[i]);
-    }, GLOW_LOOP_STEP_MS);
-    return () => window.clearInterval(id);
+      timers.push(
+        window.setTimeout(() => {
+          setActiveCon(-1);
+          timers.push(
+            window.setTimeout(() => {
+              i = (i + 1) % PINGPONG_4.length;
+              schedule();
+            }, GLOW_LOOP_DARK_MS),
+          );
+        }, GLOW_LOOP_STEP_MS),
+      );
+    };
+    schedule();
+    return () => {
+      timers.forEach((id) => window.clearTimeout(id));
+    };
   }, [reducedMotion, listInView]);
 
   return (
@@ -90,7 +106,7 @@ export function HonestCons({
                       : "rgba(116,151,199,0.18)",
                   }}
                   transition={{
-                    duration: GLOW_LOOP_FADE_S,
+                    duration: GLOW_LOOP_FADE_MS / 1000,
                     ease: GLOW_LOOP_EASE,
                   }}
                 >
