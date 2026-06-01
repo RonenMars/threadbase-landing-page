@@ -13,7 +13,7 @@ export function WaitlistForm(): React.JSX.Element {
         One email when multi-assistant support lands. No spam.
       </p>
       {submitted ? (
-        <p className="mt-6 font-medium text-accent-strong">You're on the list ✓</p>
+        <p className="mt-6 font-medium text-accent-strong">You&apos;re on the list ✓</p>
       ) : (
         <div className="mt-6 flex justify-center gap-3">
           <input
@@ -29,7 +29,7 @@ export function WaitlistForm(): React.JSX.Element {
           </button>
         </div>
       )}
-      <p className="mt-3 text-xs text-muted">No spam. One email when it's ready.</p>
+      <p className="mt-3 text-xs text-muted">No spam. One email when it&apos;s ready.</p>
     </div>
   );
 }

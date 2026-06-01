@@ -74,11 +74,14 @@ describe("lib/content.ts", () => {
     expect(HONEST_CONS[0].title).toContain("iOS-first");
   });
 
-  it("FOOTER links include solutions, mobile repo, streamer repo", () => {
+  it("FOOTER links cover the v1 surfaces: GitHub, TestFlight, Play, issues, changelog, privacy", () => {
     const hrefs = FOOTER.links.map((l) => l.href);
-    expect(hrefs).toContain("/solutions");
-    expect(hrefs.some((h) => h.includes("threadbase-mobile"))).toBe(true);
-    expect(hrefs.some((h) => h.includes("threadbase-streamer"))).toBe(true);
+    expect(hrefs).toContain("https://github.com/RonenMars/threadbase");
+    expect(hrefs.some((h) => h.includes("testflight.apple.com"))).toBe(true);
+    expect(hrefs.some((h) => h.includes("play.google.com"))).toBe(true);
+    expect(hrefs.some((h) => h.includes("/issues"))).toBe(true);
+    expect(hrefs.some((h) => h.includes("/releases"))).toBe(true);
+    expect(hrefs).toContain("/privacy");
   });
 
   it("SITE_METADATA does not mention 'session browser' or 'history browser'", () => {
