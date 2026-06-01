@@ -10,7 +10,7 @@ describe("Home page", () => {
     expect(document.body.textContent).toContain("Live.");
   });
 
-  it("renders the new section narrative in order: problem → features → pull-quote → honest cons → how it works → quick start", () => {
+  it("renders the new section narrative in order: problem → features → honest cons → how it works → quick start", () => {
     render(<Home />);
     const headings = screen
       .getAllByRole("heading", { level: 2 })
@@ -29,9 +29,12 @@ describe("Home page", () => {
     expect(quickIdx).toBeGreaterThan(howIdx);
   });
 
-  it("renders the pull-quote (testimonial) between features and honest cons", () => {
+  it("does not render any testimonial pull-quote (removed until we have real ones)", () => {
     render(<Home />);
-    expect(screen.getByText(/redirected a 20-minute test run/i)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/redirected a 20-minute test run/i),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/Ronen Mars, builder/i)).not.toBeInTheDocument();
   });
 
   it("renders the brew install command in the quick start", () => {

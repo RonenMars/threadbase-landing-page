@@ -6,7 +6,6 @@ import {
   HONEST_CONS,
   HOW_IT_WORKS,
   PROBLEM_ITEMS,
-  PULL_QUOTE,
   QUICK_START,
   ROADMAP_MILESTONES,
   SITE_METADATA,
@@ -55,11 +54,6 @@ describe("lib/content.ts", () => {
       expect(f).not.toHaveProperty("platforms");
       expect(f).not.toHaveProperty("status");
     });
-  });
-
-  it("PULL_QUOTE has body + attribution", () => {
-    expect(PULL_QUOTE.body).toContain("redirected a 20-minute test run");
-    expect(PULL_QUOTE.attribution).toContain("Ronen Mars");
   });
 
   it("QUICK_START is a single block, not an array of platform tabs", () => {

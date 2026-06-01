@@ -51,11 +51,6 @@ export interface FeatureItem {
   surfaceTags: string[];
 }
 
-export interface PullQuoteContent {
-  body: string;
-  attribution: string;
-}
-
 export interface HonestCon {
   title: string;
   description: string;
@@ -225,11 +220,6 @@ export const FEATURES: FeatureItem[] = [
     surfaceTags: ["DeviceMobile"],
   },
 ];
-
-export const PULL_QUOTE: PullQuoteContent = {
-  body: "I redirected a 20-minute test run from my kid's soccer practice. The chair-to-Claude commute is over.",
-  attribution: "— Ronen Mars, builder",
-};
 
 export const HONEST_CONS_SECTION: SectionContent = {
   heading: "Things you should know before you install.",
