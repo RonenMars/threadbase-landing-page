@@ -1,10 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import type { HowItWorksContent, QuickStartContent } from "@/lib/content";
 import { fadeUp } from "@/components/motion";
+import {
+  GLOW_LOOP_EASE,
+  GLOW_LOOP_FADE_S,
+  GLOW_LOOP_STEP_MS,
+} from "@/lib/glow-loop";
 import { Card } from "@/components/ui/card";
 
 interface QuickStartProps {
@@ -14,25 +19,30 @@ interface QuickStartProps {
 
 // Pingpong sequence over the 3 step badges: 0 → 1 → 2 → 1 → 0 → 1 → ...
 const STEP_PINGPONG = [0, 1, 2, 1];
-const STEP_INTERVAL_MS = 1800;
 
 export function QuickStart({
   content,
   howItWorks,
 }: QuickStartProps): React.JSX.Element {
   const reducedMotion = useReducedMotion();
+  const stepsRef = useRef<HTMLDivElement | null>(null);
+  const stepsInView = useInView(stepsRef, { once: false, amount: 0.3 });
   const [activeStep, setActiveStep] = useState<number>(-1);
 
   useEffect(() => {
-    if (reducedMotion || !howItWorks) return;
+    if (reducedMotion || !howItWorks || !stepsInView) {
+      setActiveStep(-1);
+      return;
+    }
+    // Start fresh from step 0 every time the steps section scrolls into view.
     setActiveStep(STEP_PINGPONG[0]);
     let i = 0;
     const id = window.setInterval(() => {
       i = (i + 1) % STEP_PINGPONG.length;
       setActiveStep(STEP_PINGPONG[i]);
-    }, STEP_INTERVAL_MS);
+    }, GLOW_LOOP_STEP_MS);
     return () => window.clearInterval(id);
-  }, [reducedMotion, howItWorks]);
+  }, [reducedMotion, howItWorks, stepsInView]);
   return (
     <section
       id="quick-start"
@@ -49,6 +59,7 @@ export function QuickStart({
         >
           {howItWorks ? (
             <div
+              ref={stepsRef}
               id="how-it-works"
               aria-labelledby="how-it-works-heading"
               className="mb-12"
@@ -84,8 +95,8 @@ export function QuickStart({
                             : "rgba(116,151,199,0.18)",
                         }}
                         transition={{
-                          duration: 0.7,
-                          ease: [0.22, 1, 0.36, 1],
+                          duration: GLOW_LOOP_FADE_S,
+                          ease: GLOW_LOOP_EASE,
                         }}
                       >
                         {i + 1}
