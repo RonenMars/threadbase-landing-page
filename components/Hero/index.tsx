@@ -153,7 +153,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                 aria-label={
                   copied ? "Copied to clipboard" : `Copy: ${cta.label}`
                 }
-                className={`min-w-50 motion-safe:active:scale-[0.97] ${
+                className={`min-w-50 cursor-pointer motion-safe:active:scale-[0.97] ${
                   copied
                     ? "border-accent-secondary shadow-[0_0_0_3px_rgba(240,138,36,0.18)]"
                     : ""
