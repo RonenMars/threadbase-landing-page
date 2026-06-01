@@ -347,18 +347,22 @@ export const FOOTER: FooterContent = {
   tagline: "Built for developers who don't want to be chained to their desks.",
   disclaimer:
     "Not affiliated with Anthropic. Claude Code is a product of Anthropic.",
-  githubUrl: "https://github.com/RonenMars/threadbase-mobile",
+  githubUrl: "https://github.com/RonenMars/threadbase",
   links: [
-    { label: "GitHub: Mobile", href: "https://github.com/RonenMars/threadbase-mobile" },
+    { label: "GitHub", href: "https://github.com/RonenMars/threadbase" },
+    { label: "TestFlight", href: "https://testflight.apple.com/join/FqdM3mFK" },
     {
-      label: "GitHub: Streamer",
-      href: "https://github.com/RonenMars/threadbase-streamer",
+      label: "Google Play",
+      href: "https://play.google.com/store/apps/details?id=REPLACE_ME",
     },
-    { label: "Other surfaces", href: "/solutions" },
-    { label: "TestFlight", href: "https://testflight.apple.com/join/REPLACE_ME" },
     {
-      label: "Issues",
-      href: "https://github.com/RonenMars/threadbase-mobile/issues",
+      label: "Report a Bug",
+      href: "https://github.com/RonenMars/threadbase/issues",
     },
+    {
+      label: "Changelog",
+      href: "https://github.com/RonenMars/threadbase-mobile/releases",
+    },
+    { label: "Privacy", href: "/privacy" },
   ],
 };
