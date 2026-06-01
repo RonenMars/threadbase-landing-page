@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { FloatingDock } from "@/components/FloatingDock";
 
 /**
@@ -50,44 +50,23 @@ describe("FloatingDock", () => {
     banner.remove();
   });
 
-  it("renders links to both Threadbase GitHub repos", () => {
+  it("renders a single link to the Threadbase GitHub repo", () => {
     render(<FloatingDock />);
-    const mobileLink = screen.getByRole("link", {
-      name: /threadbase mobile on github/i,
+    const link = screen.getByRole("link", {
+      name: /threadbase on github/i,
     });
-    const streamerLink = screen.getByRole("link", {
-      name: /threadbase streamer on github/i,
-    });
-    expect(mobileLink).toHaveAttribute(
+    expect(link).toHaveAttribute(
       "href",
-      "https://github.com/RonenMars/threadbase-mobile",
+      "https://github.com/RonenMars/threadbase",
     );
-    expect(streamerLink).toHaveAttribute(
-      "href",
-      "https://github.com/RonenMars/threadbase-streamer",
-    );
+    expect(link).toHaveAttribute("target", "_blank");
   });
 
-  it("renders the brew install command", () => {
+  it("does not render any other repo links or commands", () => {
     render(<FloatingDock />);
-    expect(
-      screen.getByText("brew install threadbase-streamer"),
-    ).toBeInTheDocument();
-  });
-
-  it("writes the brew command to the clipboard when copy is clicked", () => {
-    const writeText = vi.fn().mockResolvedValue(undefined);
-    Object.defineProperty(navigator, "clipboard", {
-      value: { writeText },
-      configurable: true,
-    });
-
-    render(<FloatingDock />);
-    const button = screen.getByRole("button", {
-      name: /copy brew install command/i,
-    });
-    fireEvent.click(button);
-
-    expect(writeText).toHaveBeenCalledWith("brew install threadbase-streamer");
+    // Only one link in the dock now.
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+    // No brew install text in the dock anymore (it lives in the hero CTA).
+    expect(screen.queryByText(/brew install/i)).not.toBeInTheDocument();
   });
 });
