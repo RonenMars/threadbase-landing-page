@@ -66,7 +66,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
         aria-hidden="true"
       />
 
-      <div className="container-shell relative z-10 flex flex-col items-center gap-8 text-center">
+      <div className="container-shell relative z-10 flex flex-col items-center gap-12 text-center">
         <motion.div
           className="flex flex-col items-center gap-4"
           variants={{
