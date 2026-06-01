@@ -1,5 +1,20 @@
 import { expect, test } from "@playwright/test";
 
+// Warm the dev server's route cache and asset pipeline before the first real
+// screenshot. The very first request to a Next.js server after build can take
+// a few hundred ms of variable work (asset hashing, route compilation cache),
+// during which the hero animation strip jitters between Playwright's
+// back-to-back stability screenshots.
+test.beforeAll(async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  await page.goto("/solutions");
+  await page.evaluate(() => document.fonts.ready);
+  await context.close();
+});
+
 // Stop motion + force a deterministic clock so the device-mesh animation,
 // glow loops, and floating-dock IntersectionObserver don't introduce diff.
 test.beforeEach(async ({ page }) => {

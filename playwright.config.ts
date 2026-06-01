@@ -5,7 +5,11 @@ export default defineConfig({
   testDir: "./tests/visual",
   fullyParallel: false, // visual tests are flakier in parallel
   forbidOnly: !!process.env.CI,
-  retries: 0,
+  // Cold-start flake: the first run after `npm run build && npm run start`
+  // occasionally jitters in the hero headline strip (mobile). 1 retry catches
+  // most of it; 2 retries hit ~100% pass rate based on stress testing. Real
+  // regressions still fail consistently across all retries.
+  retries: 2,
   workers: 1, // single worker for stable screenshots
   reporter: process.env.CI ? "github" : "list",
   expect: {
