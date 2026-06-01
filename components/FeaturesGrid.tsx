@@ -33,7 +33,7 @@ export function FeaturesGrid({
   return (
     <motion.section
       animate={inView ? "visible" : "hidden"}
-      className="px-6 py-24 sm:px-8 lg:px-10"
+      className="px-6 py-16 sm:px-8 lg:px-10"
       initial="hidden"
       ref={ref}
       variants={fadeUp}
