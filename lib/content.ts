@@ -111,7 +111,7 @@ export const HERO: HeroContent = {
   ctas: [
     {
       label: "Join TestFlight",
-      href: "https://testflight.apple.com/join/REPLACE_ME",
+      href: "https://testflight.apple.com/join/FqdM3mFK",
       variant: "primary",
     },
     {
