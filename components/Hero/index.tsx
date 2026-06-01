@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
+import { Check, Copy } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
@@ -11,11 +13,31 @@ interface HeroProps {
   hero: HeroContent;
 }
 
+const COPIED_RESET_MS = 1500;
+
 export function Hero({ hero }: HeroProps): React.JSX.Element {
+  const [copied, setCopied] = useState(false);
+  const copyResetRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyResetRef.current !== null) {
+        window.clearTimeout(copyResetRef.current);
+      }
+    };
+  }, []);
+
   function handleCopyOutlineCta(label: string): void {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      void navigator.clipboard.writeText(label);
+    if (typeof navigator === "undefined" || !navigator.clipboard) return;
+    void navigator.clipboard.writeText(label);
+    setCopied(true);
+    if (copyResetRef.current !== null) {
+      window.clearTimeout(copyResetRef.current);
     }
+    copyResetRef.current = window.setTimeout(() => {
+      setCopied(false);
+      copyResetRef.current = null;
+    }, COPIED_RESET_MS);
   }
 
   return (
@@ -128,11 +150,47 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
               <Button
                 key={cta.label}
                 onClick={() => handleCopyOutlineCta(cta.label)}
-                className="min-w-50"
+                aria-label={
+                  copied ? "Copied to clipboard" : `Copy: ${cta.label}`
+                }
+                className={`min-w-50 motion-safe:active:scale-[0.97] ${
+                  copied
+                    ? "border-accent-secondary shadow-[0_0_0_3px_rgba(240,138,36,0.18)]"
+                    : ""
+                }`}
                 size="lg"
                 variant="outline"
               >
-                {cta.label}
+                <AnimatePresence mode="wait" initial={false}>
+                  {copied ? (
+                    <motion.span
+                      key="check"
+                      initial={{ opacity: 0, scale: 0.6, rotate: -20 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      exit={{ opacity: 0, scale: 0.6, rotate: 20 }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                      className="flex items-center"
+                    >
+                      <Check
+                        size={16}
+                        weight="bold"
+                        className="text-accent-secondary"
+                      />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="copy"
+                      initial={{ opacity: 0, scale: 0.6 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.6 }}
+                      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                      className="flex items-center"
+                    >
+                      <Copy size={16} weight="regular" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                <span>{cta.label}</span>
               </Button>
             ),
           )}
