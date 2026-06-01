@@ -44,7 +44,6 @@ describe("RoadmapTeaser", () => {
       <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />,
     );
     const text = container.textContent ?? "";
-    // eslint-disable-next-line no-control-regex
     expect(text).not.toMatch(/[\u{1F300}-\u{1FAFF}]/u);
   });
 });

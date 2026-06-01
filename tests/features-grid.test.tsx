@@ -34,7 +34,6 @@ describe("FeaturesGrid", () => {
       <FeaturesGrid features={FEATURES} section={FEATURES_SECTION} />,
     );
     const text = container.textContent ?? "";
-    // eslint-disable-next-line no-control-regex
     expect(text).not.toMatch(/[\u{1F300}-\u{1FAFF}]/u);
   });
 });

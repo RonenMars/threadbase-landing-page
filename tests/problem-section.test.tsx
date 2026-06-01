@@ -24,7 +24,6 @@ describe("ProblemSection", () => {
     );
     const text = container.textContent ?? "";
     // No emoji unicode characters at all
-    // eslint-disable-next-line no-control-regex
     expect(text).not.toMatch(/[\u{1F300}-\u{1FAFF}]/u);
   });
 });
