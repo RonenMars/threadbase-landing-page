@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import type { HowItWorksContent, QuickStartContent } from "@/lib/content";
 import { fadeUp } from "@/components/motion";
@@ -11,14 +12,31 @@ interface QuickStartProps {
   howItWorks?: HowItWorksContent;
 }
 
+// Pingpong sequence over the 3 step badges: 0 → 1 → 2 → 1 → 0 → 1 → ...
+const STEP_PINGPONG = [0, 1, 2, 1];
+const STEP_INTERVAL_MS = 1800;
+
 export function QuickStart({
   content,
   howItWorks,
 }: QuickStartProps): React.JSX.Element {
+  const reducedMotion = useReducedMotion();
+  const [activeStep, setActiveStep] = useState<number>(-1);
+
+  useEffect(() => {
+    if (reducedMotion || !howItWorks) return;
+    setActiveStep(STEP_PINGPONG[0]);
+    let i = 0;
+    const id = window.setInterval(() => {
+      i = (i + 1) % STEP_PINGPONG.length;
+      setActiveStep(STEP_PINGPONG[i]);
+    }, STEP_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [reducedMotion, howItWorks]);
   return (
     <section
       id="quick-start"
-      className="px-6 py-24 sm:px-8 lg:px-10"
+      className="px-6 py-16 sm:px-8 lg:px-10"
       aria-labelledby="quick-start-heading"
     >
       <div className="container-shell">
@@ -45,22 +63,39 @@ export function QuickStart({
                 {howItWorks.heading}
               </h2>
               <ol className="mt-5 grid gap-3 sm:grid-cols-3">
-                {howItWorks.steps.map((step, i) => (
-                  <li
-                    key={step.title}
-                    className="flex items-start gap-3 rounded-2xl border border-white/6 bg-bg-secondary/40 p-3"
-                  >
-                    <span
-                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border bg-bg-secondary text-[12px] text-accent-strong"
-                      aria-hidden="true"
+                {howItWorks.steps.map((step, i) => {
+                  const isActive = i === activeStep;
+                  return (
+                    <li
+                      key={step.title}
+                      className="flex items-start gap-3 rounded-2xl border border-white/6 bg-bg-secondary/40 p-3"
                     >
-                      {i + 1}
-                    </span>
-                    <span className="text-sm leading-snug text-secondary">
-                      {step.title}
-                    </span>
-                  </li>
-                ))}
+                      <motion.span
+                        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border bg-bg-secondary text-[12px]"
+                        aria-hidden="true"
+                        animate={{
+                          scale: isActive ? 1.15 : 1,
+                          boxShadow: isActive
+                            ? "0 0 18px 4px rgba(240,138,36,0.45)"
+                            : "0 0 0px 0px rgba(240,138,36,0)",
+                          color: isActive ? "#f08a24" : "#b5e3ff",
+                          borderColor: isActive
+                            ? "rgba(240,138,36,0.55)"
+                            : "rgba(116,151,199,0.18)",
+                        }}
+                        transition={{
+                          duration: 0.7,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
+                      >
+                        {i + 1}
+                      </motion.span>
+                      <span className="text-sm leading-snug text-secondary">
+                        {step.title}
+                      </span>
+                    </li>
+                  );
+                })}
               </ol>
               <p className="mt-4 text-xs italic text-muted">
                 {howItWorks.trustNote}
