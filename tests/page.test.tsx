@@ -10,23 +10,23 @@ describe("Home page", () => {
     expect(document.body.textContent).toContain("Live.");
   });
 
-  it("renders the new section narrative in order: problem → how it works → features → pull-quote → honest cons → quick start", () => {
+  it("renders the new section narrative in order: problem → features → pull-quote → honest cons → how it works → quick start", () => {
     render(<Home />);
     const headings = screen
       .getAllByRole("heading", { level: 2 })
       .map((h) => h.textContent ?? "");
 
     const problemIdx = headings.findIndex((h) => /trapped in your laptop/i.test(h));
-    const howIdx = headings.findIndex((h) => /forever paired/i.test(h));
     const featuresIdx = headings.findIndex((h) => /phone-shaped tools/i.test(h));
     const honestIdx = headings.findIndex((h) => /before you install/i.test(h));
+    const howIdx = headings.findIndex((h) => /forever paired/i.test(h));
     const quickIdx = headings.findIndex((h) => /under a minute/i.test(h));
 
     expect(problemIdx).toBeGreaterThanOrEqual(0);
-    expect(howIdx).toBeGreaterThan(problemIdx);
-    expect(featuresIdx).toBeGreaterThan(howIdx);
+    expect(featuresIdx).toBeGreaterThan(problemIdx);
     expect(honestIdx).toBeGreaterThan(featuresIdx);
-    expect(quickIdx).toBeGreaterThan(honestIdx);
+    expect(howIdx).toBeGreaterThan(honestIdx);
+    expect(quickIdx).toBeGreaterThan(howIdx);
   });
 
   it("renders the pull-quote (testimonial) between features and honest cons", () => {
