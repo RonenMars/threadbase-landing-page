@@ -22,9 +22,19 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: "npm run build && npm run start",
+    // Use the dev server (not `next build && next start`) so:
+    // - First-run wall time drops from ~30s (build + start) to ~5s (dev boot).
+    // - Re-runs are near-instant: with reuseExistingServer the dev server
+    //   started by `npm run dev` is reused across `npm run test:visual`
+    //   invocations (per Playwright docs:
+    //   https://playwright.dev/docs/test-webserver).
+    // Tradeoff: dev mode renders without prod optimizations (no font
+    //   preload, no image dimensions, etc.). Visual regression against dev
+    //   may miss prod-specific bugs, but is sufficient for catching layout
+    //   / color / content drift from dep bumps.
+    command: "npm run dev",
     url: "http://localhost:3000",
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     timeout: 120_000,
   },
   projects: [
