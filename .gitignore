@@ -45,3 +45,7 @@ yarn-error.log*
 next-env.d.ts
 .superpowers/
 .worktrees/
+
+# Playwright runtime artifacts (snapshots are committed; reports + traces are not)
+playwright-report/
+test-results/
