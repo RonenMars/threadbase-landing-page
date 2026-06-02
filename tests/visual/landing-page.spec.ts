@@ -28,6 +28,36 @@ test.beforeEach(async ({ page }) => {
 // and structure are covered by the existing Vitest tests in tests/hero.test.tsx.
 const HERO_HEADLINE_MASK = ".glitch-title";
 
+/**
+ * Scroll the page from top to bottom and back to top, pausing between each
+ * step so Framer Motion's `whileInView` / `useInView` IntersectionObserver
+ * callbacks fire and the section fade-up animations settle.
+ *
+ * Without this, full-page screenshots show massive empty space below the
+ * `h-screen` hero because the sections below (Problem, Features, HonestCons,
+ * etc.) are still at `opacity: 0, y: 28` — their IntersectionObserver never
+ * triggered because Playwright didn't actually scroll the page.
+ */
+async function settleScrollAnimations(
+  page: import("@playwright/test").Page,
+): Promise<void> {
+  await page.evaluate(async () => {
+    const totalHeight = document.documentElement.scrollHeight;
+    const step = window.innerHeight;
+    for (let y = 0; y < totalHeight; y += step) {
+      window.scrollTo(0, y);
+      // Yield to the IntersectionObserver + a single rAF for Framer Motion.
+      await new Promise((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(resolve)),
+      );
+    }
+    window.scrollTo(0, 0);
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+  });
+  // Wait the longest fade-up animation duration so all sections complete.
+  await page.waitForTimeout(800);
+}
+
 test("home page above the fold", async ({ page }) => {
   await page.goto("/");
   // Wait for fonts so Geist's metrics are stable before the screenshot.
@@ -42,6 +72,7 @@ test("home page above the fold", async ({ page }) => {
 test("home page full scroll", async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
+  await settleScrollAnimations(page);
   await expect(page).toHaveScreenshot("home-full.png", {
     fullPage: true,
     mask: [page.locator(HERO_HEADLINE_MASK)],
@@ -51,7 +82,8 @@ test("home page full scroll", async ({ page }) => {
 test("solutions stub page", async ({ page }) => {
   await page.goto("/solutions");
   await page.evaluate(() => document.fonts.ready);
-  // /solutions has no GlitchTitle; no mask needed.
+  // /solutions has no GlitchTitle; no mask needed. Also no scroll-triggered
+  // sections (the page fits in a single viewport), so no settle call.
   await expect(page).toHaveScreenshot("solutions.png", { fullPage: true });
 });
 
