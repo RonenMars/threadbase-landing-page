@@ -1,22 +1,11 @@
 import { expect, test } from "@playwright/test";
 
-// Warm the dev server's route cache and asset pipeline before the first real
-// screenshot. The very first request to a Next.js server after build can take
-// a few hundred ms of variable work (asset hashing, route compilation cache),
-// during which the hero animation strip jitters between Playwright's
-// back-to-back stability screenshots.
-test.beforeAll(async ({ browser }) => {
-  const context = await browser.newContext();
-  const page = await context.newPage();
-  await page.goto("/");
-  await page.evaluate(() => document.fonts.ready);
-  await page.goto("/solutions");
-  await page.evaluate(() => document.fonts.ready);
-  await context.close();
-});
-
-// Stop motion + force a deterministic clock so the device-mesh animation,
-// glow loops, and floating-dock IntersectionObserver don't introduce diff.
+// Suppress CSS animations + transitions so timing-dependent state (Framer
+// Motion entry, hover transitions, the floating-dock fade-in) doesn't
+// jitter between Playwright's back-to-back stability screenshots. RAF-
+// driven animations (notably GlitchTitle's chromatic-aberration sweep)
+// are not covered here — those are handled via `mask` on the screenshot
+// calls below.
 test.beforeEach(async ({ page }) => {
   await page.addStyleTag({
     content: `
@@ -30,36 +19,39 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("home page above the fold", async ({ page }, testInfo) => {
-  // SKIP on mobile-chromium: the GlitchTitle component drives the chromatic-
-  // aberration sweep via requestAnimationFrame, writing inline styles that
-  // beat any stylesheet override. On the mobile viewport this manifests as a
-  // small (~1%) pixel jitter in the headline strip (y 235-270) that survives
-  // the warm-up + 2 retries. Desktop is unaffected (different layout). The
-  // home-full-scroll test still covers mobile, and the other 4 tests still
-  // run on both viewports.
-  test.skip(
-    testInfo.project.name === "mobile-chromium",
-    "Flaky on mobile: GlitchTitle RAF jitter in headline strip",
-  );
+// GlitchTitle drives a chromatic-aberration sweep via requestAnimationFrame,
+// writing inline styles on the <h1> that beat any stylesheet override. The
+// only reliable way to make screenshots deterministic is to MASK the
+// headline element (Playwright paints a solid block over it before diffing).
+// Coverage tradeoff: visual regression no longer catches drift in the
+// headline rendering (font, color, layout) — but the headline text content
+// and structure are covered by the existing Vitest tests in tests/hero.test.tsx.
+const HERO_HEADLINE_MASK = ".glitch-title";
+
+test("home page above the fold", async ({ page }) => {
   await page.goto("/");
   // Wait for fonts so Geist's metrics are stable before the screenshot.
   await page.evaluate(() => document.fonts.ready);
   await expect(page).toHaveScreenshot("home-above-fold.png", {
     fullPage: false,
     clip: { x: 0, y: 0, width: 1440, height: 900 },
+    mask: [page.locator(HERO_HEADLINE_MASK)],
   });
 });
 
 test("home page full scroll", async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
-  await expect(page).toHaveScreenshot("home-full.png", { fullPage: true });
+  await expect(page).toHaveScreenshot("home-full.png", {
+    fullPage: true,
+    mask: [page.locator(HERO_HEADLINE_MASK)],
+  });
 });
 
 test("solutions stub page", async ({ page }) => {
   await page.goto("/solutions");
   await page.evaluate(() => document.fonts.ready);
+  // /solutions has no GlitchTitle; no mask needed.
   await expect(page).toHaveScreenshot("solutions.png", { fullPage: true });
 });
 
