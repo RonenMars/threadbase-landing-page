@@ -10,6 +10,11 @@ export default defineConfig({
     environment: "jsdom",
     globals: true,
     setupFiles: ["./tests/setup.ts"],
-    exclude: ["**/node_modules/**", "**/.next/**", "**/.claude/**"],
+    exclude: [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/.claude/**",
+      "tests/visual/**", // owned by Playwright (npm run test:visual)
+    ],
   },
 });
