@@ -1,11 +1,29 @@
 import { expect, test } from "@playwright/test";
 
-// Suppress CSS animations + transitions so timing-dependent state (Framer
-// Motion entry, hover transitions, the floating-dock fade-in) doesn't
-// jitter between Playwright's back-to-back stability screenshots. RAF-
-// driven animations (notably GlitchTitle's chromatic-aberration sweep)
-// are not covered here — those are handled via `mask` on the screenshot
-// calls below.
+/**
+ * Visual regression suite for the threadbase landing page.
+ *
+ * What's covered: above-fold + full-scroll screenshots of `/` on desktop +
+ * mobile viewports, the `/solutions` stub page, the hero copy-button
+ * interaction, and the floating-dock scroll-trigger behavior.
+ *
+ * Determinism strategy (built up across several commits):
+ * - `beforeEach`: kills CSS animations + transitions globally so timing-
+ *   dependent state (Framer Motion entry, hover, floating-dock fade) doesn't
+ *   jitter between Playwright's back-to-back stability screenshots.
+ * - `HERO_HEADLINE_MASK`: Playwright `mask` option blacks out GlitchTitle
+ *   before diffing — its RAF-driven sweep writes inline styles that beat
+ *   any stylesheet override and can't be reliably stopped any other way.
+ * - `settleScrollAnimations()`: programmatic scroll-through before full-
+ *   page screenshots, so the IntersectionObserver-driven `whileInView`
+ *   sections (Problem, Features, HonestCons, HowItWorks, QuickStart)
+ *   actually fade up. Without this, the full-page screenshot shows ~90%
+ *   empty space below the h-screen hero.
+ *
+ * Web server: see playwright.config.ts. We use `npm run dev` with
+ * reuseExistingServer:true so a developer's already-running dev server is
+ * reused, eliminating cold-start.
+ */
 test.beforeEach(async ({ page }) => {
   await page.addStyleTag({
     content: `

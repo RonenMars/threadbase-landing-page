@@ -5,11 +5,13 @@ export default defineConfig({
   testDir: "./tests/visual",
   fullyParallel: false, // visual tests are flakier in parallel
   forbidOnly: !!process.env.CI,
-  // Cold-start flake: the first run after `npm run build && npm run start`
-  // occasionally jitters in the hero headline strip (mobile). 1 retry catches
-  // most of it; 2 retries hit ~100% pass rate based on stress testing. Real
-  // regressions still fail consistently across all retries.
-  retries: 2,
+  // 1 retry as a generic safety margin for transient failures (network blips,
+  // resource contention on CI). The cold-start race that previously required
+  // retries:2 was eliminated by switching to `npm run dev` + reuseExistingServer
+  // (webServer block below). The GlitchTitle RAF jitter that required masking
+  // tests is now masked at the screenshot level. Real regressions still fail
+  // consistently across the retry, preserving detection.
+  retries: 1,
   workers: 1, // single worker for stable screenshots
   reporter: process.env.CI ? "github" : "list",
   expect: {
