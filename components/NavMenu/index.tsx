@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, Smartphone, Shield, Github, FlaskConical, ArrowUpRight } from "lucide-react";
+import { Home, Smartphone, Shield, Github, FlaskConical, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
 import { Divide as Hamburger } from "hamburger-react";
 import { NAV, type NavLink } from "@/lib/content";
 
@@ -42,10 +42,12 @@ const itemVariants = {
 // Map link labels to Lucide icons for the Dropbox-style panel
 const LINK_ICONS: Record<string, React.ElementType> = {
   Home,
-  "Android beta": Smartphone,
-  Privacy: Shield,
+  iOS: FlaskConical,
+  Android: Smartphone,
   GitHub: Github,
-  TestFlight: FlaskConical,
+  "Privacy Policy": Shield,
+  Support: LifeBuoy,
+  "Report a bug": Bug,
 };
 
 // Split NAV links into primary (internal) and secondary (external)

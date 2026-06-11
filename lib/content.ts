@@ -349,22 +349,16 @@ export const FOOTER: FooterContent = {
     "Not affiliated with Anthropic. Claude Code is a product of Anthropic.",
   githubUrl: "https://github.com/RonenMars/threadbase",
   links: [
-    { label: "GitHub", href: "https://github.com/RonenMars/threadbase" },
-    { label: "TestFlight", href: "https://testflight.apple.com/join/FqdM3mFK" },
+    { label: "Home", href: "/" },
+    { label: "iOS", href: "https://testflight.apple.com/join/FqdM3mFK" },
+    { label: "Android", href: "/android-beta" },
+    { label: "GitHub", href: "https://github.com/RonenMars/threadbase-mobile" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Support", href: "/support" },
     {
-      label: "Google Play (beta)",
-      href: "/android-beta",
-    },
-    {
-      label: "Report a Bug",
+      label: "Report a bug",
       href: "https://github.com/RonenMars/threadbase/issues",
     },
-    {
-      label: "Changelog",
-      href: "https://github.com/RonenMars/threadbase-mobile/releases",
-    },
-    { label: "Support", href: "/support" },
-    { label: "Privacy", href: "/privacy" },
   ],
 };
 
@@ -381,16 +375,22 @@ export interface NavContent {
 export const NAV: NavContent = {
   links: [
     { label: "Home", href: "/" },
-    { label: "Android beta", href: "/android-beta" },
-    { label: "Privacy", href: "/privacy" },
     {
-      label: "GitHub",
-      href: "https://github.com/RonenMars/threadbase",
+      label: "iOS",
+      href: "https://testflight.apple.com/join/FqdM3mFK",
       external: true,
     },
+    { label: "Android", href: "/android-beta" },
     {
-      label: "TestFlight",
-      href: "https://testflight.apple.com/join/FqdM3mFK",
+      label: "GitHub",
+      href: "https://github.com/RonenMars/threadbase-mobile",
+      external: true,
+    },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Support", href: "/support" },
+    {
+      label: "Report a bug",
+      href: "https://github.com/RonenMars/threadbase/issues",
       external: true,
     },
   ],
