@@ -9,6 +9,14 @@ import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
 import { GlitchTitle } from "./GlitchTitle";
 
+function useIsAndroid(): boolean {
+  const [isAndroid, setIsAndroid] = useState(false);
+  useEffect(() => {
+    setIsAndroid(/android/i.test(navigator.userAgent));
+  }, []);
+  return isAndroid;
+}
+
 interface HeroProps {
   hero: HeroContent;
 }
@@ -18,6 +26,7 @@ const COPIED_RESET_MS = 1500;
 export function Hero({ hero }: HeroProps): React.JSX.Element {
   const [copied, setCopied] = useState(false);
   const copyResetRef = useRef<number | null>(null);
+  const isAndroid = useIsAndroid();
 
   useEffect(() => {
     return () => {
@@ -134,13 +143,24 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             },
           }}
         >
+          {isAndroid ? (
+            <Button
+              render={<Link href="/android-beta" />}
+              nativeButton={false}
+              className="min-w-50"
+              size="lg"
+              variant="primary"
+            >
+              Join the Beta
+            </Button>
+          ) : null}
           {hero.ctas.map((cta) =>
             cta.variant === "primary" ? (
               <Button
                 key={cta.label}
                 render={<Link href={cta.href} />}
                 nativeButton={false}
-                className="min-w-50"
+                className={`min-w-50${isAndroid ? " hidden" : ""}`}
                 size="lg"
                 variant="primary"
               >
