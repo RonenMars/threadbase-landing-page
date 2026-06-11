@@ -3,6 +3,7 @@ import { SITE_METADATA } from "@/lib/content";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { NavMenu } from "@/components/NavMenu";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>): React.JSX.Element {
   return (
     <html className={cn("dark", "font-sans", geist.variable)} lang="en">
-      <body className="bg-bg-primary font-sans text-primary antialiased">{children}</body>
+      <body className="bg-bg-primary font-sans text-primary antialiased">
+        <NavMenu />
+        {children}
+      </body>
     </html>
   );
 }

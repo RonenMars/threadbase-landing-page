@@ -78,7 +78,8 @@ describe("lib/content.ts", () => {
     const hrefs = FOOTER.links.map((l) => l.href);
     expect(hrefs).toContain("https://github.com/RonenMars/threadbase");
     expect(hrefs.some((h) => h.includes("testflight.apple.com"))).toBe(true);
-    expect(hrefs.some((h) => h.includes("play.google.com"))).toBe(true);
+    // Google Play surface routes through the in-app Android beta page during closed testing.
+    expect(hrefs.some((h) => h.includes("play.google.com") || h === "/android-beta")).toBe(true);
     expect(hrefs.some((h) => h.includes("/issues"))).toBe(true);
     expect(hrefs.some((h) => h.includes("/releases"))).toBe(true);
     expect(hrefs).toContain("/support");
