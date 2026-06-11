@@ -56,16 +56,13 @@ describe("NavMenu", () => {
     expect(panel).toHaveAttribute("aria-modal", "true");
   });
 
-  it("renders primary and external nav links in separate sections when open (Variant F: sectioned layout)", () => {
+  it("renders all nav links in a single flat list when open (Variant F: flat layout)", () => {
     render(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-    // Section headers are present
-    expect(screen.getByText(/^navigation$/i)).toBeInTheDocument();
-    expect(screen.getByText(/^external$/i)).toBeInTheDocument();
-    // Internal links are present
     expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
-    // External links are present
+    expect(screen.getByRole("link", { name: /android/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /ios/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /github/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /testflight/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /report a bug/i })).toBeInTheDocument();
   });
 });
