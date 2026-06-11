@@ -363,6 +363,7 @@ export const FOOTER: FooterContent = {
       label: "Changelog",
       href: "https://github.com/RonenMars/threadbase-mobile/releases",
     },
+    { label: "Support", href: "/support" },
     { label: "Privacy", href: "/privacy" },
   ],
 };

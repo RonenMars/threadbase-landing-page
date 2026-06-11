@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { BulletList } from "@/components/BulletList";
 import { Footer } from "@/components/Footer";
+import { SectionHeading } from "@/components/SectionHeading";
 import { FOOTER } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -49,14 +51,6 @@ const YOUR_CONTROL = [
   "Disable notifications system-wide in iOS Settings → Threadbase",
   "Uninstalling the app deletes every byte stored locally; nothing persists off-device",
 ];
-
-function SectionHeading({ children }: { children: React.ReactNode }): React.JSX.Element {
-  return (
-    <h2 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-primary sm:text-3xl">
-      {children}
-    </h2>
-  );
-}
 
 function DataTable({
   caption,
@@ -127,17 +121,7 @@ export default function PrivacyPage(): React.JSX.Element {
           </p>
 
           <SectionHeading>What stays on your device</SectionHeading>
-          <ul className="mt-6 space-y-3 leading-7 text-secondary">
-            {STAYS_ON_DEVICE.map((item) => (
-              <li className="flex gap-3" key={item}>
-                <span
-                  aria-hidden="true"
-                  className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-secondary"
-                />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <BulletList items={STAYS_ON_DEVICE} />
 
           <SectionHeading>What leaves your device, and where it goes</SectionHeading>
           <DataTable
@@ -163,17 +147,7 @@ export default function PrivacyPage(): React.JSX.Element {
           />
 
           <SectionHeading>Your control</SectionHeading>
-          <ul className="mt-6 space-y-3 leading-7 text-secondary">
-            {YOUR_CONTROL.map((item) => (
-              <li className="flex gap-3" key={item}>
-                <span
-                  aria-hidden="true"
-                  className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-secondary"
-                />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <BulletList items={YOUR_CONTROL} />
 
           <footer className="mt-16 border-t border-white/6 pt-6 text-sm leading-7 text-muted">
             <p>Last updated: {LAST_UPDATED}</p>
