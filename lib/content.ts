@@ -366,6 +366,7 @@ export interface NavLink {
   label: string;
   href: string;
   external?: boolean;
+  separatorBefore?: boolean;
 }
 
 export interface NavContent {
@@ -385,6 +386,7 @@ export const NAV: NavContent = {
       label: "GitHub",
       href: "https://github.com/RonenMars/threadbase-mobile",
       external: true,
+      separatorBefore: true,
     },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Support", href: "/support" },

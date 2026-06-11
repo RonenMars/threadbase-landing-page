@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Home, Smartphone, Shield, Github, FlaskConical, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
@@ -50,9 +50,6 @@ const LINK_ICONS: Record<string, React.ElementType> = {
   "Report a bug": Bug,
 };
 
-// Split NAV links into primary (internal) and secondary (external)
-const PRIMARY_LINKS = NAV.links.filter((l) => !(l.external ?? /^https?:\/\//.test(l.href)));
-const SECONDARY_LINKS = NAV.links.filter((l) => l.external ?? /^https?:\/\//.test(l.href));
 
 export function NavMenu(): React.JSX.Element {
   const [open, setOpen] = useState(false);
@@ -152,38 +149,20 @@ export function NavMenu(): React.JSX.Element {
                 </button>
               </div>
 
-              {/* PRIMARY NAV section */}
+              {/* Nav links */}
               <div className="flex flex-col gap-1 px-3">
-                <p className="mb-1 px-1 text-[11px] uppercase tracking-[0.18em] text-muted">
-                  Navigation
-                </p>
                 <ul role="list" className="flex flex-col gap-0.5">
-                  {PRIMARY_LINKS.map((link, idx) => (
-                    <NavPanelItem
-                      key={link.href}
-                      link={link}
-                      onActivate={close}
-                      forwardedRef={idx === 0 ? firstLinkRef : undefined}
-                    />
-                  ))}
-                </ul>
-              </div>
-
-              {/* Separator */}
-              <div className="my-4 mx-4 h-px bg-border" />
-
-              {/* SECONDARY (external) section */}
-              <div className="flex flex-col gap-1 px-3">
-                <p className="mb-1 px-1 text-[11px] uppercase tracking-[0.18em] text-muted">
-                  External
-                </p>
-                <ul role="list" className="flex flex-col gap-0.5">
-                  {SECONDARY_LINKS.map((link) => (
-                    <NavPanelItem
-                      key={link.href}
-                      link={link}
-                      onActivate={close}
-                    />
+                  {NAV.links.map((link, idx) => (
+                    <React.Fragment key={link.href}>
+                      {link.separatorBefore ? (
+                        <div className="my-3 mx-1 h-px bg-border" />
+                      ) : null}
+                      <NavPanelItem
+                        link={link}
+                        onActivate={close}
+                        forwardedRef={idx === 0 ? firstLinkRef : undefined}
+                      />
+                    </React.Fragment>
                   ))}
                 </ul>
               </div>
