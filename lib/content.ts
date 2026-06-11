@@ -350,8 +350,7 @@ export const FOOTER: FooterContent = {
   githubUrl: "https://github.com/RonenMars/threadbase",
   links: [
     { label: "Home", href: "/" },
-    { label: "Android", href: "/android-beta" },
-    { label: "iOS", href: "https://testflight.apple.com/join/FqdM3mFK" },
+    { label: "Beta Programs", href: "/betas" },
     { label: "GitHub", href: "https://github.com/RonenMars/threadbase-mobile" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Support", href: "/support" },
@@ -376,12 +375,7 @@ export interface NavContent {
 export const NAV: NavContent = {
   links: [
     { label: "Home", href: "/" },
-    { label: "Android", href: "/android-beta" },
-    {
-      label: "iOS",
-      href: "https://testflight.apple.com/join/FqdM3mFK",
-      external: true,
-    },
+    { label: "Beta Programs", href: "/betas" },
     {
       label: "GitHub",
       href: "https://github.com/RonenMars/threadbase-mobile",
@@ -394,6 +388,87 @@ export const NAV: NavContent = {
       label: "Report a bug",
       href: "https://github.com/RonenMars/threadbase/issues",
       external: true,
+    },
+  ],
+};
+
+export interface BetaPlatform {
+  id: string;
+  eyebrow: string;
+  name: string;
+  tagline: string;
+  description: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  steps: Array<{ title: string; body: string }>;
+  note?: string;
+}
+
+export interface BetasPageContent {
+  eyebrow: string;
+  headline: string;
+  intro: string;
+  platforms: BetaPlatform[];
+}
+
+export const BETAS_PAGE: BetasPageContent = {
+  eyebrow: "Early Access",
+  headline: "Join the Beta",
+  intro:
+    "Threadbase is available in early access on both iOS and Android. Pick your platform and get the mobile companion for Claude Code on your device.",
+  platforms: [
+    {
+      id: "ios",
+      eyebrow: "iOS · TestFlight",
+      name: "iOS Beta",
+      tagline: "Available now via TestFlight",
+      description:
+        "The iOS beta is open and ready to install through Apple's TestFlight program. No waiting, no approval — just tap the link on your iPhone or iPad.",
+      primaryCta: {
+        label: "Join TestFlight",
+        href: "https://testflight.apple.com/join/FqdM3mFK",
+      },
+      steps: [
+        {
+          title: "Install TestFlight",
+          body: "If you don't have it already, download TestFlight from the App Store — it's Apple's official beta distribution app.",
+        },
+        {
+          title: "Tap the invite link",
+          body: "Open the \"Join TestFlight\" link above on your iPhone or iPad. TestFlight will open and show the Threadbase beta.",
+        },
+        {
+          title: "Install and launch",
+          body: "Tap \"Install\" in TestFlight. Once installed, open Threadbase and scan the QR code shown by the streamer on your workstation.",
+        },
+      ],
+    },
+    {
+      id: "android",
+      eyebrow: "Android · Google Play",
+      name: "Android Beta",
+      tagline: "Closed beta via Google Play",
+      description:
+        "The Android beta runs through Google Play's closed-testing program. You'll need to join the testers group first, then opt in via Play — takes about 10 minutes end to end.",
+      primaryCta: {
+        label: "Join Android Beta",
+        href: "/android-beta",
+      },
+      steps: [
+        {
+          title: "Join the testers group",
+          body: "Open the Google Group linked on the Android beta page and join with the Google account you use on your Android device.",
+        },
+        {
+          title: "Wait ~10 minutes",
+          body: "Google's tester-eligibility cache takes a few minutes to update after you join. Grab a coffee.",
+        },
+        {
+          title: "Opt in on Google Play",
+          body: "On your Android device, follow the opt-in link on the beta page, tap \"Become a tester\", then install from the Play Store.",
+        },
+      ],
+      note: "If you see \"App not available\" on Play, wait 15 more minutes and try again — the permission cache occasionally lags.",
     },
   ],
 };

@@ -60,8 +60,7 @@ describe("NavMenu", () => {
     render(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /android/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /ios/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /beta programs/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /github/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /report a bug/i })).toBeInTheDocument();
   });
