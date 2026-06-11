@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BulletList } from "@/components/BulletList";
 import { Footer } from "@/components/Footer";
+import { SectionHeading } from "@/components/SectionHeading";
 import { FOOTER } from "@/lib/content";
 
 const SUPPORT_EMAIL = "support@threadbase.sh";
@@ -25,30 +27,6 @@ const REQUEST_DETAILS = [
   "Any error message you saw",
   "Whether the issue happens every time or only sometimes",
 ];
-
-function SectionHeading({ children }: { children: React.ReactNode }): React.JSX.Element {
-  return (
-    <h2 className="mt-14 text-2xl font-semibold tracking-[-0.04em] text-primary sm:text-3xl">
-      {children}
-    </h2>
-  );
-}
-
-function BulletList({ items }: { items: string[] }): React.JSX.Element {
-  return (
-    <ul className="mt-6 space-y-3 leading-7 text-secondary">
-      {items.map((item) => (
-        <li className="flex gap-3" key={item}>
-          <span
-            aria-hidden="true"
-            className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-secondary"
-          />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
 
 export default function SupportPage(): React.JSX.Element {
   return (
@@ -92,16 +70,12 @@ export default function SupportPage(): React.JSX.Element {
 
           <div className="mt-14 grid gap-12 lg:grid-cols-2">
             <section>
-              <h2 className="text-2xl font-semibold tracking-[-0.04em] text-primary sm:text-3xl">
-                What we can help with
-              </h2>
+              <SectionHeading>What we can help with</SectionHeading>
               <BulletList items={SUPPORT_TOPICS} />
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold tracking-[-0.04em] text-primary sm:text-3xl">
-                What to include
-              </h2>
+              <SectionHeading>What to include</SectionHeading>
               <p className="mt-6 leading-8 text-secondary">
                 You can send a short message, but these details help us investigate faster:
               </p>
@@ -126,7 +100,7 @@ export default function SupportPage(): React.JSX.Element {
             <p>
               Support email:{" "}
               <a
-                className="text-accent transition-colors hover:text-accent-hover"
+                className="font-medium text-accent transition-colors hover:text-accent-hover"
                 href={`mailto:${SUPPORT_EMAIL}`}
               >
                 {SUPPORT_EMAIL}
