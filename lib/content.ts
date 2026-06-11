@@ -350,8 +350,8 @@ export const FOOTER: FooterContent = {
   githubUrl: "https://github.com/RonenMars/threadbase",
   links: [
     { label: "Home", href: "/" },
-    { label: "iOS", href: "https://testflight.apple.com/join/FqdM3mFK" },
     { label: "Android", href: "/android-beta" },
+    { label: "iOS", href: "https://testflight.apple.com/join/FqdM3mFK" },
     { label: "GitHub", href: "https://github.com/RonenMars/threadbase-mobile" },
     { label: "Privacy Policy", href: "/privacy" },
     { label: "Support", href: "/support" },
@@ -375,12 +375,12 @@ export interface NavContent {
 export const NAV: NavContent = {
   links: [
     { label: "Home", href: "/" },
+    { label: "Android", href: "/android-beta" },
     {
       label: "iOS",
       href: "https://testflight.apple.com/join/FqdM3mFK",
       external: true,
     },
-    { label: "Android", href: "/android-beta" },
     {
       label: "GitHub",
       href: "https://github.com/RonenMars/threadbase-mobile",
