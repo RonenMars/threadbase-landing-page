@@ -335,8 +335,8 @@ export const QUICK_START: QuickStartContent = {
       href: "https://github.com/RonenMars/threadbase-streamer/releases/latest",
     },
     {
-      label: "Android — coming this week",
-      href: "https://play.google.com/store/apps/details?id=REPLACE_ME",
+      label: "Android — closed beta",
+      href: "/android-beta",
     },
   ],
 };
@@ -349,21 +349,108 @@ export const FOOTER: FooterContent = {
     "Not affiliated with Anthropic. Claude Code is a product of Anthropic.",
   githubUrl: "https://github.com/RonenMars/threadbase",
   links: [
-    { label: "GitHub", href: "https://github.com/RonenMars/threadbase" },
-    { label: "TestFlight", href: "https://testflight.apple.com/join/FqdM3mFK" },
+    { label: "Home", href: "/" },
+    { label: "Android", href: "/android-beta" },
+    { label: "iOS", href: "https://testflight.apple.com/join/FqdM3mFK" },
+    { label: "GitHub", href: "https://github.com/RonenMars/threadbase-mobile" },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Support", href: "/support" },
     {
-      label: "Google Play",
-      href: "https://play.google.com/store/apps/details?id=REPLACE_ME",
-    },
-    {
-      label: "Report a Bug",
+      label: "Report a bug",
       href: "https://github.com/RonenMars/threadbase/issues",
     },
-    {
-      label: "Changelog",
-      href: "https://github.com/RonenMars/threadbase-mobile/releases",
-    },
-    { label: "Support", href: "/support" },
-    { label: "Privacy", href: "/privacy" },
   ],
+};
+
+export interface NavLink {
+  label: string;
+  href: string;
+  external?: boolean;
+  separatorBefore?: boolean;
+}
+
+export interface NavContent {
+  links: NavLink[];
+}
+
+export const NAV: NavContent = {
+  links: [
+    { label: "Home", href: "/" },
+    { label: "Android", href: "/android-beta" },
+    {
+      label: "iOS",
+      href: "https://testflight.apple.com/join/FqdM3mFK",
+      external: true,
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com/RonenMars/threadbase-mobile",
+      external: true,
+      separatorBefore: true,
+    },
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Support", href: "/support" },
+    {
+      label: "Report a bug",
+      href: "https://github.com/RonenMars/threadbase/issues",
+      external: true,
+    },
+  ],
+};
+
+export interface BetaStep {
+  title: string;
+  body: string;
+}
+
+export interface AndroidBetaContent {
+  eyebrow: string;
+  headline: string;
+  intro: string;
+  groupUrl: string;
+  playUrl: string;
+  steps: BetaStep[];
+  fallback: {
+    title: string;
+    body: string;
+  };
+  closing: string;
+}
+
+export const ANDROID_BETA: AndroidBetaContent = {
+  eyebrow: "Android closed beta",
+  headline: "Join the Threadbase Android beta",
+  intro:
+    "Google Play's personal-developer policy gates production behind 12 testers × 14 days of closed testing. Help us hit that bar — installation is two clicks and a short wait.",
+  groupUrl: "https://groups.google.com/g/threadbase-android-testers",
+  playUrl: "https://play.google.com/apps/testing/com.ronenmars.threadbase",
+  steps: [
+    {
+      title: "Join the testers group",
+      body:
+        "Click the button below to open the public Google Group. Sign in to the Google account you want to install on, then click “Join group” (no approval needed).",
+    },
+    {
+      title: "Wait ≈10 minutes",
+      body:
+        "Google's tester-eligibility cache needs a few minutes to refresh after you join the group. Grab a coffee.",
+    },
+    {
+      title: "Open the Play Store opt-in link",
+      body:
+        "On your Android phone, signed in to the same Google account, tap the second button. Then “Become a tester” → “Download it on Google Play”.",
+    },
+    {
+      title: "Install and (optionally) pair",
+      body:
+        "Threadbase will install like any normal Play Store app, marked “(unreviewed)” while we're in closed testing. To use it, run tb-streamer on your workstation and scan its QR code.",
+    },
+  ],
+  fallback: {
+    title: "If you see “App not available”",
+    body:
+      "Wait another 15 minutes and retry — Play's permission cache occasionally lags. If it persists after 30 minutes, double-check you joined the group with the same Google account you're using on the phone.",
+  },
+  closing:
+    "Once you're installed, you don't need to do anything else — your install counts toward the 12-tester gate just by staying on your phone.",
 };

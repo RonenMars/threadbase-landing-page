@@ -74,13 +74,12 @@ describe("lib/content.ts", () => {
     expect(HONEST_CONS[0].title).toContain("iOS-first");
   });
 
-  it("FOOTER links cover the v1 surfaces: GitHub, TestFlight, Play, issues, changelog, support, privacy", () => {
+  it("FOOTER links cover the v1 surfaces: GitHub, TestFlight, Android, issues, support, privacy", () => {
     const hrefs = FOOTER.links.map((l) => l.href);
-    expect(hrefs).toContain("https://github.com/RonenMars/threadbase");
+    expect(hrefs.some((h) => h.includes("github.com/RonenMars/threadbase"))).toBe(true);
     expect(hrefs.some((h) => h.includes("testflight.apple.com"))).toBe(true);
-    expect(hrefs.some((h) => h.includes("play.google.com"))).toBe(true);
+    expect(hrefs.some((h) => h === "/android-beta")).toBe(true);
     expect(hrefs.some((h) => h.includes("/issues"))).toBe(true);
-    expect(hrefs.some((h) => h.includes("/releases"))).toBe(true);
     expect(hrefs).toContain("/support");
     expect(hrefs).toContain("/privacy");
   });

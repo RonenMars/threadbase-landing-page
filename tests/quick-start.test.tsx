@@ -21,7 +21,7 @@ describe("QuickStart", () => {
     expect(screen.getByRole("link", { name: /^linux$/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /^windows$/i })).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: /android.*coming this week/i }),
+      screen.getByRole("link", { name: /android.*closed beta/i }),
     ).toBeInTheDocument();
   });
 

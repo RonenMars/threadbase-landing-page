@@ -13,7 +13,7 @@ describe("Support page", () => {
     );
     expect(screen.getByText(/questions about installing or pairing/i)).toBeInTheDocument();
     expect(screen.getByText(/bug reports, crashes, notification problems/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /privacy policy/i })).toHaveAttribute(
+    expect(screen.getAllByRole("link", { name: /privacy policy/i })[0]).toHaveAttribute(
       "href",
       "/privacy",
     );
