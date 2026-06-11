@@ -9,12 +9,8 @@ import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
 import { GlitchTitle } from "./GlitchTitle";
 
-function useIsAndroid(): boolean {
-  const [isAndroid, setIsAndroid] = useState(false);
-  useEffect(() => {
-    setIsAndroid(/android/i.test(navigator.userAgent));
-  }, []);
-  return isAndroid;
+function isAndroidDevice(): boolean {
+  return typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
 }
 
 interface HeroProps {
@@ -26,7 +22,7 @@ const COPIED_RESET_MS = 1500;
 export function Hero({ hero }: HeroProps): React.JSX.Element {
   const [copied, setCopied] = useState(false);
   const copyResetRef = useRef<number | null>(null);
-  const isAndroid = useIsAndroid();
+  const isAndroid = isAndroidDevice();
 
   useEffect(() => {
     return () => {
