@@ -1,0 +1,26 @@
+name: Run CI
+description: Install dependencies and run a CI command (lint, build, or test)
+
+inputs:
+  node-version:
+    description: Node.js version to use
+    required: true
+  command:
+    description: npm script to run (lint, build, test)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+
+    - name: Run ${{ inputs.command }}
+      shell: bash
+      run: npm run ${{ inputs.command }}
