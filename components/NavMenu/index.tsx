@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Home, Beaker, Shield, Github, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
+import { AppleLogo, AndroidLogo } from "@phosphor-icons/react";
 import { Divide as Hamburger } from "hamburger-react";
 import { NAV, type NavLink } from "@/lib/content";
 
@@ -39,7 +40,6 @@ const itemVariants = {
   exit: { opacity: 0, x: -12, transition: { duration: 0.15, ease: EASE } },
 } as const;
 
-// Map link labels to Lucide icons for the Dropbox-style panel
 const LINK_ICONS: Record<string, React.ElementType> = {
   Home,
   "Beta Programs": Beaker,
@@ -49,14 +49,42 @@ const LINK_ICONS: Record<string, React.ElementType> = {
   "Report a bug": Bug,
 };
 
+const BETA_PLATFORMS = [
+  {
+    id: "ios",
+    label: "iOS TestFlight",
+    href: "https://testflight.apple.com/join/FqdM3mFK",
+    Icon: AppleLogo,
+  },
+  {
+    id: "android",
+    label: "Android beta",
+    href: "/android-beta",
+    Icon: AndroidLogo,
+  },
+] as const;
+
+function detectPlatform(): "ios" | "android" | "desktop" {
+  if (typeof navigator === "undefined") return "desktop";
+  const ua = navigator.userAgent;
+  if (/android/i.test(ua)) return "android";
+  if (/iphone|ipad|ipod/i.test(ua)) return "ios";
+  return "desktop";
+}
+
+function useMobilePlatform(): "ios" | "android" | "desktop" {
+  const [platform] = useState<"ios" | "android" | "desktop">(detectPlatform);
+
+  return platform;
+}
 
 export function NavMenu(): React.JSX.Element {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const panelId = useId();
+  const mobilePlatform = useMobilePlatform();
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent): void => {
@@ -69,7 +97,6 @@ export function NavMenu(): React.JSX.Element {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  // Lock body scroll while open
   useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
@@ -79,7 +106,6 @@ export function NavMenu(): React.JSX.Element {
     };
   }, [open]);
 
-  // Focus first link when opening
   useEffect(() => {
     if (open) {
       firstLinkRef.current?.focus();
@@ -88,9 +114,26 @@ export function NavMenu(): React.JSX.Element {
 
   const close = useCallback(() => setOpen(false), []);
 
+  // On mobile, replace "Beta Programs" with two platform-specific items in priority order
+  const navLinks = React.useMemo(() => {
+    if (mobilePlatform === "desktop") return NAV.links;
+
+    const [primary, secondary] =
+      mobilePlatform === "android"
+        ? [BETA_PLATFORMS[1], BETA_PLATFORMS[0]]
+        : [BETA_PLATFORMS[0], BETA_PLATFORMS[1]];
+
+    return NAV.links.flatMap((link) => {
+      if (!link.betaIcons) return [link];
+      return [
+        { label: primary.label, href: primary.href, external: primary.href.startsWith("http") },
+        { label: secondary.label, href: secondary.href, external: secondary.href.startsWith("http") },
+      ] satisfies NavLink[];
+    });
+  }, [mobilePlatform]);
+
   return (
     <>
-      {/* Hamburger trigger — top-LEFT corner */}
       <button
         ref={triggerRef}
         type="button"
@@ -108,7 +151,6 @@ export function NavMenu(): React.JSX.Element {
       <AnimatePresence initial={false}>
         {open ? (
           <>
-            {/* Backdrop — covers right portion */}
             <motion.button
               type="button"
               tabIndex={-1}
@@ -121,7 +163,6 @@ export function NavMenu(): React.JSX.Element {
               className="fixed inset-0 z-40 cursor-default bg-bg-primary/60 backdrop-blur-sm"
             />
 
-            {/* Sliding panel — from LEFT */}
             <motion.nav
               id={panelId}
               aria-label="Primary"
@@ -133,7 +174,6 @@ export function NavMenu(): React.JSX.Element {
               exit="exit"
               className="fixed inset-y-0 left-0 z-50 flex w-[min(20rem,100vw)] flex-col border-r border-border bg-bg-secondary shadow-2xl"
             >
-              {/* Panel header — close button on the right */}
               <div className="flex h-16 shrink-0 items-center justify-between px-5">
                 <span className="text-base font-semibold text-primary">Menu</span>
                 <button
@@ -148,10 +188,9 @@ export function NavMenu(): React.JSX.Element {
                 </button>
               </div>
 
-              {/* Nav links */}
               <div className="flex flex-col gap-1 px-3">
                 <ul role="list" className="flex flex-col gap-0.5">
-                  {NAV.links.map((link, idx) => (
+                  {navLinks.map((link, idx) => (
                     <React.Fragment key={link.href}>
                       {link.separatorBefore ? (
                         <div className="my-3 mx-1 h-px bg-border" />
@@ -159,6 +198,7 @@ export function NavMenu(): React.JSX.Element {
                       <NavPanelItem
                         link={link}
                         onActivate={close}
+                        isDesktop={mobilePlatform === "desktop"}
                         forwardedRef={idx === 0 ? firstLinkRef : undefined}
                       />
                     </React.Fragment>
@@ -166,7 +206,6 @@ export function NavMenu(): React.JSX.Element {
                 </ul>
               </div>
 
-              {/* Footer chrome — wordmark + version */}
               <div className="mt-auto border-t border-border px-4 py-4">
                 <p className="text-xs font-semibold text-muted">Threadbase</p>
                 <p className="mt-0.5 text-xs text-muted">v1.0</p>
@@ -182,40 +221,64 @@ export function NavMenu(): React.JSX.Element {
 function NavPanelItem({
   link,
   onActivate,
+  isDesktop,
   forwardedRef,
 }: {
   link: NavLink;
   onActivate: () => void;
+  isDesktop: boolean;
   forwardedRef?: React.Ref<HTMLAnchorElement>;
 }): React.JSX.Element {
   const external = link.external ?? /^https?:\/\//.test(link.href);
   const Icon = LINK_ICONS[link.label];
+
+  const showBetaIcons = isDesktop && link.betaIcons;
+
   return (
     <motion.li variants={itemVariants}>
-      <Link
-        ref={forwardedRef}
-        href={link.href}
-        onClick={onActivate}
-        target={external ? "_blank" : undefined}
-        rel={external ? "noopener noreferrer" : undefined}
-        className="group flex items-center gap-3 rounded-xl px-4 py-3 text-base text-secondary transition-colors duration-200 hover:bg-bg-primary/60 hover:text-primary focus-visible:bg-bg-primary/60 focus-visible:text-primary focus-visible:outline-none"
-      >
+      <div className="group flex items-center gap-3 rounded-xl px-4 py-3 text-base text-secondary transition-colors duration-200 hover:bg-bg-primary/60 hover:text-primary">
         {Icon ? (
           <Icon
             aria-hidden="true"
             size={18}
-            className="shrink-0 text-muted transition-colors duration-200 group-hover:text-primary group-focus-visible:text-primary"
+            className="shrink-0 text-muted transition-colors duration-200 group-hover:text-primary"
           />
         ) : null}
-        <span className="flex-1">{link.label}</span>
-        {external ? (
+        <Link
+          ref={forwardedRef}
+          href={link.href}
+          onClick={onActivate}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
+          className="flex-1 focus-visible:outline-none"
+        >
+          {link.label}
+        </Link>
+        {showBetaIcons ? (
+          <div className="flex items-center gap-1.5">
+            {BETA_PLATFORMS.map(({ id, label: platformLabel, href, Icon: PlatformIcon }) => (
+              <Link
+                key={id}
+                href={href}
+                onClick={onActivate}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                aria-label={platformLabel}
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-border bg-bg-primary/60 text-muted transition-colors duration-200 hover:border-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <PlatformIcon size={14} weight="duotone" />
+              </Link>
+            ))}
+          </div>
+        ) : null}
+        {external && !showBetaIcons ? (
           <ArrowUpRight
             aria-hidden="true"
             size={14}
-            className="shrink-0 text-muted opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100 group-focus-visible:translate-x-0.5 group-focus-visible:opacity-100"
+            className="shrink-0 text-muted opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
           />
         ) : null}
-      </Link>
+      </div>
     </motion.li>
   );
 }

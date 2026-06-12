@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { BulletList } from "@/components/BulletList";
-import { Footer } from "@/components/Footer";
+import { PageShell } from "@/components/PageShell";
 import { SectionHeading } from "@/components/SectionHeading";
-import { FOOTER } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Privacy — Threadbase",
@@ -109,61 +108,52 @@ function DataTable({
 
 export default function PrivacyPage(): React.JSX.Element {
   return (
-    <div className="app-shell min-h-screen">
-      <main className="px-6 py-24 sm:px-8 lg:px-10">
-        <article className="container-shell max-w-3xl">
-          <h1 className="text-balance text-4xl font-semibold tracking-[-0.05em] text-primary sm:text-5xl">
-            Privacy
-          </h1>
-          <p className="mt-6 text-lg leading-8 text-secondary">
-            Threadbase is a thin client for self-hosted Threadbase streamers. It does not
-            run any analytics, crash-reporting, or telemetry service of its own.
-          </p>
+    <PageShell
+      kicker="Threadbase privacy"
+      heading="Privacy"
+      description="Threadbase is a thin client for self-hosted Threadbase streamers. It does not run any analytics, crash-reporting, or telemetry service of its own."
+    >
+      <SectionHeading>What stays on your device</SectionHeading>
+      <BulletList items={STAYS_ON_DEVICE} />
 
-          <SectionHeading>What stays on your device</SectionHeading>
-          <BulletList items={STAYS_ON_DEVICE} />
+      <SectionHeading>What leaves your device, and where it goes</SectionHeading>
+      <DataTable
+        caption="Data that leaves your device"
+        headers={["Data", "Destination", "Purpose"]}
+        rows={LEAVES_DEVICE.map((row) => [row.data, row.destination, row.purpose])}
+      />
 
-          <SectionHeading>What leaves your device, and where it goes</SectionHeading>
-          <DataTable
-            caption="Data that leaves your device"
-            headers={["Data", "Destination", "Purpose"]}
-            rows={LEAVES_DEVICE.map((row) => [row.data, row.destination, row.purpose])}
-          />
+      <SectionHeading>What we do not collect</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">
+        The app makes <strong className="text-primary">no network calls to any
+        developer-operated backend</strong> — there is no Threadbase analytics server,
+        no crash-reporting endpoint, no advertising or tracking SDK. Apart from the
+        Expo push relay (used solely to deliver notifications you opted into) and the
+        streamer URLs you yourself enter, the app talks to nothing.
+      </p>
 
-          <SectionHeading>What we do not collect</SectionHeading>
-          <p className="mt-6 leading-8 text-secondary">
-            The app makes <strong className="text-primary">no network calls to any
-            developer-operated backend</strong> — there is no Threadbase analytics server,
-            no crash-reporting endpoint, no advertising or tracking SDK. Apart from the
-            Expo push relay (used solely to deliver notifications you opted into) and the
-            streamer URLs you yourself enter, the app talks to nothing.
-          </p>
+      <SectionHeading>Permissions used</SectionHeading>
+      <DataTable
+        caption="Permissions used by the app"
+        headers={["Permission", "Why"]}
+        rows={PERMISSIONS.map((row) => [row.permission, row.why])}
+      />
 
-          <SectionHeading>Permissions used</SectionHeading>
-          <DataTable
-            caption="Permissions used by the app"
-            headers={["Permission", "Why"]}
-            rows={PERMISSIONS.map((row) => [row.permission, row.why])}
-          />
+      <SectionHeading>Your control</SectionHeading>
+      <BulletList items={YOUR_CONTROL} />
 
-          <SectionHeading>Your control</SectionHeading>
-          <BulletList items={YOUR_CONTROL} />
-
-          <footer className="mt-16 border-t border-white/6 pt-6 text-sm leading-7 text-muted">
-            <p>Last updated: {LAST_UPDATED}</p>
-            <p className="mt-1">
-              Contact:{" "}
-              <a
-                className="text-accent transition-colors hover:text-accent-hover"
-                href="mailto:ronenmars@gmail.com"
-              >
-                ronenmars@gmail.com
-              </a>
-            </p>
-          </footer>
-        </article>
-      </main>
-      <Footer footer={FOOTER} />
-    </div>
+      <footer className="mt-16 border-t border-white/6 pt-6 text-sm leading-7 text-muted">
+        <p>Last updated: {LAST_UPDATED}</p>
+        <p className="mt-1">
+          Contact:{" "}
+          <a
+            className="text-accent transition-colors hover:text-accent-hover"
+            href="mailto:ronenmars@gmail.com"
+          >
+            ronenmars@gmail.com
+          </a>
+        </p>
+      </footer>
+    </PageShell>
   );
 }

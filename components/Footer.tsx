@@ -1,8 +1,5 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { fadeUp } from "@/components/motion";
 import type { FooterContent } from "@/lib/content";
 
 interface FooterProps {
@@ -10,17 +7,8 @@ interface FooterProps {
 }
 
 export function Footer({ footer }: FooterProps): React.JSX.Element {
-  const ref = useRef<HTMLElement | null>(null);
-  const inView = useInView(ref, { once: true, amount: 0.2 });
-
   return (
-    <motion.footer
-      animate={inView ? "visible" : "hidden"}
-      className="border-t border-white/6 bg-bg-secondary px-6 py-12 sm:px-8 lg:px-10"
-      initial="hidden"
-      ref={ref}
-      variants={fadeUp}
-    >
+    <footer className="border-t border-white/6 bg-bg-secondary px-6 py-12 sm:px-8 lg:px-10">
       <div className="container-shell space-y-8">
         <div className="flex flex-col gap-3 text-left sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-3 text-secondary">
@@ -48,6 +36,6 @@ export function Footer({ footer }: FooterProps): React.JSX.Element {
           <p>{footer.disclaimer}</p>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 }
