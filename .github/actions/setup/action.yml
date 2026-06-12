@@ -1,20 +1,12 @@
-name: Run CI
-description: Install dependencies and run a CI command (lint, build, or test)
-
-inputs:
-  node-version:
-    description: Node.js version to use
-    required: true
-  command:
-    description: npm script to run (lint, build, test)
-    required: true
+name: Setup
+description: Install and cache node_modules
 
 runs:
   using: composite
   steps:
     - uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node-version }}
+        node-version: 20
         cache: npm
 
     - name: Restore node_modules cache
@@ -29,6 +21,9 @@ runs:
       shell: bash
       run: npm ci
 
-    - name: Run ${{ inputs.command }}
-      shell: bash
-      run: npm run ${{ inputs.command }}
+    - name: Save node_modules cache
+      if: steps.cache.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v4
+      with:
+        path: node_modules
+        key: node-modules-${{ hashFiles('package-lock.json') }}
