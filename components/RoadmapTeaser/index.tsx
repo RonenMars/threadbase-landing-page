@@ -46,7 +46,7 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
               {section.eyebrow}
             </Badge>
           )}
-          <h2 className="text-balance text-3xl font-semibold tracking-[-0.05em] text-primary sm:text-4xl lg:text-5xl">
+          <h2 className="text-balance text-3xl font-semibold tracking-tighter text-primary sm:text-4xl lg:text-5xl">
             {section.heading}
           </h2>
           {section.description && (

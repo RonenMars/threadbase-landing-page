@@ -136,7 +136,7 @@ export function QuickStart({
           ) : null}
           <h2
             id="quick-start-heading"
-            className="text-balance text-3xl font-semibold tracking-[-0.05em] text-primary sm:text-4xl lg:text-5xl"
+            className="text-balance text-3xl font-semibold tracking-tighter text-primary sm:text-4xl lg:text-5xl"
           >
             {content.heading}
           </h2>

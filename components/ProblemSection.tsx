@@ -35,7 +35,7 @@ export function ProblemSection({
     >
       <div className="container-shell">
         <div className="mb-12 max-w-3xl">
-          <h2 className="text-balance text-3xl font-semibold tracking-[-0.05em] text-primary sm:text-4xl lg:text-5xl">
+          <h2 className="text-balance text-3xl font-semibold tracking-tighter text-primary sm:text-4xl lg:text-5xl">
             {section.heading}
           </h2>
         </div>
