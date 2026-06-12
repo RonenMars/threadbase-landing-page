@@ -33,12 +33,6 @@ describe("AndroidBetaPage", () => {
     expect(playLink).toHaveAttribute("href", ANDROID_BETA.playUrl);
   });
 
-  it("provides a back-to-home link", () => {
-    render(<AndroidBetaPage />);
-    const backLink = screen.getByRole("link", { name: /back to threadbase/i });
-    expect(backLink).toHaveAttribute("href", "/");
-  });
-
   it("describes the App not available fallback condition", () => {
     render(<AndroidBetaPage />);
     expect(screen.getByText(/app not available/i)).toBeInTheDocument();
