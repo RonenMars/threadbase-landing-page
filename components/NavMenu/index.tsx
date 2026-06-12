@@ -64,17 +64,16 @@ const BETA_PLATFORMS = [
   },
 ] as const;
 
-function useMobilePlatform(): "ios" | "android" | "desktop" {
-  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">("desktop");
+function detectPlatform(): "ios" | "android" | "desktop" {
+  if (typeof navigator === "undefined") return "desktop";
+  const ua = navigator.userAgent;
+  if (/android/i.test(ua)) return "android";
+  if (/iphone|ipad|ipod/i.test(ua)) return "ios";
+  return "desktop";
+}
 
-  useEffect(() => {
-    const ua = navigator.userAgent;
-    if (/android/i.test(ua)) {
-      setPlatform("android");
-    } else if (/iphone|ipad|ipod/i.test(ua)) {
-      setPlatform("ios");
-    }
-  }, []);
+function useMobilePlatform(): "ios" | "android" | "desktop" {
+  const [platform] = useState<"ios" | "android" | "desktop">(detectPlatform);
 
   return platform;
 }
