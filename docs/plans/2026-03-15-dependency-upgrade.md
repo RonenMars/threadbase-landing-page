@@ -46,3 +46,20 @@
 **Step 2:** Run `npm run lint`
 
 **Step 3:** Run `npm run build`
+
+---
+
+## ESLint 10 Migration — 2026-06-12 (PR #23)
+
+**What changed:**
+- `eslint` bumped `^9` → `^10`
+- `eslint-config-next` removed
+- Direct plugins added: `typescript-eslint`, `eslint-plugin-react-hooks`, `@next/eslint-plugin-next`
+- `eslint.config.mjs` deleted (was a stale duplicate of `eslint.config.js`)
+- Node engines updated: `>=20.9.0` → `^20.9.0 || ^21.0.0 || >=24.0.0`
+- CI test matrix extended to Node 20, 22, 24
+
+**Why `eslint-config-next` was dropped:**
+`eslint-config-next` bundles `eslint-plugin-react@7.37.5` internally. That version calls `context.getFilename()` which ESLint 10 removed, causing a hard crash at lint startup. The fix is not possible by disabling rules — the plugin throws during initialization before any rule runs.
+
+Rather than patching around it with `"react/...: off"` overrides, `eslint-config-next` was replaced with the three plugins it re-exported that are ESLint 10 compatible. `eslint-plugin-react` is intentionally excluded.
