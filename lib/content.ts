@@ -468,7 +468,6 @@ export const BETAS_PAGE: BetasPageContent = {
           body: "On your Android device, follow the opt-in link on the beta page, tap \"Become a tester\", then install from the Play Store.",
         },
       ],
-      note: "If you see \"App not available\" on Play, wait 15 more minutes and try again — the permission cache occasionally lags.",
     },
   ],
 };
