@@ -66,11 +66,9 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
 
   return (
     <motion.article
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      variants={fadeUp}
-      style={{ transitionDelay: `${index * 80}ms` } as React.CSSProperties}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: index * 0.08 }}
       className="flex flex-col gap-6 rounded-2xl border border-border bg-bg-secondary/60 p-7"
     >
       {/* Card header */}
@@ -112,17 +110,10 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
       </div>
 
       {/* Steps */}
-      <motion.ol
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={staggerContainer}
-        className="flex flex-col gap-3"
-      >
+      <ol className="flex flex-col gap-3">
         {platform.steps.map((step, idx) => (
-          <motion.li
+          <li
             key={step.title}
-            variants={staggerItem}
             className="flex gap-4"
           >
             <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border bg-bg-primary text-[11px] font-bold text-muted">
@@ -132,9 +123,9 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
               <p className="text-sm font-semibold text-primary">{step.title}</p>
               <p className="text-sm leading-relaxed text-secondary">{step.body}</p>
             </div>
-          </motion.li>
+          </li>
         ))}
-      </motion.ol>
+      </ol>
 
       {/* Note */}
       {platform.note ? (
