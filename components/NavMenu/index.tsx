@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, Beaker, Shield, Github, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
+import { Home, Beaker, Shield, GitBranch, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
 import { AppleLogo, AndroidLogo } from "@phosphor-icons/react";
 import { Divide as Hamburger } from "hamburger-react";
 import { NAV, type NavLink } from "@/lib/content";
@@ -43,7 +43,7 @@ const itemVariants = {
 const LINK_ICONS: Record<string, React.ElementType> = {
   Home,
   "Beta Programs": Beaker,
-  GitHub: Github,
+  GitHub: GitBranch,
   "Privacy Policy": Shield,
   Support: LifeBuoy,
   "Report a bug": Bug,
