@@ -22,7 +22,7 @@ export default function GlobalError({
                 <p className="text-xs uppercase tracking-[0.26em] text-accent-secondary">
                   Global error
                 </p>
-                <h1 className="text-balance text-4xl font-semibold tracking-[-0.05em] text-primary sm:text-5xl">
+                <h1 className="text-balance text-4xl font-semibold tracking-tighter text-primary sm:text-5xl">
                   Something went wrong
                 </h1>
                 <p className="mx-auto max-w-xl leading-7 text-secondary">

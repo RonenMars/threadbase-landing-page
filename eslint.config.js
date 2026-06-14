@@ -1,15 +1,27 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import nextTs from "eslint-config-next/typescript";
-import nextVitals from "eslint-config-next/core-web-vitals";
+import tseslint from "typescript-eslint";
+import reactHooks from "eslint-plugin-react-hooks";
+import next from "@next/eslint-plugin-next";
 import tailwindCanonicalClasses from "eslint-plugin-tailwind-canonical-classes";
 
 export default defineConfig([
-  ...nextVitals,
-  ...nextTs,
+  ...tseslint.configs.recommended,
+  {
+    plugins: {
+      "react-hooks": reactHooks,
+      "@next/next": next,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      ...next.configs.recommended.rules,
+      ...next.configs["core-web-vitals"].rules,
+    },
+  },
   ...tailwindCanonicalClasses.configs["flat/recommended"],
   globalIgnores([
     ".next/**",
     ".claude/**",
+    ".remember/**",
     "node_modules/**",
     ".vercel/**",
     "dist/**",
@@ -20,12 +32,14 @@ export default defineConfig([
   ]),
   {
     rules: {
-      "tailwind-canonical-classes/tailwind-canonical-classes": [
+"tailwind-canonical-classes/tailwind-canonical-classes": [
         "warn",
         {
           cssPath: "./app/globals.css",
         },
       ],
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-unused-expressions": "warn",
     },
   },
 ]);
