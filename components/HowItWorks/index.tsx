@@ -30,7 +30,7 @@ export function HowItWorks({ content }: HowItWorksProps): React.JSX.Element {
           </p>
           <h2
             id="how-it-works-heading"
-            className="text-balance text-3xl font-semibold tracking-[-0.05em] text-primary sm:text-4xl lg:text-5xl"
+            className="text-balance text-3xl font-semibold tracking-tighter text-primary sm:text-4xl lg:text-5xl"
           >
             {content.heading}
           </h2>

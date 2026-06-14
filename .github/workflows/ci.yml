@@ -8,16 +8,16 @@ on:
 
 jobs:
   # Decide whether to skip the heavy CI work. The required status checks
-  # (Lint, Build, Test (Node 20), Test (Node 22)) are enforced by branch
-  # protection, so the jobs below must ALWAYS run and report success — a job
-  # skipped via a job-level `if:` reports "skipped", which does NOT satisfy a
-  # required check and would leave the PR un-mergeable forever. Instead each
-  # job checks out (cheap, and required so the local composite action exists)
-  # and then runs a single guarded `run-ci` step. When the bracketed tag
-  # `[skip-ci]` is present in the latest commit message, the PR title, or the
-  # PR body, that one step is skipped, the job still succeeds, and the check
-  # context goes green in seconds. The tag is bracketed (not a bare `--skip-ci`)
-  # so prose that merely mentions it does not accidentally trip the skip.
+  # (Lint, Build, Test (Node 24)) are enforced by branch protection, so the
+  # jobs below must ALWAYS run and report success — a job skipped via a
+  # job-level `if:` reports "skipped", which does NOT satisfy a required check
+  # and would leave the PR un-mergeable forever. Instead each job checks out
+  # (cheap, and required so the local composite action exists) and then runs a
+  # single guarded `run-ci` step. When the bracketed tag `[skip-ci]` is present
+  # in the latest commit message, the PR title, or the PR body, that one step
+  # is skipped, the job still succeeds, and the check context goes green in
+  # seconds. The tag is bracketed (not a bare `--skip-ci`) so prose that merely
+  # mentions it does not accidentally trip the skip.
   gate:
     name: Gate
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
     needs: [gate, lint, setup]
     strategy:
       matrix:
-        node-version: [20, 22]
+        node-version: [24]
     steps:
       - uses: actions/checkout@v4
 
