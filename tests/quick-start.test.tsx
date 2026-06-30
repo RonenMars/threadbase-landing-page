@@ -13,7 +13,7 @@ describe("QuickStart", () => {
 
   it("renders the brew install line", () => {
     render(<QuickStart content={QUICK_START} />);
-    expect(screen.getByText(/brew install threadbase-streamer/)).toBeInTheDocument();
+    expect(screen.getByText(/brew install tb-streamer/)).toBeInTheDocument();
   });
 
   it("renders Linux, Windows, and Android inline links below the code block", () => {

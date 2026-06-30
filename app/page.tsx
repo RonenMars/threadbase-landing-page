@@ -5,6 +5,7 @@ import { Hero } from "@/components/Hero";
 import { HonestCons } from "@/components/HonestCons";
 import { ProblemSection } from "@/components/ProblemSection";
 import { QuickStart } from "@/components/QuickStart";
+import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import {
   FEATURES,
   FEATURES_SECTION,
@@ -16,6 +17,8 @@ import {
   PROBLEM_ITEMS,
   PROBLEM_SECTION,
   QUICK_START,
+  ROADMAP_MILESTONES,
+  ROADMAP_SECTION,
 } from "@/lib/content";
 
 export default function Home(): React.JSX.Element {
@@ -28,6 +31,7 @@ export default function Home(): React.JSX.Element {
         <FeaturesGrid features={FEATURES} section={FEATURES_SECTION} />
 
         <HonestCons items={HONEST_CONS} section={HONEST_CONS_SECTION} />
+        <RoadmapTeaser milestones={ROADMAP_MILESTONES} section={ROADMAP_SECTION} />
         <QuickStart content={QUICK_START} howItWorks={HOW_IT_WORKS} />
       </main>
       <Footer footer={FOOTER} />

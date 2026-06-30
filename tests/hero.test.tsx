@@ -20,14 +20,14 @@ describe("Hero", () => {
   it("renders 3 platform badges", () => {
     render(<Hero hero={HERO} />);
     expect(screen.getByText(/iOS · TestFlight beta/)).toBeInTheDocument();
-    expect(screen.getByText(/Android · coming days/)).toBeInTheDocument();
+    expect(screen.getByText(/Android · closed testing/)).toBeInTheDocument();
     expect(screen.getByText(/macOS · Linux · Windows streamer/)).toBeInTheDocument();
   });
 
   it("renders both CTAs", () => {
     render(<Hero hero={HERO} />);
     expect(screen.getByText(/Join TestFlight/i)).toBeInTheDocument();
-    expect(screen.getByText(/brew install threadbase-streamer/)).toBeInTheDocument();
+    expect(screen.getByText(/brew install tb-streamer/)).toBeInTheDocument();
   });
 
   it("does NOT render the old workflow steps or shell stages", () => {
@@ -45,11 +45,11 @@ describe("Hero", () => {
 
     render(<Hero hero={HERO} />);
     const copyBtn = screen.getByRole("button", {
-      name: /^copy: brew install threadbase-streamer$/i,
+      name: /^copy: brew install tb-streamer$/i,
     });
     fireEvent.click(copyBtn);
 
-    expect(writeText).toHaveBeenCalledWith("brew install threadbase-streamer");
+    expect(writeText).toHaveBeenCalledWith("brew install tb-streamer");
     // After click, the aria-label flips to indicate the copied state.
     expect(
       screen.getByRole("button", { name: /copied to clipboard/i }),

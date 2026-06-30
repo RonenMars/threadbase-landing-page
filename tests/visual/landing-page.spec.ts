@@ -109,7 +109,7 @@ test("hero copy button shows the brew command", async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
   const copyBtn = page.getByRole("button", {
-    name: /copy: brew install threadbase-streamer/i,
+    name: /copy: brew install tb-streamer/i,
   });
   await expect(copyBtn).toBeVisible();
 });
