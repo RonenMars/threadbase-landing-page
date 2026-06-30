@@ -307,6 +307,12 @@ export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
     detail:
       "The streamer reads Codex CLI sessions today. Full interactive support, plus Continue and OpenCode, are next.",
   },
+  {
+    status: "future",
+    title: "Durable multi-agent orchestration",
+    detail:
+      "A Temporal-backed pipeline that runs incoming tasks through worker → reviewer → sign-off agent stages, each independently retriable and crash-resilient — no hand-rolled queue.",
+  },
 ];
 
 export const QUICK_START: QuickStartContent = {
