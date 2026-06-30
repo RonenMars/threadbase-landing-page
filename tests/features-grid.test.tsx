@@ -17,8 +17,8 @@ describe("FeaturesGrid", () => {
     expect(screen.getByText(/Tool-call approvals/i)).toBeInTheDocument();
     expect(screen.getByText(/Multi-server pairing/i)).toBeInTheDocument();
     expect(screen.getByText(/Push notifications/i)).toBeInTheDocument();
-    expect(screen.getByText(/Mission Control/i)).toBeInTheDocument();
-    expect(screen.getByText(/Voice prompts/i)).toBeInTheDocument();
+    expect(screen.getByText(/Native interactive prompts/i)).toBeInTheDocument();
+    expect(screen.getByText(/Resilient by default/i)).toBeInTheDocument();
   });
 
   it("renders main icons as SVGs (Phosphor)", () => {

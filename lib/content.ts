@@ -105,7 +105,7 @@ export const HERO: HeroContent = {
   subheadline: "",
   badges: [
     { label: "iOS · TestFlight beta" },
-    { label: "Android · coming days" },
+    { label: "Android · closed testing" },
     { label: "macOS · Linux · Windows streamer" },
   ],
   ctas: [
@@ -115,7 +115,7 @@ export const HERO: HeroContent = {
       variant: "primary",
     },
     {
-      label: "brew install threadbase-streamer",
+      label: "brew install tb-streamer",
       href: "#quick-start",
       variant: "outline",
     },
@@ -168,7 +168,7 @@ export const HOW_IT_WORKS: HowItWorksContent = {
     },
   ],
   trustNote:
-    "End-to-end encrypted pairing via NaCl. The streamer never talks to a Threadbase server.",
+    "End-to-end encrypted pairing via NaCl. The streamer never talks to a Threadbase server, and it auto-updates itself in the background.",
 };
 
 export const FEATURES_SECTION: SectionContent = {
@@ -181,7 +181,7 @@ export const FEATURES: FeatureItem[] = [
     icon: "MonitorPlay",
     title: "Live PTY streaming",
     description:
-      "Watch your laptop's terminal output stream to your phone character-by-character. Cursor, ANSI colors, redraws — exactly as they appear on your screen.",
+      "Watch your laptop's terminal stream to your phone character-by-character. Cursor, colors, redraws — exactly as they appear.",
     surfaceTags: ["Laptop", "DeviceMobile"],
   },
   {
@@ -202,21 +202,21 @@ export const FEATURES: FeatureItem[] = [
     icon: "BellRinging",
     title: "Push notifications",
     description:
-      "Get pinged when Claude finishes a long task, errors out, or asks a question. Stop refreshing.",
+      "Get pinged when Claude finishes a long task, errors out, or asks a question. Stop refreshing the app to check.",
     surfaceTags: ["DeviceMobile"],
   },
   {
-    icon: "Compass",
-    title: "Mission Control",
+    icon: "ListChecks",
+    title: "Native interactive prompts",
     description:
-      "One screen, every live session, across every machine. Color-coded by status. Tap to dive in.",
+      "When Claude asks you to pick from options, answer with a tap — not by typing into a terminal.",
     surfaceTags: ["DeviceMobile"],
   },
   {
-    icon: "Microphone",
-    title: "Voice prompts",
+    icon: "ArrowsClockwise",
+    title: "Resilient by default",
     description:
-      "Tap to dictate. On-device Whisper transcribes. Type-free orchestration while you walk.",
+      "Lose signal in the elevator? Threadbase resumes paused sends and refetches the moment you're back online.",
     surfaceTags: ["DeviceMobile"],
   },
 ];
@@ -227,14 +227,9 @@ export const HONEST_CONS_SECTION: SectionContent = {
 
 export const HONEST_CONS: HonestCon[] = [
   {
-    title: "iOS-first. Android is days away.",
+    title: "Closed beta on both platforms",
     description:
-      "The iOS app is on TestFlight today. Android lands on Google Play this week.",
-  },
-  {
-    title: "Closed TestFlight beta",
-    description:
-      "iOS access is limited while we stabilize. Request access via the TestFlight link; we approve in batches.",
+      "iOS access is limited while we stabilize — request it via the TestFlight link. Android is in closed testing on Google Play; join the testers group on the Android beta page.",
   },
   {
     title: "Your phone and laptop need to reach each other",
@@ -250,7 +245,7 @@ export const HONEST_CONS: HonestCon[] = [
 
 export const ROADMAP_SECTION: SectionContent = {
   eyebrow: "What's next",
-  heading: "Eight things we're building.",
+  heading: "Five things we're building.",
 };
 
 export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
@@ -267,14 +262,20 @@ export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
       "Find that one message from 3 weeks ago across every paired server. Already functional.",
   },
   {
-    status: "this-week",
-    title: "Android app on Google Play",
-    detail: "Closing the mobile cross-platform gap.",
+    status: "shipped",
+    title: "Native interactive prompts",
+    detail:
+      "Answer Claude's multiple-choice questions by tapping a native form — no typing into the PTY.",
   },
   {
-    status: "this-week",
+    status: "shipped",
+    title: "Android app on Google Play",
+    detail: "Closed testing track. Closing the mobile cross-platform gap.",
+  },
+  {
+    status: "shipped",
     title: "Homebrew formula for the streamer",
-    detail: "`brew install threadbase-streamer` replaces the manual GitHub Release download on macOS.",
+    detail: "`brew tap RonenMars/threadbase && brew install tb-streamer` replaces the manual GitHub Release download on macOS.",
   },
   {
     status: "next",
@@ -296,9 +297,9 @@ export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
   },
   {
     status: "later",
-    title: "Sync mode (native prompt forms instead of typing into PTY)",
+    title: "Sync mode + multi-select prompts",
     detail:
-      "Render Claude Code's interactive prompts as native phone forms instead of typing into the terminal.",
+      "JSONL-sourced message bubbles, plus multi-select support for interactive prompts beyond today's single-choice forms.",
   },
   {
     status: "future",
@@ -312,11 +313,13 @@ export const QUICK_START: QuickStartContent = {
   eyebrow: "Installation",
   heading: "Get up and running in under a minute.",
   steps: [
-    "# 1. Install the streamer on your Mac",
-    "brew install threadbase-streamer",
+    "# 1. Install the streamer (macOS or Linux)",
+    "brew tap RonenMars/threadbase",
+    "brew install tb-streamer",
     "",
-    "# 2. Start it",
-    "threadbase-streamer start",
+    "# 2. One-time setup, then start it (also starts on login)",
+    "tb-streamer set-key <YOUR_API_KEY>",
+    "brew services start tb-streamer",
     "",
     "# 3. Open the Threadbase app on your phone",
     "#    Tap \"Pair\" → scan the QR shown in your terminal",

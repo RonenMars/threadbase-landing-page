@@ -39,7 +39,7 @@ describe("Home page", () => {
 
   it("renders the brew install command in the quick start", () => {
     render(<Home />);
-    expect(screen.getAllByText(/brew install threadbase-streamer/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/brew install tb-streamer/).length).toBeGreaterThan(0);
   });
 
   it("does NOT render any of the old removed sections", () => {

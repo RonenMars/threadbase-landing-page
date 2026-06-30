@@ -24,7 +24,7 @@ describe("lib/content.ts", () => {
     expect(HERO.badges).toHaveLength(3);
     expect(HERO.badges.map((b) => b.label)).toEqual([
       "iOS · TestFlight beta",
-      "Android · coming days",
+      "Android · closed testing",
       "macOS · Linux · Windows streamer",
     ]);
   });
@@ -33,7 +33,7 @@ describe("lib/content.ts", () => {
     expect(HERO.ctas).toHaveLength(2);
     expect(HERO.ctas[0]).toMatchObject({ label: "Join TestFlight", variant: "primary" });
     expect(HERO.ctas[1]).toMatchObject({
-      label: "brew install threadbase-streamer",
+      label: "brew install tb-streamer",
       variant: "outline",
     });
   });
@@ -69,9 +69,9 @@ describe("lib/content.ts", () => {
     });
   });
 
-  it("HONEST_CONS has the 4 mobile-streamer-specific cons", () => {
-    expect(HONEST_CONS).toHaveLength(4);
-    expect(HONEST_CONS[0].title).toContain("iOS-first");
+  it("HONEST_CONS has the 3 mobile-streamer-specific cons", () => {
+    expect(HONEST_CONS).toHaveLength(3);
+    expect(HONEST_CONS[0].title).toContain("Closed beta");
   });
 
   it("FOOTER links cover the core surfaces: GitHub, betas, issues, support, privacy", () => {
