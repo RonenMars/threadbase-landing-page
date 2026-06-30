@@ -5,7 +5,6 @@ import type { Icon } from "@phosphor-icons/react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { FeatureItem, SectionContent } from "@/lib/content";
 
@@ -40,11 +39,6 @@ export function FeaturesGrid({
     >
       <div className="container-shell">
         <div className="mb-12 max-w-3xl space-y-4">
-          {section.eyebrow ? (
-            <Badge className="section-kicker" variant="primary">
-              {section.eyebrow}
-            </Badge>
-          ) : null}
           <h2 className="text-balance text-3xl font-semibold tracking-tighter text-primary sm:text-4xl lg:text-5xl">
             {section.heading}
           </h2>
