@@ -237,15 +237,15 @@ export const HONEST_CONS: HonestCon[] = [
       "Same Wi-Fi network, or a VPN that bridges them. There's no relay server in the middle — that's the point.",
   },
   {
-    title: "Claude Code only, for now",
+    title: "Codex CLI sessions are read-only",
     description:
-      "The streamer parses Claude Code sessions. Codex CLI, Continue, OpenCode are on the longer roadmap, not v1.",
+      "The streamer can read Codex CLI sessions, but can't resume them yet — Claude Code is still the only fully interactive agent. Continue and OpenCode are on the longer roadmap.",
   },
 ];
 
 export const ROADMAP_SECTION: SectionContent = {
   eyebrow: "What's next",
-  heading: "Five things we're building.",
+  heading: "Four things we're building.",
 };
 
 export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
@@ -302,10 +302,10 @@ export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
       "JSONL-sourced message bubbles, plus multi-select support for interactive prompts beyond today's single-choice forms.",
   },
   {
-    status: "future",
-    title: "Multi-assistant support (Codex CLI, Continue, OpenCode)",
+    status: "shipped",
+    title: "Codex CLI support (read-only)",
     detail:
-      "Same local-first approach, more agents. After Claude Code is rock-solid.",
+      "The streamer reads Codex CLI sessions today. Full interactive support, plus Continue and OpenCode, are next.",
   },
 ];
 
