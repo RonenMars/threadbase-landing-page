@@ -53,5 +53,10 @@
     "typescript-eslint": "^8.61.1",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.1": true,
+    "sharp@0.34.5": true,
+    "fsevents@2.3.3": true
   }
 }
