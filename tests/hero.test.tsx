@@ -14,7 +14,7 @@ describe("Hero", () => {
 
   it("renders the eyebrow", () => {
     render(<Hero hero={HERO} />);
-    expect(screen.getByText(/claude code, untethered/i)).toBeInTheDocument();
+    expect(screen.getByText(/claude code \+ codex cli, untethered/i)).toBeInTheDocument();
   });
 
   it("renders 3 platform badges", () => {

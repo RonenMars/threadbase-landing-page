@@ -96,11 +96,11 @@ export interface RoadmapMilestone {
 export const SITE_METADATA: SiteMetadata = {
   title: "Threadbase — Your terminal. In your pocket. Live.",
   description:
-    "Threadbase mirrors your Claude Code sessions to your phone in real time. Approve tool calls, redirect the agent, and monitor long runs from anywhere.",
+    "Threadbase mirrors Claude Code and Codex CLI sessions to your phone in real time. Approve tool calls, redirect the agent, and monitor long runs from anywhere.",
 };
 
 export const HERO: HeroContent = {
-  eyebrow: "Claude Code, untethered",
+  eyebrow: "Claude Code + Codex CLI, untethered",
   headline: "Your terminal. Live. In your pocket.",
   subheadline: "",
   badges: [
@@ -123,7 +123,7 @@ export const HERO: HeroContent = {
 };
 
 export const PROBLEM_SECTION: SectionContent = {
-  heading: "Three reasons Claude Code feels trapped in your laptop.",
+  heading: "Three reasons agent sessions feel trapped in your laptop.",
 };
 
 export const PROBLEM_ITEMS: ProblemItem[] = [
@@ -131,13 +131,13 @@ export const PROBLEM_ITEMS: ProblemItem[] = [
     icon: "Coffee",
     title: "You're not at your laptop.",
     description:
-      "Lunch. Bed. The gym. Walking the dog. Claude is mid-task, blocked on your approval — and you're across the room or across the city.",
+      "Lunch. Bed. The gym. Walking the dog. An agent is mid-task, blocked on your approval — and you're across the room or across the city.",
   },
   {
     icon: "Bell",
     title: "Long-running agents waste your day.",
     description:
-      "A test suite finishes after 12 minutes. A migration completes. Claude asks \"should I commit?\" You don't see it until you sit back down.",
+      "A test suite finishes after 12 minutes. A migration completes. Claude or Codex asks \"should I commit?\" You don't see it until you sit back down.",
   },
   {
     icon: "MapPin",
@@ -154,7 +154,7 @@ export const HOW_IT_WORKS: HowItWorksContent = {
     {
       title: "Run the streamer on your Mac, Linux box, or Windows PC",
       description:
-        "One install. It runs in the background and exposes your Claude Code sessions to authorized devices on your network.",
+        "One install. It runs in the background and exposes your Claude Code and Codex CLI sessions to authorized devices on your network.",
     },
     {
       title: "Pair your phone in 10 seconds",
@@ -162,8 +162,8 @@ export const HOW_IT_WORKS: HowItWorksContent = {
         "Open the Threadbase app, scan a QR code from the streamer. End-to-end encrypted, paired forever.",
     },
     {
-      title: "Use Claude from anywhere",
-      description: "Your phone is now a live window into your laptop.",
+      title: "Use your agent from anywhere",
+      description: "Your phone is now a live window into your laptop sessions.",
       postscript: "Pair more machines — swipe between them.",
     },
   ],
@@ -179,16 +179,16 @@ export const FEATURES_SECTION: SectionContent = {
 export const FEATURES: FeatureItem[] = [
   {
     icon: "MonitorPlay",
-    title: "Live PTY streaming",
+    title: "Claude + Codex live sessions",
     description:
-      "Watch your laptop's terminal stream to your phone character-by-character. Cursor, colors, redraws — exactly as they appear.",
+      "Watch Claude Code or start a new Codex CLI session from your phone, with terminal output streamed character-by-character.",
     surfaceTags: ["Laptop", "DeviceMobile"],
   },
   {
     icon: "CheckSquare",
-    title: "Tool-call approvals",
+    title: "Remote session control",
     description:
-      "When Claude asks to run a Bash command, edit a file, or call a tool, approve from your phone with a tap.",
+      "Approve tool calls, answer prompts, send follow-ups, or stop a runaway session without getting back to your laptop.",
     surfaceTags: ["DeviceMobile"],
   },
   {
@@ -207,9 +207,9 @@ export const FEATURES: FeatureItem[] = [
   },
   {
     icon: "ListChecks",
-    title: "Native interactive prompts",
+    title: "Native prompt cards",
     description:
-      "When Claude asks you to pick from options, answer with a tap — not by typing into a terminal.",
+      "When Claude asks for a choice or permission, answer with a native card — not by typing into a terminal.",
     surfaceTags: ["DeviceMobile"],
   },
   {
@@ -237,15 +237,15 @@ export const HONEST_CONS: HonestCon[] = [
       "Same Wi-Fi network, or a VPN that bridges them. There's no relay server in the middle — that's the point.",
   },
   {
-    title: "Codex CLI sessions are read-only",
+    title: "Codex support is newer than Claude support",
     description:
-      "The streamer can read Codex CLI sessions, but can't resume them yet — Claude Code is still the only fully interactive agent. Continue and OpenCode are on the longer roadmap.",
+      "Threadbase can read Codex CLI history and start new Codex sessions from mobile. Codex resume and native prompt cards are still catching up.",
   },
 ];
 
 export const ROADMAP_SECTION: SectionContent = {
   eyebrow: "What's next",
-  heading: "Four things we're building.",
+  heading: "What's shipped and what's next.",
 };
 
 export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
@@ -263,9 +263,9 @@ export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
   },
   {
     status: "shipped",
-    title: "Native interactive prompts",
+    title: "Native prompt cards",
     detail:
-      "Answer Claude's multiple-choice questions by tapping a native form — no typing into the PTY.",
+      "Answer Claude's questions and permission gates by tapping a native form — no typing into the PTY.",
   },
   {
     status: "shipped",
@@ -303,9 +303,9 @@ export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
   },
   {
     status: "shipped",
-    title: "Codex CLI support (read-only)",
+    title: "Codex CLI live sessions",
     detail:
-      "The streamer reads Codex CLI sessions today. Full interactive support, plus Continue and OpenCode, are next.",
+      "Threadbase reads Codex CLI history and can start new Codex sessions from mobile. Resume support is still on the follow-up list.",
   },
   {
     status: "future",
@@ -319,12 +319,18 @@ export const QUICK_START: QuickStartContent = {
   eyebrow: "Installation",
   heading: "Get up and running in under a minute.",
   steps: [
-    "# 1. Install the streamer (macOS or Linux)",
+    "# 1. Install the streamer",
+    "npm install -g @threadbase-sh/streamer",
+    "",
+    "# Or use Homebrew on macOS/Linux",
     "brew tap RonenMars/threadbase",
     "brew install tb-streamer",
     "",
-    "# 2. One-time setup, then start it (also starts on login)",
+    "# 2. One-time setup, then start it",
     "tb-streamer set-key <YOUR_API_KEY>",
+    "tb-streamer serve",
+    "",
+    "# Homebrew service mode also starts on login",
     "brew services start tb-streamer",
     "",
     "# 3. Open the Threadbase app on your phone",
