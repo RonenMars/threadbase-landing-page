@@ -15,7 +15,7 @@ describe("HowItWorks", () => {
     render(<HowItWorks content={HOW_IT_WORKS} />);
     expect(screen.getByText(/Run the streamer on your Mac/i)).toBeInTheDocument();
     expect(screen.getByText(/Pair your phone in 10 seconds/i)).toBeInTheDocument();
-    expect(screen.getByText(/Use Claude from anywhere/i)).toBeInTheDocument();
+    expect(screen.getByText(/Use your agent from anywhere/i)).toBeInTheDocument();
   });
 
   it("renders single-digit number badges (1, 2, 3 — not 01, 02, 03)", () => {

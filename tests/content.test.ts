@@ -72,6 +72,21 @@ describe("lib/content.ts", () => {
   it("HONEST_CONS has the 3 mobile-streamer-specific cons", () => {
     expect(HONEST_CONS).toHaveLength(3);
     expect(HONEST_CONS[0].title).toContain("Closed beta");
+    expect(HONEST_CONS[2].title).toContain("Codex support is newer");
+    expect(HONEST_CONS[2].description).toContain("start new Codex sessions");
+  });
+
+  it("front-page copy no longer describes Codex support as read-only", () => {
+    const frontPageCopy = [
+      SITE_METADATA.description,
+      HERO.eyebrow,
+      ...FEATURES.map((feature) => `${feature.title} ${feature.description}`),
+      ...HONEST_CONS.map((item) => `${item.title} ${item.description}`),
+      ...ROADMAP_MILESTONES.map((milestone) => `${milestone.title} ${milestone.detail}`),
+    ].join(" ");
+
+    expect(frontPageCopy.toLowerCase()).toContain("codex");
+    expect(frontPageCopy.toLowerCase()).not.toContain("read-only");
   });
 
   it("FOOTER links cover the core surfaces: GitHub, betas, issues, support, privacy", () => {

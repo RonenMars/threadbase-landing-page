@@ -13,11 +13,11 @@ describe("FeaturesGrid", () => {
 
   it("renders all 6 feature titles", () => {
     render(<FeaturesGrid features={FEATURES} section={FEATURES_SECTION} />);
-    expect(screen.getByText(/Live PTY streaming/i)).toBeInTheDocument();
-    expect(screen.getByText(/Tool-call approvals/i)).toBeInTheDocument();
+    expect(screen.getByText(/Claude \+ Codex live sessions/i)).toBeInTheDocument();
+    expect(screen.getByText(/Remote session control/i)).toBeInTheDocument();
     expect(screen.getByText(/Multi-server pairing/i)).toBeInTheDocument();
     expect(screen.getByText(/Push notifications/i)).toBeInTheDocument();
-    expect(screen.getByText(/Native interactive prompts/i)).toBeInTheDocument();
+    expect(screen.getByText(/Native prompt cards/i)).toBeInTheDocument();
     expect(screen.getByText(/Resilient by default/i)).toBeInTheDocument();
   });
 
