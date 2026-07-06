@@ -26,7 +26,8 @@ describe("Hero", () => {
 
   it("renders both CTAs", () => {
     render(<Hero hero={HERO} />);
-    expect(screen.getByText(/Join TestFlight/i)).toBeInTheDocument();
+    const betaCta = screen.getByRole("button", { name: /join the beta/i });
+    expect(betaCta).toHaveAttribute("href", "https://threadbase.sh/betas");
     expect(screen.getByText(/brew install tb-streamer/)).toBeInTheDocument();
   });
 
