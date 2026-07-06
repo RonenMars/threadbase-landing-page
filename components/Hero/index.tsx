@@ -13,6 +13,16 @@ function isAndroidDevice(): boolean {
   return typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
 }
 
+function isIosDevice(): boolean {
+  if (typeof navigator === "undefined") return false;
+
+  const matchesIosMobileUa = /iPad|iPhone|iPod/i.test(navigator.userAgent);
+  const matchesIpadDesktopUa =
+    /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1;
+
+  return matchesIosMobileUa || matchesIpadDesktopUa;
+}
+
 interface HeroProps {
   hero: HeroContent;
 }
@@ -23,6 +33,13 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
   const [copied, setCopied] = useState(false);
   const copyResetRef = useRef<number | null>(null);
   const isAndroid = isAndroidDevice();
+  const isIos = isIosDevice();
+  const primaryCta = hero.ctas.find((cta) => cta.variant === "primary");
+  const primaryCtaHref = isAndroid
+    ? "https://threadbase.sh/android-beta"
+    : isIos
+      ? (primaryCta?.href ?? "https://testflight.apple.com/join/FqdM3mFK")
+      : "https://threadbase.sh/betas";
 
   useEffect(() => {
     return () => {
@@ -139,30 +156,17 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             },
           }}
         >
-          {isAndroid ? (
-            <Button
-              render={<Link href="/android-beta" />}
-              nativeButton={false}
-              className="min-w-50"
-              size="lg"
-              variant="primary"
-            >
-              Join the Beta
-            </Button>
-          ) : null}
+          <Button
+            render={<Link href={primaryCtaHref} />}
+            nativeButton={false}
+            className="min-w-50"
+            size="lg"
+            variant="primary"
+          >
+            Join the Beta
+          </Button>
           {hero.ctas.map((cta) =>
-            cta.variant === "primary" ? (
-              <Button
-                key={cta.label}
-                render={<Link href={cta.href} />}
-                nativeButton={false}
-                className={`min-w-50${isAndroid ? " hidden" : ""}`}
-                size="lg"
-                variant="primary"
-              >
-                {cta.label}
-              </Button>
-            ) : (
+            cta.variant === "outline" ? (
               <Button
                 key={cta.label}
                 onClick={() => handleCopyOutlineCta(cta.label)}
@@ -208,7 +212,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
                 </AnimatePresence>
                 <span>{cta.label}</span>
               </Button>
-            ),
+            ) : null,
           )}
         </motion.div>
       </div>
