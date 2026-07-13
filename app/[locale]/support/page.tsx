@@ -86,7 +86,7 @@ export default async function SupportPage({
         {t("privacyBeforeLink")}{" "}
         <Link
           className="font-medium text-accent transition-colors hover:text-accent-hover"
-          href="/privacy"
+          href="/privacy-policy"
         >
           {t("privacyLink")}
         </Link>{" "}
