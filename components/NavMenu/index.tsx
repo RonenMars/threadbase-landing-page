@@ -184,7 +184,7 @@ export function NavMenu(): React.JSX.Element {
           <Hamburger toggled={open} toggle={setOpen} size={18} color="currentColor" />
         </span>
       </button>
-      <div className="fixed right-5 top-5 z-60">
+      <div className="fixed inset-e-5 top-5 z-60">
         <LanguageSwitcher variant="compact" />
       </div>
 

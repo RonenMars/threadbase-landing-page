@@ -102,6 +102,7 @@ function CompactLanguageSwitcher({
         aria-label={ariaLabel}
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
+        dir="ltr"
         className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-bg-secondary/85 px-3 text-xs font-semibold uppercase text-secondary shadow-lg backdrop-blur transition-[border-color,color,box-shadow,transform] duration-300 ease-out hover:border-accent hover:text-primary hover:shadow-[0_8px_24px_-8px_rgba(99,179,255,0.55)] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary"
       >
         <span aria-hidden="true">🌐</span>
@@ -114,7 +115,7 @@ function CompactLanguageSwitcher({
       {open ? (
         <nav
           aria-label={ariaLabel}
-          className="absolute right-0 mt-2 flex min-w-28 flex-col gap-1 rounded-lg border border-border bg-bg-secondary p-1 shadow-2xl"
+          className="absolute inset-e-0 mt-2 flex min-w-28 flex-col gap-1 rounded-lg border border-border bg-bg-secondary p-1 shadow-2xl"
         >
           {selectableLocales.map((targetLocale) => (
             <Link
