@@ -1,11 +1,11 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { Hero } from "@/components/Hero";
-import { HERO } from "@/lib/content";
+import { renderWithIntl } from "@/tests/test-utils";
 
 describe("Hero", () => {
   it("renders the new headline text", () => {
-    render(<Hero hero={HERO} />);
+    renderWithIntl(<Hero />);
     const root = screen.getByRole("banner") ?? document.body;
     expect(root.textContent).toContain("Your terminal.");
     expect(root.textContent).toContain("In your pocket.");
@@ -13,26 +13,26 @@ describe("Hero", () => {
   });
 
   it("renders the eyebrow", () => {
-    render(<Hero hero={HERO} />);
+    renderWithIntl(<Hero />);
     expect(screen.getByText(/claude code \+ codex cli, untethered/i)).toBeInTheDocument();
   });
 
   it("renders 3 platform badges", () => {
-    render(<Hero hero={HERO} />);
+    renderWithIntl(<Hero />);
     expect(screen.getByText(/iOS · TestFlight beta/)).toBeInTheDocument();
     expect(screen.getByText(/Android · closed testing/)).toBeInTheDocument();
     expect(screen.getByText(/macOS · Linux · Windows streamer/)).toBeInTheDocument();
   });
 
   it("renders both CTAs", () => {
-    render(<Hero hero={HERO} />);
+    renderWithIntl(<Hero />);
     const betaCta = screen.getByRole("button", { name: /join the beta/i });
     expect(betaCta).toHaveAttribute("href", "https://threadbase.sh/betas");
     expect(screen.getByText(/brew install tb-streamer/)).toBeInTheDocument();
   });
 
   it("does NOT render the old workflow steps or shell stages", () => {
-    render(<Hero hero={HERO} />);
+    renderWithIntl(<Hero />);
     expect(screen.queryByText(/Decode JSONL/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Command Palette/i)).not.toBeInTheDocument();
   });
@@ -44,7 +44,7 @@ describe("Hero", () => {
       configurable: true,
     });
 
-    render(<Hero hero={HERO} />);
+    renderWithIntl(<Hero />);
     const copyBtn = screen.getByRole("button", {
       name: /^copy: brew install tb-streamer$/i,
     });

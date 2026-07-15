@@ -1,16 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { HowItWorksContent } from "@/lib/content";
+import { useTranslations } from "next-intl";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getHowItWorksContent } from "@/lib/translated-content";
 import { NumberBadge } from "./NumberBadge";
 
-interface HowItWorksProps {
-  content: HowItWorksContent;
-}
+export function HowItWorks(): React.JSX.Element {
+  const { content } = getHowItWorksContent(
+    useTranslations("home.howItWorks"),
+  );
 
-export function HowItWorks({ content }: HowItWorksProps): React.JSX.Element {
   return (
     <section
       id="how-it-works"

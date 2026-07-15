@@ -1,9 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { DeviceMobileCamera, AppleLogo, ArrowSquareOut } from "@phosphor-icons/react";
-import { BETAS_PAGE, type BetaPlatform } from "@/lib/content";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { PageShell } from "@/components/PageShell";
+import type { BetaPlatform } from "@/lib/content";
+import { getBetasPageContent } from "@/lib/translated-content";
 
 const PLATFORM_ICONS: Record<string, React.ElementType> = {
   ios: AppleLogo,
@@ -11,15 +13,17 @@ const PLATFORM_ICONS: Record<string, React.ElementType> = {
 };
 
 export function BetasPage(): React.JSX.Element {
+  const content = getBetasPageContent(useTranslations("pages.betas"));
+
   return (
     <PageShell
-      kicker="Threadbase beta programs"
-      heading={BETAS_PAGE.headline}
-      description={BETAS_PAGE.intro}
+      kicker={content.kicker}
+      heading={content.headline}
+      description={content.intro}
       wide
     >
       <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {BETAS_PAGE.platforms.map((platform, idx) => (
+        {content.platforms.map((platform, idx) => (
           <PlatformCard key={platform.id} platform={platform} index={idx} />
         ))}
       </div>
@@ -60,7 +64,7 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
           className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-[transform,box-shadow] duration-300 ease-out hover:shadow-[0_12px_32px_-12px_rgba(99,179,255,0.7)] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary"
         >
           <span>{platform.primaryCta.label}</span>
-          <ArrowSquareOut size={15} weight="bold" className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5" />
+          <ArrowSquareOut size={15} weight="bold" className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
         </Link>
         {platform.secondaryCta ? (
           <Link

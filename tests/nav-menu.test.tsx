@@ -1,18 +1,38 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { screen, fireEvent } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { NavMenu } from "@/components/NavMenu";
-import { NAV } from "@/lib/content";
+import { NAV_LINK_CONFIG } from "@/lib/content";
+import enMessages from "@/messages/en.json";
+import { renderWithIntl } from "@/tests/test-utils";
 
 describe("NavMenu", () => {
   it("renders a hamburger button with an accessible label", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     const trigger = screen.getByRole("button", { name: /open menu/i });
     expect(trigger).toBeInTheDocument();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
 
+  it("renders a compact language selector before the menu opens", () => {
+    renderWithIntl(<NavMenu />);
+    expect(screen.getByRole("button", { name: /change language/i })).toHaveTextContent("🌐EN▾");
+  });
+
+  it("hides the current language inside the compact dropdown", () => {
+    renderWithIntl(<NavMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /change language/i }));
+    expect(screen.queryByRole("link", { name: enMessages.languageSwitcher.localeLabels.en })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: enMessages.languageSwitcher.localeLabels.ru })).toBeInTheDocument();
+  });
+
+  it("keeps the current language in the menu selector", () => {
+    renderWithIntl(<NavMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+    expect(screen.getByRole("link", { name: enMessages.languageSwitcher.localeLabels.en })).toBeInTheDocument();
+  });
+
   it("opens the menu when the hamburger is clicked", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
     expect(trigger).toHaveAttribute("aria-expanded", "true");
@@ -20,16 +40,25 @@ describe("NavMenu", () => {
     expect(trigger).toHaveAttribute("aria-label", "Close menu");
   });
 
+  it("remembers manual locale selection", () => {
+    document.cookie = "NEXT_LOCALE=; path=/; max-age=0";
+    renderWithIntl(<NavMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /change language/i }));
+    fireEvent.click(screen.getByRole("link", { name: enMessages.languageSwitcher.localeLabels.ru }));
+    expect(document.cookie).toContain("NEXT_LOCALE=ru");
+  });
+
   it("renders all nav links from content when open", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-    for (const link of NAV.links) {
-      expect(screen.getByRole("link", { name: link.label })).toHaveAttribute("href", link.href);
+    for (const link of NAV_LINK_CONFIG) {
+      const label = enMessages.nav.links[link.id];
+      expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", link.href);
     }
   });
 
   it("closes when the user presses Escape", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
     expect(trigger).toHaveAttribute("aria-expanded", "true");
@@ -38,10 +67,10 @@ describe("NavMenu", () => {
   });
 
   it("closes when a nav link is activated", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
-    const firstLink = screen.getByRole("link", { name: NAV.links[0].label });
+    const firstLink = screen.getByRole("link", { name: enMessages.nav.links.home });
     fireEvent.click(firstLink);
     expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
@@ -49,7 +78,7 @@ describe("NavMenu", () => {
   // Variant F — Dropbox-style panel specific tests
 
   it("panel has role=dialog and aria-modal=true when open (Variant F: slide-in panel)", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     const panel = screen.getByRole("dialog");
     expect(panel).toBeInTheDocument();
@@ -57,7 +86,7 @@ describe("NavMenu", () => {
   });
 
   it("renders all nav links in a single flat list when open (Variant F: flat layout)", () => {
-    render(<NavMenu />);
+    renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /beta programs/i })).toBeInTheDocument();
