@@ -19,10 +19,12 @@ export interface HeroContent {
   subheadline: string;
   badges: HeroBadge[];
   ctas: HeroCta[];
+  primaryButtonLabel: string;
+  copiedLabel: string;
+  copyAriaLabel: string;
 }
 
 export interface ProblemItem {
-  /** Phosphor icon name (e.g., "Coffee", "Bell", "MapPin"). Resolved by the component. */
   icon: string;
   title: string;
   description: string;
@@ -31,7 +33,6 @@ export interface ProblemItem {
 export interface HowItWorksStep {
   title: string;
   description: string;
-  /** Optional italic post-script line below the description (used for the "swipe between servers" bonus on step 3). */
   postscript?: string;
 }
 
@@ -43,11 +44,9 @@ export interface HowItWorksContent {
 }
 
 export interface FeatureItem {
-  /** Phosphor icon name. */
   icon: string;
   title: string;
   description: string;
-  /** Surface tags (Phosphor icon names) shown top-right of the card. Typically 1 or 2 entries. */
   surfaceTags: string[];
 }
 
@@ -59,15 +58,14 @@ export interface HonestCon {
 export interface QuickStartContent {
   eyebrow: string;
   heading: string;
-  /** Each entry is a line of the single code block. Empty strings render as blank lines. */
   steps: string[];
-  /** Inline links shown below the code block (Linux, Windows, Android). */
   links: Array<{ label: string; href: string }>;
 }
 
 export interface FooterLink {
   label: string;
   href: string;
+  external?: boolean;
 }
 
 export interface FooterContent {
@@ -75,7 +73,6 @@ export interface FooterContent {
   licenseText: string;
   tagline: string;
   disclaimer: string;
-  githubUrl: string;
   links: FooterLink[];
 }
 
@@ -93,323 +90,20 @@ export interface RoadmapMilestone {
   detail: string;
 }
 
-export const SITE_METADATA: SiteMetadata = {
-  title: "Threadbase — Your terminal. In your pocket. Live.",
-  description:
-    "Threadbase mirrors Claude Code and Codex CLI sessions to your phone in real time. Approve tool calls, redirect the agent, and monitor long runs from anywhere.",
-};
-
-export const HERO: HeroContent = {
-  eyebrow: "Claude Code + Codex CLI, untethered",
-  headline: "Your terminal. Live. In your pocket.",
-  subheadline: "",
-  badges: [
-    { label: "iOS · TestFlight beta" },
-    { label: "Android · closed testing" },
-    { label: "macOS · Linux · Windows streamer" },
-  ],
-  ctas: [
-    {
-      label: "Join TestFlight",
-      href: "https://testflight.apple.com/join/FqdM3mFK",
-      variant: "primary",
-    },
-    {
-      label: "brew install tb-streamer",
-      href: "#quick-start",
-      variant: "outline",
-    },
-  ],
-};
-
-export const PROBLEM_SECTION: SectionContent = {
-  heading: "Three reasons agent sessions feel trapped in your laptop.",
-};
-
-export const PROBLEM_ITEMS: ProblemItem[] = [
-  {
-    icon: "Coffee",
-    title: "You're not at your laptop.",
-    description:
-      "Lunch. Bed. The gym. Walking the dog. An agent is mid-task, blocked on your approval — and you're across the room or across the city.",
-  },
-  {
-    icon: "Bell",
-    title: "Long-running agents waste your day.",
-    description:
-      "A test suite finishes after 12 minutes. A migration completes. Claude or Codex asks \"should I commit?\" You don't see it until you sit back down.",
-  },
-  {
-    icon: "MapPin",
-    title: "Your terminal is glued to one machine.",
-    description:
-      "The session you started on your iMac doesn't follow you to the MacBook. Your dev environment is wherever you last sat down.",
-  },
-];
-
-export const HOW_IT_WORKS: HowItWorksContent = {
-  eyebrow: "How it works",
-  heading: "Three steps. Ten seconds. Forever paired.",
-  steps: [
-    {
-      title: "Run the streamer on your Mac, Linux box, or Windows PC",
-      description:
-        "One install. It runs in the background and exposes your Claude Code and Codex CLI sessions to authorized devices on your network.",
-    },
-    {
-      title: "Pair your phone in 10 seconds",
-      description:
-        "Open the Threadbase app, scan a QR code from the streamer. End-to-end encrypted, paired forever.",
-    },
-    {
-      title: "Use your agent from anywhere",
-      description: "Your phone is now a live window into your laptop sessions.",
-      postscript: "Pair more machines — swipe between them.",
-    },
-  ],
-  trustNote:
-    "End-to-end encrypted pairing via NaCl. The streamer never talks to a Threadbase server, and it auto-updates itself in the background.",
-};
-
-export const FEATURES_SECTION: SectionContent = {
-  eyebrow: "Built for mobile-first orchestration",
-  heading: "The phone-shaped tools your laptop was missing.",
-};
-
-export const FEATURES: FeatureItem[] = [
-  {
-    icon: "MonitorPlay",
-    title: "Claude + Codex live sessions",
-    description:
-      "Watch Claude Code or start a new Codex CLI session from your phone, with terminal output streamed character-by-character.",
-    surfaceTags: ["Laptop", "DeviceMobile"],
-  },
-  {
-    icon: "CheckSquare",
-    title: "Remote session control",
-    description:
-      "Approve tool calls, answer prompts, send follow-ups, or stop a runaway session without getting back to your laptop.",
-    surfaceTags: ["DeviceMobile"],
-  },
-  {
-    icon: "Stack",
-    title: "Multi-server pairing",
-    description:
-      "Connect one phone to multiple Macs, Linux boxes, or Windows machines. Switch sessions with a swipe.",
-    surfaceTags: ["Laptop", "DeviceMobile"],
-  },
-  {
-    icon: "BellRinging",
-    title: "Push notifications",
-    description:
-      "Get pinged when Claude finishes a long task, errors out, or asks a question. Stop refreshing the app to check.",
-    surfaceTags: ["DeviceMobile"],
-  },
-  {
-    icon: "ListChecks",
-    title: "Native prompt cards",
-    description:
-      "When Claude asks for a choice or permission, answer with a native card — not by typing into a terminal.",
-    surfaceTags: ["DeviceMobile"],
-  },
-  {
-    icon: "ArrowsClockwise",
-    title: "Resilient by default",
-    description:
-      "Lose signal in the elevator? Threadbase resumes paused sends and refetches the moment you're back online.",
-    surfaceTags: ["DeviceMobile"],
-  },
-];
-
-export const HONEST_CONS_SECTION: SectionContent = {
-  heading: "Things you should know before you install.",
-};
-
-export const HONEST_CONS: HonestCon[] = [
-  {
-    title: "Closed beta on both platforms",
-    description:
-      "iOS access is limited while we stabilize — request it via the TestFlight link. Android is in closed testing on Google Play; join the testers group on the Android beta page.",
-  },
-  {
-    title: "Your phone and laptop need to reach each other",
-    description:
-      "Same Wi-Fi network, or a VPN that bridges them. There's no relay server in the middle — that's the point.",
-  },
-  {
-    title: "Codex support is newer than Claude support",
-    description:
-      "Threadbase can read Codex CLI history and start new Codex sessions from mobile. Codex resume and native prompt cards are still catching up.",
-  },
-];
-
-export const ROADMAP_SECTION: SectionContent = {
-  eyebrow: "What's next",
-  heading: "What's shipped and what's next.",
-};
-
-export const ROADMAP_MILESTONES: RoadmapMilestone[] = [
-  {
-    status: "shipped",
-    title: "iOS app + macOS/Linux/Windows streamer",
-    detail:
-      "The four surfaces above. iOS via TestFlight, streamer via GitHub Releases on all three desktop OSes.",
-  },
-  {
-    status: "shipped",
-    title: "Cross-session search",
-    detail:
-      "Find that one message from 3 weeks ago across every paired server. Already functional.",
-  },
-  {
-    status: "shipped",
-    title: "Native prompt cards",
-    detail:
-      "Answer Claude's questions and permission gates by tapping a native form — no typing into the PTY.",
-  },
-  {
-    status: "shipped",
-    title: "Android app on Google Play",
-    detail: "Closed testing track. Closing the mobile cross-platform gap.",
-  },
-  {
-    status: "shipped",
-    title: "Homebrew formula for the streamer",
-    detail: "`brew tap RonenMars/threadbase && brew install tb-streamer` replaces the manual GitHub Release download on macOS.",
-  },
-  {
-    status: "next",
-    title: "Workspace tagging + saved views",
-    detail:
-      "Tag any session, project, or conversation. Save filter+sort combos as named tabs.",
-  },
-  {
-    status: "next",
-    title: "Live Activities + Dynamic Island (iOS)",
-    detail:
-      "Lock-screen session status and Dynamic Island for in-progress sessions.",
-  },
-  {
-    status: "later",
-    title: "Scheduled prompts (\"send tomorrow at 9am\")",
-    detail:
-      "Async-teammate workflow. Compose, schedule, walk away.",
-  },
-  {
-    status: "later",
-    title: "Sync mode + multi-select prompts",
-    detail:
-      "JSONL-sourced message bubbles, plus multi-select support for interactive prompts beyond today's single-choice forms.",
-  },
-  {
-    status: "shipped",
-    title: "Codex CLI live sessions",
-    detail:
-      "Threadbase reads Codex CLI history and can start new Codex sessions from mobile. Resume support is still on the follow-up list.",
-  },
-  {
-    status: "future",
-    title: "Durable multi-agent orchestration",
-    detail:
-      "A Temporal-backed pipeline that runs incoming tasks through worker → reviewer → sign-off agent stages, each independently retriable and crash-resilient — no hand-rolled queue.",
-  },
-];
-
-export const QUICK_START: QuickStartContent = {
-  eyebrow: "Installation",
-  heading: "Get up and running in under a minute.",
-  steps: [
-    "# 1. Install the streamer",
-    "npm install -g @threadbase-sh/streamer",
-    "",
-    "# Or use Homebrew on macOS/Linux",
-    "brew tap RonenMars/threadbase",
-    "brew install tb-streamer",
-    "",
-    "# 2. One-time setup, then start it",
-    "tb-streamer set-key <YOUR_API_KEY>",
-    "tb-streamer serve",
-    "",
-    "# Homebrew service mode also starts on login",
-    "brew services start tb-streamer",
-    "",
-    "# 3. Open the Threadbase app on your phone",
-    "#    Tap \"Pair\" → scan the QR shown in your terminal",
-    "",
-    "# 4. (Optional) Pair more machines",
-    "#    Run the streamer on your Linux box, Windows PC, or a second Mac.",
-    "#    Pair each from the same app. Swipe between sessions.",
-  ],
-  links: [
-    {
-      label: "Linux",
-      href: "https://github.com/RonenMars/threadbase-streamer/releases/latest",
-    },
-    {
-      label: "Windows",
-      href: "https://github.com/RonenMars/threadbase-streamer/releases/latest",
-    },
-    {
-      label: "Android — closed beta",
-      href: "/android-beta",
-    },
-  ],
-};
-
-export const FOOTER: FooterContent = {
-  productName: "Threadbase",
-  licenseText: "MIT License",
-  tagline: "Built for developers who don't want to be chained to their desks.",
-  disclaimer:
-    "Not affiliated with Anthropic. Claude Code is a product of Anthropic.",
-  githubUrl: "https://github.com/RonenMars/threadbase",
-  links: [
-    { label: "Home", href: "/" },
-    { label: "Beta Programs", href: "/betas" },
-    { label: "GitHub", href: "https://github.com/RonenMars/threadbase-mobile" },
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Support", href: "/support" },
-    {
-      label: "Report a bug",
-      href: "https://github.com/RonenMars/threadbase/issues",
-    },
-  ],
-};
-
-export interface NavLink {
-  label: string;
+export interface NavLinkConfig {
+  id: "home" | "betas" | "github" | "privacy" | "support" | "issues";
   href: string;
   external?: boolean;
   separatorBefore?: boolean;
   betaIcons?: boolean;
 }
 
-export interface NavContent {
-  links: NavLink[];
+export interface NavLink extends NavLinkConfig {
+  label: string;
 }
 
-export const NAV: NavContent = {
-  links: [
-    { label: "Home", href: "/" },
-    { label: "Beta Programs", href: "/betas", betaIcons: true },
-    {
-      label: "GitHub",
-      href: "https://github.com/RonenMars/threadbase-mobile",
-      external: true,
-      separatorBefore: true,
-    },
-    { label: "Privacy Policy", href: "/privacy" },
-    { label: "Support", href: "/support" },
-    {
-      label: "Report a bug",
-      href: "https://github.com/RonenMars/threadbase/issues",
-      external: true,
-    },
-  ],
-};
-
 export interface BetaPlatform {
-  id: string;
+  id: "ios" | "android";
   eyebrow: string;
   name: string;
   tagline: string;
@@ -421,72 +115,11 @@ export interface BetaPlatform {
 }
 
 export interface BetasPageContent {
-  eyebrow: string;
+  kicker: string;
   headline: string;
   intro: string;
   platforms: BetaPlatform[];
 }
-
-export const BETAS_PAGE: BetasPageContent = {
-  eyebrow: "Early Access",
-  headline: "Join the Beta",
-  intro:
-    "Threadbase is available in early access on both iOS and Android. Pick your platform and get the mobile companion for Claude Code on your device.",
-  platforms: [
-    {
-      id: "ios",
-      eyebrow: "iOS · TestFlight",
-      name: "iOS Beta",
-      tagline: "Available now via TestFlight",
-      description:
-        "The iOS beta is open and ready to install through Apple's TestFlight program. No waiting, no approval — just tap the link on your iPhone or iPad.",
-      primaryCta: {
-        label: "Join TestFlight",
-        href: "https://testflight.apple.com/join/FqdM3mFK",
-      },
-      steps: [
-        {
-          title: "Install TestFlight",
-          body: "If you don't have it already, download TestFlight from the App Store — it's Apple's official beta distribution app.",
-        },
-        {
-          title: "Tap the invite link",
-          body: "Open the \"Join TestFlight\" link above on your iPhone or iPad. TestFlight will open and show the Threadbase beta.",
-        },
-        {
-          title: "Install and launch",
-          body: "Tap \"Install\" in TestFlight. Once installed, open Threadbase and scan the QR code shown by the streamer on your workstation.",
-        },
-      ],
-    },
-    {
-      id: "android",
-      eyebrow: "Android · Google Play",
-      name: "Android Beta",
-      tagline: "Closed beta via Google Play",
-      description:
-        "The Android beta runs through Google Play's closed-testing program. You'll need to join the testers group first, then opt in via Play — takes about 10 minutes end to end.",
-      primaryCta: {
-        label: "Join Android Beta",
-        href: "/android-beta",
-      },
-      steps: [
-        {
-          title: "Join the testers group",
-          body: "Open the Google Group linked on the Android beta page and join with the Google account you use on your Android device.",
-        },
-        {
-          title: "Wait ~10 minutes",
-          body: "Google's tester-eligibility cache takes a few minutes to update after you join. Grab a coffee.",
-        },
-        {
-          title: "Opt in on Google Play",
-          body: "On your Android device, follow the opt-in link on the beta page, tap \"Become a tester\", then install from the Play Store.",
-        },
-      ],
-    },
-  ],
-};
 
 export interface BetaStep {
   title: string;
@@ -499,6 +132,10 @@ export interface AndroidBetaContent {
   intro: string;
   groupUrl: string;
   playUrl: string;
+  groupCta: string;
+  playCta: string;
+  howToJoinHeading: string;
+  stepLabel: string;
   steps: BetaStep[];
   fallback: {
     title: string;
@@ -507,40 +144,94 @@ export interface AndroidBetaContent {
   closing: string;
 }
 
-export const ANDROID_BETA: AndroidBetaContent = {
-  eyebrow: "Android closed beta",
-  headline: "Join the Threadbase Android beta",
-  intro:
-    "Google Play's personal-developer policy gates production behind 12 testers × 14 days of closed testing. Help us hit that bar — installation is two clicks and a short wait.",
+export const HERO_CTA_CONFIG = [
+  {
+    href: "https://testflight.apple.com/join/FqdM3mFK",
+    variant: "primary",
+  },
+  {
+    href: "#quick-start",
+    variant: "outline",
+  },
+] as const satisfies Array<Omit<HeroCta, "label">>;
+
+export const PROBLEM_ITEM_CONFIG = [
+  { icon: "Coffee" },
+  { icon: "Bell" },
+  { icon: "MapPin" },
+] as const satisfies Array<Pick<ProblemItem, "icon">>;
+
+export const FEATURE_CONFIG = [
+  { icon: "MonitorPlay", surfaceTags: ["Laptop", "DeviceMobile"] },
+  { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
+  { icon: "Stack", surfaceTags: ["Laptop", "DeviceMobile"] },
+  { icon: "BellRinging", surfaceTags: ["DeviceMobile"] },
+  { icon: "ListChecks", surfaceTags: ["DeviceMobile"] },
+  { icon: "ArrowsClockwise", surfaceTags: ["DeviceMobile"] },
+] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
+
+export const ROADMAP_MILESTONE_CONFIG = [
+  { status: "shipped" },
+  { status: "shipped" },
+  { status: "shipped" },
+  { status: "shipped" },
+  { status: "shipped" },
+  { status: "next" },
+  { status: "next" },
+  { status: "later" },
+  { status: "later" },
+  { status: "shipped" },
+  { status: "future" },
+] as const satisfies Array<Pick<RoadmapMilestone, "status">>;
+
+export const QUICK_START_LINK_CONFIG = [
+  {
+    href: "https://github.com/RonenMars/threadbase-streamer/releases/latest",
+  },
+  {
+    href: "https://github.com/RonenMars/threadbase-streamer/releases/latest",
+  },
+  {
+    href: "/android-beta",
+  },
+] as const;
+
+export const NAV_LINK_CONFIG = [
+  { id: "home", href: "/" },
+  { id: "betas", href: "/betas", betaIcons: true },
+  {
+    id: "github",
+    href: "https://github.com/RonenMars/threadbase-mobile",
+    external: true,
+    separatorBefore: true,
+  },
+  { id: "privacy", href: "/privacy" },
+  { id: "support", href: "/support" },
+  {
+    id: "issues",
+    href: "https://github.com/RonenMars/threadbase/issues",
+    external: true,
+  },
+] as const satisfies NavLinkConfig[];
+
+export const FOOTER_LINK_CONFIG = NAV_LINK_CONFIG;
+
+export const BETA_PLATFORM_CONFIG = [
+  {
+    id: "ios",
+    primaryHref: "https://testflight.apple.com/join/FqdM3mFK",
+  },
+  {
+    id: "android",
+    primaryHref: "/android-beta",
+  },
+] as const;
+
+export const ANDROID_BETA_LINKS = {
   groupUrl: "https://groups.google.com/g/threadbase-android-testers",
   playUrl: "https://play.google.com/apps/testing/com.ronenmars.threadbase",
-  steps: [
-    {
-      title: "Join the testers group",
-      body:
-        "Click the button below to open the public Google Group. Sign in to the Google account you want to install on, then click “Join group” (no approval needed).",
-    },
-    {
-      title: "Wait ≈10 minutes",
-      body:
-        "Google's tester-eligibility cache needs a few minutes to refresh after you join the group. Grab a coffee.",
-    },
-    {
-      title: "Open the Play Store opt-in link",
-      body:
-        "On your Android phone, signed in to the same Google account, tap the second button. Then “Become a tester” → “Download it on Google Play”.",
-    },
-    {
-      title: "Install and (optionally) pair",
-      body:
-        "Threadbase will install like any normal Play Store app, marked “(unreviewed)” while we're in closed testing. To use it, run tb-streamer on your workstation and scan its QR code.",
-    },
-  ],
-  fallback: {
-    title: "If you see “App not available”",
-    body:
-      "Wait another 15 minutes and retry — Play's permission cache occasionally lags. If it persists after 30 minutes, double-check you joined the group with the same Google account you're using on the phone.",
-  },
-  closing:
-    "Once you're installed, you don't need to do anything else — your install counts toward the 12-tester gate just by staying on your phone.",
-};
+} as const;
+
+export const SUPPORT_EMAIL = "support@threadbase.sh";
+export const PRIVACY_CONTACT_EMAIL = "ronenmars@gmail.com";
+export const PRIVACY_LAST_UPDATED = "2026-05-31";

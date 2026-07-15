@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 export default function NotFound(): React.JSX.Element {
+  const t = useTranslations("pages.notFound");
+
   return (
     <div className="app-shell min-h-screen">
       <main className="container-shell flex min-h-screen items-center justify-center px-6 py-24 sm:px-8 lg:px-10">
@@ -8,20 +13,20 @@ export default function NotFound(): React.JSX.Element {
           <div className="app-grid absolute inset-0 opacity-20" />
           <div className="relative space-y-6">
             <p className="text-xs uppercase tracking-[0.26em] text-accent-strong">
-              404
+              {t("eyebrow")}
             </p>
             <h1 className="text-balance text-4xl font-semibold tracking-tighter text-primary sm:text-5xl">
-              Page not found
+              {t("heading")}
             </h1>
             <p className="mx-auto max-w-xl leading-7 text-secondary">
-              The route you requested does not exist in this local build.
+              {t("body")}
             </p>
             <div className="flex justify-center">
               <Link
                 className="inline-flex min-w-44 items-center justify-center rounded-full border border-accent bg-accent px-6 py-3 font-medium tracking-tight text-slate-950 transition-all duration-300 ease-out hover:border-accent-strong hover:bg-accent-strong"
                 href="/"
               >
-                Return home
+                {t("homeLink")}
               </Link>
             </div>
           </div>
