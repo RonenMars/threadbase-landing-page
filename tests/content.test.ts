@@ -1,114 +1,106 @@
 import { describe, expect, it } from "vitest";
 import {
-  FEATURE_CONFIG,
-  FOOTER_LINK_CONFIG,
-  HERO_CTA_CONFIG,
-  NAV_LINK_CONFIG,
-  PROBLEM_ITEM_CONFIG,
-  QUICK_START_LINK_CONFIG,
-  ROADMAP_MILESTONE_CONFIG,
+  FEATURES,
+  FOOTER,
+  HERO,
+  HONEST_CONS,
+  HOW_IT_WORKS,
+  PROBLEM_ITEMS,
+  QUICK_START,
+  ROADMAP_MILESTONES,
+  SITE_METADATA,
 } from "@/lib/content";
-import arMessages from "@/messages/ar.json";
-import enMessages from "@/messages/en.json";
-import heMessages from "@/messages/he.json";
-import ruMessages from "@/messages/ru.json";
 
-const messages = {
-  en: enMessages,
-  ru: ruMessages,
-  he: heMessages,
-  ar: arMessages,
-};
-
-describe("i18n content catalogs", () => {
-  it("ships exactly the planned locales", () => {
-    expect(Object.keys(messages)).toEqual(["en", "ru", "he", "ar"]);
+describe("lib/content.ts", () => {
+  it("exposes the new tagline in HERO.headline", () => {
+    expect(HERO.headline).toBe("Your terminal. Live. In your pocket.");
   });
 
-  it("keeps the English hero headline in messages/en.json", () => {
-    expect(enMessages.home.hero.headline).toBe(
-      "Your terminal. Live. In your pocket.",
-    );
+  it("HERO.subheadline exists as a string (empty allowed)", () => {
+    expect(typeof HERO.subheadline).toBe("string");
   });
 
-  it("keeps hero structure in lib/content.ts", () => {
-    expect(HERO_CTA_CONFIG).toHaveLength(2);
-    expect(HERO_CTA_CONFIG[0]).toMatchObject({
-      href: "https://testflight.apple.com/join/FqdM3mFK",
-      variant: "primary",
-    });
-    expect(HERO_CTA_CONFIG[1]).toMatchObject({
-      href: "#quick-start",
+  it("HERO has exactly 3 platform badges", () => {
+    expect(HERO.badges).toHaveLength(3);
+    expect(HERO.badges.map((b) => b.label)).toEqual([
+      "iOS · TestFlight beta",
+      "Android · closed testing",
+      "macOS · Linux · Windows streamer",
+    ]);
+  });
+
+  it("HERO has primary TestFlight CTA + outline brew CTA", () => {
+    expect(HERO.ctas).toHaveLength(2);
+    expect(HERO.ctas[0]).toMatchObject({ label: "Join TestFlight", variant: "primary" });
+    expect(HERO.ctas[1]).toMatchObject({
+      label: "brew install tb-streamer",
       variant: "outline",
     });
   });
 
-  it("keeps icon/status/link structure out of translated copy", () => {
-    expect(PROBLEM_ITEM_CONFIG.map((p) => p.icon)).toEqual([
-      "Coffee",
-      "Bell",
-      "MapPin",
-    ]);
-    expect(FEATURE_CONFIG).toHaveLength(6);
-    expect(ROADMAP_MILESTONE_CONFIG.map((m) => m.status)).toEqual([
-      "shipped",
-      "shipped",
-      "shipped",
-      "shipped",
-      "shipped",
-      "next",
-      "next",
-      "later",
-      "later",
-      "shipped",
-      "future",
-    ]);
+  it("PROBLEM_ITEMS has exactly 3 entries with Phosphor icon names", () => {
+    expect(PROBLEM_ITEMS).toHaveLength(3);
+    expect(PROBLEM_ITEMS.map((p) => p.icon)).toEqual(["Coffee", "Bell", "MapPin"]);
   });
 
-  it("preserves terminal commands verbatim in every locale", () => {
-    for (const catalog of Object.values(messages)) {
-      expect(catalog.home.quickStart.steps).toContain(
-        "npm install -g @threadbase-sh/streamer",
-      );
-      expect(catalog.home.quickStart.steps).toContain(
-        "brew install tb-streamer",
-      );
-      expect(catalog.home.quickStart.steps).toContain(
-        "tb-streamer set-key <YOUR_API_KEY>",
-      );
-      expect(catalog.home.quickStart.steps).toContain("tb-streamer serve");
-    }
+  it("HOW_IT_WORKS has 3 steps and a trust note", () => {
+    expect(HOW_IT_WORKS.steps).toHaveLength(3);
+    expect(HOW_IT_WORKS.trustNote).toContain("End-to-end encrypted");
   });
 
-  it("front-page English copy no longer describes Codex support as read-only", () => {
+  it("FEATURES has exactly 6 entries (no status badges, no platform array)", () => {
+    expect(FEATURES).toHaveLength(6);
+    FEATURES.forEach((f) => {
+      expect(f).not.toHaveProperty("platforms");
+      expect(f).not.toHaveProperty("status");
+    });
+  });
+
+  it("QUICK_START is a single block, not an array of platform tabs", () => {
+    expect(Array.isArray(QUICK_START.steps)).toBe(true);
+    expect(QUICK_START.steps.length).toBeGreaterThan(0);
+    // QUICK_START should NOT be PlatformBlock[]
+    expect(QUICK_START).not.toHaveProperty("platformId");
+  });
+
+  it("ROADMAP_MILESTONES uses status strings, not emoji glyphs", () => {
+    ROADMAP_MILESTONES.forEach((m) => {
+      expect(["shipped", "this-week", "next", "later", "future"]).toContain(m.status);
+    });
+  });
+
+  it("HONEST_CONS has the 3 mobile-streamer-specific cons", () => {
+    expect(HONEST_CONS).toHaveLength(3);
+    expect(HONEST_CONS[0].title).toContain("Closed beta");
+    expect(HONEST_CONS[2].title).toContain("Codex support is newer");
+    expect(HONEST_CONS[2].description).toContain("start new Codex sessions");
+  });
+
+  it("front-page copy no longer describes Codex support as read-only", () => {
     const frontPageCopy = [
-      enMessages.metadata.site.description,
-      enMessages.home.hero.eyebrow,
-      ...enMessages.home.features.items.map(
-        (feature) => `${feature.title} ${feature.description}`,
-      ),
-      ...enMessages.home.honestCons.items.map(
-        (item) => `${item.title} ${item.description}`,
-      ),
-      ...enMessages.home.roadmap.milestones.map(
-        (milestone) => `${milestone.title} ${milestone.detail}`,
-      ),
+      SITE_METADATA.description,
+      HERO.eyebrow,
+      ...FEATURES.map((feature) => `${feature.title} ${feature.description}`),
+      ...HONEST_CONS.map((item) => `${item.title} ${item.description}`),
+      ...ROADMAP_MILESTONES.map((milestone) => `${milestone.title} ${milestone.detail}`),
     ].join(" ");
 
     expect(frontPageCopy.toLowerCase()).toContain("codex");
     expect(frontPageCopy.toLowerCase()).not.toContain("read-only");
   });
 
-  it("footer and nav links cover the core surfaces", () => {
-    const hrefs = FOOTER_LINK_CONFIG.map((link) => link.href);
-    expect(NAV_LINK_CONFIG).toHaveLength(6);
-    expect(hrefs.some((href) => href.includes("github.com/RonenMars/threadbase"))).toBe(true);
-    expect(hrefs).toContain("/betas");
-    expect(hrefs.some((href) => href.includes("/issues"))).toBe(true);
+  it("FOOTER links cover the core surfaces: GitHub, betas, issues, support, privacy", () => {
+    const hrefs = FOOTER.links.map((l) => l.href);
+    expect(hrefs.some((h) => h.includes("github.com/RonenMars/threadbase"))).toBe(true);
+    expect(hrefs.some((h) => h === "/betas" || h.includes("testflight") || h === "/android-beta")).toBe(true);
+    expect(hrefs.some((h) => h.includes("/issues"))).toBe(true);
     expect(hrefs).toContain("/support");
     expect(hrefs).toContain("/privacy");
-    expect(QUICK_START_LINK_CONFIG.map((link) => link.href)).toContain(
-      "/android-beta",
-    );
+  });
+
+  it("SITE_METADATA does not mention 'session browser' or 'history browser'", () => {
+    expect(SITE_METADATA.title.toLowerCase()).not.toContain("session browser");
+    expect(SITE_METADATA.description.toLowerCase()).not.toContain("session browser");
+    expect(SITE_METADATA.description.toLowerCase()).not.toContain("history browser");
   });
 });

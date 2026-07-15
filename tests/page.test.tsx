@@ -1,18 +1,17 @@
-import { screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import Home from "@/app/[locale]/page";
-import { renderWithIntl } from "@/tests/test-utils";
+import Home from "@/app/page";
 
 describe("Home page", () => {
   it("renders the new hero headline", () => {
-    renderWithIntl(<Home />);
+    render(<Home />);
     expect(document.body.textContent).toContain("Your terminal.");
     expect(document.body.textContent).toContain("In your pocket.");
     expect(document.body.textContent).toContain("Live.");
   });
 
   it("renders the new section narrative in order: problem → features → honest cons → how it works → quick start", () => {
-    renderWithIntl(<Home />);
+    render(<Home />);
     const headings = screen
       .getAllByRole("heading", { level: 2 })
       .map((h) => h.textContent ?? "");
@@ -31,7 +30,7 @@ describe("Home page", () => {
   });
 
   it("does not render any testimonial pull-quote (removed until we have real ones)", () => {
-    renderWithIntl(<Home />);
+    render(<Home />);
     expect(
       screen.queryByText(/redirected a 20-minute test run/i),
     ).not.toBeInTheDocument();
@@ -39,12 +38,12 @@ describe("Home page", () => {
   });
 
   it("renders the brew install command in the quick start", () => {
-    renderWithIntl(<Home />);
+    render(<Home />);
     expect(screen.getAllByText(/brew install tb-streamer/).length).toBeGreaterThan(0);
   });
 
   it("does NOT render any of the old removed sections", () => {
-    renderWithIntl(<Home />);
+    render(<Home />);
     // No platform picker
     expect(screen.queryByText(/choose your environment/i)).not.toBeInTheDocument();
     // No screenshots section

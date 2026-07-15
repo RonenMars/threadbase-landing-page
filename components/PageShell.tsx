@@ -1,4 +1,5 @@
 import { Footer } from "@/components/Footer";
+import { FOOTER } from "@/lib/content";
 
 interface PageShellProps {
   kicker: string;
@@ -23,7 +24,7 @@ export function PageShell({ kicker, heading, description, children, wide }: Page
           {children}
         </article>
       </main>
-      <Footer />
+      <Footer footer={FOOTER} />
     </div>
   );
 }

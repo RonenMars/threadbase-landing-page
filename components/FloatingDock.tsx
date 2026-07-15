@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { GithubLogo } from "@phosphor-icons/react";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 
 const THREADBASE_REPO = "https://github.com/RonenMars/threadbase";
 
@@ -13,7 +12,6 @@ const SCROLL_THRESHOLD_PX = 80;
 export function FloatingDock(): React.JSX.Element {
   const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const t = useTranslations("floatingDock");
 
   useEffect(() => {
     const update = () => {
@@ -32,13 +30,13 @@ export function FloatingDock(): React.JSX.Element {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-6 inset-e-6 z-50"
+          className="fixed bottom-6 right-6 z-50"
         >
           <Link
             href={THREADBASE_REPO}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label={t("githubAriaLabel")}
+            aria-label="Threadbase on GitHub"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             onFocus={() => setHovered(true)}

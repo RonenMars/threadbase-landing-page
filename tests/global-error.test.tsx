@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import GlobalError from "@/app/[locale]/global-error";
+import GlobalError from "@/app/global-error";
 
 describe("GlobalError", () => {
   it("renders a dedicated global error boundary", () => {

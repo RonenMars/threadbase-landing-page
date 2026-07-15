@@ -2,16 +2,15 @@
 
 import * as PhosphorIcons from "@phosphor-icons/react";
 import type { Icon } from "@phosphor-icons/react";
-import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { FeatureItem, SectionContent } from "@/lib/content";
-import { getFeaturesContent } from "@/lib/translated-content";
 
 interface FeaturesGridProps {
-  section?: SectionContent;
-  features?: FeatureItem[];
+  features: FeatureItem[];
+  section: SectionContent;
 }
 
 function resolveIcon(name: string): Icon | null {
@@ -24,18 +23,18 @@ function resolveIcon(name: string): Icon | null {
 }
 
 export function FeaturesGrid({
-  section: sectionProp,
-  features: featuresProp,
+  section,
+  features,
 }: FeaturesGridProps): React.JSX.Element {
-  const fallback = getFeaturesContent(useTranslations("home.features"));
-  const section = sectionProp ?? fallback.section;
-  const features = featuresProp ?? fallback.features;
+  const ref = useRef<HTMLElement | null>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
     <motion.section
-      animate="visible"
+      animate={inView ? "visible" : "hidden"}
       className="px-6 py-16 sm:px-8 lg:px-10"
-      initial={false}
+      initial="hidden"
+      ref={ref}
       variants={fadeUp}
     >
       <div className="container-shell">

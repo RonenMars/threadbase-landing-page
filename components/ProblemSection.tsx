@@ -1,17 +1,11 @@
 "use client";
 
 import { Bell, Coffee, type Icon, MapPin } from "@phosphor-icons/react";
-import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ProblemItem, SectionContent } from "@/lib/content";
-import { getProblemContent } from "@/lib/translated-content";
-
-interface ProblemSectionProps {
-  section?: SectionContent;
-  items?: ProblemItem[];
-}
 
 const ICON_MAP: Record<string, Icon> = {
   Coffee,
@@ -19,19 +13,24 @@ const ICON_MAP: Record<string, Icon> = {
   MapPin,
 };
 
+interface ProblemSectionProps {
+  section: SectionContent;
+  items: ProblemItem[];
+}
+
 export function ProblemSection({
-  section: sectionProp,
-  items: itemsProp,
+  section,
+  items,
 }: ProblemSectionProps): React.JSX.Element {
-  const fallback = getProblemContent(useTranslations("home.problem"));
-  const section = sectionProp ?? fallback.section;
-  const items = itemsProp ?? fallback.items;
+  const ref = useRef<HTMLElement | null>(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
 
   return (
     <motion.section
-      animate="visible"
+      animate={inView ? "visible" : "hidden"}
       className="relative bg-bg-secondary px-6 py-24 sm:px-8 lg:px-10"
-      initial={false}
+      initial="hidden"
+      ref={ref}
       variants={fadeUp}
     >
       <div className="container-shell">

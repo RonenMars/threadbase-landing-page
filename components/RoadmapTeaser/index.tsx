@@ -1,35 +1,30 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 import { fadeUp } from "@/components/motion";
 import { Badge } from "@/components/ui/badge";
-import type {
-  RoadmapMilestone,
-  RoadmapStatus,
-  SectionContent,
-} from "@/lib/content";
-import { getRoadmapContent } from "@/lib/translated-content";
+import type { RoadmapMilestone, RoadmapStatus, SectionContent } from "@/lib/content";
 import { RoadmapMilestoneCard } from "./RoadmapMilestoneCard";
 import { RoadmapMilestoneNode } from "./RoadmapMilestoneNode";
 import { WaitlistForm } from "./WaitlistForm";
 
 interface RoadmapTeaserProps {
-  section?: SectionContent;
-  milestones?: RoadmapMilestone[];
-  statusLabels?: Record<RoadmapStatus, string>;
+  milestones: RoadmapMilestone[];
+  section: SectionContent;
 }
 
-export function RoadmapTeaser({
-  section: sectionProp,
-  milestones: milestonesProp,
-  statusLabels: statusLabelsProp,
-}: RoadmapTeaserProps): React.JSX.Element {
-  const fallback = getRoadmapContent(useTranslations("home.roadmap"));
-  const section = sectionProp ?? fallback.section;
-  const milestones = milestonesProp ?? fallback.milestones;
-  const statusLabels = statusLabelsProp ?? fallback.statusLabels;
+const STATUS_LABEL: Record<RoadmapStatus, string> = {
+  shipped: "Shipped",
+  "this-week": "This week",
+  next: "Next",
+  later: "Later",
+  future: "Future",
+};
+
+export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): React.JSX.Element {
+  const ref = useRef<HTMLElement | null>(null);
+  const inView = useInView(ref, { once: true, amount: 0.1 });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   function toggleOpen(index: number): void {
@@ -38,9 +33,10 @@ export function RoadmapTeaser({
 
   return (
     <motion.section
-      animate="visible"
+      animate={inView ? "visible" : "hidden"}
       className="px-6 py-24 sm:px-8 lg:px-10"
-      initial={false}
+      initial="hidden"
+      ref={ref}
       variants={fadeUp}
     >
       <div className="container-shell max-w-3xl">
@@ -78,7 +74,7 @@ export function RoadmapTeaser({
               return (
                 <div key={milestone.title} className="relative grid grid-cols-[1fr_56px_1fr] items-center gap-4">
                   {/* Left slot */}
-                  <div className={isLeft ? "text-end" : ""}>
+                  <div className={isLeft ? "text-right" : ""}>
                     {isLeft ? (
                       <RoadmapMilestoneCard
                         milestone={milestone}
@@ -86,8 +82,8 @@ export function RoadmapTeaser({
                         onClick={() => toggleOpen(index)}
                       />
                     ) : (
-                      <p className="text-end text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                        {statusLabels[milestone.status]}
+                      <p className="text-right text-xs font-bold uppercase tracking-[0.18em] text-muted">
+                        {STATUS_LABEL[milestone.status]}
                       </p>
                     )}
                   </div>
@@ -111,7 +107,7 @@ export function RoadmapTeaser({
                       />
                     ) : (
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                        {statusLabels[milestone.status]}
+                        {STATUS_LABEL[milestone.status]}
                       </p>
                     )}
                   </div>
