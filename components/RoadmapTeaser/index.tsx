@@ -1,30 +1,35 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { fadeUp } from "@/components/motion";
 import { Badge } from "@/components/ui/badge";
-import type { RoadmapMilestone, RoadmapStatus, SectionContent } from "@/lib/content";
+import type {
+  RoadmapMilestone,
+  RoadmapStatus,
+  SectionContent,
+} from "@/lib/content";
+import { getRoadmapContent } from "@/lib/translated-content";
 import { RoadmapMilestoneCard } from "./RoadmapMilestoneCard";
 import { RoadmapMilestoneNode } from "./RoadmapMilestoneNode";
 import { WaitlistForm } from "./WaitlistForm";
 
 interface RoadmapTeaserProps {
-  milestones: RoadmapMilestone[];
-  section: SectionContent;
+  section?: SectionContent;
+  milestones?: RoadmapMilestone[];
+  statusLabels?: Record<RoadmapStatus, string>;
 }
 
-const STATUS_LABEL: Record<RoadmapStatus, string> = {
-  shipped: "Shipped",
-  "this-week": "This week",
-  next: "Next",
-  later: "Later",
-  future: "Future",
-};
-
-export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): React.JSX.Element {
-  const ref = useRef<HTMLElement | null>(null);
-  const inView = useInView(ref, { once: true, amount: 0.1 });
+export function RoadmapTeaser({
+  section: sectionProp,
+  milestones: milestonesProp,
+  statusLabels: statusLabelsProp,
+}: RoadmapTeaserProps): React.JSX.Element {
+  const fallback = getRoadmapContent(useTranslations("home.roadmap"));
+  const section = sectionProp ?? fallback.section;
+  const milestones = milestonesProp ?? fallback.milestones;
+  const statusLabels = statusLabelsProp ?? fallback.statusLabels;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   function toggleOpen(index: number): void {
@@ -33,10 +38,9 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
 
   return (
     <motion.section
-      animate={inView ? "visible" : "hidden"}
+      animate="visible"
       className="px-6 py-24 sm:px-8 lg:px-10"
-      initial="hidden"
-      ref={ref}
+      initial={false}
       variants={fadeUp}
     >
       <div className="container-shell max-w-3xl">
@@ -74,7 +78,7 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
               return (
                 <div key={milestone.title} className="relative grid grid-cols-[1fr_56px_1fr] items-center gap-4">
                   {/* Left slot */}
-                  <div className={isLeft ? "text-right" : ""}>
+                  <div className={isLeft ? "text-end" : ""}>
                     {isLeft ? (
                       <RoadmapMilestoneCard
                         milestone={milestone}
@@ -82,8 +86,8 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
                         onClick={() => toggleOpen(index)}
                       />
                     ) : (
-                      <p className="text-right text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                        {STATUS_LABEL[milestone.status]}
+                      <p className="text-end text-xs font-bold uppercase tracking-[0.18em] text-muted">
+                        {statusLabels[milestone.status]}
                       </p>
                     )}
                   </div>
@@ -107,7 +111,7 @@ export function RoadmapTeaser({ milestones, section }: RoadmapTeaserProps): Reac
                       />
                     ) : (
                       <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted">
-                        {STATUS_LABEL[milestone.status]}
+                        {statusLabels[milestone.status]}
                       </p>
                     )}
                   </div>

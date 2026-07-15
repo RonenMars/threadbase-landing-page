@@ -2,47 +2,52 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Link from "next/link";
 import { Check, Copy } from "@phosphor-icons/react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type { HeroContent } from "@/lib/content";
+import { getHeroContent } from "@/lib/translated-content";
 import { GlitchTitle } from "./GlitchTitle";
 
-function isAndroidDevice(): boolean {
-  return typeof navigator !== "undefined" && /android/i.test(navigator.userAgent);
+interface HeroProps {
+  hero?: HeroContent;
 }
 
-function isIosDevice(): boolean {
-  if (typeof navigator === "undefined") return false;
+function detectPlatform(): "ios" | "android" | "desktop" {
+  if (typeof navigator === "undefined") return "desktop";
+  if (/android/i.test(navigator.userAgent)) return "android";
 
   const matchesIosMobileUa = /iPad|iPhone|iPod/i.test(navigator.userAgent);
   const matchesIpadDesktopUa =
     /Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1;
 
-  return matchesIosMobileUa || matchesIpadDesktopUa;
-}
-
-interface HeroProps {
-  hero: HeroContent;
+  return matchesIosMobileUa || matchesIpadDesktopUa ? "ios" : "desktop";
 }
 
 const COPIED_RESET_MS = 1500;
 
-export function Hero({ hero }: HeroProps): React.JSX.Element {
+export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
+  const tHero = useTranslations("home.hero");
+  const hero = heroProp ?? getHeroContent(tHero);
   const [copied, setCopied] = useState(false);
+  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">("desktop");
   const copyResetRef = useRef<number | null>(null);
-  const isAndroid = isAndroidDevice();
-  const isIos = isIosDevice();
   const primaryCta = hero.ctas.find((cta) => cta.variant === "primary");
-  const primaryCtaHref = isAndroid
+  const primaryCtaHref = platform === "android"
     ? "https://threadbase.sh/android-beta"
-    : isIos
+    : platform === "ios"
       ? (primaryCta?.href ?? "https://testflight.apple.com/join/FqdM3mFK")
       : "https://threadbase.sh/betas";
 
   useEffect(() => {
+    const platformFrame = window.requestAnimationFrame(() => {
+      setPlatform(detectPlatform());
+    });
+
     return () => {
+      window.cancelAnimationFrame(platformFrame);
       if (copyResetRef.current !== null) {
         window.clearTimeout(copyResetRef.current);
       }
@@ -68,7 +73,7 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
       role="banner"
       aria-labelledby="hero-headline"
       className="relative h-screen flex items-center justify-center overflow-hidden px-6 pb-24 pt-10 sm:px-8 lg:px-10 lg:pb-32 lg:pt-14"
-      initial="hidden"
+      initial={false}
       variants={{
         hidden: {},
         visible: {
@@ -163,16 +168,14 @@ export function Hero({ hero }: HeroProps): React.JSX.Element {
             size="lg"
             variant="primary"
           >
-            Join the Beta
+            {hero.primaryButtonLabel}
           </Button>
           {hero.ctas.map((cta) =>
             cta.variant === "outline" ? (
               <Button
                 key={cta.label}
                 onClick={() => handleCopyOutlineCta(cta.label)}
-                aria-label={
-                  copied ? "Copied to clipboard" : `Copy: ${cta.label}`
-                }
+                aria-label={copied ? hero.copiedLabel : hero.copyAriaLabel}
                 className={`min-w-50 cursor-pointer motion-safe:active:scale-[0.97] ${
                   copied
                     ? "border-accent-secondary shadow-[0_0_0_3px_rgba(240,138,36,0.18)]"

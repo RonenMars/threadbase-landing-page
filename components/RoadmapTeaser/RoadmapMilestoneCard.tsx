@@ -26,7 +26,7 @@ export function RoadmapMilestoneCard({ milestone, isOpen, onClick }: RoadmapMile
   return (
     <button
       onClick={onClick}
-      className={`w-full cursor-pointer rounded-3xl border bg-[rgba(11,19,31,0.8)] p-4 text-left transition-all hover:-translate-y-0.5 ${cardBorder[milestone.status]}`}
+      className={`w-full cursor-pointer rounded-3xl border bg-[rgba(11,19,31,0.8)] p-4 text-start transition-all hover:-translate-y-0.5 ${cardBorder[milestone.status]}`}
     >
       <p className={`text-sm font-bold ${titleColor}`}>{milestone.title}</p>
       <AnimatePresence>

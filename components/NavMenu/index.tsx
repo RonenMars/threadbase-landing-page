@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Home, Beaker, Shield, GitBranch, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
 import { AppleLogo, AndroidLogo } from "@phosphor-icons/react";
 import { Divide as Hamburger } from "hamburger-react";
-import { NAV, type NavLink } from "@/lib/content";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, type Locale, getTextDirection } from "@/i18n/routing";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import type { NavLink } from "@/lib/content";
+import { getNavLinks } from "@/lib/translated-content";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -16,8 +19,9 @@ const backdropVariants = {
   exit: { opacity: 0, transition: { duration: 0.2, ease: EASE } },
 } as const;
 
-const panelVariants = {
-  hidden: { x: "-100%" },
+function getPanelVariants(isRtl: boolean) {
+  return {
+  hidden: { x: isRtl ? "100%" : "-100%" },
   visible: {
     x: 0,
     transition: {
@@ -29,40 +33,32 @@ const panelVariants = {
     },
   },
   exit: {
-    x: "-100%",
+    x: isRtl ? "100%" : "-100%",
     transition: { duration: 0.28, ease: EASE },
   },
-} as const;
+  } as const;
+}
 
-const itemVariants = {
-  hidden: { opacity: 0, x: -12 },
+function getItemVariants(isRtl: boolean) {
+  return {
+  hidden: { opacity: 0, x: isRtl ? 12 : -12 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: EASE } },
-  exit: { opacity: 0, x: -12, transition: { duration: 0.15, ease: EASE } },
-} as const;
+  exit: {
+    opacity: 0,
+    x: isRtl ? 12 : -12,
+    transition: { duration: 0.15, ease: EASE },
+  },
+  } as const;
+}
 
-const LINK_ICONS: Record<string, React.ElementType> = {
-  Home,
-  "Beta Programs": Beaker,
-  GitHub: GitBranch,
-  "Privacy Policy": Shield,
-  Support: LifeBuoy,
-  "Report a bug": Bug,
+const LINK_ICONS: Record<NavLink["id"], React.ElementType> = {
+  home: Home,
+  betas: Beaker,
+  github: GitBranch,
+  privacy: Shield,
+  support: LifeBuoy,
+  issues: Bug,
 };
-
-const BETA_PLATFORMS = [
-  {
-    id: "ios",
-    label: "iOS TestFlight",
-    href: "https://testflight.apple.com/join/FqdM3mFK",
-    Icon: AppleLogo,
-  },
-  {
-    id: "android",
-    label: "Android beta",
-    href: "/android-beta",
-    Icon: AndroidLogo,
-  },
-] as const;
 
 function detectPlatform(): "ios" | "android" | "desktop" {
   if (typeof navigator === "undefined") return "desktop";
@@ -73,17 +69,48 @@ function detectPlatform(): "ios" | "android" | "desktop" {
 }
 
 function useMobilePlatform(): "ios" | "android" | "desktop" {
-  const [platform] = useState<"ios" | "android" | "desktop">(detectPlatform);
+  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">("desktop");
+
+  useEffect(() => {
+    const platformFrame = window.requestAnimationFrame(() => {
+      setPlatform(detectPlatform());
+    });
+    return () => window.cancelAnimationFrame(platformFrame);
+  }, []);
 
   return platform;
 }
 
 export function NavMenu(): React.JSX.Element {
+  const locale = useLocale() as Locale;
+  const isRtl = getTextDirection(locale) === "rtl";
+  const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const panelId = useId();
   const mobilePlatform = useMobilePlatform();
+  const panelVariants = React.useMemo(() => getPanelVariants(isRtl), [isRtl]);
+  const itemVariants = React.useMemo(() => getItemVariants(isRtl), [isRtl]);
+  const links = React.useMemo(() => getNavLinks(t), [t]);
+  const betaPlatforms = React.useMemo(
+    () =>
+      [
+        {
+          id: "ios",
+          label: t("betaPlatforms.ios"),
+          href: "https://testflight.apple.com/join/FqdM3mFK",
+          Icon: AppleLogo,
+        },
+        {
+          id: "android",
+          label: t("betaPlatforms.android"),
+          href: "/android-beta",
+          Icon: AndroidLogo,
+        },
+      ] as const,
+    [t],
+  );
 
   useEffect(() => {
     if (!open) return;
@@ -116,37 +143,50 @@ export function NavMenu(): React.JSX.Element {
 
   // On mobile, replace "Beta Programs" with two platform-specific items in priority order
   const navLinks = React.useMemo(() => {
-    if (mobilePlatform === "desktop") return NAV.links;
+    if (mobilePlatform === "desktop") return links;
 
     const [primary, secondary] =
       mobilePlatform === "android"
-        ? [BETA_PLATFORMS[1], BETA_PLATFORMS[0]]
-        : [BETA_PLATFORMS[0], BETA_PLATFORMS[1]];
+        ? [betaPlatforms[1], betaPlatforms[0]]
+        : [betaPlatforms[0], betaPlatforms[1]];
 
-    return NAV.links.flatMap((link) => {
+    return links.flatMap((link) => {
       if (!link.betaIcons) return [link];
       return [
-        { label: primary.label, href: primary.href, external: primary.href.startsWith("http") },
-        { label: secondary.label, href: secondary.href, external: secondary.href.startsWith("http") },
+        {
+          id: "betas",
+          label: primary.label,
+          href: primary.href,
+          external: primary.href.startsWith("http"),
+        },
+        {
+          id: "betas",
+          label: secondary.label,
+          href: secondary.href,
+          external: secondary.href.startsWith("http"),
+        },
       ] satisfies NavLink[];
     });
-  }, [mobilePlatform]);
+  }, [betaPlatforms, links, mobilePlatform]);
 
   return (
     <>
       <button
         ref={triggerRef}
         type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? t("closeMenu") : t("openMenu")}
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((prev) => !prev)}
-        className={`fixed left-5 top-5 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-border bg-bg-secondary/85 text-secondary shadow-lg backdrop-blur transition-[border-color,color,box-shadow,transform,opacity] duration-300 ease-out hover:border-accent hover:text-primary hover:shadow-[0_8px_24px_-8px_rgba(99,179,255,0.55)] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary ${open ? "pointer-events-none opacity-0" : "opacity-100"}`}
+        className={`fixed start-5 top-5 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-border bg-bg-secondary/85 text-secondary shadow-lg backdrop-blur transition-[border-color,color,box-shadow,transform,opacity] duration-300 ease-out hover:border-accent hover:text-primary hover:shadow-[0_8px_24px_-8px_rgba(99,179,255,0.55)] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary ${open ? "pointer-events-none opacity-0" : "opacity-100"}`}
       >
         <span aria-hidden="true" className="pointer-events-none">
           <Hamburger toggled={open} toggle={setOpen} size={18} color="currentColor" />
         </span>
       </button>
+      <div className="fixed inset-e-5 top-5 z-60">
+        <LanguageSwitcher variant="compact" />
+      </div>
 
       <AnimatePresence initial={false}>
         {open ? (
@@ -165,20 +205,22 @@ export function NavMenu(): React.JSX.Element {
 
             <motion.nav
               id={panelId}
-              aria-label="Primary"
+              aria-label={t("ariaLabel")}
               role="dialog"
               aria-modal="true"
               variants={panelVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-y-0 left-0 z-50 flex w-[min(20rem,100vw)] flex-col border-r border-border bg-bg-secondary shadow-2xl"
+              className="fixed inset-y-0 inset-s-0 z-50 flex w-[min(20rem,100vw)] flex-col border-e border-border bg-bg-secondary shadow-2xl"
             >
               <div className="flex h-16 shrink-0 items-center justify-between px-5">
-                <span className="text-base font-semibold text-primary">Menu</span>
+                <span className="text-base font-semibold text-primary">
+                  {t("menu")}
+                </span>
                 <button
                   type="button"
-                  aria-label="Close menu"
+                  aria-label={t("closeMenu")}
                   onClick={close}
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-bg-primary/60 text-secondary transition-colors hover:border-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
@@ -199,6 +241,8 @@ export function NavMenu(): React.JSX.Element {
                         link={link}
                         onActivate={close}
                         isDesktop={mobilePlatform === "desktop"}
+                        itemVariants={itemVariants}
+                        betaPlatforms={betaPlatforms}
                         forwardedRef={idx === 0 ? firstLinkRef : undefined}
                       />
                     </React.Fragment>
@@ -207,8 +251,15 @@ export function NavMenu(): React.JSX.Element {
               </div>
 
               <div className="mt-auto border-t border-border px-4 py-4">
-                <p className="text-xs font-semibold text-muted">Threadbase</p>
-                <p className="mt-0.5 text-xs text-muted">v1.0</p>
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-semibold text-muted">
+                      {t("productName")}
+                    </p>
+                    <p className="mt-0.5 text-xs text-muted">{t("version")}</p>
+                  </div>
+                  <LanguageSwitcher />
+                </div>
               </div>
             </motion.nav>
           </>
@@ -222,15 +273,24 @@ function NavPanelItem({
   link,
   onActivate,
   isDesktop,
+  itemVariants,
+  betaPlatforms,
   forwardedRef,
 }: {
   link: NavLink;
   onActivate: () => void;
   isDesktop: boolean;
+  itemVariants: ReturnType<typeof getItemVariants>;
+  betaPlatforms: ReadonlyArray<{
+    id: "ios" | "android";
+    label: string;
+    href: string;
+    Icon: React.ElementType;
+  }>;
   forwardedRef?: React.Ref<HTMLAnchorElement>;
 }): React.JSX.Element {
   const external = link.external ?? /^https?:\/\//.test(link.href);
-  const Icon = LINK_ICONS[link.label];
+  const Icon = LINK_ICONS[link.id];
 
   const showBetaIcons = isDesktop && link.betaIcons;
 
@@ -256,7 +316,7 @@ function NavPanelItem({
         </Link>
         {showBetaIcons ? (
           <div className="flex items-center gap-1.5">
-            {BETA_PLATFORMS.map(({ id, label: platformLabel, href, Icon: PlatformIcon }) => (
+            {betaPlatforms.map(({ id, label: platformLabel, href, Icon: PlatformIcon }) => (
               <Link
                 key={id}
                 href={href}
@@ -275,7 +335,7 @@ function NavPanelItem({
           <ArrowUpRight
             aria-hidden="true"
             size={14}
-            className="shrink-0 text-muted opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100"
+            className="shrink-0 text-muted opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-x-0.5 group-hover:opacity-100 rtl:group-hover:-translate-x-0.5"
           />
         ) : null}
       </div>
