@@ -56,7 +56,7 @@ and `DeviceContext`/`ExpoConstants`/`ReactNativeInfo` stripped.
 | # | Item | Owner | Status | Evidence |
 |---|---|---|---|---|
 | 3.1 | Finalize feedback transport architecture | MOBILE | `[x]` | `services/feedback-transport.ts` — order is endpoint → Sentry → email → clipboard, matching the published policy. |
-| 3.2 | Document retention period | LANDING | `[!]` | Policy documents **90-day Sentry retention for crash reports** but says nothing about **feedback** retention (email/endpoint submissions have no stated period). Gap in the policy text itself. |
+| 3.2 | Document retention period | LANDING | `[x]` | **Resolved.** A `Retention.` entry was added to `feedbackDetails` in all four locales: Sentry-submitted feedback inherits the 90-day crash retention; emailed feedback is kept until the request is resolved. |
 | 3.3 | Document attachment handling | LANDING | `[x]` | Policy covers EXIF-stripping, size limits, preview/remove. Code path: `loadAttachment()` → Sentry attachment. |
 
 **Note on 3.3 / attachments:** `submitFeedbackViaSentry()` documents that attachments bypass `beforeSend`
@@ -78,10 +78,10 @@ user-picked and EXIF-stripped upstream — but it is worth keeping in mind as an
 
 | # | Item | Owner | Status | Evidence |
 |---|---|---|---|---|
-| 5.1 | Replace Sentry region placeholder | LANDING | `[!]` | The `_(Set this…)_` placeholder is gone from the published text, but it was replaced with the **vague** "processed in the region configured for the Sentry project" rather than a named region. Needs the actual region (e.g. US / EU). |
-| 5.2 | Add controller/entity information | LANDING | `[ ]` | No legal entity / data-controller identity published. Only a contact email. |
-| 5.3 | Review GDPR / UK GDPR wording | LANDING | `[ ]` | No lawful-basis, data-subject-rights, or controller wording present. |
-| 5.4 | International transfer wording | LANDING | `[ ]` | Absent — depends on 5.1. |
+| 5.1 | Replace Sentry region placeholder | LANDING | `[x]` | **Resolved.** Region confirmed as the **European Union** and named explicitly in all four locales, replacing the vague "region configured for the Sentry project". |
+| 5.2 | Add controller/entity information | LANDING | `[ ]` | **Blocked — needs a legal entity name.** Nothing in the repo declares one (`Ltd`/`LLC`/`GmbH`/"controller" all absent); only `support@threadbase.sh` is published. Cannot be invented. |
+| 5.3 | Review GDPR / UK GDPR wording | LANDING | `[ ]` | **Blocked — needs legal review.** No lawful-basis or data-subject-rights section exists. Depends on 5.2 (rights must be exercised against a named controller). |
+| 5.4 | International transfer wording | LANDING | `[x]` | **Resolved.** Now that the region is known (5.1), each locale states that crash reports from outside the EU are transmitted to and stored in the EU. |
 | 5.5 | Review deletion request flow | LANDING | `[x]` | Published: deletion requests routed to `support@threadbase.sh`, scoped to the install id "where feasible". |
 
 **Contact-address drift:** the source doc uses `ronenmars@gmail.com`; the published site uses
@@ -93,7 +93,7 @@ user-picked and EXIF-stripped upstream — but it is worth keeping in mind as an
 
 | # | Item | Owner | Status | Evidence |
 |---|---|---|---|---|
-| 6.1 | Verify on-device behavior on iOS and Android | MOBILE | `[!]` | **Mismatch found.** `hooks/useVoiceInput.ts:79` sets `requiresOnDeviceRecognition: Platform.OS === 'ios'` — so on **Android** recognition is **not** forced on-device and audio may go to Google's speech service. |
+| 6.1 | Verify on-device behavior on iOS and Android | MOBILE | `[x]` | **Verified and accepted as-is.** `hooks/useVoiceInput.ts:79` sets `requiresOnDeviceRecognition: Platform.OS === 'ios'` — on **Android** audio may go to Google's speech service. Decision: keep current behaviour (forcing on-device on Android would break dictation on devices without a downloaded offline model) and rely on the corrected disclosure in 6.2. **Consequence: the Play Data Safety form must disclose audio going to Google (see 7.2).** |
 | 6.2 | Adjust wording if cloud processing is possible | LANDING | `[x]` | **Fixed in this branch** — all four locales now state iOS = on-device, Android = may be processed by the system service. |
 
 ---
@@ -120,18 +120,23 @@ user-picked and EXIF-stripped upstream — but it is worth keeping in mind as an
 
 ## Summary
 
-**Verified working (12):** 1.1, 1.2, 1.4–1.8, 2.1–2.6, 3.1, 3.3, 5.5, 6.2.
+**Verified working (20):** 1.1, 1.2, 1.4–1.8, 2.1–2.6, 3.1, 3.2, 3.3, 5.1, 5.4, 5.5, 6.1, 6.2.
 The mobile Sentry implementation is genuinely privacy-hardened and, on the whole, **exceeds** what
 the policy promises.
 
-**Mismatches to resolve (3):**
-1. **6.1 — speech on Android is not on-device.** Site wording fixed here; the *mobile app* still
-   needs a decision: either force on-device on Android too, or keep the corrected disclosure.
-2. **5.1 — Sentry region is still unnamed.** Needs the real region before this can be called done.
-3. **3.2 — feedback retention undocumented.** Crash retention (90d) is stated; feedback is not.
+**All three original mismatches are now resolved:**
+1. **6.1 — speech on Android is not on-device.** Decision taken: keep current app behaviour, publish
+   an honest platform-specific disclosure (shipped in all four locales).
+2. **5.1 — Sentry region.** Confirmed **European Union**; named explicitly in all four locales, and
+   5.4 (international transfer) closed as a consequence.
+3. **3.2 — feedback retention.** Documented: 90 days via Sentry, until-resolved via email.
+
+**Still open — needs you (2):**
+- **5.2 / 5.3 — controller identity + GDPR wording.** Blocked on a legal entity name; nothing in the
+  repo declares one. These are lawyer questions, not engineering ones.
 
 **Not verifiable from these repos (8):** 1.3, 4.1, 4.2, 7.1, 7.2, 7.3, 8.2, 8.3 — these need the
 Sentry dashboard, the streamer repo, and the two store consoles.
 
-**Legal gaps (3):** 5.2, 5.3, 5.4 — no controller identity, no GDPR wording, no transfer wording.
-These are lawyer questions, not engineering ones.
+> **Action required outside this repo:** 7.2 (Play Data Safety) must now disclose that dictation
+> audio may be sent to Google on Android, per the 6.1 decision.
