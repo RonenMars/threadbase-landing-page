@@ -205,7 +205,7 @@ export const NAV_LINK_CONFIG = [
     external: true,
     separatorBefore: true,
   },
-  { id: "privacy", href: "/privacy" },
+  { id: "privacy", href: "/privacy-policy" },
   { id: "support", href: "/support" },
   {
     id: "issues",
