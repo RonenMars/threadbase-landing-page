@@ -44,13 +44,17 @@ export default async function LocaleLayout({
   params,
 }: LocaleLayoutProps): Promise<React.JSX.Element> {
   const { locale } = await params;
-  const messages = await getMessages();
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
+  // Must precede any other next-intl server API call: anything that reads
+  // request state first (getMessages) opts the whole route into dynamic
+  // rendering, silently defeating generateStaticParams.
   setRequestLocale(locale);
+
+  const messages = await getMessages();
 
   return (
     <html

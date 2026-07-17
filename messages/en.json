@@ -461,7 +461,7 @@
         },
         {
           "label": "Processing location.",
-          "body": "Crash reports are processed in the region configured for the Sentry project."
+          "body": "Crash reports are processed by Sentry in the European Union. If you use Threadbase from outside the EU, your crash report is transmitted to and stored in the EU."
         }
       ],
       "feedbackHeading": "4. User-initiated feedback submissions",
@@ -478,6 +478,10 @@
         {
           "label": "Optional email.",
           "body": "If you provide a reply email, it is stored with your feedback so we can respond. Leaving it blank keeps your submission anonymous."
+        },
+        {
+          "label": "Retention.",
+          "body": "Feedback submitted through Sentry is retained for the same period as crash reports (by default, 90 days) and then deleted. Feedback you send by email is kept until your request is resolved."
         },
         {
           "label": "What is excluded.",
@@ -514,7 +518,7 @@
         { "permission": "Camera", "why": "Scanning a QR code to pair with a streamer, and attaching photos to your sessions." },
         { "permission": "Photo library", "why": "Attaching photos from your library to your sessions, and attaching a screenshot to feedback." },
         { "permission": "Microphone", "why": "Dictating prompts by voice." },
-        { "permission": "Speech recognition", "why": "Converting your speech to text on-device." },
+        { "permission": "Speech recognition", "why": "Converting your speech to text. On iOS this is processed on-device; on Android it may be processed by the system speech service, which can send audio to Google." },
         { "permission": "Face ID / biometrics", "why": "Optionally locking access to your conversations." },
         { "permission": "Notifications", "why": "Delivering session notifications, if you enable them." }
       ],
