@@ -233,5 +233,3 @@ export const ANDROID_BETA_LINKS = {
 } as const;
 
 export const SUPPORT_EMAIL = "support@threadbase.sh";
-export const PRIVACY_CONTACT_EMAIL = "ronenmars@gmail.com";
-export const PRIVACY_LAST_UPDATED = "2026-05-31";
