@@ -111,4 +111,28 @@ describe("i18n content catalogs", () => {
       "/android-beta",
     );
   });
+
+  // The privacy and support pages .map() over these keys via t.raw(). A key missing
+  // from one locale renders fine in the others and hard-500s that route in prod.
+  it.each([
+    ["pages.privacy", "automaticReporting"],
+    ["pages.privacy", "crashReportingDetails"],
+    ["pages.privacy", "feedbackDetails"],
+    ["pages.privacy", "permissions"],
+    ["pages.privacy", "permissionsHeaders"],
+    ["pages.privacy", "staysOnDevice"],
+    ["pages.privacy", "trafficCategories"],
+    ["pages.privacy", "yourControl"],
+    ["pages.support", "requestDetails"],
+    ["pages.support", "topics"],
+  ])("%s.%s is a non-empty array in every locale", (namespace, key) => {
+    const [group, page] = namespace.split(".");
+    for (const [locale, catalog] of Object.entries(messages)) {
+      const value = (catalog as Record<string, Record<string, Record<string, unknown>>>)[
+        group
+      ][page][key];
+      expect(Array.isArray(value), `${locale}: ${namespace}.${key}`).toBe(true);
+      expect((value as unknown[]).length, `${locale}: ${namespace}.${key}`).toBeGreaterThan(0);
+    }
+  });
 });

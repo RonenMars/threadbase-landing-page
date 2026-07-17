@@ -52,9 +52,9 @@ function PolicyList({ items }: { items: React.ReactNode[] }): React.JSX.Element 
 
 function NumberedList({ items }: { items: string[] }): React.JSX.Element {
   return (
-    <ol className="mt-6 list-decimal space-y-3 pl-5 leading-7 text-secondary">
+    <ol className="mt-6 list-decimal space-y-3 ps-5 leading-7 text-secondary">
       {items.map((item) => (
-        <li className="pl-2" key={item}>
+        <li className="ps-2" key={item}>
           {item}
         </li>
       ))}
