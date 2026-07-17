@@ -106,7 +106,7 @@ describe("i18n content catalogs", () => {
     expect(hrefs).toContain("/betas");
     expect(hrefs.some((href) => href.includes("/issues"))).toBe(true);
     expect(hrefs).toContain("/support");
-    expect(hrefs).toContain("/privacy");
+    expect(hrefs).toContain("/privacy-policy");
     expect(QUICK_START_LINK_CONFIG.map((link) => link.href)).toContain(
       "/android-beta",
     );

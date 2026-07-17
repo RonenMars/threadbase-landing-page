@@ -22,8 +22,8 @@
         "description": "Get help with Threadbase setup, pairing, notifications, bug reports, and app questions."
       },
       "privacy": {
-        "title": "Privacy — Threadbase",
-        "description": "How the Threadbase iOS and macOS apps handle your data."
+        "title": "Privacy Policy — Threadbase",
+        "description": "How Threadbase handles streamer traffic, push notifications, crash reporting, feedback, screenshots, and diagnostics."
       }
     }
   },
@@ -400,53 +400,133 @@
     },
     "privacy": {
       "kicker": "Threadbase privacy",
-      "heading": "Privacy",
-      "description": "Threadbase is a thin client for self-hosted Threadbase streamers. It does not run any analytics, crash-reporting, or telemetry service of its own.",
-      "staysHeading": "What stays on your device",
-      "staysOnDevice": [
-        "Server URLs and API keys (Keychain / Keystore via SecureStore)",
-        "Session display names, draft prompts, UI settings, quick-access list, React Query cache",
-        "All Claude Code session content fetched from your streamer"
+      "heading": "Privacy Policy",
+      "description": "Threadbase is a thin client for the Claude Code sessions you run on your own computer, reached through a Threadbase streamer instance that you operate. Threadbase is local-first by design: your prompts, session content, and credentials stay on your device and on the streamers you configure.",
+      "intro": "This policy describes the specific, limited cases in which data leaves your device, and the controls you have over each.",
+      "trafficHeading": "The kinds of network traffic Threadbase uses",
+      "trafficIntro": "Threadbase separates its traffic into five distinct categories. Each is described in its own section below.",
+      "trafficCategories": [
+        "Core traffic to your streamers — the app's normal function.",
+        "Expo push-notification delivery — optional notifications.",
+        "Crash reporting (Sentry) — automatic reporting is off by default and opt-in; a single crash can also be reported manually at any time.",
+        "User-initiated feedback submissions — only when you send feedback.",
+        "Optional screenshots or diagnostics you explicitly select — only when you choose to include them."
       ],
-      "leavesHeading": "What leaves your device, and where it goes",
-      "leavesCaption": "Data that leaves your device",
-      "leavesHeaders": ["Data", "Destination", "Purpose"],
-      "leavesDevice": [
+      "coreHeading": "1. Core traffic to your streamers",
+      "coreBody": "Threadbase connects only to the streamer URLs you configure. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. Threadbase does not route this traffic through any Threadbase-operated server, and it does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
+      "pushHeading": "2. Expo push-notification delivery",
+      "pushBody": "If you enable notifications, Threadbase obtains a push token from Expo's push service and shares that token with each streamer you have paired, so the streamer can notify you when a session needs attention. The token is delivered through Expo's notification relay. Removing a server in Settings revokes its push token. The token is an opaque delivery address; it does not contain your session content.",
+      "crashHeading": "3. Optional crash reporting (Sentry)",
+      "crashIntro": "Threadbase includes optional crash reporting to help diagnose defects, sent through two paths:",
+      "automaticReporting": [
+        "Automatic reporting. Disabled by default and opt-in. Nothing is sent automatically unless you turn on \"Share anonymous crash reports\" in Settings -> Crash Reporting. Once enabled, future crashes are sent automatically until you turn it off again.",
+        "Manual, one-time report. If the app crashes, the recovery screen offers a \"Report this crash\" button. Tapping it sends that single crash report even if automatic reporting is off. This is a deliberate action you take, not something the app does on its own. It does not turn on automatic reporting; after sending, the app may ask once whether you'd like to turn automatic reporting on going forward, and remembers your answer so it does not ask again."
+      ],
+      "crashSameData": "Both paths send the same sanitized data described below, through the same service.",
+      "crashReportingDetails": [
         {
-          "data": "Session content, prompts, files, status events",
-          "destination": "The Threadbase streamer URL you configured",
-          "purpose": "Show your sessions in the app"
+          "label": "Service provider.",
+          "bodyBeforeLink": "Crash reports are processed by",
+          "linkText": "Sentry",
+          "linkHref": "https://sentry.io/",
+          "bodyAfterLink": ", a third-party error-monitoring service, under Sentry's own terms and data-processing agreements."
         },
         {
-          "data": "Expo push token (ExponentPushToken[…])",
-          "destination": "(a) Expo's push relay; (b) every streamer you've paired with, via POST /api/push/register",
-          "purpose": "Deliver session notifications"
+          "label": "What is sent.",
+          "body": "Only sanitized technical information: the app version and build number, the platform (iOS or Android), the operating-system major/minor version, the JavaScript engine, the release channel or environment, the Expo runtime version, the EAS update identifier, a generic connection-mode category (local, remote, or unknown), and the type, message, and stack trace of the error. Reports also include an anonymous, randomly generated installation identifier used only to group reports; it is not tied to your identity, your device's advertising identifier, or your streamer credentials."
         },
         {
-          "data": "Pairing handshake",
-          "destination": "The streamer URL encoded in the pair QR you scan",
-          "purpose": "Exchange API key during setup"
+          "label": "What is excluded.",
+          "body": "Crash reports do not intentionally include prompts, terminal output, source code, file contents, credentials, authentication tokens, server addresses, hostnames, IP addresses, repository names or paths, session names or content, or your device name. A sanitization step runs on every report before it is transmitted; anything that cannot be confidently sanitized is dropped rather than sent."
+        },
+        {
+          "label": "A note on absolutes.",
+          "body": "We design crash reporting to exclude the categories above, and we apply sanitization before sending. We cannot, however, describe unexpected behavior in the underlying SDK or platform as an absolute impossibility, which is why crash reporting is opt-in and off by default."
+        },
+        {
+          "label": "Your control.",
+          "body": "You can enable or disable crash reporting at any time in Settings. Disabling it stops future reporting immediately and deletes the anonymous installation identifier from your device."
+        },
+        {
+          "label": "Previously submitted reports.",
+          "body": "Reports already sent before you disable crash reporting remain in Sentry subject to the retention below; disabling does not retroactively delete them."
+        },
+        {
+          "label": "Retention.",
+          "body": "Crash reports are retained according to the configured Sentry project retention (by default, 90 days) and then deleted."
+        },
+        {
+          "label": "Deletion requests.",
+          "body": "To request deletion of reports associated with your anonymous installation identifier where feasible, contact support@threadbase.sh."
+        },
+        {
+          "label": "Processing location.",
+          "body": "Crash reports are processed in the region configured for the Sentry project."
         }
       ],
+      "feedbackHeading": "4. User-initiated feedback submissions",
+      "feedbackIntro": "The Help & Feedback screen lets you send a bug report, feature request, or general feedback. This is always a deliberate action you initiate; Threadbase never sends feedback on its own.",
+      "feedbackDetails": [
+        {
+          "label": "What is sent.",
+          "body": "The description you type, an optional reply email address if you provide one, and only if you leave the \"Include technical diagnostics\" option enabled, the same category of sanitized technical metadata described for diagnostics below. Before you submit, the screen shows you exactly what will be included."
+        },
+        {
+          "label": "How it is sent.",
+          "body": "Feedback is delivered through the first available of: a configured feedback endpoint, the Sentry User Feedback channel (only when crash reporting is enabled), your device's email app, or a copy-to-clipboard option you can paste into the Threadbase feedback page. Feedback works whether or not crash reporting is enabled."
+        },
+        {
+          "label": "Optional email.",
+          "body": "If you provide a reply email, it is stored with your feedback so we can respond. Leaving it blank keeps your submission anonymous."
+        },
+        {
+          "label": "What is excluded.",
+          "body": "As with crash reports, feedback does not intentionally include prompts, terminal output, source code, credentials, server addresses, or session content."
+        }
+      ],
+      "screenshotHeading": "5. Optional screenshots and diagnostics you select",
+      "screenshotAndDiagnosticDetails": [
+        {
+          "label": "Screenshots.",
+          "body": "Threadbase never captures your screen automatically. If you attach a screenshot to feedback, you select it explicitly from your photo library, you can preview and remove it, and it is submitted exactly as you selected it. Attached screenshots are re-encoded to strip embedded metadata (such as location) and are size-limited. Screenshots are used only to deliver the feedback you submit and are not retained beyond what is necessary for that submission and its handling."
+        },
+        {
+          "label": "Diagnostics.",
+          "body": "You can copy or export a diagnostics report from the app. It contains only the sanitized technical metadata categories described above, never prompts, terminal output, credentials, server addresses, session content, or your device name. You control whether it is copied or submitted."
+        }
+      ],
+      "screenshotReview": "Screenshots and manually entered feedback may contain content you choose to include. Please review anything you attach before submitting.",
+      "staysHeading": "What stays on your device",
+      "staysOnDevice": [
+        "Your prompts and draft prompts.",
+        "Claude Code, Codex, and other agent conversation content.",
+        "Terminal output and session content.",
+        "Your streamer URLs, API keys, and pairing credentials (in the iOS Keychain / Android Keystore).",
+        "Your session names, favorites, and app settings."
+      ],
+      "uninstallBody": "Uninstalling the app deletes everything Threadbase stored locally. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
       "notCollectHeading": "What we do not collect",
-      "notCollectPrefix": "The app makes",
-      "notCollectStrong": "no network calls to any developer-operated backend",
-      "notCollectSuffix": "— there is no Threadbase analytics server, no crash-reporting endpoint, no advertising or tracking SDK. Apart from the Expo push relay (used solely to deliver notifications you opted into) and the streamer URLs you yourself enter, the app talks to nothing.",
-      "permissionsHeading": "Permissions used",
+      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, and diagnostics described above.",
+      "permissionsHeading": "Permissions the app uses",
       "permissionsCaption": "Permissions used by the app",
       "permissionsHeaders": ["Permission", "Why"],
       "permissions": [
-        { "permission": "Camera", "why": "Scan pairing QR codes; attach photos to sessions" },
-        { "permission": "Photo library", "why": "Attach photos to sessions" },
-        { "permission": "Microphone + speech recognition", "why": "Dictate prompts (speech-to-text is on-device)" },
-        { "permission": "Notifications", "why": "Deliver session status alerts from your streamers" }
+        { "permission": "Camera", "why": "Scanning a QR code to pair with a streamer, and attaching photos to your sessions." },
+        { "permission": "Photo library", "why": "Attaching photos from your library to your sessions, and attaching a screenshot to feedback." },
+        { "permission": "Microphone", "why": "Dictating prompts by voice." },
+        { "permission": "Speech recognition", "why": "Converting your speech to text on-device." },
+        { "permission": "Face ID / biometrics", "why": "Optionally locking access to your conversations." },
+        { "permission": "Notifications", "why": "Delivering session notifications, if you enable them." }
       ],
       "controlHeading": "Your control",
       "yourControl": [
-        "Remove a server in Settings to revoke its push token and stop all traffic to it",
-        "Disable notifications system-wide in iOS Settings → Threadbase",
-        "Uninstalling the app deletes every byte stored locally; nothing persists off-device"
+        "Crash reporting is off by default; enable or disable it any time in Settings.",
+        "Feedback and diagnostics are only ever sent when you initiate them.",
+        "Removing a server revokes its push token.",
+        "Uninstalling the app deletes everything stored locally.",
+        "Contact support@threadbase.sh with any privacy question or deletion request."
       ],
+      "effectiveDateLabel": "Effective date:",
       "lastUpdatedLabel": "Last updated:",
       "contactLabel": "Contact:"
     },
