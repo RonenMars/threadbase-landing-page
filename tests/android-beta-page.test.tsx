@@ -2,21 +2,21 @@ import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import AndroidBetaPage from "@/app/[locale]/android-beta/page";
 import { ANDROID_BETA_LINKS } from "@/lib/content";
-import enMessages from "@/messages/en.json";
+import enTranslations from "@/locales/en.json";
 import { renderWithIntl } from "@/tests/test-utils";
 
 describe("AndroidBetaPage", () => {
   it("renders the page heading and eyebrow", () => {
     renderWithIntl(<AndroidBetaPage />);
     expect(screen.getByRole("heading", { name: /android beta/i, level: 1 })).toBeInTheDocument();
-    expect(screen.getByText(enMessages.pages.androidBeta.eyebrow)).toBeInTheDocument();
+    expect(screen.getByText(enTranslations.pages.androidBeta.eyebrow)).toBeInTheDocument();
   });
 
   it("renders all four ordered steps in order", () => {
     renderWithIntl(<AndroidBetaPage />);
     const stepHeadings = screen.getAllByRole("heading", { level: 3 });
-    expect(stepHeadings).toHaveLength(enMessages.pages.androidBeta.steps.length);
-    enMessages.pages.androidBeta.steps.forEach((step, idx) => {
+    expect(stepHeadings).toHaveLength(enTranslations.pages.androidBeta.steps.length);
+    enTranslations.pages.androidBeta.steps.forEach((step, idx) => {
       expect(stepHeadings[idx]).toHaveTextContent(step.title);
     });
   });

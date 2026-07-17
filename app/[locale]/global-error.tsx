@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import arMessages from "@/messages/ar.json";
-import enMessages from "@/messages/en.json";
-import heMessages from "@/messages/he.json";
-import ruMessages from "@/messages/ru.json";
+import arTranslations from "@/locales/ar.json";
+import enTranslations from "@/locales/en.json";
+import heTranslations from "@/locales/he.json";
+import ruTranslations from "@/locales/ru.json";
 import {
   getTextDirection,
   isLocale,
@@ -16,11 +16,11 @@ type GlobalErrorProps = {
   reset: () => void;
 };
 
-const messages = {
-  en: enMessages,
-  ru: ruMessages,
-  he: heMessages,
-  ar: arMessages,
+const translations = {
+  en: enTranslations,
+  ru: ruTranslations,
+  he: heTranslations,
+  ar: arTranslations,
 } as const;
 
 function getCurrentLocale(): Locale {
@@ -34,7 +34,7 @@ export default function GlobalError({
   reset,
 }: GlobalErrorProps): React.JSX.Element {
   const locale = getCurrentLocale();
-  const t = messages[locale].pages.globalError;
+  const t = translations[locale].pages.globalError;
   const homeHref = locale === "en" ? "/" : `/${locale}`;
 
   return (

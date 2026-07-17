@@ -54,7 +54,7 @@ export default async function LocaleLayout({
   // rendering, silently defeating generateStaticParams.
   setRequestLocale(locale);
 
-  const messages = await getMessages();
+  const translations = await getMessages();
 
   return (
     <html
@@ -63,7 +63,7 @@ export default async function LocaleLayout({
       lang={locale}
     >
       <body className="bg-bg-primary font-sans text-primary antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={translations}>
           <NavMenu />
           {children}
         </NextIntlClientProvider>

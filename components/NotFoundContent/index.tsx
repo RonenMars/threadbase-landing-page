@@ -6,7 +6,7 @@ import { Link } from "@/i18n/routing";
 /**
  * The 404 body, shared by the locale-scoped `app/[locale]/not-found.tsx` and
  * the root `app/not-found.tsx`. Each caller supplies the locale context: the
- * locale route via its layout, the root route via `defaultLocale` messages.
+ * locale route via its layout, the root route via `defaultLocale` translations.
  */
 export function NotFoundContent(): React.JSX.Element {
   const t = useTranslations("pages.notFound");

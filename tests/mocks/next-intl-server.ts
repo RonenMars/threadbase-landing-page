@@ -1,14 +1,14 @@
-import arMessages from "@/messages/ar.json";
-import enMessages from "@/messages/en.json";
-import heMessages from "@/messages/he.json";
-import ruMessages from "@/messages/ru.json";
+import arTranslations from "@/locales/ar.json";
+import enTranslations from "@/locales/en.json";
+import heTranslations from "@/locales/he.json";
+import ruTranslations from "@/locales/ru.json";
 import type { Locale } from "./i18n-routing";
 
-const messages = {
-  en: enMessages,
-  ru: ruMessages,
-  he: heMessages,
-  ar: arMessages,
+const translations = {
+  en: enTranslations,
+  ru: ruTranslations,
+  he: heTranslations,
+  ar: arTranslations,
 } as const;
 
 type TranslationValues = Record<string, string | number | boolean | Date>;
@@ -46,8 +46,8 @@ export async function getTranslations({
   namespace?: string;
 } = {}): Promise<Translator> {
   const namespaceMessages = namespace
-    ? getByPath(messages[locale], namespace)
-    : messages[locale];
+    ? getByPath(translations[locale], namespace)
+    : translations[locale];
 
   const t = ((key: string, values?: TranslationValues) => {
     const message = getByPath(namespaceMessages, key);

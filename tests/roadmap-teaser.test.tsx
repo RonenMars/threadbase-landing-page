@@ -3,13 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import { ROADMAP_MILESTONE_CONFIG } from "@/lib/content";
-import enMessages from "@/messages/en.json";
+import enTranslations from "@/locales/en.json";
 import { renderWithIntl } from "@/tests/test-utils";
 
 describe("RoadmapTeaser", () => {
   it("renders all milestone titles", () => {
     renderWithIntl(<RoadmapTeaser />);
-    for (const milestone of enMessages.home.roadmap.milestones) {
+    for (const milestone of enTranslations.home.roadmap.milestones) {
       expect(screen.getByText(milestone.title)).toBeInTheDocument();
     }
   });
@@ -18,7 +18,7 @@ describe("RoadmapTeaser", () => {
     renderWithIntl(<RoadmapTeaser />);
     expect(
       screen.getByRole("heading", {
-        name: enMessages.home.roadmap.section.heading,
+        name: enTranslations.home.roadmap.section.heading,
       }),
     ).toBeInTheDocument();
   });
