@@ -8,25 +8,25 @@ import {
   QUICK_START_LINK_CONFIG,
   ROADMAP_MILESTONE_CONFIG,
 } from "@/lib/content";
-import arMessages from "@/messages/ar.json";
-import enMessages from "@/messages/en.json";
-import heMessages from "@/messages/he.json";
-import ruMessages from "@/messages/ru.json";
+import arTranslations from "@/locales/ar.json";
+import enTranslations from "@/locales/en.json";
+import heTranslations from "@/locales/he.json";
+import ruTranslations from "@/locales/ru.json";
 
-const messages = {
-  en: enMessages,
-  ru: ruMessages,
-  he: heMessages,
-  ar: arMessages,
+const translations = {
+  en: enTranslations,
+  ru: ruTranslations,
+  he: heTranslations,
+  ar: arTranslations,
 };
 
 describe("i18n content catalogs", () => {
   it("ships exactly the planned locales", () => {
-    expect(Object.keys(messages)).toEqual(["en", "ru", "he", "ar"]);
+    expect(Object.keys(translations)).toEqual(["en", "ru", "he", "ar"]);
   });
 
-  it("keeps the English hero headline in messages/en.json", () => {
-    expect(enMessages.home.hero.headline).toBe(
+  it("keeps the English hero headline in locales/en.json", () => {
+    expect(enTranslations.home.hero.headline).toBe(
       "Your terminal. Live. In your pocket.",
     );
   });
@@ -66,7 +66,7 @@ describe("i18n content catalogs", () => {
   });
 
   it("preserves terminal commands verbatim in every locale", () => {
-    for (const catalog of Object.values(messages)) {
+    for (const catalog of Object.values(translations)) {
       expect(catalog.home.quickStart.steps).toContain(
         "npm install -g @threadbase-sh/streamer",
       );
@@ -82,15 +82,15 @@ describe("i18n content catalogs", () => {
 
   it("front-page English copy no longer describes Codex support as read-only", () => {
     const frontPageCopy = [
-      enMessages.metadata.site.description,
-      enMessages.home.hero.eyebrow,
-      ...enMessages.home.features.items.map(
+      enTranslations.metadata.site.description,
+      enTranslations.home.hero.eyebrow,
+      ...enTranslations.home.features.items.map(
         (feature) => `${feature.title} ${feature.description}`,
       ),
-      ...enMessages.home.honestCons.items.map(
+      ...enTranslations.home.honestCons.items.map(
         (item) => `${item.title} ${item.description}`,
       ),
-      ...enMessages.home.roadmap.milestones.map(
+      ...enTranslations.home.roadmap.milestones.map(
         (milestone) => `${milestone.title} ${milestone.detail}`,
       ),
     ].join(" ");

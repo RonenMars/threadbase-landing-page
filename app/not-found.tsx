@@ -3,12 +3,12 @@
 import { NextIntlClientProvider } from "next-intl";
 import { NotFoundContent } from "@/components/NotFoundContent";
 import { defaultLocale } from "@/i18n/routing";
-import messages from "@/messages/en.json";
+import translations from "@/locales/en.json";
 
 /**
  * Root 404 — serves requests that never reach a locale segment, and so have no
  * request locale to detect. Renders in `defaultLocale` with statically imported
- * messages rather than calling `getMessages()`, which needs a locale context
+ * translations rather than calling `getTranslations()`, which needs a locale context
  * this route does not have.
  *
  * Must stay a Client Component: `NextIntlClientProvider` reads request state
@@ -17,7 +17,7 @@ import messages from "@/messages/en.json";
  */
 export default function RootNotFound(): React.JSX.Element {
   return (
-    <NextIntlClientProvider locale={defaultLocale} messages={messages}>
+    <NextIntlClientProvider locale={defaultLocale} messages={translations}>
       <NotFoundContent />
     </NextIntlClientProvider>
   );

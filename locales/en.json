@@ -158,7 +158,7 @@
         },
         {
           "title": "Resilient by default",
-          "description": "Lose signal in the elevator? Threadbase resumes paused messages and refetches the moment you're back online."
+          "description": "Lose signal in the elevator? Threadbase resumes paused translations and refetches the moment you're back online."
         }
       ]
     },

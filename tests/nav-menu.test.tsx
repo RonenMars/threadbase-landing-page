@@ -2,7 +2,7 @@ import { screen, fireEvent } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { NavMenu } from "@/components/NavMenu";
 import { NAV_LINK_CONFIG } from "@/lib/content";
-import enMessages from "@/messages/en.json";
+import enTranslations from "@/locales/en.json";
 import { renderWithIntl } from "@/tests/test-utils";
 
 describe("NavMenu", () => {
@@ -21,14 +21,14 @@ describe("NavMenu", () => {
   it("hides the current language inside the compact dropdown", () => {
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /change language/i }));
-    expect(screen.queryByRole("link", { name: enMessages.languageSwitcher.localeLabels.en })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: enMessages.languageSwitcher.localeLabels.ru })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: enTranslations.languageSwitcher.localeLabels.en })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: enTranslations.languageSwitcher.localeLabels.ru })).toBeInTheDocument();
   });
 
   it("keeps the current language in the menu selector", () => {
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-    expect(screen.getByRole("link", { name: enMessages.languageSwitcher.localeLabels.en })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: enTranslations.languageSwitcher.localeLabels.en })).toBeInTheDocument();
   });
 
   it("opens the menu when the hamburger is clicked", () => {
@@ -44,7 +44,7 @@ describe("NavMenu", () => {
     document.cookie = "NEXT_LOCALE=; path=/; max-age=0";
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /change language/i }));
-    fireEvent.click(screen.getByRole("link", { name: enMessages.languageSwitcher.localeLabels.ru }));
+    fireEvent.click(screen.getByRole("link", { name: enTranslations.languageSwitcher.localeLabels.ru }));
     expect(document.cookie).toContain("NEXT_LOCALE=ru");
   });
 
@@ -52,7 +52,7 @@ describe("NavMenu", () => {
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     for (const link of NAV_LINK_CONFIG) {
-      const label = enMessages.nav.links[link.id];
+      const label = enTranslations.nav.links[link.id];
       expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", link.href);
     }
   });
@@ -70,7 +70,7 @@ describe("NavMenu", () => {
     renderWithIntl(<NavMenu />);
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
-    const firstLink = screen.getByRole("link", { name: enMessages.nav.links.home });
+    const firstLink = screen.getByRole("link", { name: enTranslations.nav.links.home });
     fireEvent.click(firstLink);
     expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
