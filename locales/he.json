@@ -248,6 +248,9 @@
         "sending": "נרשמים…",
         "submitted": "בדקו את תיבת הדואר שלכם לאישור ✓",
         "error": "משהו השתבש. נסו שוב.",
+        "emailRequired": "יש להזין אימייל.",
+        "emailInvalid": "הזינו כתובת אימייל תקינה.",
+        "consentRequired": "יש לסמן את התיבה כדי להירשם.",
         "consentBeforeLink": "אני מסכים/ה לקבל עדכוני מוצר וחדשות מ-Threadbase. ראו את",
         "consentLink": "מדיניות הפרטיות",
         "consentAfterLink": "שלנו."

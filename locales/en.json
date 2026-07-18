@@ -248,6 +248,9 @@
         "sending": "Subscribing…",
         "submitted": "Check your inbox to confirm ✓",
         "error": "Something went wrong. Please try again.",
+        "emailRequired": "Email is required.",
+        "emailInvalid": "Enter a valid email address.",
+        "consentRequired": "Please check the box to subscribe.",
         "consentBeforeLink": "I agree to receive product updates and news from Threadbase. See the",
         "consentLink": "Privacy Policy",
         "consentAfterLink": "."

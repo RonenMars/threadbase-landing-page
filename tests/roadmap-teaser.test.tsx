@@ -29,13 +29,21 @@ describe("RoadmapTeaser", () => {
     expect(screen.getByRole("button", { name: "Subscribe" })).toBeInTheDocument();
   });
 
-  it("disables the subscribe button until consent is checked", async () => {
+  it("shows a validation error when submitting without consent", async () => {
     const user = userEvent.setup();
     renderWithIntl(<RoadmapTeaser />);
-    const button = screen.getByRole("button", { name: "Subscribe" });
-    expect(button).toBeDisabled();
+    await user.type(screen.getByPlaceholderText("you@company.com"), "test@example.com");
+    await user.click(screen.getByRole("button", { name: "Subscribe" }));
+    expect(await screen.findByText(/check the box to subscribe/i)).toBeInTheDocument();
+  });
+
+  it("shows a validation error for an invalid email", async () => {
+    const user = userEvent.setup();
+    renderWithIntl(<RoadmapTeaser />);
+    await user.type(screen.getByPlaceholderText("you@company.com"), "not-an-email");
     await user.click(screen.getByRole("checkbox"));
-    expect(button).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: "Subscribe" }));
+    expect(await screen.findByText(/valid email address/i)).toBeInTheDocument();
   });
 
   it("shows success message after newsletter submit", async () => {

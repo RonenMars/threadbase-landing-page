@@ -248,6 +248,9 @@
         "sending": "Подписываем…",
         "submitted": "Проверьте почту, чтобы подтвердить подписку ✓",
         "error": "Что-то пошло не так. Попробуйте ещё раз.",
+        "emailRequired": "Укажите email.",
+        "emailInvalid": "Введите корректный email.",
+        "consentRequired": "Отметьте флажок, чтобы подписаться.",
         "consentBeforeLink": "Я согласен(на) получать новости и обновления от Threadbase. См.",
         "consentLink": "Политику конфиденциальности",
         "consentAfterLink": "."
