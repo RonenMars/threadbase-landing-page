@@ -13,7 +13,14 @@ import { usePtyTypewriter } from "./usePtyTypewriter";
 export function DeviceMesh(): React.JSX.Element {
   const reducedMotion = useReducedMotion();
   const [replayKey, setReplayKey] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  // null until matchMedia resolves — renders neither variant, so phones never
+  // paint the desktop scene and restart its timeline at t=0. Resolves during the
+  // first client render; stays null only for the SSR pass.
+  const [isMobile, setIsMobile] = useState<boolean | null>(() => {
+    if (typeof window === "undefined") return null;
+    if (typeof window.matchMedia !== "function") return false;
+    return window.matchMedia("(max-width: 639px)").matches;
+  });
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
@@ -34,13 +41,13 @@ export function DeviceMesh(): React.JSX.Element {
     );
   }
 
+  if (isMobile === null) {
+    return <div className="relative mt-16 w-full" />;
+  }
+
   return (
     <div key={replayKey} className="relative mt-16 w-full">
-      {isMobile ? (
-        <DeviceMeshMobile />
-      ) : (
-        <DeviceMeshDesktop onSettle={() => undefined} />
-      )}
+      {isMobile ? <DeviceMeshMobile /> : <DeviceMeshDesktop />}
 
       {/* Replay button — shown after the animation duration */}
       <ReplayButton
@@ -51,23 +58,15 @@ export function DeviceMesh(): React.JSX.Element {
   );
 }
 
-function DeviceMeshDesktop({
-  onSettle,
-}: {
-  onSettle: () => void;
-}): React.JSX.Element {
+function DeviceMeshDesktop(): React.JSX.Element {
   const [streamEnabled, setStreamEnabled] = useState(false);
   const phoneLitAtMs = DESKTOP_BEATS.connect.start * 1000;
   const streamAtMs = DESKTOP_BEATS.stream.start * 1000;
 
   useEffect(() => {
-    const t1 = window.setTimeout(() => setStreamEnabled(true), streamAtMs);
-    const t2 = window.setTimeout(onSettle, DESKTOP_BEATS.settle.end * 1000);
-    return () => {
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-    };
-  }, [onSettle, streamAtMs]);
+    const t = window.setTimeout(() => setStreamEnabled(true), streamAtMs);
+    return () => window.clearTimeout(t);
+  }, [streamAtMs]);
 
   const ptyOutput = usePtyTypewriter(PTY_LINES.phoneAndLaptop1, streamEnabled);
 

@@ -1,5 +1,5 @@
 import { screen, fireEvent } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { NavMenu } from "@/components/NavMenu";
 import { NAV_LINK_CONFIG } from "@/lib/content";
 import enTranslations from "@/locales/en.json";
@@ -92,5 +92,58 @@ describe("NavMenu", () => {
     expect(screen.getByRole("link", { name: /beta programs/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /github/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /report a bug/i })).toBeInTheDocument();
+  });
+
+  it("keeps Tab focus inside the panel while it is open", () => {
+    renderWithIntl(<NavMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+    const panel = screen.getByRole("dialog");
+    const focusable = panel.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    last.focus();
+    fireEvent.keyDown(window, { key: "Tab" });
+    expect(document.activeElement).toBe(first);
+
+    fireEvent.keyDown(window, { key: "Tab", shiftKey: true });
+    expect(document.activeElement).toBe(last);
+  });
+
+  describe("on a mobile platform", () => {
+    afterEach(() => {
+      vi.unstubAllGlobals();
+    });
+
+    it("gives each beta platform row its own icon", async () => {
+      vi.stubGlobal("navigator", {
+        ...navigator,
+        userAgent:
+          "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/120 Mobile Safari/537.36",
+      });
+      renderWithIntl(<NavMenu />);
+      fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+
+      const android = await screen.findByRole("link", {
+        name: enTranslations.nav.betaPlatforms.android,
+      });
+      const ios = screen.getByRole("link", {
+        name: enTranslations.nav.betaPlatforms.ios,
+      });
+
+      // Each row is one <li>; the icon is the row's own svg, not a shared ancestor's.
+      const iconOf = (link: HTMLElement): string | undefined =>
+        link.closest("li")?.querySelector("svg")?.outerHTML;
+
+      const androidIcon = iconOf(android);
+      const iosIcon = iconOf(ios);
+
+      expect(androidIcon).toBeDefined();
+      expect(iosIcon).toBeDefined();
+      // Both rows resolved to the generic Beaker before the per-platform icon fix.
+      expect(androidIcon).not.toBe(iosIcon);
+    });
   });
 });

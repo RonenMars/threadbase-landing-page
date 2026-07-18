@@ -88,6 +88,7 @@ export function NavMenu(): React.JSX.Element {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
   const panelId = useId();
   const mobilePlatform = useMobilePlatform();
   const panelVariants = React.useMemo(() => getPanelVariants(isRtl), [isRtl]);
@@ -118,6 +119,31 @@ export function NavMenu(): React.JSX.Element {
       if (event.key === "Escape") {
         setOpen(false);
         triggerRef.current?.focus();
+        return;
+      }
+
+      if (event.key !== "Tab") return;
+
+      // ponytail: query on each Tab rather than caching — the panel's list is small
+      // and this stays correct as items mount/unmount.
+      const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (!focusable?.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (!panelRef.current?.contains(active)) {
+        event.preventDefault();
+        first.focus();
       }
     };
     window.addEventListener("keydown", onKeyDown);
@@ -152,20 +178,14 @@ export function NavMenu(): React.JSX.Element {
 
     return links.flatMap((link) => {
       if (!link.betaIcons) return [link];
-      return [
-        {
-          id: "betas",
-          label: primary.label,
-          href: primary.href,
-          external: primary.href.startsWith("http"),
-        },
-        {
-          id: "betas",
-          label: secondary.label,
-          href: secondary.href,
-          external: secondary.href.startsWith("http"),
-        },
-      ] satisfies NavLink[];
+      return [primary, secondary].map((platform) => ({
+        id: "betas" as const,
+        label: platform.label,
+        href: platform.href,
+        external: platform.href.startsWith("http"),
+        // ponytail: platform icon rides on the entry; keeps the shared NavLink id union untouched.
+        Icon: platform.Icon,
+      }));
     });
   }, [betaPlatforms, links, mobilePlatform]);
 
@@ -204,6 +224,7 @@ export function NavMenu(): React.JSX.Element {
             />
 
             <motion.nav
+              ref={panelRef}
               id={panelId}
               aria-label={t("ariaLabel")}
               role="dialog"
@@ -277,7 +298,7 @@ function NavPanelItem({
   betaPlatforms,
   forwardedRef,
 }: {
-  link: NavLink;
+  link: NavLink & { Icon?: React.ElementType };
   onActivate: () => void;
   isDesktop: boolean;
   itemVariants: ReturnType<typeof getItemVariants>;
@@ -290,7 +311,7 @@ function NavPanelItem({
   forwardedRef?: React.Ref<HTMLAnchorElement>;
 }): React.JSX.Element {
   const external = link.external ?? /^https?:\/\//.test(link.href);
-  const Icon = LINK_ICONS[link.id];
+  const Icon = link.Icon ?? LINK_ICONS[link.id];
 
   const showBetaIcons = isDesktop && link.betaIcons;
 

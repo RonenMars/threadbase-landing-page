@@ -15,6 +15,7 @@ export function usePtyTypewriter(lines: readonly string[], enabled: boolean): st
     if (!enabled) return;
 
     let cancelled = false;
+    let timer = 0;
     let charIndex = 0;
     let lineIndex = 0;
     const buffer: string[] = [];
@@ -35,15 +36,23 @@ export function usePtyTypewriter(lines: readonly string[], enabled: boolean): st
 
       setOutput(buffer.join("\n"));
 
-      const jitter = (Math.random() - 0.5) * 2 * PTY_CADENCE_MS.jitter;
-      const delay = PTY_CADENCE_MS.base + jitter;
-      window.setTimeout(tick, delay);
+      schedule();
     }
 
-    tick();
+    function schedule(): void {
+      const jitter = (Math.random() - 0.5) * 2 * PTY_CADENCE_MS.jitter;
+      const delay = PTY_CADENCE_MS.base + jitter;
+      timer = window.setTimeout(tick, delay);
+    }
+
+    // First tick is scheduled rather than called inline: the buffer rebuilds from
+    // empty on every effect re-run, so a synchronous setOutput would flash the
+    // previous run's full text against it.
+    schedule();
 
     return () => {
       cancelled = true;
+      window.clearTimeout(timer);
     };
   }, [lines, enabled]);
 
