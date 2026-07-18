@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { RoadmapTeaser } from "@/components/RoadmapTeaser";
 import { ROADMAP_MILESTONE_CONFIG } from "@/lib/content";
 import enTranslations from "@/locales/en.json";
@@ -23,17 +23,36 @@ describe("RoadmapTeaser", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders the waitlist form", () => {
+  it("renders the newsletter form", () => {
     renderWithIntl(<RoadmapTeaser />);
     expect(screen.getByPlaceholderText("you@company.com")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Notify me" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Subscribe" })).toBeInTheDocument();
   });
 
-  it("shows success message after waitlist submit", async () => {
+  it("shows success message after newsletter submit", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({ ok: true } as Response),
+    );
     const user = userEvent.setup();
     renderWithIntl(<RoadmapTeaser />);
-    await user.click(screen.getByRole("button", { name: "Notify me" }));
-    expect(screen.getByText(/you're on the list/i)).toBeInTheDocument();
+    await user.type(screen.getByPlaceholderText("you@company.com"), "test@example.com");
+    await user.click(screen.getByRole("button", { name: "Subscribe" }));
+    expect(await screen.findByText(/check your inbox/i)).toBeInTheDocument();
+    vi.unstubAllGlobals();
+  });
+
+  it("shows error message when subscribe request fails", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockRejectedValue(new Error("network error")),
+    );
+    const user = userEvent.setup();
+    renderWithIntl(<RoadmapTeaser />);
+    await user.type(screen.getByPlaceholderText("you@company.com"), "test@example.com");
+    await user.click(screen.getByRole("button", { name: "Subscribe" }));
+    expect(await screen.findByText(/something went wrong/i)).toBeInTheDocument();
+    vi.unstubAllGlobals();
   });
 
   it("renders status icons as SVG (Phosphor)", () => {

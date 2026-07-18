@@ -48,3 +48,7 @@ CI can be skipped for trivial changes by adding `[skip-ci]` to the commit messag
 ## CI
 
 GitHub Actions runs lint, build, and vitest on Node 20/22/24 on every push and PR to `main`. Visual regression tests are manual-only (not in CI).
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in values. `MAILERLITE_API_KEY` is required by `app/api/subscribe/route.ts` (newsletter subscription form).

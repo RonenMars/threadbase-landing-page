@@ -239,13 +239,18 @@
           "detail": "A Temporal-backed pipeline that runs incoming tasks through worker → reviewer → sign-off agent stages, each independently retriable and crash-resilient — no hand-rolled queue."
         }
       ],
-      "waitlist": {
-        "heading": "Get notified when it ships.",
-        "body": "One email when multi-assistant support lands. No spam.",
+      "newsletter": {
+        "heading": "Stay in the loop.",
+        "body": "Product news and updates from Threadbase, straight to your inbox.",
+        "namePlaceholder": "Your name (optional)",
         "placeholder": "you@company.com",
-        "button": "Notify me",
-        "submitted": "You're on the list ✓",
-        "footnote": "No spam. One email when it's ready."
+        "button": "Subscribe",
+        "sending": "Subscribing…",
+        "submitted": "Check your inbox to confirm ✓",
+        "error": "Something went wrong. Please try again.",
+        "consentBeforeLink": "By subscribing you agree to receive product updates and news from Threadbase. See our",
+        "consentLink": "Privacy Policy",
+        "consentAfterLink": "."
       }
     },
     "quickStart": {

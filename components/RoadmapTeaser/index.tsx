@@ -13,7 +13,7 @@ import type {
 import { getRoadmapContent } from "@/lib/translated-content";
 import { RoadmapMilestoneCard } from "./RoadmapMilestoneCard";
 import { RoadmapMilestoneNode } from "./RoadmapMilestoneNode";
-import { WaitlistForm } from "./WaitlistForm";
+import { NewsletterForm } from "./NewsletterForm";
 
 interface RoadmapTeaserProps {
   section?: SectionContent;
@@ -121,7 +121,7 @@ export function RoadmapTeaser({
           </div>
         </div>
 
-        <WaitlistForm />
+        <NewsletterForm />
       </div>
     </motion.section>
   );
