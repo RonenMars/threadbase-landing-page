@@ -43,6 +43,8 @@ Tests run against the live dev server with a single worker. Pixel tolerance is 0
 
 Use conventional prefixes: `feat/<scope>`, `fix/<scope>`, `chore/<scope>`. All changes go through a PR — no direct pushes to `main`.
 
+Plan/design docs (`docs/plans/*.md`) for a feature must be committed together with that feature's implementation — or earlier, before implementation starts. Never leave them as uncommitted stragglers once the feature ships.
+
 CI can be skipped for trivial changes by adding `[skip-ci]` to the commit message, PR title, or PR body.
 
 ## CI
