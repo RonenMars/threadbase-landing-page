@@ -1,28 +1,18 @@
 import "./globals.css";
-import { defaultLocale, getTextDirection } from "@/i18n/routing";
 
 type RootLayoutProps = Readonly<{
   children: React.ReactNode;
 }>;
 
 /**
- * Root layout. Only ever renders for requests that fall outside a locale
- * segment — in practice, `app/not-found.tsx`. Locale routes supply their own
- * <html> via `app/[locale]/layout.tsx`, so this must stay minimal and must not
- * depend on request state or a locale context.
+ * Root layout. Next.js renders this for every route, including locale
+ * routes, so it must not render its own <html>/<body> — that would nest
+ * inside the one `app/[locale]/layout.tsx` provides and break hydration.
+ * `app/not-found.tsx` is the only route that falls outside a locale segment,
+ * so it supplies its own <html>/<body>.
  */
 export default function RootLayout({
   children,
 }: RootLayoutProps): React.JSX.Element {
-  return (
-    <html
-      className="dark font-sans"
-      dir={getTextDirection(defaultLocale)}
-      lang={defaultLocale}
-    >
-      <body className="bg-bg-primary font-sans text-primary antialiased">
-        {children}
-      </body>
-    </html>
-  );
+  return children as React.JSX.Element;
 }
