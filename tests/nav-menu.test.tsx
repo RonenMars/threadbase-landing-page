@@ -127,10 +127,10 @@ describe("NavMenu", () => {
       fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
       const android = await screen.findByRole("link", {
-        name: enMessages.nav.betaPlatforms.android,
+        name: enTranslations.nav.betaPlatforms.android,
       });
       const ios = screen.getByRole("link", {
-        name: enMessages.nav.betaPlatforms.ios,
+        name: enTranslations.nav.betaPlatforms.ios,
       });
 
       // Each row is one <li>; the icon is the row's own svg, not a shared ancestor's.

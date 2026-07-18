@@ -127,7 +127,7 @@ describe("i18n content catalogs", () => {
     ["pages.support", "topics"],
   ])("%s.%s is a non-empty array in every locale", (namespace, key) => {
     const [group, page] = namespace.split(".");
-    for (const [locale, catalog] of Object.entries(messages)) {
+    for (const [locale, catalog] of Object.entries(translations)) {
       const value = (catalog as Record<string, Record<string, Record<string, unknown>>>)[
         group
       ][page][key];
