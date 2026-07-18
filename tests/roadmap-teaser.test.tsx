@@ -29,6 +29,15 @@ describe("RoadmapTeaser", () => {
     expect(screen.getByRole("button", { name: "Subscribe" })).toBeInTheDocument();
   });
 
+  it("disables the subscribe button until consent is checked", async () => {
+    const user = userEvent.setup();
+    renderWithIntl(<RoadmapTeaser />);
+    const button = screen.getByRole("button", { name: "Subscribe" });
+    expect(button).toBeDisabled();
+    await user.click(screen.getByRole("checkbox"));
+    expect(button).toBeEnabled();
+  });
+
   it("shows success message after newsletter submit", async () => {
     vi.stubGlobal(
       "fetch",
@@ -37,6 +46,7 @@ describe("RoadmapTeaser", () => {
     const user = userEvent.setup();
     renderWithIntl(<RoadmapTeaser />);
     await user.type(screen.getByPlaceholderText("you@company.com"), "test@example.com");
+    await user.click(screen.getByRole("checkbox"));
     await user.click(screen.getByRole("button", { name: "Subscribe" }));
     expect(await screen.findByText(/check your inbox/i)).toBeInTheDocument();
     vi.unstubAllGlobals();
@@ -50,6 +60,7 @@ describe("RoadmapTeaser", () => {
     const user = userEvent.setup();
     renderWithIntl(<RoadmapTeaser />);
     await user.type(screen.getByPlaceholderText("you@company.com"), "test@example.com");
+    await user.click(screen.getByRole("checkbox"));
     await user.click(screen.getByRole("button", { name: "Subscribe" }));
     expect(await screen.findByText(/something went wrong/i)).toBeInTheDocument();
     vi.unstubAllGlobals();

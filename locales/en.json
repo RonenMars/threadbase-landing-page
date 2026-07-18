@@ -248,7 +248,7 @@
         "sending": "Subscribing…",
         "submitted": "Check your inbox to confirm ✓",
         "error": "Something went wrong. Please try again.",
-        "consentBeforeLink": "By subscribing you agree to receive product updates and news from Threadbase. See our",
+        "consentBeforeLink": "I agree to receive product updates and news from Threadbase. See the",
         "consentLink": "Privacy Policy",
         "consentAfterLink": "."
       }
@@ -409,13 +409,14 @@
       "description": "Threadbase is a thin client for the Claude Code sessions you run on your own computer, reached through a Threadbase streamer instance that you operate. Threadbase is local-first by design: your prompts, session content, and credentials stay on your device and on the streamers you configure.",
       "intro": "This policy describes the specific, limited cases in which data leaves your device, and the controls you have over each.",
       "trafficHeading": "The kinds of network traffic Threadbase uses",
-      "trafficIntro": "Threadbase separates its traffic into five distinct categories. Each is described in its own section below.",
+      "trafficIntro": "Threadbase separates its traffic into six distinct categories. Each is described in its own section below.",
       "trafficCategories": [
         "Core traffic to your streamers — the app's normal function.",
         "Expo push-notification delivery — optional notifications.",
         "Crash reporting (Sentry) — automatic reporting is off by default and opt-in; a single crash can also be reported manually at any time.",
         "User-initiated feedback submissions — only when you send feedback.",
-        "Optional screenshots or diagnostics you explicitly select — only when you choose to include them."
+        "Optional screenshots or diagnostics you explicitly select — only when you choose to include them.",
+        "Newsletter subscription (MailerLite) — only when you opt in on the website."
       ],
       "coreHeading": "1. Core traffic to your streamers",
       "coreBody": "Threadbase connects only to the streamer URLs you configure. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. Threadbase does not route this traffic through any Threadbase-operated server, and it does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
@@ -505,6 +506,8 @@
         }
       ],
       "screenshotReview": "Screenshots and manually entered feedback may contain content you choose to include. Please review anything you attach before submitting.",
+      "newsletterHeading": "6. Newsletter subscription (MailerLite)",
+      "newsletterBody": "The Threadbase website offers an opt-in email newsletter for product news and updates. This is separate from the mobile app and only applies if you subscribe on the website. If you do, the email address you provide (and your name, if you choose to give one) is sent to MailerLite, our email service provider, which processes it under its own terms and data-processing agreements to send you the newsletter and manage your subscription, including confirmation and unsubscribe. Subscribing requires an explicit, unchecked consent checkbox — there is no pre-ticked opt-in. Every newsletter email includes an unsubscribe link; unsubscribing stops future emails and removes you from the list.",
       "staysHeading": "What stays on your device",
       "staysOnDevice": [
         "Your prompts and draft prompts.",
@@ -515,7 +518,7 @@
       ],
       "uninstallBody": "Uninstalling the app deletes everything Threadbase stored locally. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
       "notCollectHeading": "What we do not collect",
-      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, and diagnostics described above.",
+      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above.",
       "permissionsHeading": "Permissions the app uses",
       "permissionsCaption": "Permissions used by the app",
       "permissionsHeaders": ["Permission", "Why"],

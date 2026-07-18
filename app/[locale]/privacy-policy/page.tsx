@@ -4,7 +4,7 @@ import { PageShell } from "@/components/PageShell";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Locale } from "@/i18n/routing";
 
-const EFFECTIVE_DATE = "2026-07-12";
+const EFFECTIVE_DATE = "2026-07-18";
 
 type PageProps = {
   params: Promise<{ locale: Locale }>;
@@ -199,6 +199,9 @@ export default async function PrivacyPolicyPage({
       <SectionHeading>{t("screenshotHeading")}</SectionHeading>
       <PolicyDetailList items={screenshotAndDiagnosticDetails} />
       <p className="mt-6 leading-8 text-secondary">{t("screenshotReview")}</p>
+
+      <SectionHeading>{t("newsletterHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("newsletterBody")}</p>
 
       <SectionHeading>{t("staysHeading")}</SectionHeading>
       <PolicyList items={staysOnDevice} />

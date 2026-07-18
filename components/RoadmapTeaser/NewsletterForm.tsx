@@ -9,6 +9,8 @@ export function NewsletterForm(): React.JSX.Element {
   const [status, setStatus] = useState<Status>("idle");
   const t = useTranslations("home.roadmap.newsletter");
 
+  const [consented, setConsented] = useState(false);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -64,26 +66,35 @@ export function NewsletterForm(): React.JSX.Element {
           />
           <button
             type="submit"
-            disabled={status === "sending"}
+            disabled={status === "sending" || !consented}
             className="rounded-xl bg-accent-secondary px-5 py-2 text-sm font-semibold text-[#070b11] transition-colors hover:bg-[#ffab52] disabled:opacity-60"
           >
             {status === "sending" ? t("sending") : t("button")}
           </button>
+          <label className="flex w-full items-start justify-center gap-2 text-xs text-muted">
+            <input
+              type="checkbox"
+              checked={consented}
+              onChange={(event) => setConsented(event.target.checked)}
+              required
+              className="mt-0.5 size-3.5 shrink-0 accent-accent-secondary"
+            />
+            <span>
+              {t("consentBeforeLink")}{" "}
+              <Link
+                className="font-medium text-accent transition-colors hover:text-accent-hover"
+                href="/privacy-policy"
+              >
+                {t("consentLink")}
+              </Link>
+              {t("consentAfterLink")}
+            </span>
+          </label>
         </form>
       )}
       {status === "error" && (
         <p className="mt-3 text-sm text-red-400">{t("error")}</p>
       )}
-      <p className="mt-3 text-xs text-muted">
-        {t("consentBeforeLink")}{" "}
-        <Link
-          className="font-medium text-accent transition-colors hover:text-accent-hover"
-          href="/privacy-policy"
-        >
-          {t("consentLink")}
-        </Link>
-        {t("consentAfterLink")}
-      </p>
     </div>
   );
 }
