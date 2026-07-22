@@ -530,7 +530,7 @@
         { "permission": "Photo library", "why": "Attaching photos from your library to your sessions, and attaching a screenshot to feedback." },
         { "permission": "Microphone", "why": "Dictating prompts by voice." },
         { "permission": "Speech recognition", "why": "Converting your speech to text. On iOS this is processed on-device; on Android it may be processed by the system speech service, which can send audio to Google." },
-        { "permission": "Face ID / biometrics", "why": "Optionally locking access to your conversations." },
+        { "permission": "Face ID / biometrics", "why": "Optionally locking access to your conversations. Authentication happens entirely on-device through the operating system (iOS Face ID/Touch ID, Android BiometricPrompt); Threadbase only receives a pass/fail result and never accesses, stores, or transmits your biometric data." },
         { "permission": "Notifications", "why": "Delivering session notifications, if you enable them." }
       ],
       "controlHeading": "Your control",
