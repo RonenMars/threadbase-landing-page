@@ -165,7 +165,6 @@ export const FEATURE_CONFIG = [
   { icon: "MonitorPlay", surfaceTags: ["Laptop", "DeviceMobile"] },
   { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
   { icon: "Stack", surfaceTags: ["Laptop", "DeviceMobile"] },
-  { icon: "BellRinging", surfaceTags: ["DeviceMobile"] },
   { icon: "ListChecks", surfaceTags: ["DeviceMobile"] },
   { icon: "ArrowsClockwise", surfaceTags: ["DeviceMobile"] },
 ] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
@@ -176,6 +175,7 @@ export const ROADMAP_MILESTONE_CONFIG = [
   { status: "shipped" },
   { status: "shipped" },
   { status: "shipped" },
+  { status: "next" },
   { status: "next" },
   { status: "next" },
   { status: "later" },

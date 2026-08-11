@@ -12,14 +12,18 @@ describe("FeaturesGrid", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders all 6 feature titles", () => {
+  it("renders all 5 feature titles", () => {
     renderWithIntl(<FeaturesGrid />);
     expect(screen.getByText(/Claude \+ Codex live sessions/i)).toBeInTheDocument();
     expect(screen.getByText(/Remote session control/i)).toBeInTheDocument();
     expect(screen.getByText(/Multi-server pairing/i)).toBeInTheDocument();
-    expect(screen.getByText(/Push notifications/i)).toBeInTheDocument();
     expect(screen.getByText(/Native prompt cards/i)).toBeInTheDocument();
     expect(screen.getByText(/Resilient by default/i)).toBeInTheDocument();
+  });
+
+  it("does not advertise push notifications as a shipped feature", () => {
+    renderWithIntl(<FeaturesGrid />);
+    expect(screen.queryByText(/Push notifications/i)).not.toBeInTheDocument();
   });
 
   it("renders main icons as SVGs (Phosphor)", () => {
