@@ -149,6 +149,10 @@
           "description": "Connect one phone to multiple Macs, Linux boxes, or Windows machines. Switch sessions with a swipe."
         },
         {
+          "title": "Push notifications",
+          "description": "Get pinged when Claude finishes a long task, errors out, or asks a question. Stop refreshing the app to check."
+        },
+        {
           "title": "Native prompt cards",
           "description": "When Claude asks for a choice or permission, answer with a native card — not by typing into a terminal."
         },
@@ -217,10 +221,6 @@
         {
           "title": "Live Activities + Dynamic Island (iOS)",
           "detail": "Lock-screen session status and Dynamic Island for in-progress sessions."
-        },
-        {
-          "title": "Push notifications",
-          "detail": "Get pinged when Claude finishes a long task, errors out, or asks a question. Streamers you host yourself do not send notifications yet."
         },
         {
           "title": "Scheduled prompts (\"send tomorrow at 9am\")",
@@ -424,7 +424,7 @@
       "coreHeading": "1. Core traffic to your streamers",
       "coreBody": "Threadbase connects only to the streamer URLs you configure. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. Threadbase does not route this traffic through any Threadbase-operated server, and it does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
       "pushHeading": "2. Push-notification delivery",
-      "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings revokes its token. Threadbase uses two delivery paths. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials; no Threadbase-operated server and no third-party relay is involved. Apple issues those credentials per developer team, so a streamer you host yourself cannot send Live Activities today. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, and a short, truncated excerpt of recent terminal output — so it can contain whatever that session printed. Ordinary push notifications will be delivered through Expo's push relay; no streamer sends them today.",
+      "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings revokes its token. Threadbase uses two delivery paths. Ordinary notifications — for example, a session waiting for your input — are delivered through Expo's push relay. That payload carries only the project name, a fixed message, and the session and server identifiers the app needs to open the right screen; it does not include prompts, terminal output, credentials, or conversation content. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials, which Apple issues per developer team. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, and a short, truncated excerpt of recent terminal output — so it can contain whatever that session printed.",
       "crashHeading": "3. Optional crash reporting (Sentry)",
       "crashIntro": "Threadbase includes optional crash reporting to help diagnose defects, sent through two paths:",
       "automaticReporting": [
@@ -522,6 +522,14 @@
       "uninstallBody": "Uninstalling the app deletes everything Threadbase stored locally. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
       "notCollectHeading": "What we do not collect",
       "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above. Separately, when Live Activities are enabled, the streamer sends the session excerpt described in section 2 to Apple's push service; that data travels from your streamer, not from your device.",
+      "subProcessorsHeading": "Service providers we use",
+      "subProcessorsIntro": "Threadbase relies on the following third parties. Each one processes only the data described in its section above, under its own terms and data-processing agreements.",
+      "subProcessors": [
+        { "label": "Expo.", "body": "Delivers ordinary push notifications. Expo receives your push token and the notification payload described in section 2, which carries no session content." },
+        { "label": "Apple.", "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a truncated excerpt of session output." },
+        { "label": "Sentry.", "body": "Processes optional crash reports, as described in section 3." },
+        { "label": "MailerLite.", "body": "Processes newsletter subscriptions from the website, as described in section 6." }
+      ],
       "permissionsHeading": "Permissions the app uses",
       "permissionsCaption": "Permissions used by the app",
       "permissionsHeaders": ["Permission", "Why"],

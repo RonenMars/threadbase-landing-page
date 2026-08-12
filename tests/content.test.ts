@@ -49,14 +49,13 @@ describe("i18n content catalogs", () => {
       "Bell",
       "MapPin",
     ]);
-    expect(FEATURE_CONFIG).toHaveLength(5);
+    expect(FEATURE_CONFIG).toHaveLength(6);
     expect(ROADMAP_MILESTONE_CONFIG.map((m) => m.status)).toEqual([
       "shipped",
       "shipped",
       "shipped",
       "shipped",
       "shipped",
-      "next",
       "next",
       "next",
       "later",
