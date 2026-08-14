@@ -136,3 +136,45 @@ describe("i18n content catalogs", () => {
     }
   });
 });
+
+/**
+ * The uninstall claim, guarded.
+ *
+ * Both of these strings used to say uninstalling deletes everything stored
+ * locally, full stop. That is false on iOS: the app stores server credentials
+ * via expo-secure-store with no `keychainAccessible` option and no first-run
+ * clear, so Keychain entries survive an uninstall and are restored on reinstall
+ * (tb-mobile `stores/servers.ts` says so in a code comment).
+ *
+ * The page tests assert headings only, which is how an inaccurate disclosure sat
+ * on a published policy that App Store Connect points at. These assert the
+ * claim itself, in every locale, so re-simplifying the sentence fails the build
+ * rather than shipping.
+ */
+describe("privacy policy — uninstall claim", () => {
+  // Written per locale rather than as one regex: the point is that the caveat
+  // was actually translated, not that some Latin-script token survived.
+  const SECURE_STORE_MARKER: Record<string, string> = {
+    en: "Keychain",
+    ru: "Keychain",
+    he: "Keychain",
+    ar: "Keychain",
+  };
+
+  for (const [locale, catalog] of Object.entries(translations)) {
+    const privacy = (
+      catalog as unknown as {
+        pages: { privacy: { uninstallBody: string; yourControl: string[] } };
+      }
+    ).pages.privacy;
+
+    it(`${locale}: the uninstall paragraph qualifies the claim`, () => {
+      expect(privacy.uninstallBody).toContain(SECURE_STORE_MARKER[locale]);
+    });
+
+    it(`${locale}: the "Your control" bullet qualifies it too`, () => {
+      const bullet = privacy.yourControl.find((b) => b.includes(SECURE_STORE_MARKER[locale]));
+      expect(bullet, "no yourControl bullet mentions the secure store").toBeDefined();
+    });
+  }
+});

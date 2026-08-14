@@ -519,7 +519,7 @@
         "Your streamer URLs, API keys, and pairing credentials (in the iOS Keychain / Android Keystore).",
         "Your session names, favorites, and app settings."
       ],
-      "uninstallBody": "Uninstalling the app deletes everything Threadbase stored locally. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
+      "uninstallBody": "Uninstalling the app removes the Threadbase data stored in the app's own container. Some credentials held by the operating system's secure credential storage — such as the iOS Keychain — can survive an uninstall and be restored if you reinstall; to delete a server's credentials, remove that server inside the app first. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
       "notCollectHeading": "What we do not collect",
       "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above. Separately, when Live Activities are enabled, the streamer sends the session excerpt described in section 2 to Apple's push service; that data travels from your streamer, not from your device.",
       "subProcessorsHeading": "Service providers we use",
@@ -546,7 +546,7 @@
         "Crash reporting is off by default; enable or disable it any time in Settings.",
         "Feedback and diagnostics are only ever sent when you initiate them.",
         "Removing a server revokes its push token.",
-        "Uninstalling the app deletes everything stored locally.",
+        "Uninstalling the app removes the data stored in its own container; credentials held by the operating system's secure credential storage, such as the iOS Keychain, can survive it — remove a server in the app to delete its credentials.",
         "Contact support@threadbase.sh with any privacy question or deletion request."
       ],
       "effectiveDateLabel": "Effective date:",
