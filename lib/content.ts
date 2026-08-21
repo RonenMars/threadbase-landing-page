@@ -24,12 +24,6 @@ export interface HeroContent {
   copyAriaLabel: string;
 }
 
-export interface ProblemItem {
-  icon: string;
-  title: string;
-  description: string;
-}
-
 export interface HowItWorksStep {
   title: string;
   description: string;
@@ -53,6 +47,19 @@ export interface FeatureItem {
 export interface HonestCon {
   title: string;
   description: string;
+}
+
+export interface SecurityContent {
+  heading: string;
+  description: string;
+  scopeNote: string;
+  highlights: string[];
+}
+
+export interface FinalCtaContent {
+  heading: string;
+  description: string;
+  ctaLabel: string;
 }
 
 export interface QuickStartContent {
@@ -80,14 +87,6 @@ export interface SectionContent {
   eyebrow?: string;
   heading: string;
   description?: string;
-}
-
-export type RoadmapStatus = "shipped" | "this-week" | "next" | "later" | "future";
-
-export interface RoadmapMilestone {
-  status: RoadmapStatus;
-  title: string;
-  detail: string;
 }
 
 export interface NavLinkConfig {
@@ -155,34 +154,12 @@ export const HERO_CTA_CONFIG = [
   },
 ] as const satisfies Array<Omit<HeroCta, "label">>;
 
-export const PROBLEM_ITEM_CONFIG = [
-  { icon: "Coffee" },
-  { icon: "Bell" },
-  { icon: "MapPin" },
-] as const satisfies Array<Pick<ProblemItem, "icon">>;
-
 export const FEATURE_CONFIG = [
-  { icon: "MonitorPlay", surfaceTags: ["Laptop", "DeviceMobile"] },
-  { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
-  { icon: "Stack", surfaceTags: ["Laptop", "DeviceMobile"] },
   { icon: "BellRinging", surfaceTags: ["DeviceMobile"] },
-  { icon: "ListChecks", surfaceTags: ["DeviceMobile"] },
   { icon: "ArrowsClockwise", surfaceTags: ["DeviceMobile"] },
+  { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
+  { icon: "MagnifyingGlass", surfaceTags: ["Laptop", "DeviceMobile"] },
 ] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
-
-export const ROADMAP_MILESTONE_CONFIG = [
-  { status: "shipped" },
-  { status: "shipped" },
-  { status: "shipped" },
-  { status: "shipped" },
-  { status: "shipped" },
-  { status: "next" },
-  { status: "next" },
-  { status: "later" },
-  { status: "later" },
-  { status: "shipped" },
-  { status: "future" },
-] as const satisfies Array<Pick<RoadmapMilestone, "status">>;
 
 export const QUICK_START_LINK_CONFIG = [
   {

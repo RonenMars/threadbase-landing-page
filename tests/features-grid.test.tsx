@@ -8,18 +8,17 @@ describe("FeaturesGrid", () => {
   it("renders the section heading", () => {
     renderWithIntl(<FeaturesGrid />);
     expect(
-      screen.getByRole("heading", { name: /phone-shaped tools/i }),
+      screen.getByRole("heading", { name: /keep every agent moving/i }),
     ).toBeInTheDocument();
   });
 
-  it("renders all 6 feature titles", () => {
+  it("renders the four workflow pillars", () => {
     renderWithIntl(<FeaturesGrid />);
-    expect(screen.getByText(/Claude \+ Codex live sessions/i)).toBeInTheDocument();
-    expect(screen.getByText(/Remote session control/i)).toBeInTheDocument();
-    expect(screen.getByText(/Multi-server pairing/i)).toBeInTheDocument();
-    expect(screen.getByText(/Push notifications/i)).toBeInTheDocument();
-    expect(screen.getByText(/Native prompt cards/i)).toBeInTheDocument();
-    expect(screen.getByText(/Resilient by default/i)).toBeInTheDocument();
+    expect(screen.getByText(/we’ll tell you when the agent needs you/i)).toBeInTheDocument();
+    expect(screen.getByText(/start at your desk.*continue from your phone/i)).toBeInTheDocument();
+    expect(screen.getByText(/without fighting a tiny terminal/i)).toBeInTheDocument();
+    expect(screen.getByText(/the line you don’t/i)).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(4);
   });
 
   it("renders main icons as SVGs (Phosphor)", () => {

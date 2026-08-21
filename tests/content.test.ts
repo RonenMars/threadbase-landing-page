@@ -4,9 +4,7 @@ import {
   FOOTER_LINK_CONFIG,
   HERO_CTA_CONFIG,
   NAV_LINK_CONFIG,
-  PROBLEM_ITEM_CONFIG,
   QUICK_START_LINK_CONFIG,
-  ROADMAP_MILESTONE_CONFIG,
 } from "@/lib/content";
 import arTranslations from "@/locales/ar.json";
 import enTranslations from "@/locales/en.json";
@@ -20,6 +18,20 @@ const translations = {
   ar: arTranslations,
 };
 
+function scalarPaths(value: unknown, prefix = ""): string[] {
+  if (Array.isArray(value)) {
+    return value.flatMap((item, index) =>
+      scalarPaths(item, prefix ? `${prefix}.${index}` : String(index)),
+    );
+  }
+  if (typeof value === "object" && value !== null) {
+    return Object.entries(value).flatMap(([key, item]) =>
+      scalarPaths(item, prefix ? `${prefix}.${key}` : key),
+    );
+  }
+  return [prefix];
+}
+
 describe("i18n content catalogs", () => {
   it("ships exactly the planned locales", () => {
     expect(Object.keys(translations)).toEqual(["en", "ru", "he", "ar"]);
@@ -27,7 +39,7 @@ describe("i18n content catalogs", () => {
 
   it("keeps the English hero headline in locales/en.json", () => {
     expect(enTranslations.home.hero.headline).toBe(
-      "Your terminal. Live. In your pocket.",
+      "Your coding agents don’t stop when you leave your desk.",
     );
   });
 
@@ -43,26 +55,28 @@ describe("i18n content catalogs", () => {
     });
   });
 
-  it("keeps icon/status/link structure out of translated copy", () => {
-    expect(PROBLEM_ITEM_CONFIG.map((p) => p.icon)).toEqual([
-      "Coffee",
-      "Bell",
-      "MapPin",
+  it("keeps workflow icon structure out of translated copy", () => {
+    expect(FEATURE_CONFIG.map((feature) => feature.icon)).toEqual([
+      "BellRinging",
+      "ArrowsClockwise",
+      "CheckSquare",
+      "MagnifyingGlass",
     ]);
-    expect(FEATURE_CONFIG).toHaveLength(6);
-    expect(ROADMAP_MILESTONE_CONFIG.map((m) => m.status)).toEqual([
-      "shipped",
-      "shipped",
-      "shipped",
-      "shipped",
-      "shipped",
-      "next",
-      "next",
-      "later",
-      "later",
-      "shipped",
-      "future",
-    ]);
+  });
+
+  it("keeps locale key parity for every scalar value", () => {
+    const sourcePaths = scalarPaths(enTranslations).sort();
+    for (const [locale, catalog] of Object.entries(translations)) {
+      expect(scalarPaths(catalog).sort(), locale).toEqual(sourcePaths);
+    }
+  });
+
+  it("keeps homepage array lengths aligned with the structural config", () => {
+    for (const catalog of Object.values(translations)) {
+      expect(catalog.home.features.items).toHaveLength(FEATURE_CONFIG.length);
+      expect(catalog.home.honestCons.items).toHaveLength(3);
+      expect(catalog.home.security.highlights).toHaveLength(3);
+    }
   });
 
   it("preserves terminal commands verbatim in every locale", () => {
@@ -80,23 +94,21 @@ describe("i18n content catalogs", () => {
     }
   });
 
-  it("front-page English copy no longer describes Codex support as read-only", () => {
-    const frontPageCopy = [
-      enTranslations.metadata.site.description,
-      enTranslations.home.hero.eyebrow,
-      ...enTranslations.home.features.items.map(
-        (feature) => `${feature.title} ${feature.description}`,
-      ),
-      ...enTranslations.home.honestCons.items.map(
-        (item) => `${item.title} ${item.description}`,
-      ),
-      ...enTranslations.home.roadmap.milestones.map(
-        (milestone) => `${milestone.title} ${milestone.detail}`,
-      ),
-    ].join(" ");
+  it("keeps the refreshed homepage claims precise", () => {
+    const frontPageCopy = JSON.stringify(enTranslations.home).toLowerCase();
 
-    expect(frontPageCopy.toLowerCase()).toContain("codex");
-    expect(frontPageCopy.toLowerCase()).not.toContain("read-only");
+    expect(frontPageCopy).toContain("codex");
+    expect(frontPageCopy).toContain("supported tool approvals");
+    expect(frontPageCopy).toContain("contextual snippets");
+    expect(frontPageCopy).toContain("active codex writers");
+    expect(frontPageCopy).not.toContain("resume support is still");
+    expect(frontPageCopy).not.toContain("native prompt cards");
+    expect(frontPageCopy).not.toContain("live activities");
+    expect(frontPageCopy).not.toContain("end-to-end encrypted");
+    expect(frontPageCopy).not.toContain("never talks to a threadbase server");
+    expect(enTranslations.home.security.description).toContain(
+      "does not relay your coding-agent session through a Threadbase-hosted session backend",
+    );
   });
 
   it("footer and nav links cover the core surfaces", () => {

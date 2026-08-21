@@ -15,10 +15,8 @@ import { expect, test } from "@playwright/test";
  *   before diffing — its RAF-driven sweep writes inline styles that beat
  *   any stylesheet override and can't be reliably stopped any other way.
  * - `settleScrollAnimations()`: programmatic scroll-through before full-
- *   page screenshots, so the IntersectionObserver-driven `whileInView`
- *   sections (Problem, Features, HonestCons, HowItWorks, QuickStart)
- *   actually fade up. Without this, the full-page screenshot shows ~90%
- *   empty space below the h-screen hero.
+ *   page screenshots, so IntersectionObserver-driven section animations
+ *   settle before capture.
  *
  * Web server: see playwright.config.ts. We use `npm run dev` with
  * reuseExistingServer:true so a developer's already-running dev server is
@@ -51,10 +49,9 @@ const HERO_HEADLINE_MASK = ".glitch-title";
  * step so Framer Motion's `whileInView` / `useInView` IntersectionObserver
  * callbacks fire and the section fade-up animations settle.
  *
- * Without this, full-page screenshots show massive empty space below the
- * `h-screen` hero because the sections below (Problem, Features, HonestCons,
- * etc.) are still at `opacity: 0, y: 28` — their IntersectionObserver never
- * triggered because Playwright didn't actually scroll the page.
+ * Without this, full-page screenshots can show empty space below the hero
+ * because sections are still at `opacity: 0, y: 28` — their
+ * IntersectionObserver never triggered because Playwright didn't scroll.
  */
 async function settleScrollAnimations(
   page: import("@playwright/test").Page,

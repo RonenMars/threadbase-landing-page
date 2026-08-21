@@ -72,7 +72,7 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
       animate="visible"
       role="banner"
       aria-labelledby="hero-headline"
-      className="relative h-screen flex items-center justify-center overflow-hidden px-6 pb-24 pt-10 sm:px-8 lg:px-10 lg:pb-32 lg:pt-14"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-16 sm:px-8 sm:py-28 lg:px-10 lg:py-32"
       initial={false}
       variants={{
         hidden: {},
@@ -93,7 +93,7 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
         aria-hidden="true"
       />
 
-      <div className="container-shell relative z-10 flex flex-col items-center gap-12 text-center">
+      <div className="container-shell relative z-10 flex flex-col items-center gap-7 text-center sm:gap-10">
         <motion.div
           className="flex flex-col items-center gap-4"
           variants={{
@@ -111,7 +111,7 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
         </motion.div>
 
         <motion.div
-          className="max-w-5xl space-y-6"
+          className="max-w-5xl space-y-4 sm:space-y-6"
           variants={{
             hidden: { opacity: 0, y: 24 },
             visible: {
@@ -123,10 +123,10 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
         >
           <GlitchTitle
             text={hero.headline}
-            className="glitch-title text-balance text-5xl font-semibold tracking-[-0.06em] text-primary sm:text-6xl lg:text-7xl"
+            className="glitch-title text-balance text-4xl font-semibold tracking-[-0.04em] text-primary sm:text-6xl lg:text-7xl"
           />
           {hero.subheadline ? (
-            <p className="mx-auto max-w-3xl mt-2.5 text-[1.2rem] text-white">
+            <p className="mx-auto mt-2.5 max-w-3xl text-base leading-7 text-secondary sm:text-xl sm:leading-8">
               {hero.subheadline}
             </p>
           ) : null}

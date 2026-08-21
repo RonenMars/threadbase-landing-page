@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,7 +11,7 @@ type Status = "idle" | "sending" | "done" | "error";
 
 export function NewsletterForm(): React.JSX.Element {
   const [status, setStatus] = useState<Status>("idle");
-  const t = useTranslations("home.roadmap.newsletter");
+  const t = useTranslations("home.finalCta.newsletter");
 
   const schema = z.object({
     name: z.string().max(100).optional().or(z.literal("")),
@@ -44,17 +45,15 @@ export function NewsletterForm(): React.JSX.Element {
   }
 
   return (
-    <div className="mt-16 rounded-4xl border border-[rgba(240,138,36,0.18)] bg-[linear-gradient(135deg,rgba(240,138,36,0.06),rgba(99,179,255,0.03))] p-8 text-center">
+    <div className="rounded-4xl border border-[rgba(240,138,36,0.18)] bg-[linear-gradient(135deg,rgba(240,138,36,0.06),rgba(99,179,255,0.03))] p-7 text-start sm:p-8">
       <h3 className="text-xl font-semibold tracking-[-0.03em] text-primary">
         {t("heading")}
       </h3>
-      <p className="mt-2 text-sm text-secondary">
-        {t("body")}
-      </p>
+      <p className="mt-2 text-sm leading-6 text-secondary">{t("body")}</p>
       {status === "done" ? (
         <p className="mt-6 font-medium text-accent-strong">{t("submitted")}</p>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="mx-auto mt-6 flex w-full max-w-md flex-col gap-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex w-full flex-col gap-4">
           <input
             type="text"
             autoComplete="off"
@@ -73,20 +72,21 @@ export function NewsletterForm(): React.JSX.Element {
             <input
               type="text"
               inputMode="email"
+              dir="ltr"
               placeholder={t("placeholder")}
               aria-describedby={errors.email ? "newsletter-email-error" : undefined}
               aria-invalid={Boolean(errors.email)}
-              className="w-full rounded-xl border border-border bg-black/30 px-4 py-2.5 text-sm text-primary placeholder:text-muted focus:border-accent/50 focus:outline-none aria-invalid:border-red-400"
+              className="w-full rounded-xl border border-border bg-black/30 px-4 py-2.5 text-start text-sm text-primary placeholder:text-muted focus:border-accent/50 focus:outline-none aria-invalid:border-red-400"
               {...register("email")}
             />
             {errors.email && (
-              <p id="newsletter-email-error" role="alert" className="text-left text-xs text-red-400">
+              <p id="newsletter-email-error" role="alert" className="text-start text-xs text-red-400">
                 {errors.email.message}
               </p>
             )}
           </div>
           <div className="flex flex-col items-start gap-1.5">
-            <label className="flex items-start gap-2 text-left text-xs text-muted">
+            <label className="flex items-start gap-2 text-start text-xs leading-5 text-muted">
               <input
                 type="checkbox"
                 aria-describedby={errors.consent ? "newsletter-consent-error" : undefined}
@@ -106,7 +106,7 @@ export function NewsletterForm(): React.JSX.Element {
               </span>
             </label>
             {errors.consent && (
-              <p id="newsletter-consent-error" role="alert" className="text-left text-xs text-red-400">
+              <p id="newsletter-consent-error" role="alert" className="text-start text-xs text-red-400">
                 {errors.consent.message}
               </p>
             )}

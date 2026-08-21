@@ -29,4 +29,12 @@ describe("QuickStart", () => {
     renderWithIntl(<QuickStart />);
     expect(screen.queryByRole("tablist")).not.toBeInTheDocument();
   });
+
+  it("keeps the setup summary accurate without an E2EE transport claim", () => {
+    renderWithIntl(<QuickStart />);
+    expect(
+      screen.getByRole("heading", { name: /run the streamer.*pair your phone/i }),
+    ).toBeInTheDocument();
+    expect(document.body.textContent).not.toMatch(/end-to-end encrypted/i);
+  });
 });

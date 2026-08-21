@@ -1,17 +1,17 @@
 {
   "metadata": {
     "site": {
-      "title": "Threadbase — Your terminal. In your pocket. Live.",
-      "description": "Threadbase mirrors Claude Code and Codex CLI sessions to your phone in real time. Approve tool calls, redirect the agent, and monitor long runs from anywhere."
+      "title": "Threadbase — Keep Claude Code and Codex moving",
+      "description": "Watch, resume, approve, search, and respond to Claude Code and Codex sessions from your phone across every machine you pair."
     },
     "routes": {
       "betas": {
         "title": "Threadbase — Beta Programs",
-        "description": "Join the Threadbase beta on iOS via TestFlight or Android via Google Play. Get early access to the mobile companion for Claude Code."
+        "description": "Join the Threadbase beta on iOS via TestFlight or Android via Google Play. Get early access to the mobile companion for Claude Code and Codex."
       },
       "androidBeta": {
         "title": "Threadbase — Android beta",
-        "description": "Join the Threadbase Android closed-alpha beta on Google Play. Two clicks, a short wait, and you're testing the mobile companion to Claude Code."
+        "description": "Join the Threadbase Android closed-alpha beta on Google Play. Two clicks, a short wait, and you're testing the mobile companion to Claude Code and Codex."
       },
       "solutions": {
         "title": "Threadbase — Other Surfaces",
@@ -75,9 +75,9 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Claude Code + Codex CLI, untethered",
-      "headline": "Your terminal. Live. In your pocket.",
-      "subheadline": "",
+      "eyebrow": "Claude Code + Codex CLI, away from your desk",
+      "headline": "Your coding agents don’t stop when you leave your desk.",
+      "subheadline": "Watch, resume, approve, search, and respond to Claude Code and Codex sessions from your phone — across every machine you pair.",
       "primaryButtonLabel": "Join the Beta",
       "copiedLabel": "Copied to clipboard",
       "copyAriaLabel": "Copy: {label}",
@@ -91,154 +91,83 @@
         { "label": "brew install tb-streamer" }
       ]
     },
-    "problem": {
-      "section": {
-        "heading": "Three reasons agent sessions feel trapped in your laptop."
-      },
-      "items": [
-        {
-          "title": "You're not at your laptop.",
-          "description": "Lunch. Bed. The gym. Walking the dog. An agent is mid-task, blocked on your approval — and you're across the room or across the city."
-        },
-        {
-          "title": "Long-running agents waste your day.",
-          "description": "A test suite finishes after 12 minutes. A migration completes. Claude or Codex asks whether to commit. You don't see it until you sit back down."
-        },
-        {
-          "title": "Your terminal is glued to one machine.",
-          "description": "The session you started on your iMac doesn't follow you to the MacBook. Your dev environment is wherever you last sat down."
-        }
-      ]
-    },
     "howItWorks": {
       "eyebrow": "How it works",
-      "heading": "Three steps. Ten seconds. Forever paired.",
-      "trustNote": "End-to-end encrypted pairing via NaCl. The streamer never talks to a Threadbase server, and it auto-updates itself in the background.",
+      "heading": "Run the streamer. Pair your phone. Keep working.",
+      "trustNote": "Pair more machines whenever you need them, then switch between their sessions from the same app.",
       "steps": [
         {
           "title": "Run the streamer on your Mac, Linux box, or Windows PC",
-          "description": "One install. It runs in the background and exposes your Claude Code and Codex CLI sessions to authorized devices on your network."
+          "description": "Install it once on every machine you want Threadbase to reach."
         },
         {
-          "title": "Pair your phone in 10 seconds",
-          "description": "Open the Threadbase app, scan a QR code from the streamer. End-to-end encrypted, paired forever."
+          "title": "Pair your phone with the QR code",
+          "description": "Open Threadbase and scan the code shown by the streamer."
         },
         {
-          "title": "Use your agent from anywhere",
-          "description": "Your phone is now a live window into your laptop sessions.",
-          "postscript": "Pair more machines — swipe between them."
+          "title": "Keep the session moving from anywhere",
+          "description": "Watch, resume, and respond from your phone while the streamer runs the agent on your machine.",
+          "postscript": "Pair more machines and switch between them from one app."
         }
       ]
     },
     "features": {
       "section": {
-        "eyebrow": "Built for mobile-first orchestration",
-        "heading": "The phone-shaped tools your laptop was missing."
+        "eyebrow": "Built for continuity",
+        "heading": "Keep every agent moving, wherever you are."
       },
       "items": [
         {
-          "title": "Claude + Codex live sessions",
-          "description": "Watch Claude Code or start a new Codex CLI session from your phone, with terminal output streamed character-by-character."
+          "title": "Walk away. We’ll tell you when the agent needs you.",
+          "description": "A dropped phone connection won’t stop a running agent. Managed sessions continue independently, and Threadbase can notify you when the agent starts waiting for input."
         },
         {
-          "title": "Remote session control",
-          "description": "Approve tool calls, answer prompts, send follow-ups, or stop a runaway session without getting back to your laptop."
+          "title": "Start at your desk. Continue from your phone.",
+          "description": "Follow sessions launched from your normal CLI workflow, then resume supported Claude Code and Codex conversations remotely. Threadbase detects active Codex writers and offers safe recovery options, including forks where supported."
         },
         {
-          "title": "Multi-server pairing",
-          "description": "Connect one phone to multiple Macs, Linux boxes, or Windows machines. Switch sessions with a swipe."
+          "title": "Approve the agent without fighting a tiny terminal.",
+          "description": "Handle supported tool approvals and permission prompts with mobile controls. The raw terminal is still there when you need it."
         },
         {
-          "title": "Push notifications",
-          "description": "Get pinged when Claude finishes a long task, errors out, or asks a question. Stop refreshing the app to check."
-        },
-        {
-          "title": "Native prompt cards",
-          "description": "When Claude asks for a choice or permission, answer with a native card — not by typing into a terminal."
-        },
-        {
-          "title": "Resilient by default",
-          "description": "Lose signal in the elevator? Threadbase resumes paused translations and refetches the moment you're back online."
+          "title": "Search the session you remember — and the line you don’t.",
+          "description": "Search across sessions with contextual snippets and highlighted matches, then resume with conversation history beside the live terminal."
         }
+      ]
+    },
+    "security": {
+      "heading": "Your streamer. Your machines. No Threadbase session relay.",
+      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Run the streamer you control on every machine you pair, then manage those sessions from one mobile app.",
+      "scopeNote": "This boundary describes the coding-session path. Pairing, notification delivery, and the local coding-agent process are separate parts of the architecture.",
+      "highlights": [
+        "A streamer you control",
+        "Multiple paired machines",
+        "One mobile session view"
       ]
     },
     "honestCons": {
       "section": {
-        "heading": "Things you should know before you install."
+        "heading": "Beta, honestly."
       },
       "items": [
         {
-          "title": "Closed beta on both platforms",
-          "description": "iOS access is limited while we stabilize — request it via the TestFlight link. Android is in closed testing on Google Play; join the testers group on the Android beta page."
+          "title": "Provider details differ",
+          "description": "Claude Code and Codex are both supported, but approvals, recovery, and resume behavior can differ by provider."
         },
         {
-          "title": "Your phone and laptop need to reach each other",
-          "description": "Same Wi-Fi network, or a VPN that bridges them. There's no relay server in the middle — that's the point."
+          "title": "You run the streamer",
+          "description": "Install the local streamer on every machine you want to reach and keep it accessible from your phone."
         },
         {
-          "title": "Codex support is newer than Claude support",
-          "description": "Threadbase can read Codex CLI history and start new Codex sessions from mobile. Codex resume and native prompt cards are still being added."
+          "title": "Distribution is still beta",
+          "description": "iOS ships through TestFlight; Android ships through closed testing on Google Play."
         }
       ]
     },
-    "roadmap": {
-      "section": {
-        "eyebrow": "What's next",
-        "heading": "What's shipped and what's next."
-      },
-      "statusLabels": {
-        "shipped": "Shipped",
-        "this-week": "This week",
-        "next": "Next",
-        "later": "Later",
-        "future": "Future"
-      },
-      "milestones": [
-        {
-          "title": "iOS app + macOS/Linux/Windows streamer",
-          "detail": "The four surfaces above. iOS via TestFlight, streamer via GitHub Releases on all three desktop OSes."
-        },
-        {
-          "title": "Cross-session search",
-          "detail": "Find that one message from 3 weeks ago across every paired server. Already functional."
-        },
-        {
-          "title": "Native prompt cards",
-          "detail": "Answer Claude's questions and permission gates by tapping a native form — no typing into the PTY."
-        },
-        {
-          "title": "Android app on Google Play",
-          "detail": "Closed testing track. Closing the mobile cross-platform gap."
-        },
-        {
-          "title": "Homebrew formula for the streamer",
-          "detail": "`brew tap RonenMars/threadbase && brew install tb-streamer` replaces the manual GitHub Release download on macOS."
-        },
-        {
-          "title": "Workspace tagging + saved views",
-          "detail": "Tag any session, project, or conversation. Save filter+sort combos as named tabs."
-        },
-        {
-          "title": "Live Activities + Dynamic Island (iOS)",
-          "detail": "Lock-screen session status and Dynamic Island for in-progress sessions."
-        },
-        {
-          "title": "Scheduled prompts (\"send tomorrow at 9am\")",
-          "detail": "An async-teammate workflow: compose it, schedule it, walk away."
-        },
-        {
-          "title": "Sync mode + multi-select prompts",
-          "detail": "JSONL-sourced message bubbles, plus multi-select support for interactive prompts beyond today's single-choice forms."
-        },
-        {
-          "title": "Codex CLI live sessions",
-          "detail": "Threadbase reads Codex CLI history and can start new Codex sessions from mobile. Resume support is still on the follow-up list."
-        },
-        {
-          "title": "Durable multi-agent orchestration",
-          "detail": "A Temporal-backed pipeline that runs incoming tasks through worker → reviewer → sign-off agent stages, each independently retriable and crash-resilient — no hand-rolled queue."
-        }
-      ],
+    "finalCta": {
+      "heading": "Leave the desk. Keep the session.",
+      "description": "Join the iOS or Android beta, or subscribe for product updates.",
+      "ctaLabel": "Join the Beta",
       "newsletter": {
         "heading": "Stay in the loop.",
         "body": "Product news and updates from Threadbase, straight to your inbox.",
@@ -292,7 +221,7 @@
     "betas": {
       "kicker": "Threadbase beta programs",
       "headline": "Join the Beta",
-      "intro": "Threadbase is available in early access on both iOS and Android. Pick your platform and get the mobile companion for Claude Code on your device.",
+      "intro": "Threadbase is available in early access on both iOS and Android. Pick your platform and get the mobile companion for Claude Code and Codex on your device.",
       "platforms": [
         {
           "eyebrow": "iOS · TestFlight",

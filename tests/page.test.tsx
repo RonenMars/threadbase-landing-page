@@ -4,30 +4,32 @@ import Home from "@/app/[locale]/page";
 import { renderWithIntl } from "@/tests/test-utils";
 
 describe("Home page", () => {
-  it("renders the new hero headline", () => {
+  it("renders the continuity-first hero headline", () => {
     renderWithIntl(<Home />);
-    expect(document.body.textContent).toContain("Your terminal.");
-    expect(document.body.textContent).toContain("In your pocket.");
-    expect(document.body.textContent).toContain("Live.");
+    expect(document.body.textContent).toContain(
+      "Your coding agents don’t stop when you leave your desk.",
+    );
   });
 
-  it("renders the new section narrative in order: problem → features → honest cons → how it works → quick start", () => {
+  it("renders the shorter narrative in order: workflows → security → beta → quick start → final CTA", () => {
     renderWithIntl(<Home />);
     const headings = screen
       .getAllByRole("heading", { level: 2 })
       .map((h) => h.textContent ?? "");
 
-    const problemIdx = headings.findIndex((h) => /trapped in your laptop/i.test(h));
-    const featuresIdx = headings.findIndex((h) => /phone-shaped tools/i.test(h));
-    const honestIdx = headings.findIndex((h) => /before you install/i.test(h));
-    const howIdx = headings.findIndex((h) => /forever paired/i.test(h));
+    const featuresIdx = headings.findIndex((h) => /keep every agent moving/i.test(h));
+    const securityIdx = headings.findIndex((h) => /no threadbase session relay/i.test(h));
+    const honestIdx = headings.findIndex((h) => /beta, honestly/i.test(h));
+    const howIdx = headings.findIndex((h) => /run the streamer.*pair your phone/i.test(h));
     const quickIdx = headings.findIndex((h) => /under a minute/i.test(h));
+    const finalCtaIdx = headings.findIndex((h) => /leave the desk.*keep the session/i.test(h));
 
-    expect(problemIdx).toBeGreaterThanOrEqual(0);
-    expect(featuresIdx).toBeGreaterThan(problemIdx);
-    expect(honestIdx).toBeGreaterThan(featuresIdx);
+    expect(featuresIdx).toBeGreaterThanOrEqual(0);
+    expect(securityIdx).toBeGreaterThan(featuresIdx);
+    expect(honestIdx).toBeGreaterThan(securityIdx);
     expect(howIdx).toBeGreaterThan(honestIdx);
     expect(quickIdx).toBeGreaterThan(howIdx);
+    expect(finalCtaIdx).toBeGreaterThan(quickIdx);
   });
 
   it("does not render any testimonial pull-quote (removed until we have real ones)", () => {
@@ -51,5 +53,8 @@ describe("Home page", () => {
     expect(screen.queryByText(/conversation browser/i)).not.toBeInTheDocument();
     // No "AI Session Browser" eyebrow
     expect(screen.queryByText(/^AI Session Browser$/i)).not.toBeInTheDocument();
+    // No repeated problem section or detailed roadmap
+    expect(screen.queryByText(/trapped in your laptop/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/what's shipped and what's next/i)).not.toBeInTheDocument();
   });
 });
