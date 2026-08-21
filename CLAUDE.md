@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+Optional AI-assistant tooling this repo declares (plugins, MCP servers, and how to install them for Claude Code or Codex): [docs/agents/tooling.md](docs/agents/tooling.md)
+
 ## Project
 
 Threadbase landing page — Next.js 16 + React 19 + TypeScript marketing site. Uses the App Router (not pages router).

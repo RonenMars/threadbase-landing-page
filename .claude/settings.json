@@ -18,5 +18,13 @@
     "vercel@claude-plugins-official": true,
     "ui-design@claude-code-workflows": true,
     "frontend-design@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-code-workflows": {
+      "source": {
+        "source": "github",
+        "repo": "wshobson/agents"
+      }
+    }
   }
 }
