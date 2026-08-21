@@ -50,10 +50,7 @@ export function FeaturesGrid({
           ) : null}
         </div>
 
-        <motion.div
-          className="grid gap-5 md:grid-cols-2 xl:grid-cols-3"
-          variants={staggerContainer}
-        >
+        <motion.div className="grid gap-5 md:grid-cols-2" variants={staggerContainer}>
           {features.map((feature) => {
             const MainIcon = resolveIcon(feature.icon);
             return (

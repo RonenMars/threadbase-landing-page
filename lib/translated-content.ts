@@ -5,22 +5,19 @@ import {
   FOOTER_LINK_CONFIG,
   HERO_CTA_CONFIG,
   NAV_LINK_CONFIG,
-  PROBLEM_ITEM_CONFIG,
   QUICK_START_LINK_CONFIG,
-  ROADMAP_MILESTONE_CONFIG,
   type AndroidBetaContent,
   type BetasPageContent,
   type FeatureItem,
+  type FinalCtaContent,
   type FooterContent,
   type HeroBadge,
   type HeroContent,
   type HonestCon,
   type HowItWorksStep,
   type NavLink,
-  type ProblemItem,
   type QuickStartContent,
-  type RoadmapMilestone,
-  type RoadmapStatus,
+  type SecurityContent,
   type SectionContent,
 } from "@/lib/content";
 
@@ -52,23 +49,6 @@ export function getHeroContent(t: Translator): HeroContent {
     ctas: HERO_CTA_CONFIG.map((config, index) => ({
       ...config,
       label: ctas[index]?.label ?? "",
-    })),
-  };
-}
-
-export function getProblemContent(t: Translator): {
-  section: SectionContent;
-  items: ProblemItem[];
-} {
-  const items = rawArray<Omit<ProblemItem, "icon">>(t, "items");
-
-  return {
-    section: {
-      heading: t("section.heading"),
-    },
-    items: PROBLEM_ITEM_CONFIG.map((config, index) => ({
-      ...config,
-      ...items[index],
     })),
   };
 }
@@ -121,32 +101,20 @@ export function getHonestConsContent(t: Translator): {
   };
 }
 
-export function getRoadmapContent(t: Translator): {
-  section: SectionContent;
-  milestones: RoadmapMilestone[];
-  statusLabels: Record<RoadmapStatus, string>;
-} {
-  const milestones = rawArray<Omit<RoadmapMilestone, "status">>(
-    t,
-    "milestones",
-  );
-
+export function getSecurityContent(t: Translator): SecurityContent {
   return {
-    section: {
-      eyebrow: t("section.eyebrow"),
-      heading: t("section.heading"),
-    },
-    milestones: ROADMAP_MILESTONE_CONFIG.map((config, index) => ({
-      ...config,
-      ...milestones[index],
-    })),
-    statusLabels: {
-      shipped: t("statusLabels.shipped"),
-      "this-week": t("statusLabels.this-week"),
-      next: t("statusLabels.next"),
-      later: t("statusLabels.later"),
-      future: t("statusLabels.future"),
-    },
+    heading: t("heading"),
+    description: t("description"),
+    scopeNote: t("scopeNote"),
+    highlights: rawArray<string>(t, "highlights"),
+  };
+}
+
+export function getFinalCtaContent(t: Translator): FinalCtaContent {
+  return {
+    heading: t("heading"),
+    description: t("description"),
+    ctaLabel: t("ctaLabel"),
   };
 }
 
