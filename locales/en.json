@@ -353,14 +353,14 @@
       "coreHeading": "1. Core traffic to your streamers",
       "coreBody": "Threadbase connects only to the streamer URLs you configure. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. Threadbase does not route this traffic through any Threadbase-operated server, and it does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
       "pushHeading": "2. Push-notification delivery",
-      "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings revokes its token. Threadbase uses two delivery paths. Ordinary notifications — for example, a session waiting for your input — are delivered through Expo's push relay. That payload carries only the project name, a fixed message, and the session and server identifiers the app needs to open the right screen; it does not include prompts, terminal output, credentials, or conversation content. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials, which Apple issues per developer team. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, and a short, truncated excerpt of recent terminal output — so it can contain whatever that session printed.",
+      "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings revokes its token. Threadbase uses two delivery paths. Ordinary notifications — for example, a session waiting for your input — are delivered through Expo's push relay. That payload carries the project name, which may identify the repository or project, a fixed message, and the session and server identifiers the app needs to open the right screen; it does not include prompts, terminal output, credentials, or conversation content. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials, which Apple issues per developer team. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, and a short, truncated excerpt of recent terminal output. The prompt-derived title and terminal excerpt can contain content from the session, including sensitive text that appeared there.",
       "crashHeading": "3. Optional crash reporting (Sentry)",
       "crashIntro": "Threadbase includes optional crash reporting to help diagnose defects, sent through two paths:",
       "automaticReporting": [
         "Automatic reporting. Disabled by default and opt-in. Nothing is sent automatically unless you turn on \"Share anonymous crash reports\" in Settings -> Crash Reporting. Once enabled, future crashes are sent automatically until you turn it off again.",
         "Manual, one-time report. If the app crashes, the recovery screen offers a \"Report this crash\" button. Tapping it sends that single crash report even if automatic reporting is off. This is a deliberate action you take, not something the app does on its own. It does not turn on automatic reporting; after sending, the app may ask once whether you'd like to turn automatic reporting on going forward, and remembers your answer so it does not ask again."
       ],
-      "crashSameData": "Both paths send the same sanitized data described below, through the same service.",
+      "crashSameData": "Automatic and manual JavaScript crash reports use the same in-app sanitization path described below. Native iOS and Android crashes are captured by the platform crash handler and may contain different native diagnostic data; server-side Sentry scrubbing is configured for that path.",
       "crashReportingDetails": [
         {
           "label": "Service provider.",
@@ -375,7 +375,7 @@
         },
         {
           "label": "What is excluded.",
-          "body": "Crash reports do not intentionally include prompts, terminal output, source code, file contents, credentials, authentication tokens, server addresses, hostnames, IP addresses, repository names or paths, session names or content, or your device name. A sanitization step runs in the app on every report it sends, and anything that cannot be confidently sanitized is dropped rather than sent. Crashes captured by the underlying iOS or Android platform layer are transmitted by that platform's own crash handler; those are covered instead by server-side scrubbing rules configured on our error-reporting account, including the exclusion of IP addresses."
+          "body": "JavaScript crash reports do not intentionally include prompts, terminal output, source code, file contents, credentials, authentication tokens, server addresses, hostnames, IP addresses, repository names or paths, session names or content, or your device name. A sanitization step runs in the app on every JavaScript report it sends, and anything that cannot be confidently sanitized is dropped rather than sent. Native crashes captured by the underlying iOS or Android platform layer are transmitted by that platform's own crash handler and may contain native diagnostic data outside the JavaScript allowlist; server-side Sentry scrubbing rules are configured for that path, including the exclusion of IP addresses."
         },
         {
           "label": "A note on absolutes.",
@@ -411,7 +411,7 @@
         },
         {
           "label": "How it is sent.",
-          "body": "Feedback is delivered through the first available of: a configured feedback endpoint, the Sentry User Feedback channel (only when crash reporting is enabled), your device's email app, or a copy-to-clipboard option you can paste into the Threadbase feedback page. Feedback works whether or not crash reporting is enabled."
+          "body": "Feedback is delivered through the first available of: a configured feedback endpoint, the Sentry User Feedback channel when the build has Sentry configured, your device's email app, or a copy-to-clipboard option you can paste into the Threadbase feedback page. Tapping Send is explicit consent for that one submission and may use Sentry even when automatic crash reporting is off; it does not enable automatic reporting. Feedback works whether or not crash reporting is enabled."
         },
         {
           "label": "Optional email.",
@@ -444,18 +444,18 @@
       "staysOnDevice": [
         "Your prompts and draft prompts.",
         "Claude Code, Codex, and other agent conversation content.",
-        "Terminal output and session content, apart from the truncated excerpt an iOS Live Activity carries, described in section 2.",
+        "Terminal output and session content, apart from the prompt-derived title and truncated terminal excerpt an iOS Live Activity carries, described in section 2.",
         "Your streamer URLs, API keys, and pairing credentials (in the iOS Keychain / Android Keystore).",
         "Your session names, favorites, and app settings."
       ],
       "uninstallBody": "Uninstalling the app removes the Threadbase data stored in the app's own container. Some credentials held by the operating system's secure credential storage — such as the iOS Keychain — can survive an uninstall and be restored if you reinstall; to delete a server's credentials, remove that server inside the app first. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
       "notCollectHeading": "What we do not collect",
-      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above. Separately, when Live Activities are enabled, the streamer sends the session excerpt described in section 2 to Apple's push service; that data travels from your streamer, not from your device.",
+      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above. Separately, when Live Activities are enabled, the streamer sends the prompt-derived title and terminal excerpt described in section 2 to Apple's push service; that data travels from your streamer, not from your device.",
       "subProcessorsHeading": "Service providers we use",
       "subProcessorsIntro": "Threadbase relies on the following third parties. Each one processes only the data described in its section above, under its own terms and data-processing agreements.",
       "subProcessors": [
         { "label": "Expo.", "body": "Delivers ordinary push notifications. Expo receives your push token and the notification payload described in section 2, which carries no session content." },
-        { "label": "Apple.", "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a truncated excerpt of session output." },
+        { "label": "Apple.", "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a prompt-derived title and a truncated excerpt of session output." },
         { "label": "Sentry.", "body": "Processes optional crash reports, as described in section 3." },
         { "label": "MailerLite.", "body": "Processes newsletter subscriptions from the website, as described in section 6." }
       ],
@@ -466,7 +466,7 @@
         { "permission": "Camera", "why": "Scanning a QR code to pair with a streamer, and attaching photos to your sessions." },
         { "permission": "Photo library", "why": "Attaching photos from your library to your sessions, and attaching a screenshot to feedback." },
         { "permission": "Microphone", "why": "Dictating prompts by voice." },
-        { "permission": "Speech recognition", "why": "Converting your speech to text. On iOS this is processed on-device; on Android it may be processed by the system speech service, which can send audio to Google." },
+        { "permission": "Speech recognition", "why": "Converting your speech to text. On iOS Threadbase requests on-device recognition, subject to the device's available speech model; on Android it uses the system speech service and may send audio to Google." },
         { "permission": "Face ID / biometrics", "why": "Optionally locking access to your conversations. Authentication happens entirely on-device through the operating system (iOS Face ID/Touch ID, Android BiometricPrompt); Threadbase only receives a pass/fail result and never accesses, stores, or transmits your biometric data." },
         { "permission": "Notifications", "why": "Delivering session notifications and iOS Live Activities, if you enable them. Section 2 describes what those messages carry." }
       ],
