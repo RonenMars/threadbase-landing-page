@@ -140,9 +140,9 @@ describe("i18n content catalogs", () => {
   ])("%s.%s is a non-empty array in every locale", (namespace, key) => {
     const [group, page] = namespace.split(".");
     for (const [locale, catalog] of Object.entries(translations)) {
-      const value = (catalog as Record<string, Record<string, Record<string, unknown>>>)[
-        group
-      ][page][key];
+      const value = (
+        catalog as unknown as Record<string, Record<string, Record<string, unknown>>>
+      )[group][page][key];
       expect(Array.isArray(value), `${locale}: ${namespace}.${key}`).toBe(true);
       expect((value as unknown[]).length, `${locale}: ${namespace}.${key}`).toBeGreaterThan(0);
     }
