@@ -492,7 +492,7 @@
       "yourControl": [
         "Crash reporting is off by default; enable or disable it any time in Settings.",
         "Feedback and diagnostics are only ever sent when you initiate them.",
-        "Removing a server revokes its push token.",
+        "Removing a server deletes its credentials from your device. To stop a streamer from sending notifications, revoke this device on that streamer (tb-streamer devices revoke); revoking deletes the push token there.",
         "Uninstalling the app removes the data stored in its own container; credentials held by the operating system's secure credential storage, such as the iOS Keychain, can survive it — remove a server in the app to delete its credentials.",
         "Contact support@threadbase.sh with any privacy question or deletion request."
       ],

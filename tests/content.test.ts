@@ -203,3 +203,32 @@ describe("privacy policy — uninstall claim", () => {
     });
   }
 });
+
+/**
+ * The push-token claim, guarded.
+ *
+ * The policy used to say "Removing a server revokes its push token." Removing a
+ * server only clears that server's credentials from the device; the streamer
+ * keeps the token until the device is revoked there. The false version sat on a
+ * published policy for months, so the corrected sentence is asserted rather
+ * than left to review.
+ *
+ * The CLI command stays verbatim in every locale, so one assertion covers all four.
+ */
+describe("privacy policy — push-token claim", () => {
+  it.each(Object.entries(translations))(
+    "%s: the push-token bullet points at the streamer-side revoke",
+    (_locale, catalog) => {
+      const bullets = (
+        catalog as unknown as {
+          pages: { privacy: { yourControl: string[] } };
+        }
+      ).pages.privacy.yourControl;
+
+      expect(
+        bullets.some((bullet) => bullet.includes("tb-streamer devices revoke")),
+        "no yourControl bullet names the streamer-side revoke command",
+      ).toBe(true);
+    },
+  );
+});
