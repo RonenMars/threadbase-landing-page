@@ -61,6 +61,8 @@ describe("i18n content catalogs", () => {
       "ArrowsClockwise",
       "CheckSquare",
       "MagnifyingGlass",
+      "Desktop",
+      "Microphone",
     ]);
   });
 
@@ -75,7 +77,7 @@ describe("i18n content catalogs", () => {
     for (const catalog of Object.values(translations)) {
       expect(catalog.home.features.items).toHaveLength(FEATURE_CONFIG.length);
       expect(catalog.home.honestCons.items).toHaveLength(5);
-      expect(catalog.home.security.highlights).toHaveLength(3);
+      expect(catalog.home.security.highlights).toHaveLength(4);
     }
   });
 
@@ -110,7 +112,12 @@ describe("i18n content catalogs", () => {
     expect(frontPageCopy).toContain(
       "ios live activities are opt-in on the streamer and need your own apns credentials",
     );
-    expect(frontPageCopy).not.toContain("end-to-end encrypted");
+    // Was a `not.toContain` guard: the site over-claimed E2EE before the
+    // streamer shipped it. E2EE is on by default since streamer 1.76
+    // (Noise IK, X25519 + ChaCha20-Poly1305), so the claim now stands — but
+    // only with the named primitives, so it stays falsifiable.
+    expect(frontPageCopy).toContain("end-to-end encrypted by default");
+    expect(frontPageCopy).toContain("noise ik");
     expect(frontPageCopy).not.toContain("never talks to a threadbase server");
     expect(enTranslations.home.security.description).toContain(
       "does not relay your coding-agent session through a Threadbase-hosted session backend",
