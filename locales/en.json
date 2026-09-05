@@ -156,11 +156,19 @@
         },
         {
           "title": "You run the streamer",
-          "description": "Install the local streamer on every machine you want to reach and keep it accessible from your phone."
+          "description": "Install the local streamer on every machine you want to reach and keep it accessible from your phone. Reaching it from outside your network is on you — a Cloudflare quick-tunnel helper is included, a guided setup isn’t yet."
         },
         {
           "title": "Distribution is still beta",
           "description": "iOS ships through TestFlight; Android ships through closed testing on Google Play."
+        },
+        {
+          "title": "Platform edges",
+          "description": "On Windows, sessions started outside Threadbase can’t report their working directory. Homebrew on Linux is x86_64 only — use npm on arm64. iOS Live Activities are opt-in on the streamer and need your own APNs credentials."
+        },
+        {
+          "title": "Some prompts still need the terminal",
+          "description": "Single-choice approvals and questions work from the phone. Multi-select and multi-question forms fall back to the raw terminal for now."
         }
       ]
     },

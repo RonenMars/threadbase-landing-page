@@ -74,7 +74,7 @@ describe("i18n content catalogs", () => {
   it("keeps homepage array lengths aligned with the structural config", () => {
     for (const catalog of Object.values(translations)) {
       expect(catalog.home.features.items).toHaveLength(FEATURE_CONFIG.length);
-      expect(catalog.home.honestCons.items).toHaveLength(3);
+      expect(catalog.home.honestCons.items).toHaveLength(5);
       expect(catalog.home.security.highlights).toHaveLength(3);
     }
   });
@@ -103,7 +103,13 @@ describe("i18n content catalogs", () => {
     expect(frontPageCopy).toContain("active codex writers");
     expect(frontPageCopy).not.toContain("resume support is still");
     expect(frontPageCopy).not.toContain("native prompt cards");
-    expect(frontPageCopy).not.toContain("live activities");
+    // Was a `not.toContain` guard: the homepage listed Live Activities among
+    // the shipped notification features while the streamer could only send
+    // them with the operator's own APNs credentials. HonestCons now names that
+    // exact constraint, so the mention stands only in its caveated form.
+    expect(frontPageCopy).toContain(
+      "ios live activities are opt-in on the streamer and need your own apns credentials",
+    );
     expect(frontPageCopy).not.toContain("end-to-end encrypted");
     expect(frontPageCopy).not.toContain("never talks to a threadbase server");
     expect(enTranslations.home.security.description).toContain(
