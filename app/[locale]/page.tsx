@@ -4,6 +4,7 @@ import { FloatingDock } from "@/components/FloatingDock";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { HonestCons } from "@/components/HonestCons";
+import { PhoneStrip } from "@/components/PhoneStrip";
 import { QuickStart } from "@/components/QuickStart";
 import { SecuritySection } from "@/components/SecuritySection";
 
@@ -13,6 +14,7 @@ export default function Home(): React.JSX.Element {
       <main>
         <Hero />
         <FeaturesGrid />
+        <PhoneStrip />
         <SecuritySection />
         <HonestCons />
         <QuickStart />

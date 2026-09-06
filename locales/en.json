@@ -141,6 +141,15 @@
         }
       ]
     },
+    "phoneStrip": {
+      "heading": "Built for the phone, not shrunk to it",
+      "items": [
+        "A terminal view that strips the TUI decorations so the transcript reads like a transcript.",
+        "A chat view with diffs and tool calls, not a wall of ANSI.",
+        "Face ID lock, Markdown export, favourites.",
+        "English, Hebrew, Arabic, and Russian — with proper RTL."
+      ]
+    },
     "security": {
       "heading": "Your streamer. Your machines. No Threadbase session relay.",
       "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Run the streamer you control on every machine you pair, then manage those sessions from one mobile app. Sessions are end-to-end encrypted by default (Noise IK, X25519 + ChaCha20-Poly1305) between your phone and each streamer, with per-device credentials you can revoke and a fingerprint you can verify with tb-streamer identity.",
