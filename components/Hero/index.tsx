@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Check, Copy } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
@@ -26,14 +25,10 @@ function detectPlatform(): "ios" | "android" | "desktop" {
   return matchesIosMobileUa || matchesIpadDesktopUa ? "ios" : "desktop";
 }
 
-const COPIED_RESET_MS = 1500;
-
 export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
   const tHero = useTranslations("home.hero");
   const hero = heroProp ?? getHeroContent(tHero);
-  const [copied, setCopied] = useState(false);
   const [platform, setPlatform] = useState<"ios" | "android" | "desktop">("desktop");
-  const copyResetRef = useRef<number | null>(null);
   const primaryCta = hero.ctas.find((cta) => cta.variant === "primary");
   const primaryCtaHref = platform === "android"
     ? "https://threadbase.sh/android-beta"
@@ -48,24 +43,8 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
 
     return () => {
       window.cancelAnimationFrame(platformFrame);
-      if (copyResetRef.current !== null) {
-        window.clearTimeout(copyResetRef.current);
-      }
     };
   }, []);
-
-  function handleCopyOutlineCta(label: string): void {
-    if (typeof navigator === "undefined" || !navigator.clipboard) return;
-    void navigator.clipboard.writeText(label);
-    setCopied(true);
-    if (copyResetRef.current !== null) {
-      window.clearTimeout(copyResetRef.current);
-    }
-    copyResetRef.current = window.setTimeout(() => {
-      setCopied(false);
-      copyResetRef.current = null;
-    }, COPIED_RESET_MS);
-  }
 
   return (
     <motion.section
@@ -174,46 +153,13 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
             cta.variant === "outline" ? (
               <Button
                 key={cta.label}
-                onClick={() => handleCopyOutlineCta(cta.label)}
-                aria-label={copied ? hero.copiedLabel : hero.copyAriaLabel}
-                className={`min-w-50 cursor-pointer motion-safe:active:scale-[0.97] ${
-                  copied
-                    ? "border-accent-secondary shadow-[0_0_0_3px_rgba(240,138,36,0.18)]"
-                    : ""
-                }`}
+                render={<Link href={cta.href} />}
+                nativeButton={false}
+                className="min-w-50"
                 size="lg"
                 variant="outline"
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  {copied ? (
-                    <motion.span
-                      key="check"
-                      initial={{ opacity: 0, scale: 0.6, rotate: -20 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      exit={{ opacity: 0, scale: 0.6, rotate: 20 }}
-                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                      className="flex items-center"
-                    >
-                      <Check
-                        size={16}
-                        weight="bold"
-                        className="text-accent-secondary"
-                      />
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="copy"
-                      initial={{ opacity: 0, scale: 0.6 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.6 }}
-                      transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                      className="flex items-center"
-                    >
-                      <Copy size={16} weight="regular" />
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-                <span>{cta.label}</span>
+                {cta.label}
               </Button>
             ) : null,
           )}

@@ -41,10 +41,6 @@ export function getHeroContent(t: Translator): HeroContent {
     headline: t("headline"),
     subheadline: t("subheadline"),
     primaryButtonLabel: t("primaryButtonLabel"),
-    copiedLabel: t("copiedLabel"),
-    copyAriaLabel: t("copyAriaLabel", {
-      label: ctas[1]?.label ?? "",
-    }),
     badges: rawArray<HeroBadge>(t, "badges"),
     ctas: HERO_CTA_CONFIG.map((config, index) => ({
       ...config,
