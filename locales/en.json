@@ -95,15 +95,15 @@
       "trustNote": "Pair more machines whenever you need them, then switch between their sessions from the same app.",
       "steps": [
         {
-          "title": "Run the streamer on your Mac, Linux box, or Windows PC",
-          "description": "Install it once on every machine you want Threadbase to reach."
+          "title": "Install the streamer on any machine that runs your agents.",
+          "description": "One binary — macOS, Linux, or Windows."
         },
         {
-          "title": "Pair your phone with the QR code",
-          "description": "Open Threadbase and scan the code shown by the streamer."
+          "title": "Pair your phone with a QR code — the keys are exchanged right there.",
+          "description": "Encrypted from the first byte, before the first session starts."
         },
         {
-          "title": "Keep the session moving from anywhere",
+          "title": "Leave. We’ll push you when the agent needs you.",
           "description": "Watch, resume, and respond from your phone while the streamer runs the agent on your machine.",
           "postscript": "Pair more machines and switch between them from one app."
         }
