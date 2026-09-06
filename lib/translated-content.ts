@@ -109,6 +109,8 @@ export function getSecurityContent(t: Translator): SecurityContent {
   return {
     heading: t("heading"),
     description: t("description"),
+    cantSeeHeading: t("cantSeeHeading"),
+    cantSee: rawArray<string>(t, "cantSee"),
     scopeNote: t("scopeNote"),
     highlights: rawArray<string>(t, "highlights"),
   };

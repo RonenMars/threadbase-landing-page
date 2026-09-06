@@ -50,6 +50,8 @@ export interface HonestCon {
 export interface SecurityContent {
   heading: string;
   description: string;
+  cantSeeHeading: string;
+  cantSee: string[];
   scopeNote: string;
   highlights: string[];
 }

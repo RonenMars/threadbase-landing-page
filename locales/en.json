@@ -152,7 +152,15 @@
     },
     "security": {
       "heading": "Your streamer. Your machines. No Threadbase session relay.",
-      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Run the streamer you control on every machine you pair, then manage those sessions from one mobile app. Sessions are end-to-end encrypted by default (Noise IK, X25519 + ChaCha20-Poly1305) between your phone and each streamer, with per-device credentials you can revoke and a fingerprint you can verify with tb-streamer identity.",
+      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Sessions are end-to-end encrypted by default — Noise IK, X25519 and ChaCha20-Poly1305 — between your phone and each streamer. Every phone gets its own scoped credentials. Revoke one, and it's gone. Verify a machine's fingerprint with tb-streamer identity before you trust it.",
+      "cantSeeHeading": "What we can't see",
+      "cantSee": [
+        "Your prompts, transcripts, approvals, and files never touch a Threadbase server — there isn't one.",
+        "No analytics.",
+        "Crash reports are off by default and only ever sent because you switched them on.",
+        "Feedback you write in Settings goes out when you tap send, and nothing else does.",
+        "Keys live in the Keychain and Keystore."
+      ],
       "scopeNote": "This boundary describes the coding-session path. Pairing, notification delivery, and the local coding-agent process are separate parts of the architecture.",
       "highlights": [
         "End-to-end encrypted by default",
