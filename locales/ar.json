@@ -76,11 +76,9 @@
   "home": {
     "hero": {
       "eyebrow": "Claude Code + Codex CLI بعيدًا عن المكتب",
-      "headline": "يواصل وكلاء البرمجة العمل حتى عند الابتعاد عن المكتب.",
-      "subheadline": "راقبوا سيشنات Claude Code وCodex واستأنفوها، ووافقوا وابحثوا وردّوا من الهاتف — عبر كل جهاز تم إقرانه.",
-      "primaryButtonLabel": "انضمّوا إلى الإصدار التجريبي",
-      "copiedLabel": "نُسخ إلى الحافظة",
-      "copyAriaLabel": "نسخ: {label}",
+      "headline": "ابتعدوا عن المكتب. أبقوا الوكيل يعمل.",
+      "subheadline": "يبث Threadbase سيشنات Claude Code وCodex من أجهزتكم إلى هاتفكم. وافقوا، أجيبوا، أضيفوا التوجيه التالي إلى قائمة الانتظار، أو ابدأوا سيشن جديدة من أي مكان. مشفّر من طرف إلى طرف. لا شيء يغادر أجهزتكم.",
+      "primaryButtonLabel": "احصلوا على التطبيق",
       "badges": [
         { "label": "iOS · إصدار TestFlight التجريبي" },
         { "label": "Android · اختبار مغلق" },
@@ -88,7 +86,7 @@
       ],
       "ctas": [
         { "label": "انضمّوا إلى TestFlight" },
-        { "label": "brew install tb-streamer" }
+        { "label": "ثبّتوا الـ streamer" }
       ]
     },
     "howItWorks": {

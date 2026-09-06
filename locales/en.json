@@ -76,11 +76,9 @@
   "home": {
     "hero": {
       "eyebrow": "Claude Code + Codex CLI, away from your desk",
-      "headline": "Your coding agents don’t stop when you leave your desk.",
-      "subheadline": "Watch, resume, approve, search, and respond to Claude Code and Codex sessions from your phone — across every machine you pair.",
-      "primaryButtonLabel": "Join the Beta",
-      "copiedLabel": "Copied to clipboard",
-      "copyAriaLabel": "Copy: {label}",
+      "headline": "Leave the desk. Keep the agent working.",
+      "subheadline": "Threadbase streams Claude Code and Codex sessions from your own machines to your phone. Approve, answer, queue the next prompt, or start a fresh session from anywhere. End-to-end encrypted. Nothing leaves your machines.",
+      "primaryButtonLabel": "Get the app",
       "badges": [
         { "label": "iOS · TestFlight beta" },
         { "label": "Android · closed testing" },
@@ -88,7 +86,7 @@
       ],
       "ctas": [
         { "label": "Join TestFlight" },
-        { "label": "brew install tb-streamer" }
+        { "label": "Install the streamer" }
       ]
     },
     "howItWorks": {

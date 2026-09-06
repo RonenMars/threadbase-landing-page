@@ -76,11 +76,9 @@
   "home": {
     "hero": {
       "eyebrow": "Claude Code + Codex CLI, גם הרחק משולחן העבודה",
-      "headline": "סוכני הקוד ממשיכים לעבוד גם כשמתרחקים משולחן העבודה.",
-      "subheadline": "צפו, חדשו, אשרו, חפשו והגיבו לסשנים של Claude Code ו-Codex מהטלפון — בכל המכונות שחוברו.",
-      "primaryButtonLabel": "הצטרפו לבטא",
-      "copiedLabel": "הועתק ללוח",
-      "copyAriaLabel": "העתקה: {label}",
+      "headline": "תעזבו את השולחן. תשאירו את הסוכן עובד.",
+      "subheadline": "Threadbase משדר סשנים של Claude Code ו-Codex מהמכונות שלכם לטלפון. אשרו, השיבו, הוסיפו את ההנחיה הבאה לתור, או התחילו סשן חדש מכל מקום. מוצפן מקצה לקצה. שום דבר לא יוצא מהמכונות שלכם.",
+      "primaryButtonLabel": "קבלו את האפליקציה",
       "badges": [
         { "label": "iOS · בטא TestFlight" },
         { "label": "Android · בדיקות סגורות" },
@@ -88,7 +86,7 @@
       ],
       "ctas": [
         { "label": "הצטרפו ל-TestFlight" },
-        { "label": "brew install tb-streamer" }
+        { "label": "התקינו את הסטרימר" }
       ]
     },
     "howItWorks": {

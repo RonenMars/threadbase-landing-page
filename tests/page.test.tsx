@@ -7,7 +7,7 @@ describe("Home page", () => {
   it("renders the continuity-first hero headline", () => {
     renderWithIntl(<Home />);
     expect(document.body.textContent).toContain(
-      "Your coding agents don’t stop when you leave your desk.",
+      "Leave the desk. Keep the agent working.",
     );
   });
 

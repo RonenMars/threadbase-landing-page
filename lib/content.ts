@@ -20,8 +20,6 @@ export interface HeroContent {
   badges: HeroBadge[];
   ctas: HeroCta[];
   primaryButtonLabel: string;
-  copiedLabel: string;
-  copyAriaLabel: string;
 }
 
 export interface HowItWorksStep {
