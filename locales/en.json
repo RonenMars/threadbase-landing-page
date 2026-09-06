@@ -117,27 +117,27 @@
       "items": [
         {
           "title": "Walk away. We’ll tell you when the agent needs you.",
-          "description": "A dropped phone connection won’t stop a running agent. Managed sessions continue independently, and Threadbase can notify you when the agent starts waiting for input."
+          "description": "Threadbase watches the session and pushes you the moment the agent stops for input. Not a stream you have to babysit."
         },
         {
-          "title": "Start at your desk. Continue from your phone.",
-          "description": "Follow sessions launched from your normal CLI workflow, then resume supported Claude Code and Codex conversations remotely. Threadbase detects active Codex writers and offers safe recovery options, including forks where supported."
+          "title": "Approve without a tiny terminal.",
+          "description": "Permission prompts and questions arrive as cards. Tap the answer. The agent keeps going."
         },
         {
-          "title": "Approve the agent without fighting a tiny terminal.",
-          "description": "Handle supported tool approvals and permission prompts with mobile controls. The raw terminal is still there when you need it."
+          "title": "Keep it fed.",
+          "description": "Queue the next three prompts while the agent works. Dictate them. Attach a screenshot. It picks them up in order."
         },
         {
-          "title": "Search the session you remember — and the line you don’t.",
-          "description": "Search across sessions with contextual snippets and highlighted matches, then resume with conversation history beside the live terminal."
+          "title": "Start from your phone. Or take over.",
+          "description": "Browse a machine's projects and launch a new session from the app — or adopt a session you started in your terminal and drive it from the phone."
         },
         {
-          "title": "Take over the session you started at your desk.",
-          "description": "Sessions launched from your normal terminal show up on the phone. Follow them live, or adopt one and drive it from the app."
+          "title": "Search everything.",
+          "description": "Full-text search across every session on every machine, with snippets. Find the conversation where the agent explained that migration."
         },
         {
-          "title": "Built for actually working from a phone.",
-          "description": "Dictate prompts, attach photos and files, queue prompts while the agent is busy, lock the app with Face ID, export a conversation as Markdown. In English, Hebrew, Arabic, and Russian."
+          "title": "Every machine, one app.",
+          "description": "Pair as many machines as you run. Each phone gets its own credentials you can revoke from the streamer at any time."
         }
       ]
     },

@@ -155,11 +155,11 @@ export const HERO_CTA_CONFIG = [
 
 export const FEATURE_CONFIG = [
   { icon: "BellRinging", surfaceTags: ["DeviceMobile"] },
-  { icon: "ArrowsClockwise", surfaceTags: ["DeviceMobile"] },
   { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
+  { icon: "Microphone", surfaceTags: ["DeviceMobile"] },
+  { icon: "ArrowsClockwise", surfaceTags: ["Laptop", "DeviceMobile"] },
   { icon: "MagnifyingGlass", surfaceTags: ["Laptop", "DeviceMobile"] },
   { icon: "Desktop", surfaceTags: ["Laptop", "DeviceMobile"] },
-  { icon: "Microphone", surfaceTags: ["DeviceMobile"] },
 ] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
 
 export const QUICK_START_LINK_CONFIG = [
