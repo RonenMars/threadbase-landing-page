@@ -58,11 +58,11 @@ describe("i18n content catalogs", () => {
   it("keeps workflow icon structure out of translated copy", () => {
     expect(FEATURE_CONFIG.map((feature) => feature.icon)).toEqual([
       "BellRinging",
-      "ArrowsClockwise",
       "CheckSquare",
+      "Microphone",
+      "ArrowsClockwise",
       "MagnifyingGlass",
       "Desktop",
-      "Microphone",
     ]);
   });
 
@@ -100,9 +100,9 @@ describe("i18n content catalogs", () => {
     const frontPageCopy = JSON.stringify(enTranslations.home).toLowerCase();
 
     expect(frontPageCopy).toContain("codex");
-    expect(frontPageCopy).toContain("supported tool approvals");
-    expect(frontPageCopy).toContain("contextual snippets");
-    expect(frontPageCopy).toContain("active codex writers");
+    expect(frontPageCopy).toContain("permission prompts and questions arrive as cards");
+    expect(frontPageCopy).toContain("full-text search across every session");
+    expect(frontPageCopy).toContain("adopt a session you started in your terminal");
     expect(frontPageCopy).not.toContain("resume support is still");
     expect(frontPageCopy).not.toContain("native prompt cards");
     // Was a `not.toContain` guard: the homepage listed Live Activities among
