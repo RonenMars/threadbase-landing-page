@@ -124,6 +124,9 @@ export function QuickStart({
               </li>
             ))}
           </ul>
+          <p className="mt-4 text-xs italic text-muted">
+            {content.operatorNote}
+          </p>
         </motion.div>
       </div>
     </section>

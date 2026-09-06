@@ -132,17 +132,26 @@
         {
           "title": "Search the session you remember — and the line you don’t.",
           "description": "Search across sessions with contextual snippets and highlighted matches, then resume with conversation history beside the live terminal."
+        },
+        {
+          "title": "Take over the session you started at your desk.",
+          "description": "Sessions launched from your normal terminal show up on the phone. Follow them live, or adopt one and drive it from the app."
+        },
+        {
+          "title": "Built for actually working from a phone.",
+          "description": "Dictate prompts, attach photos and files, queue prompts while the agent is busy, lock the app with Face ID, export a conversation as Markdown. In English, Hebrew, Arabic, and Russian."
         }
       ]
     },
     "security": {
       "heading": "Your streamer. Your machines. No Threadbase session relay.",
-      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Run the streamer you control on every machine you pair, then manage those sessions from one mobile app.",
+      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Run the streamer you control on every machine you pair, then manage those sessions from one mobile app. Sessions are end-to-end encrypted by default (Noise IK, X25519 + ChaCha20-Poly1305) between your phone and each streamer, with per-device credentials you can revoke and a fingerprint you can verify with tb-streamer identity.",
       "scopeNote": "This boundary describes the coding-session path. Pairing, notification delivery, and the local coding-agent process are separate parts of the architecture.",
       "highlights": [
+        "End-to-end encrypted by default",
+        "Per-device credentials, one-tap revoke",
         "A streamer you control",
-        "Multiple paired machines",
-        "One mobile session view"
+        "Multiple paired machines"
       ]
     },
     "honestCons": {
@@ -156,11 +165,19 @@
         },
         {
           "title": "You run the streamer",
-          "description": "Install the local streamer on every machine you want to reach and keep it accessible from your phone."
+          "description": "Install the local streamer on every machine you want to reach and keep it accessible from your phone. Reaching it from outside your network is on you — a Cloudflare quick-tunnel helper is included, a guided setup isn’t yet."
         },
         {
           "title": "Distribution is still beta",
           "description": "iOS ships through TestFlight; Android ships through closed testing on Google Play."
+        },
+        {
+          "title": "Platform edges",
+          "description": "On Windows, sessions started outside Threadbase can’t report their working directory. Homebrew on Linux is x86_64 only — use npm on arm64. iOS Live Activities are opt-in on the streamer and need your own APNs credentials."
+        },
+        {
+          "title": "Some prompts still need the terminal",
+          "description": "Single-choice approvals and questions work from the phone. Multi-select and multi-question forms fall back to the raw terminal for now."
         }
       ]
     },
@@ -214,7 +231,8 @@
         { "label": "Linux" },
         { "label": "Windows" },
         { "label": "Android — closed beta" }
-      ]
+      ],
+      "operatorNote": "Configure Claude CLI flags per machine from the phone, back up and restore streamer metadata, and check server and notification health without opening a terminal."
     }
   },
   "pages": {
@@ -455,7 +473,7 @@
       "subProcessorsIntro": "Threadbase relies on the following third parties. Each one processes only the data described in its section above, under its own terms and data-processing agreements.",
       "subProcessors": [
         { "label": "Expo.", "body": "Delivers ordinary push notifications. Expo receives your push token and the notification payload described in section 2, which carries no session content." },
-        { "label": "Apple.", "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a prompt-derived title, a server label that may be the streamer's hostname, and a truncated excerpt of session output." },
+        { "label": "Apple.", "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a prompt-derived title, a server label that may be the streamer's hostname, and a truncated excerpt of session output; these may contain sensitive content." },
         { "label": "Sentry.", "body": "Processes optional crash reports, as described in section 3." },
         { "label": "MailerLite.", "body": "Processes newsletter subscriptions from the website, as described in section 6." }
       ],
@@ -474,7 +492,7 @@
       "yourControl": [
         "Crash reporting is off by default; enable or disable it any time in Settings.",
         "Feedback and diagnostics are only ever sent when you initiate them.",
-        "Removing a server revokes its push token.",
+        "Removing a server deletes its credentials from your device. To stop a streamer from sending notifications, revoke this device on that streamer (tb-streamer devices revoke); revoking deletes the push token there.",
         "Uninstalling the app removes the data stored in its own container; credentials held by the operating system's secure credential storage, such as the iOS Keychain, can survive it — remove a server in the app to delete its credentials.",
         "Contact support@threadbase.sh with any privacy question or deletion request."
       ],
