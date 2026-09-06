@@ -54,6 +54,11 @@ export interface SecurityContent {
   highlights: string[];
 }
 
+export interface PhoneStripContent {
+  heading: string;
+  items: string[];
+}
+
 export interface FinalCtaContent {
   heading: string;
   description: string;

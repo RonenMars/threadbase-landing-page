@@ -16,6 +16,7 @@ import {
   type HonestCon,
   type HowItWorksStep,
   type NavLink,
+  type PhoneStripContent,
   type QuickStartContent,
   type SecurityContent,
   type SectionContent,
@@ -94,6 +95,13 @@ export function getHonestConsContent(t: Translator): {
       heading: t("section.heading"),
     },
     items: rawArray<HonestCon>(t, "items"),
+  };
+}
+
+export function getPhoneStripContent(t: Translator): PhoneStripContent {
+  return {
+    heading: t("heading"),
+    items: rawArray<string>(t, "items"),
   };
 }
 
