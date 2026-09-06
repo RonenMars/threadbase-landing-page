@@ -196,6 +196,9 @@
         }
       ]
     },
+    "socialProof": {
+      "line": "Open source, MIT, built by a developer who runs it every day."
+    },
     "finalCta": {
       "heading": "Leave the desk. Keep the session.",
       "description": "Join the iOS or Android beta, or subscribe for product updates.",

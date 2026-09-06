@@ -7,6 +7,7 @@ import { HonestCons } from "@/components/HonestCons";
 import { PhoneStrip } from "@/components/PhoneStrip";
 import { QuickStart } from "@/components/QuickStart";
 import { SecuritySection } from "@/components/SecuritySection";
+import { SocialProofLine } from "@/components/SocialProofLine";
 
 export default function Home(): React.JSX.Element {
   return (
@@ -18,6 +19,7 @@ export default function Home(): React.JSX.Element {
         <SecuritySection />
         <HonestCons />
         <QuickStart />
+        <SocialProofLine />
         <FinalCta />
       </main>
       <Footer />
