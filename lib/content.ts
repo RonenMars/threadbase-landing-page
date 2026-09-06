@@ -75,6 +75,18 @@ export interface QuickStartContent {
   operatorNote: string;
 }
 
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface FaqContent {
+  heading: string;
+  intro: string;
+  supportLinkLabel: string;
+  items: FaqItem[];
+}
+
 export interface FooterLink {
   label: string;
   href: string;

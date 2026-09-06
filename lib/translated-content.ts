@@ -8,6 +8,8 @@ import {
   QUICK_START_LINK_CONFIG,
   type AndroidBetaContent,
   type BetasPageContent,
+  type FaqContent,
+  type FaqItem,
   type FeatureItem,
   type FinalCtaContent,
   type FooterContent,
@@ -95,6 +97,15 @@ export function getHonestConsContent(t: Translator): {
       heading: t("section.heading"),
     },
     items: rawArray<HonestCon>(t, "items"),
+  };
+}
+
+export function getFaqContent(t: Translator): FaqContent {
+  return {
+    heading: t("heading"),
+    intro: t("intro"),
+    supportLinkLabel: t("supportLinkLabel"),
+    items: rawArray<FaqItem>(t, "items"),
   };
 }
 

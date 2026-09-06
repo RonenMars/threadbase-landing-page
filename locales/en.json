@@ -199,6 +199,37 @@
     "socialProof": {
       "line": "Open source, MIT, built by a developer who runs it every day."
     },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "intro": "Anything else, reach out at",
+      "supportLinkLabel": "support",
+      "items": [
+        {
+          "question": "Does it work with Codex?",
+          "answer": "Yes. Claude Code and Codex sessions run side by side, with per-provider health and capability differences shown in the app."
+        },
+        {
+          "question": "Do I have to open ports?",
+          "answer": "No. Pairing over your LAN works out of the box. A bundled Cloudflare quick-tunnel helper gets you off-LAN without touching your router."
+        },
+        {
+          "question": "What if my phone is offline when the agent asks?",
+          "answer": "The push waits, and the session waits. Nothing times out because your phone was offline — open the app and you'll see what happened."
+        },
+        {
+          "question": "Which platforms run the streamer?",
+          "answer": "macOS, Linux, and Windows. See the honest list above for the platform-specific edges."
+        },
+        {
+          "question": "Why is Sentry in the app?",
+          "answer": "Two things you control: the feedback form in Settings, and crash reporting, which is off by default. Nothing is sent until you turn it on or tap send."
+        },
+        {
+          "question": "What does it cost?",
+          "answer": "Threadbase is free and open source under the MIT license. Self-host the streamer on your own machines."
+        }
+      ]
+    },
     "finalCta": {
       "heading": "Leave the desk. Keep the session.",
       "description": "Join the iOS or Android beta, or subscribe for product updates.",

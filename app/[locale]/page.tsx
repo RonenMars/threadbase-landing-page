@@ -1,3 +1,4 @@
+import { Faq } from "@/components/Faq";
 import { FeaturesGrid } from "@/components/FeaturesGrid";
 import { FinalCta } from "@/components/FinalCta";
 import { FloatingDock } from "@/components/FloatingDock";
@@ -20,6 +21,7 @@ export default function Home(): React.JSX.Element {
         <HonestCons />
         <QuickStart />
         <SocialProofLine />
+        <Faq />
         <FinalCta />
       </main>
       <Footer />
