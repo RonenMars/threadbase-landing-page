@@ -78,6 +78,7 @@ describe("i18n content catalogs", () => {
       expect(catalog.home.features.items).toHaveLength(FEATURE_CONFIG.length);
       expect(catalog.home.honestCons.items).toHaveLength(5);
       expect(catalog.home.security.highlights).toHaveLength(4);
+      expect(catalog.home.security.cantSee).toHaveLength(5);
     }
   });
 
