@@ -20,8 +20,6 @@ export interface HeroContent {
   badges: HeroBadge[];
   ctas: HeroCta[];
   primaryButtonLabel: string;
-  copiedLabel: string;
-  copyAriaLabel: string;
 }
 
 export interface HowItWorksStep {
@@ -52,8 +50,15 @@ export interface HonestCon {
 export interface SecurityContent {
   heading: string;
   description: string;
+  cantSeeHeading: string;
+  cantSee: string[];
   scopeNote: string;
   highlights: string[];
+}
+
+export interface PhoneStripContent {
+  heading: string;
+  items: string[];
 }
 
 export interface FinalCtaContent {
@@ -68,6 +73,18 @@ export interface QuickStartContent {
   steps: string[];
   links: Array<{ label: string; href: string }>;
   operatorNote: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface FaqContent {
+  heading: string;
+  intro: string;
+  supportLinkLabel: string;
+  items: FaqItem[];
 }
 
 export interface FooterLink {
@@ -157,11 +174,11 @@ export const HERO_CTA_CONFIG = [
 
 export const FEATURE_CONFIG = [
   { icon: "BellRinging", surfaceTags: ["DeviceMobile"] },
-  { icon: "ArrowsClockwise", surfaceTags: ["DeviceMobile"] },
   { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
+  { icon: "Microphone", surfaceTags: ["DeviceMobile"] },
+  { icon: "ArrowsClockwise", surfaceTags: ["Laptop", "DeviceMobile"] },
   { icon: "MagnifyingGlass", surfaceTags: ["Laptop", "DeviceMobile"] },
   { icon: "Desktop", surfaceTags: ["Laptop", "DeviceMobile"] },
-  { icon: "Microphone", surfaceTags: ["DeviceMobile"] },
 ] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
 
 export const QUICK_START_LINK_CONFIG = [

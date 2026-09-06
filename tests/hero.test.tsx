@@ -1,5 +1,5 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it } from "vitest";
 import { Hero } from "@/components/Hero";
 import { renderWithIntl } from "@/tests/test-utils";
 
@@ -18,14 +18,14 @@ afterEach(() => {
 });
 
 describe("Hero", () => {
-  it("renders the continuity-first headline and supporting copy", () => {
+  it("renders the leave-the-desk headline and supporting copy", () => {
     renderWithIntl(<Hero />);
     const root = screen.getByRole("banner") ?? document.body;
     expect(root.textContent).toContain(
-      "Your coding agents don’t stop when you leave your desk.",
+      "Leave the desk. Keep the agent working.",
     );
     expect(root.textContent).toContain(
-      "Watch, resume, approve, search, and respond to Claude Code and Codex sessions from your phone",
+      "Threadbase streams Claude Code and Codex sessions from your own machines to your phone.",
     );
   });
 
@@ -45,9 +45,10 @@ describe("Hero", () => {
 
   it("renders both CTAs", () => {
     renderWithIntl(<Hero />);
-    const betaCta = screen.getByRole("button", { name: /join the beta/i });
+    const betaCta = screen.getByRole("button", { name: /get the app/i });
     expect(betaCta).toHaveAttribute("href", "https://threadbase.sh/betas");
-    expect(screen.getByText(/brew install tb-streamer/)).toBeInTheDocument();
+    const streamerCta = screen.getByRole("button", { name: /install the streamer/i });
+    expect(streamerCta).toHaveAttribute("href", "#quick-start");
   });
 
   it.each([
@@ -82,7 +83,7 @@ describe("Hero", () => {
     renderWithIntl(<Hero />);
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: /join the beta/i })).toHaveAttribute(
+      expect(screen.getByRole("button", { name: /get the app/i })).toHaveAttribute(
         "href",
         href,
       );
@@ -93,25 +94,5 @@ describe("Hero", () => {
     renderWithIntl(<Hero />);
     expect(screen.queryByText(/Decode JSONL/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Command Palette/i)).not.toBeInTheDocument();
-  });
-
-  it("copies the brew install command to the clipboard when the outline CTA is clicked", () => {
-    const writeText = vi.fn().mockResolvedValue(undefined);
-    Object.defineProperty(navigator, "clipboard", {
-      value: { writeText },
-      configurable: true,
-    });
-
-    renderWithIntl(<Hero />);
-    const copyBtn = screen.getByRole("button", {
-      name: /^copy: brew install tb-streamer$/i,
-    });
-    fireEvent.click(copyBtn);
-
-    expect(writeText).toHaveBeenCalledWith("brew install tb-streamer");
-    // After click, the aria-label flips to indicate the copied state.
-    expect(
-      screen.getByRole("button", { name: /copied to clipboard/i }),
-    ).toBeInTheDocument();
   });
 });

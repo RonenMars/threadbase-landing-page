@@ -17,7 +17,15 @@ describe("SecuritySection", () => {
     // streamer shipped it. The claim now stands, but only in the form that
     // names its primitives — a bare "end-to-end encrypted" fails this.
     expect(document.body.textContent).toContain(
-      "end-to-end encrypted by default (Noise IK, X25519 + ChaCha20-Poly1305)",
+      "end-to-end encrypted by default — Noise IK, X25519 and ChaCha20-Poly1305",
     );
+  });
+
+  it("lists what Threadbase can't see", () => {
+    renderWithIntl(<SecuritySection />);
+    expect(
+      screen.getByText(/there isn't one/i),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/keys live in the keychain and keystore/i)).toBeInTheDocument();
   });
 });

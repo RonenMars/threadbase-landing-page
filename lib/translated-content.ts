@@ -8,6 +8,8 @@ import {
   QUICK_START_LINK_CONFIG,
   type AndroidBetaContent,
   type BetasPageContent,
+  type FaqContent,
+  type FaqItem,
   type FeatureItem,
   type FinalCtaContent,
   type FooterContent,
@@ -16,6 +18,7 @@ import {
   type HonestCon,
   type HowItWorksStep,
   type NavLink,
+  type PhoneStripContent,
   type QuickStartContent,
   type SecurityContent,
   type SectionContent,
@@ -41,10 +44,6 @@ export function getHeroContent(t: Translator): HeroContent {
     headline: t("headline"),
     subheadline: t("subheadline"),
     primaryButtonLabel: t("primaryButtonLabel"),
-    copiedLabel: t("copiedLabel"),
-    copyAriaLabel: t("copyAriaLabel", {
-      label: ctas[1]?.label ?? "",
-    }),
     badges: rawArray<HeroBadge>(t, "badges"),
     ctas: HERO_CTA_CONFIG.map((config, index) => ({
       ...config,
@@ -101,10 +100,28 @@ export function getHonestConsContent(t: Translator): {
   };
 }
 
+export function getFaqContent(t: Translator): FaqContent {
+  return {
+    heading: t("heading"),
+    intro: t("intro"),
+    supportLinkLabel: t("supportLinkLabel"),
+    items: rawArray<FaqItem>(t, "items"),
+  };
+}
+
+export function getPhoneStripContent(t: Translator): PhoneStripContent {
+  return {
+    heading: t("heading"),
+    items: rawArray<string>(t, "items"),
+  };
+}
+
 export function getSecurityContent(t: Translator): SecurityContent {
   return {
     heading: t("heading"),
     description: t("description"),
+    cantSeeHeading: t("cantSeeHeading"),
+    cantSee: rawArray<string>(t, "cantSee"),
     scopeNote: t("scopeNote"),
     highlights: rawArray<string>(t, "highlights"),
   };

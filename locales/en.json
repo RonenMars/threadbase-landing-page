@@ -76,11 +76,9 @@
   "home": {
     "hero": {
       "eyebrow": "Claude Code + Codex CLI, away from your desk",
-      "headline": "Your coding agents don’t stop when you leave your desk.",
-      "subheadline": "Watch, resume, approve, search, and respond to Claude Code and Codex sessions from your phone — across every machine you pair.",
-      "primaryButtonLabel": "Join the Beta",
-      "copiedLabel": "Copied to clipboard",
-      "copyAriaLabel": "Copy: {label}",
+      "headline": "Leave the desk. Keep the agent working.",
+      "subheadline": "Threadbase streams Claude Code and Codex sessions from your own machines to your phone. Approve, answer, queue the next prompt, or start a fresh session from anywhere. End-to-end encrypted. Nothing leaves your machines.",
+      "primaryButtonLabel": "Get the app",
       "badges": [
         { "label": "iOS · TestFlight beta" },
         { "label": "Android · closed testing" },
@@ -88,7 +86,7 @@
       ],
       "ctas": [
         { "label": "Join TestFlight" },
-        { "label": "brew install tb-streamer" }
+        { "label": "Install the streamer" }
       ]
     },
     "howItWorks": {
@@ -97,15 +95,15 @@
       "trustNote": "Pair more machines whenever you need them, then switch between their sessions from the same app.",
       "steps": [
         {
-          "title": "Run the streamer on your Mac, Linux box, or Windows PC",
-          "description": "Install it once on every machine you want Threadbase to reach."
+          "title": "Install the streamer on any machine that runs your agents.",
+          "description": "One binary — macOS, Linux, or Windows."
         },
         {
-          "title": "Pair your phone with the QR code",
-          "description": "Open Threadbase and scan the code shown by the streamer."
+          "title": "Pair your phone with a QR code — the keys are exchanged right there.",
+          "description": "Encrypted from the first byte, before the first session starts."
         },
         {
-          "title": "Keep the session moving from anywhere",
+          "title": "Leave. We’ll push you when the agent needs you.",
           "description": "Watch, resume, and respond from your phone while the streamer runs the agent on your machine.",
           "postscript": "Pair more machines and switch between them from one app."
         }
@@ -119,33 +117,50 @@
       "items": [
         {
           "title": "Walk away. We’ll tell you when the agent needs you.",
-          "description": "A dropped phone connection won’t stop a running agent. Managed sessions continue independently, and Threadbase can notify you when the agent starts waiting for input."
+          "description": "Threadbase watches the session and pushes you the moment the agent stops for input. Not a stream you have to babysit."
         },
         {
-          "title": "Start at your desk. Continue from your phone.",
-          "description": "Follow sessions launched from your normal CLI workflow, then resume supported Claude Code and Codex conversations remotely. Threadbase detects active Codex writers and offers safe recovery options, including forks where supported."
+          "title": "Approve without a tiny terminal.",
+          "description": "Permission prompts and questions arrive as cards. Tap the answer. The agent keeps going."
         },
         {
-          "title": "Approve the agent without fighting a tiny terminal.",
-          "description": "Handle supported tool approvals and permission prompts with mobile controls. The raw terminal is still there when you need it."
+          "title": "Keep it fed.",
+          "description": "Queue the next three prompts while the agent works. Dictate them. Attach a screenshot. It picks them up in order."
         },
         {
-          "title": "Search the session you remember — and the line you don’t.",
-          "description": "Search across sessions with contextual snippets and highlighted matches, then resume with conversation history beside the live terminal."
+          "title": "Start from your phone. Or take over.",
+          "description": "Browse a machine's projects and launch a new session from the app — or adopt a session you started in your terminal and drive it from the phone."
         },
         {
-          "title": "Take over the session you started at your desk.",
-          "description": "Sessions launched from your normal terminal show up on the phone. Follow them live, or adopt one and drive it from the app."
+          "title": "Search everything.",
+          "description": "Full-text search across every session on every machine, with snippets. Find the conversation where the agent explained that migration."
         },
         {
-          "title": "Built for actually working from a phone.",
-          "description": "Dictate prompts, attach photos and files, queue prompts while the agent is busy, lock the app with Face ID, export a conversation as Markdown. In English, Hebrew, Arabic, and Russian."
+          "title": "Every machine, one app.",
+          "description": "Pair as many machines as you run. Each phone gets its own credentials you can revoke from the streamer at any time."
         }
+      ]
+    },
+    "phoneStrip": {
+      "heading": "Built for the phone, not shrunk to it",
+      "items": [
+        "A terminal view that strips the TUI decorations so the transcript reads like a transcript.",
+        "A chat view with diffs and tool calls, not a wall of ANSI.",
+        "Face ID lock, Markdown export, favourites.",
+        "English, Hebrew, Arabic, and Russian — with proper RTL."
       ]
     },
     "security": {
       "heading": "Your streamer. Your machines. No Threadbase session relay.",
-      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Run the streamer you control on every machine you pair, then manage those sessions from one mobile app. Sessions are end-to-end encrypted by default (Noise IK, X25519 + ChaCha20-Poly1305) between your phone and each streamer, with per-device credentials you can revoke and a fingerprint you can verify with tb-streamer identity.",
+      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Sessions are end-to-end encrypted by default — Noise IK, X25519 and ChaCha20-Poly1305 — between your phone and each streamer. Every phone gets its own scoped credentials. Revoke one, and it's gone. Verify a machine's fingerprint with tb-streamer identity before you trust it.",
+      "cantSeeHeading": "What we can't see",
+      "cantSee": [
+        "Your prompts, transcripts, approvals, and files never touch a Threadbase server — there isn't one.",
+        "No analytics.",
+        "Crash reports are off by default and only ever sent because you switched them on.",
+        "Feedback you write in Settings goes out when you tap send, and nothing else does.",
+        "Keys live in the Keychain and Keystore."
+      ],
       "scopeNote": "This boundary describes the coding-session path. Pairing, notification delivery, and the local coding-agent process are separate parts of the architecture.",
       "highlights": [
         "End-to-end encrypted by default",
@@ -178,6 +193,40 @@
         {
           "title": "Some prompts still need the terminal",
           "description": "Single-choice approvals and questions work from the phone. Multi-select and multi-question forms fall back to the raw terminal for now."
+        }
+      ]
+    },
+    "socialProof": {
+      "line": "Open source, MIT, built by a developer who runs it every day."
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "intro": "Anything else, reach out at",
+      "supportLinkLabel": "support",
+      "items": [
+        {
+          "question": "Does it work with Codex?",
+          "answer": "Yes. Claude Code and Codex sessions run side by side, with per-provider health and capability differences shown in the app."
+        },
+        {
+          "question": "Do I have to open ports?",
+          "answer": "No. Pairing over your LAN works out of the box. A bundled Cloudflare quick-tunnel helper gets you off-LAN without touching your router."
+        },
+        {
+          "question": "What if my phone is offline when the agent asks?",
+          "answer": "The push waits, and the session waits. Nothing times out because your phone was offline — open the app and you'll see what happened."
+        },
+        {
+          "question": "Which platforms run the streamer?",
+          "answer": "macOS, Linux, and Windows. See the honest list above for the platform-specific edges."
+        },
+        {
+          "question": "Why is Sentry in the app?",
+          "answer": "Two things you control: the feedback form in Settings, and crash reporting, which is off by default. Nothing is sent until you turn it on or tap send."
+        },
+        {
+          "question": "What does it cost?",
+          "answer": "Threadbase is free and open source under the MIT license. Self-host the streamer on your own machines."
         }
       ]
     },

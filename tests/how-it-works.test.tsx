@@ -13,9 +13,15 @@ describe("HowItWorks", () => {
 
   it("renders 3 numbered steps with their titles", () => {
     renderWithIntl(<HowItWorks />);
-    expect(screen.getByText(/Run the streamer on your Mac/i)).toBeInTheDocument();
-    expect(screen.getByText(/Pair your phone with the QR code/i)).toBeInTheDocument();
-    expect(screen.getByText(/Keep the session moving from anywhere/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Install the streamer on any machine/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Pair your phone with a QR code/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/We’ll push you when the agent needs you/i),
+    ).toBeInTheDocument();
   });
 
   it("renders single-digit number badges (1, 2, 3 — not 01, 02, 03)", () => {
