@@ -61,6 +61,8 @@ describe("i18n content catalogs", () => {
       "ArrowsClockwise",
       "CheckSquare",
       "MagnifyingGlass",
+      "Desktop",
+      "Microphone",
     ]);
   });
 
@@ -74,8 +76,8 @@ describe("i18n content catalogs", () => {
   it("keeps homepage array lengths aligned with the structural config", () => {
     for (const catalog of Object.values(translations)) {
       expect(catalog.home.features.items).toHaveLength(FEATURE_CONFIG.length);
-      expect(catalog.home.honestCons.items).toHaveLength(3);
-      expect(catalog.home.security.highlights).toHaveLength(3);
+      expect(catalog.home.honestCons.items).toHaveLength(5);
+      expect(catalog.home.security.highlights).toHaveLength(4);
     }
   });
 
@@ -103,8 +105,19 @@ describe("i18n content catalogs", () => {
     expect(frontPageCopy).toContain("active codex writers");
     expect(frontPageCopy).not.toContain("resume support is still");
     expect(frontPageCopy).not.toContain("native prompt cards");
-    expect(frontPageCopy).not.toContain("live activities");
-    expect(frontPageCopy).not.toContain("end-to-end encrypted");
+    // Was a `not.toContain` guard: the homepage listed Live Activities among
+    // the shipped notification features while the streamer could only send
+    // them with the operator's own APNs credentials. HonestCons now names that
+    // exact constraint, so the mention stands only in its caveated form.
+    expect(frontPageCopy).toContain(
+      "ios live activities are opt-in on the streamer and need your own apns credentials",
+    );
+    // Was a `not.toContain` guard: the site over-claimed E2EE before the
+    // streamer shipped it. E2EE is on by default since streamer 1.76
+    // (Noise IK, X25519 + ChaCha20-Poly1305), so the claim now stands — but
+    // only with the named primitives, so it stays falsifiable.
+    expect(frontPageCopy).toContain("end-to-end encrypted by default");
+    expect(frontPageCopy).toContain("noise ik");
     expect(frontPageCopy).not.toContain("never talks to a threadbase server");
     expect(enTranslations.home.security.description).toContain(
       "does not relay your coding-agent session through a Threadbase-hosted session backend",
@@ -189,4 +202,33 @@ describe("privacy policy — uninstall claim", () => {
       expect(bullet, "no yourControl bullet mentions the secure store").toBeDefined();
     });
   }
+});
+
+/**
+ * The push-token claim, guarded.
+ *
+ * The policy used to say "Removing a server revokes its push token." Removing a
+ * server only clears that server's credentials from the device; the streamer
+ * keeps the token until the device is revoked there. The false version sat on a
+ * published policy for months, so the corrected sentence is asserted rather
+ * than left to review.
+ *
+ * The CLI command stays verbatim in every locale, so one assertion covers all four.
+ */
+describe("privacy policy — push-token claim", () => {
+  it.each(Object.entries(translations))(
+    "%s: the push-token bullet points at the streamer-side revoke",
+    (_locale, catalog) => {
+      const bullets = (
+        catalog as unknown as {
+          pages: { privacy: { yourControl: string[] } };
+        }
+      ).pages.privacy.yourControl;
+
+      expect(
+        bullets.some((bullet) => bullet.includes("tb-streamer devices revoke")),
+        "no yourControl bullet names the streamer-side revoke command",
+      ).toBe(true);
+    },
+  );
 });

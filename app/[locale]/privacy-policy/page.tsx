@@ -3,8 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { PageShell } from "@/components/PageShell";
 import { SectionHeading } from "@/components/SectionHeading";
 import type { Locale } from "@/i18n/routing";
-
-const EFFECTIVE_DATE = "2026-07-18";
+import privacyMeta from "@/content/privacy-meta.json";
 
 type PageProps = {
   params: Promise<{ locale: Locale }>;
@@ -226,8 +225,8 @@ export default async function PrivacyPolicyPage({
       <PolicyList items={yourControl} />
 
       <footer className="mt-16 border-t border-white/6 pt-6 text-sm leading-7 text-muted">
-        <p>{t("effectiveDateLabel")} {EFFECTIVE_DATE}</p>
-        <p>{t("lastUpdatedLabel")} {EFFECTIVE_DATE}</p>
+        <p>{t("effectiveDateLabel")} {privacyMeta.effectiveDate}</p>
+        <p>{t("lastUpdatedLabel")} {privacyMeta.lastUpdated}</p>
         <p className="mt-1">
           {t("contactLabel")}{" "}
           <a

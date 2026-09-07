@@ -67,6 +67,7 @@ export interface QuickStartContent {
   heading: string;
   steps: string[];
   links: Array<{ label: string; href: string }>;
+  operatorNote: string;
 }
 
 export interface FooterLink {
@@ -159,6 +160,8 @@ export const FEATURE_CONFIG = [
   { icon: "ArrowsClockwise", surfaceTags: ["DeviceMobile"] },
   { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
   { icon: "MagnifyingGlass", surfaceTags: ["Laptop", "DeviceMobile"] },
+  { icon: "Desktop", surfaceTags: ["Laptop", "DeviceMobile"] },
+  { icon: "Microphone", surfaceTags: ["DeviceMobile"] },
 ] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
 
 export const QUICK_START_LINK_CONFIG = [

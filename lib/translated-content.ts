@@ -125,6 +125,7 @@ export function getQuickStartContent(t: Translator): QuickStartContent {
     eyebrow: t("eyebrow"),
     heading: t("heading"),
     steps: rawArray<string>(t, "steps"),
+    operatorNote: t("operatorNote"),
     links: QUICK_START_LINK_CONFIG.map((config, index) => ({
       ...config,
       label: links[index]?.label ?? "",
