@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -163,6 +164,26 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
               </Button>
             ) : null,
           )}
+        </motion.div>
+
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: 24 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+            },
+          }}
+        >
+          <Image
+            alt={hero.imageAlt}
+            className="mx-auto mt-4 h-auto w-full max-w-70 rounded-3xl border border-border-strong shadow-2xl"
+            height={2532}
+            priority
+            src="/screenshots/hero-approval-card.png"
+            width={1170}
+          />
         </motion.div>
       </div>
     </motion.section>

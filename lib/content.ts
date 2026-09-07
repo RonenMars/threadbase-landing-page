@@ -20,6 +20,7 @@ export interface HeroContent {
   badges: HeroBadge[];
   ctas: HeroCta[];
   primaryButtonLabel: string;
+  imageAlt: string;
 }
 
 export interface HowItWorksStep {
@@ -40,6 +41,7 @@ export interface FeatureItem {
   title: string;
   description: string;
   surfaceTags: string[];
+  screenshot?: string;
 }
 
 export interface HonestCon {
@@ -174,12 +176,28 @@ export const HERO_CTA_CONFIG = [
 
 export const FEATURE_CONFIG = [
   { icon: "BellRinging", surfaceTags: ["DeviceMobile"] },
-  { icon: "CheckSquare", surfaceTags: ["DeviceMobile"] },
+  {
+    icon: "CheckSquare",
+    surfaceTags: ["DeviceMobile"],
+    screenshot: "/screenshots/card-approve.png",
+  },
   { icon: "Microphone", surfaceTags: ["DeviceMobile"] },
-  { icon: "ArrowsClockwise", surfaceTags: ["Laptop", "DeviceMobile"] },
-  { icon: "MagnifyingGlass", surfaceTags: ["Laptop", "DeviceMobile"] },
-  { icon: "Desktop", surfaceTags: ["Laptop", "DeviceMobile"] },
-] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags">>;
+  {
+    icon: "ArrowsClockwise",
+    surfaceTags: ["Laptop", "DeviceMobile"],
+    screenshot: "/screenshots/card-start-or-take-over.png",
+  },
+  {
+    icon: "MagnifyingGlass",
+    surfaceTags: ["Laptop", "DeviceMobile"],
+    screenshot: "/screenshots/card-search.png",
+  },
+  {
+    icon: "Desktop",
+    surfaceTags: ["Laptop", "DeviceMobile"],
+    screenshot: "/screenshots/card-multi-machine.png",
+  },
+] as const satisfies Array<Pick<FeatureItem, "icon" | "surfaceTags" | "screenshot">>;
 
 export const QUICK_START_LINK_CONFIG = [
   {
