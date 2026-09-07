@@ -29,6 +29,14 @@ describe("Hero", () => {
     );
   });
 
+  it("renders the approval-card screenshot", () => {
+    renderWithIntl(<Hero />);
+    const image = screen.getByAltText(
+      /threadbase approval card on iphone, next to a terminal session/i,
+    );
+    expect(image).toBeInTheDocument();
+  });
+
   it("renders the eyebrow", () => {
     renderWithIntl(<Hero />);
     expect(

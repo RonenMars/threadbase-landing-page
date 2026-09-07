@@ -23,6 +23,15 @@ describe("FeaturesGrid", () => {
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(6);
   });
 
+  it("renders screenshots for the four cards that have one", () => {
+    renderWithIntl(<FeaturesGrid />);
+    expect(screen.getByAltText(/approve without a tiny terminal/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/start from your phone\. or take over\./i)).toBeInTheDocument();
+    expect(screen.getByAltText(/search everything/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/every machine, one app/i)).toBeInTheDocument();
+    expect(screen.getAllByRole("img")).toHaveLength(4);
+  });
+
   it("renders main icons as SVGs (Phosphor)", () => {
     const { container } = renderWithIntl(<FeaturesGrid />);
     const svgs = container.querySelectorAll("svg");

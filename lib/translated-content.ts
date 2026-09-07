@@ -44,6 +44,7 @@ export function getHeroContent(t: Translator): HeroContent {
     headline: t("headline"),
     subheadline: t("subheadline"),
     primaryButtonLabel: t("primaryButtonLabel"),
+    imageAlt: t("imageAlt"),
     badges: rawArray<HeroBadge>(t, "badges"),
     ctas: HERO_CTA_CONFIG.map((config, index) => ({
       ...config,
