@@ -210,26 +210,52 @@ describe("privacy policy — uninstall claim", () => {
  *
  * The policy used to say "Removing a server revokes its push token." Removing a
  * server only clears that server's credentials from the device; the streamer
- * keeps the token until the device is revoked there. The false version sat on a
- * published policy for months, so the corrected sentence is asserted rather
- * than left to review.
+ * keeps the token until the device is revoked. The false version sat on a
+ * published policy for months. `pages.privacy.pushBody` carried the identical
+ * false sentence independently of `yourControl` — the interim fix (commit
+ * b43b531) only touched `yourControl`, so `pushBody` stayed wrong until now.
  *
- * The CLI command stays verbatim in every locale, so one assertion covers all four.
+ * The mobile app shipped an in-app revoke flow (Settings → Paired devices →
+ * Revoke), which deletes the push token immediately — verified against
+ * tb-streamer's `/api/devices/:id/revoke` route, which calls `dropPushTokens`.
+ * That supersedes the streamer-side `tb-streamer devices revoke` CLI command
+ * as the thing this copy should point users at, so both spots now name the
+ * in-app screen instead.
  */
 describe("privacy policy — push-token claim", () => {
+  // Written per locale rather than as one regex: same reasoning as
+  // SECURE_STORE_MARKER above — a translated marker, not a surviving Latin token.
+  const PAIRED_DEVICES_MARKER: Record<string, string> = {
+    en: "Paired devices",
+    ru: "Привязанные устройства",
+    he: "מכשירים מקושרים",
+    ar: "الأجهزة المقترنة",
+  };
+
   it.each(Object.entries(translations))(
-    "%s: the push-token bullet points at the streamer-side revoke",
-    (_locale, catalog) => {
-      const bullets = (
+    "%s: the push-token bullet and pushBody point at the in-app Paired devices revoke",
+    (locale, catalog) => {
+      const privacy = (
         catalog as unknown as {
-          pages: { privacy: { yourControl: string[] } };
+          pages: { privacy: { yourControl: string[]; pushBody: string } };
         }
-      ).pages.privacy.yourControl;
+      ).pages.privacy;
+      const marker = PAIRED_DEVICES_MARKER[locale];
 
       expect(
-        bullets.some((bullet) => bullet.includes("tb-streamer devices revoke")),
-        "no yourControl bullet names the streamer-side revoke command",
+        privacy.yourControl.some((bullet) => bullet.includes(marker)),
+        "no yourControl bullet names the in-app Paired devices screen",
+      ).toBe(true);
+      expect(
+        privacy.pushBody.includes(marker),
+        "pushBody doesn't name the in-app Paired devices screen",
       ).toBe(true);
     },
   );
+
+  it("no longer claims removing a server alone revokes its token", () => {
+    expect(enTranslations.pages.privacy.pushBody).not.toContain(
+      "Removing a server in Settings revokes its token.",
+    );
+  });
 });
