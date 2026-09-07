@@ -4,6 +4,7 @@ import * as PhosphorIcons from "@phosphor-icons/react";
 import type { Icon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { fadeUp, staggerContainer, staggerItem } from "@/components/motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { FeatureItem, SectionContent } from "@/lib/content";
@@ -75,6 +76,15 @@ export function FeaturesGrid({
                       <p className="leading-7 text-secondary">
                         {feature.description}
                       </p>
+                      {feature.screenshot ? (
+                        <Image
+                          alt={feature.title}
+                          className="mt-5 h-auto w-full max-w-55 rounded-2xl border border-border-strong"
+                          height={2532}
+                          src={feature.screenshot}
+                          width={1170}
+                        />
+                      ) : null}
                     </CardContent>
                   </Card>
                 </motion.div>

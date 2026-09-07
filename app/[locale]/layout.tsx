@@ -32,10 +32,25 @@ export async function generateMetadata({
     locale,
     namespace: "metadata.site",
   });
+  const title = t("title");
+  const description = t("description");
 
   return {
-    title: t("title"),
-    description: t("description"),
+    metadataBase: new URL("https://threadbase.sh"),
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      siteName: "Threadbase",
+      type: "website",
+      locale,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 

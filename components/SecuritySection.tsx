@@ -3,6 +3,7 @@
 import { CheckCircle, ShieldCheck } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { BulletList } from "@/components/BulletList";
 import { fadeUp } from "@/components/motion";
 import type { SecurityContent } from "@/lib/content";
 import { getSecurityContent } from "@/lib/translated-content";
@@ -37,6 +38,12 @@ export function SecuritySection({
             <p className="mt-5 max-w-3xl text-base leading-7 text-secondary sm:text-lg sm:leading-8">
               {content.description}
             </p>
+
+            <h3 className="mt-8 text-sm font-semibold uppercase tracking-[0.18em] text-muted">
+              {content.cantSeeHeading}
+            </h3>
+            <BulletList items={content.cantSee} />
+
             <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm text-primary">
               {content.highlights.map((highlight) => (
                 <li className="flex items-center gap-2" key={highlight}>
