@@ -4,8 +4,8 @@ import { expect, test } from "@playwright/test";
  * Visual regression suite for the threadbase landing page.
  *
  * What's covered: above-fold + full-scroll screenshots of `/` on desktop +
- * mobile viewports, the `/solutions` stub page, the hero copy-button
- * interaction, and the floating-dock scroll-trigger behavior.
+ * mobile viewports, the `/solutions` stub page, the hero secondary CTA's
+ * quick-start link, and the floating-dock scroll-trigger behavior.
  *
  * Determinism strategy (built up across several commits):
  * - `beforeEach`: kills CSS animations + transitions globally so timing-
@@ -102,13 +102,14 @@ test("solutions stub page", async ({ page }) => {
   await expect(page).toHaveScreenshot("solutions.png", { fullPage: true });
 });
 
-test("hero copy button shows the brew command", async ({ page }) => {
+test("hero secondary CTA links to the quick-start anchor", async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
-  const copyBtn = page.getByRole("button", {
-    name: /copy: brew install tb-streamer/i,
+  const installLink = page.getByRole("button", {
+    name: /install the streamer/i,
   });
-  await expect(copyBtn).toBeVisible();
+  await expect(installLink).toBeVisible();
+  await expect(installLink).toHaveAttribute("href", "#quick-start");
 });
 
 test("floating dock appears after scrolling past hero", async ({ page }) => {
