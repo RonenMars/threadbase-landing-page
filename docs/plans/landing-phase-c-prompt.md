@@ -1,6 +1,6 @@
 # threadbase.sh refresh — Phase C (landing repo)
 
-Brief: `docs/plans/threadbase-landing-refresh-brief.md`. Phase C is the three items Phase B (`docs/plans/landing-phase-b-prompt.md`, shipped in PR #98) explicitly deferred because each is gated on a release outside this repo. Each item has its own precondition — check all three independently before touching anything. An item whose precondition isn't met yet is **skipped, not stubbed**: don't write speculative copy for a spec that might still change.
+Brief: `docs/plans/threadbase-landing-refresh-brief.md`. Phase C is the four items Phase B (`docs/plans/landing-phase-b-prompt.md`, shipped in PR #98) explicitly deferred because each is gated on a release outside this repo. Each item has its own precondition — check all three independently before touching anything. An item whose precondition isn't met yet is **skipped, not stubbed**: don't write speculative copy for a spec that might still change.
 
 ## Ground rules
 
@@ -46,9 +46,21 @@ Brief: `docs/plans/threadbase-landing-refresh-brief.md`. Phase C is the three it
 
 **If not shipped:** skip, report what FEATURES.md says. This is the item most likely to still be pending — the brief flagged it as "1d" out, but re-verify rather than trusting that estimate's age.
 
+## Item 4 — Drop the "recent app versions" hedge on server removal
+
+**Precondition:** a **released** mobile build contains tb-mobile#1018 (`removeServerAndUnregisterPush`). Compare the latest release in `threadbase-mobile` against that PR's merge time — `gh release list --limit 1` and `gh pr view 1018 --json mergedAt`. As of 2026-09-08 it is **not** met: `ios-v227` shipped 2026-09-07T18:53:02Z and #1018 merged 2026-09-07T20:41:42Z, so no released app unregisters on removal.
+
+**If shipped**, implement in `pages.privacy.yourControl` and `pages.privacy.pushBody` (`locales/*.json`, all four locales):
+1. Drop only the version hedge — "and recent app versions also ask that streamer to delete its push token" becomes "and asks that streamer to delete its push token". Both strings carry the claim independently, as they did before PR #103; change both or the site contradicts itself.
+2. **Keep the unreachable clause.** "though not if the streamer is unreachable at that moment" is not a hedge about app versions — the unregister is best-effort by design, because a server is very often removed precisely because it stopped answering. It stays true forever.
+3. Keep `Paired devices` named in both spots as the certain route: the per-locale guards in `tests/content.test.ts` ("privacy policy — push-token claim") assert that marker in `yourControl` and `pushBody`, and they must stay green.
+4. Regenerate `content/privacy-meta.json` with `scripts/bump-privacy-date.mjs` — this is a `pages.privacy` change, same as items 1 and 3.
+
+**If not shipped:** skip, and report the released build number and its date against #1018's merge time. This is a copy-accuracy item, not a feature: the wording as it stands is already true for every user, so there is nothing broken to fix while the precondition is unmet.
+
 ## Execution
 
-1. Check all three preconditions first, before editing anything. Report the check results (which FEATURES.md lines, what they say) before proceeding — this is worth a brief pause-and-confirm with the user if more than one item turns out to be gated, since implementing one of three is a different-shaped PR than three of three.
+1. Check all four preconditions first, before editing anything. Report the check results (which FEATURES.md lines, what they say) before proceeding — this is worth a brief pause-and-confirm with the user if more than one item turns out to be gated, since implementing one of three is a different-shaped PR than three of three.
 2. Implement whichever items are unblocked, one commit each, in the order above.
 3. Run `vitest run`, `eslint .`, `tsc --noEmit`, and `npm run build` after every commit.
 4. Visual regression: the baseline was already red going into Phase B (5 pre-existing failures) and Phase B didn't touch it — check whether it's been fixed since; if still red, keep deferring snapshot updates and say so again rather than re-diagnosing from scratch.
