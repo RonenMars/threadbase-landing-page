@@ -2,7 +2,15 @@
 
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Home, Beaker, Shield, GitBranch, LifeBuoy, Bug, ArrowUpRight } from "lucide-react";
+import {
+  Home,
+  Beaker,
+  Shield,
+  GitBranch,
+  LifeBuoy,
+  Bug,
+  ArrowUpRight,
+} from "lucide-react";
 import { AppleLogo, AndroidLogo } from "@phosphor-icons/react";
 import { Divide as Hamburger } from "hamburger-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -21,33 +29,33 @@ const backdropVariants = {
 
 function getPanelVariants(isRtl: boolean) {
   return {
-  hidden: { x: isRtl ? "100%" : "-100%" },
-  visible: {
-    x: 0,
-    transition: {
-      duration: 0.4,
-      ease: EASE,
-      when: "beforeChildren",
-      staggerChildren: 0.05,
-      delayChildren: 0.1,
+    hidden: { x: isRtl ? "100%" : "-100%" },
+    visible: {
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: EASE,
+        when: "beforeChildren",
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
+      },
     },
-  },
-  exit: {
-    x: isRtl ? "100%" : "-100%",
-    transition: { duration: 0.28, ease: EASE },
-  },
+    exit: {
+      x: isRtl ? "100%" : "-100%",
+      transition: { duration: 0.28, ease: EASE },
+    },
   } as const;
 }
 
 function getItemVariants(isRtl: boolean) {
   return {
-  hidden: { opacity: 0, x: isRtl ? 12 : -12 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: EASE } },
-  exit: {
-    opacity: 0,
-    x: isRtl ? 12 : -12,
-    transition: { duration: 0.15, ease: EASE },
-  },
+    hidden: { opacity: 0, x: isRtl ? 12 : -12 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: EASE } },
+    exit: {
+      opacity: 0,
+      x: isRtl ? 12 : -12,
+      transition: { duration: 0.15, ease: EASE },
+    },
   } as const;
 }
 
@@ -69,7 +77,9 @@ function detectPlatform(): "ios" | "android" | "desktop" {
 }
 
 function useMobilePlatform(): "ios" | "android" | "desktop" {
-  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">("desktop");
+  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">(
+    "desktop",
+  );
 
   useEffect(() => {
     const platformFrame = window.requestAnimationFrame(() => {
@@ -201,7 +211,12 @@ export function NavMenu(): React.JSX.Element {
         className={`fixed start-5 top-5 z-[60] flex h-12 w-12 items-center justify-center rounded-full border border-border bg-bg-secondary/85 text-secondary shadow-lg backdrop-blur transition-[border-color,color,box-shadow,transform,opacity] duration-300 ease-out hover:border-accent hover:text-primary hover:shadow-[0_8px_24px_-8px_rgba(99,179,255,0.55)] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary ${open ? "pointer-events-none opacity-0" : "opacity-100"}`}
       >
         <span aria-hidden="true" className="pointer-events-none">
-          <Hamburger toggled={open} toggle={setOpen} size={18} color="currentColor" />
+          <Hamburger
+            toggled={open}
+            toggle={setOpen}
+            size={18}
+            color="currentColor"
+          />
         </span>
       </button>
       <div className="fixed inset-e-5 top-5 z-60">
@@ -245,8 +260,19 @@ export function NavMenu(): React.JSX.Element {
                   onClick={close}
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-bg-primary/60 text-secondary transition-colors hover:border-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
-                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round"/>
+                  <svg
+                    aria-hidden="true"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 1l12 12M13 1L1 13"
+                      stroke="currentColor"
+                      strokeWidth="1.75"
+                      strokeLinecap="round"
+                    />
                   </svg>
                 </button>
               </div>
@@ -337,19 +363,23 @@ function NavPanelItem({
         </Link>
         {showBetaIcons ? (
           <div className="flex items-center gap-1.5">
-            {betaPlatforms.map(({ id, label: platformLabel, href, Icon: PlatformIcon }) => (
-              <Link
-                key={id}
-                href={href}
-                onClick={onActivate}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                aria-label={platformLabel}
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-border bg-bg-primary/60 text-muted transition-colors duration-200 hover:border-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              >
-                <PlatformIcon size={14} weight="duotone" />
-              </Link>
-            ))}
+            {betaPlatforms.map(
+              ({ id, label: platformLabel, href, Icon: PlatformIcon }) => (
+                <Link
+                  key={id}
+                  href={href}
+                  onClick={onActivate}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    href.startsWith("http") ? "noopener noreferrer" : undefined
+                  }
+                  aria-label={platformLabel}
+                  className="flex h-7 w-7 items-center justify-center rounded-full border border-border bg-bg-primary/60 text-muted transition-colors duration-200 hover:border-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                  <PlatformIcon size={14} weight="duotone" />
+                </Link>
+              ),
+            )}
           </div>
         ) : null}
         {external && !showBetaIcons ? (

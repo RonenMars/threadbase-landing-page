@@ -36,8 +36,8 @@ export function Footer(): React.JSX.Element {
 
         <div className="flex flex-col gap-6 leading-7 text-muted sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-2">
-          <p className="text-secondary">{footer.tagline}</p>
-          <p>{footer.disclaimer}</p>
+            <p className="text-secondary">{footer.tagline}</p>
+            <p>{footer.disclaimer}</p>
           </div>
           <LanguageSwitcher />
         </div>

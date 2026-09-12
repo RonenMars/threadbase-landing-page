@@ -8,11 +8,19 @@ interface PageShellProps {
   wide?: boolean;
 }
 
-export function PageShell({ kicker, heading, description, children, wide }: PageShellProps): React.JSX.Element {
+export function PageShell({
+  kicker,
+  heading,
+  description,
+  children,
+  wide,
+}: PageShellProps): React.JSX.Element {
   return (
     <div className="app-shell flex min-h-screen flex-col">
       <main className="flex-1 px-6 py-24 sm:px-8 lg:px-10">
-        <article className={`container-shell ${wide ? "max-w-5xl" : "max-w-3xl"}`}>
+        <article
+          className={`container-shell ${wide ? "max-w-5xl" : "max-w-3xl"}`}
+        >
           <p className="section-kicker mb-4 text-xs font-semibold uppercase text-muted">
             {kicker}
           </p>

@@ -13,7 +13,9 @@ interface FinalCtaProps {
   content?: FinalCtaContent;
 }
 
-export function FinalCta({ content: contentProp }: FinalCtaProps): React.JSX.Element {
+export function FinalCta({
+  content: contentProp,
+}: FinalCtaProps): React.JSX.Element {
   const fallback = getFinalCtaContent(useTranslations("home.finalCta"));
   const content = contentProp ?? fallback;
 

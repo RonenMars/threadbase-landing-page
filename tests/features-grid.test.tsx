@@ -14,10 +14,16 @@ describe("FeaturesGrid", () => {
 
   it("renders the six workflow pillars", () => {
     renderWithIntl(<FeaturesGrid />);
-    expect(screen.getByText(/we’ll tell you when the agent needs you/i)).toBeInTheDocument();
-    expect(screen.getByText(/approve without a tiny terminal/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/we’ll tell you when the agent needs you/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/approve without a tiny terminal/i),
+    ).toBeInTheDocument();
     expect(screen.getByText(/keep it fed/i)).toBeInTheDocument();
-    expect(screen.getByText(/start from your phone\. or take over\./i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/start from your phone\. or take over\./i),
+    ).toBeInTheDocument();
     expect(screen.getByText(/search everything/i)).toBeInTheDocument();
     expect(screen.getByText(/every machine, one app/i)).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { level: 3 })).toHaveLength(6);

@@ -1,18 +1,26 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import tseslint from "typescript-eslint";
-import reactHooks from "eslint-plugin-react-hooks";
+import babelParser from "@babel/eslint-parser";
 import next from "@next/eslint-plugin-next";
 import tailwindCanonicalClasses from "eslint-plugin-tailwind-canonical-classes";
 
 export default defineConfig([
-  ...tseslint.configs.recommended,
   {
+    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
+    languageOptions: {
+      parser: babelParser,
+      parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+          babelrc: false,
+          configFile: false,
+          parserOpts: { plugins: ["typescript", "jsx"] },
+        },
+      },
+    },
     plugins: {
-      "react-hooks": reactHooks,
       "@next/next": next,
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
       ...next.configs.recommended.rules,
       ...next.configs["core-web-vitals"].rules,
     },
@@ -32,14 +40,12 @@ export default defineConfig([
   ]),
   {
     rules: {
-"tailwind-canonical-classes/tailwind-canonical-classes": [
+      "tailwind-canonical-classes/tailwind-canonical-classes": [
         "warn",
         {
           cssPath: "./app/globals.css",
         },
       ],
-      "@typescript-eslint/no-unused-vars": "warn",
-      "@typescript-eslint/no-unused-expressions": "warn",
     },
   },
 ]);

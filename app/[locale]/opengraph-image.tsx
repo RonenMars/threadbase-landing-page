@@ -21,30 +21,30 @@ export default async function Image({
   });
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#0b1320",
-          color: "#f5f7fa",
-          fontFamily: "sans-serif",
-          padding: "80px",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ fontSize: 72, fontWeight: 600, letterSpacing: -2 }}>
-          Threadbase
-        </div>
-        <div style={{ fontSize: 32, marginTop: 32, color: "#a9b4c4", maxWidth: 900 }}>
-          {t("title")}
-        </div>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#0b1320",
+        color: "#f5f7fa",
+        fontFamily: "sans-serif",
+        padding: "80px",
+        textAlign: "center",
+      }}
+    >
+      <div style={{ fontSize: 72, fontWeight: 600, letterSpacing: -2 }}>
+        Threadbase
       </div>
-    ),
+      <div
+        style={{ fontSize: 32, marginTop: 32, color: "#a9b4c4", maxWidth: 900 }}
+      >
+        {t("title")}
+      </div>
+    </div>,
     size,
   );
 }

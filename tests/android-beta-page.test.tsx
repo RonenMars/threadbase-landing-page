@@ -8,14 +8,20 @@ import { renderWithIntl } from "@/tests/test-utils";
 describe("AndroidBetaPage", () => {
   it("renders the page heading and eyebrow", () => {
     renderWithIntl(<AndroidBetaPage />);
-    expect(screen.getByRole("heading", { name: /android beta/i, level: 1 })).toBeInTheDocument();
-    expect(screen.getByText(enTranslations.pages.androidBeta.eyebrow)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /android beta/i, level: 1 }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(enTranslations.pages.androidBeta.eyebrow),
+    ).toBeInTheDocument();
   });
 
   it("renders all four ordered steps in order", () => {
     renderWithIntl(<AndroidBetaPage />);
     const stepHeadings = screen.getAllByRole("heading", { level: 3 });
-    expect(stepHeadings).toHaveLength(enTranslations.pages.androidBeta.steps.length);
+    expect(stepHeadings).toHaveLength(
+      enTranslations.pages.androidBeta.steps.length,
+    );
     enTranslations.pages.androidBeta.steps.forEach((step, idx) => {
       expect(stepHeadings[idx]).toHaveTextContent(step.title);
     });
@@ -23,10 +29,15 @@ describe("AndroidBetaPage", () => {
 
   it("links to the Google Group join URL with the canonical href", () => {
     renderWithIntl(<AndroidBetaPage />);
-    const groupLink = screen.getByRole("link", { name: /join the testers group/i });
+    const groupLink = screen.getByRole("link", {
+      name: /join the testers group/i,
+    });
     expect(groupLink).toHaveAttribute("href", ANDROID_BETA_LINKS.groupUrl);
     expect(groupLink).toHaveAttribute("target", "_blank");
-    expect(groupLink).toHaveAttribute("rel", expect.stringContaining("noopener"));
+    expect(groupLink).toHaveAttribute(
+      "rel",
+      expect.stringContaining("noopener"),
+    );
   });
 
   it("links to the Play Store opt-in URL", () => {

@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 import { notFound } from "next/navigation";
 import "../globals.css";
-import {
-  getTextDirection,
-  routing,
-  type Locale,
-} from "@/i18n/routing";
+import { getTextDirection, routing, type Locale } from "@/i18n/routing";
 import { NavMenu } from "@/components/NavMenu";
 
 type LocaleLayoutProps = Readonly<{

@@ -8,7 +8,10 @@ import { PTY_CADENCE_MS } from "./sceneTimeline";
  * Returns the currently-revealed text (lines joined with newlines).
  * Pass `enabled = false` to halt typing without resetting.
  */
-export function usePtyTypewriter(lines: readonly string[], enabled: boolean): string {
+export function usePtyTypewriter(
+  lines: readonly string[],
+  enabled: boolean,
+): string {
   const [output, setOutput] = useState("");
 
   useEffect(() => {

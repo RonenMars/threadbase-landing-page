@@ -5,11 +5,7 @@ import { cn } from "@/lib/utils";
 
 function Tabs({ className, ...props }: TabsPrimitive.Root.Props) {
   return (
-    <TabsPrimitive.Root
-      data-slot="tabs"
-      className={cn(className)}
-      {...props}
-    />
+    <TabsPrimitive.Root data-slot="tabs" className={cn(className)} {...props} />
   );
 }
 
@@ -19,7 +15,10 @@ function TabsList({ className, ...props }: TabsPrimitive.List.Props) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
-      className={cn("inline-flex h-11 items-center justify-center rounded-full bg-white/4 p-1", className)}
+      className={cn(
+        "inline-flex h-11 items-center justify-center rounded-full bg-white/4 p-1",
+        className,
+      )}
       {...props}
     />
   );

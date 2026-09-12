@@ -13,10 +13,7 @@ export const routing = {
   localeDetection: true,
 } as const;
 
-type LinkProps = Omit<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href"
-> & {
+type LinkProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   href: string | { pathname: string };
   locale?: Locale;
 };

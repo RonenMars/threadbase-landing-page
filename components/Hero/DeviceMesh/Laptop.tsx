@@ -6,7 +6,10 @@ interface LaptopProps {
   scale?: number;
 }
 
-export function Laptop({ children, scale = 1 }: LaptopProps): React.JSX.Element {
+export function Laptop({
+  children,
+  scale = 1,
+}: LaptopProps): React.JSX.Element {
   return (
     <svg
       viewBox="0 0 200 130"
@@ -46,9 +49,7 @@ export function Laptop({ children, scale = 1 }: LaptopProps): React.JSX.Element 
       />
       {/* content */}
       <foreignObject x="16" y="14" width="168" height="96">
-        <div
-          className="h-full w-full font-mono text-[5px] leading-tight text-accent-strong"
-        >
+        <div className="h-full w-full font-mono text-[5px] leading-tight text-accent-strong">
           {children}
         </div>
       </foreignObject>

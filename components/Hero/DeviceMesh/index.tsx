@@ -23,7 +23,11 @@ export function DeviceMesh(): React.JSX.Element {
   });
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
+    if (
+      typeof window === "undefined" ||
+      typeof window.matchMedia !== "function"
+    )
+      return;
     const mq = window.matchMedia("(max-width: 639px)");
     function update(): void {
       setIsMobile(mq.matches);
@@ -51,7 +55,11 @@ export function DeviceMesh(): React.JSX.Element {
 
       {/* Replay button — shown after the animation duration */}
       <ReplayButton
-        delaySec={(isMobile ? MOBILE_BEATS.replayShow.start : DESKTOP_BEATS.replayShow.start) + 0.1}
+        delaySec={
+          (isMobile
+            ? MOBILE_BEATS.replayShow.start
+            : DESKTOP_BEATS.replayShow.start) + 0.1
+        }
         onClick={() => setReplayKey((k) => k + 1)}
       />
     </div>
@@ -205,9 +213,7 @@ function ThreadBeat({
     return () => window.clearTimeout(t);
   }, [pulseAfterSec]);
 
-  return (
-    <ThreadInner id={id} d={d} drawDelay={delaySec} pulse={pulse} />
-  );
+  return <ThreadInner id={id} d={d} drawDelay={delaySec} pulse={pulse} />;
 }
 
 // Inline alias to avoid name collision with the Thread.tsx default export.
@@ -241,7 +247,11 @@ function ThreadInner({
         strokeLinecap="round"
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: drawDelay }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+          delay: drawDelay,
+        }}
       />
       {pulse ? (
         <motion.path

@@ -25,17 +25,20 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
   }
 
-  const response = await fetch("https://connect.mailerlite.com/api/subscribers", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.MAILERLITE_API_KEY}`,
+  const response = await fetch(
+    "https://connect.mailerlite.com/api/subscribers",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.MAILERLITE_API_KEY}`,
+      },
+      body: JSON.stringify({
+        email,
+        ...(name && { fields: { name: name.slice(0, MAX_NAME_LENGTH) } }),
+      }),
     },
-    body: JSON.stringify({
-      email,
-      ...(name && { fields: { name: name.slice(0, MAX_NAME_LENGTH) } }),
-    }),
-  });
+  );
 
   if (!response.ok) {
     return NextResponse.json({ error: "Subscription failed" }, { status: 502 });

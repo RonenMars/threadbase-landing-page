@@ -10,16 +10,20 @@ describe("Support page", () => {
     });
     renderWithIntl(page);
 
-    expect(screen.getByRole("heading", { level: 1, name: /how can we help/i })).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: "support@threadbase.sh" })[0]).toHaveAttribute(
-      "href",
-      "mailto:support@threadbase.sh",
-    );
-    expect(screen.getByText(/questions about installing or pairing/i)).toBeInTheDocument();
-    expect(screen.getByText(/bug reports, crashes, notification problems/i)).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /privacy policy/i })[0]).toHaveAttribute(
-      "href",
-      "/privacy-policy",
-    );
+    expect(
+      screen.getByRole("heading", { level: 1, name: /how can we help/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getAllByRole("link", { name: "support@threadbase.sh" })[0],
+    ).toHaveAttribute("href", "mailto:support@threadbase.sh");
+    expect(
+      screen.getByText(/questions about installing or pairing/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/bug reports, crashes, notification problems/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getAllByRole("link", { name: /privacy policy/i })[0],
+    ).toHaveAttribute("href", "/privacy-policy");
   });
 });

@@ -13,8 +13,9 @@ Threadbase landing page — Next.js 16 + React 19 + TypeScript marketing site. U
 ```bash
 npm run dev          # start dev server (port 3000)
 npm run build        # production build
-eslint .             # lint
-eslint . --fix       # lint + auto-fix
+npm run lint        # Biome lint + format check, then Next.js/Tailwind ESLint rules
+npm run lint:fix    # auto-fix ESLint rules, then Biome lint + formatting
+npm run format      # format with Biome
 vitest run           # unit tests (one-shot)
 vitest               # unit tests (watch)
 npm run test:visual  # Playwright visual regression (spins up dev server)
@@ -35,7 +36,9 @@ There is no `tailwind.config.ts`. All Tailwind configuration (plugins, custom ut
 
 ## Formatting
 
-No Prettier. ESLint handles all formatting including Tailwind class order (canonical-classes plugin). Run `eslint . --fix` to auto-correct.
+Biome handles formatting and general JavaScript, TypeScript, and React Hooks linting. A slim ESLint config retains `@next/eslint-plugin-next` and `eslint-plugin-tailwind-canonical-classes`, which canonicalizes classes through Tailwind v4 (it is not a class-order formatter). Babel parses TypeScript for these ESLint rules without a TypeScript peer dependency. Run `npm run lint:fix` to auto-correct or `npm run format` for formatting only.
+
+Existing array-key and accessibility findings in the privacy policy, QuickStart, and NavMenu have file-scoped warning overrides in `biome.json`; new files retain recommended severities. Generated outputs and lockfiles are excluded from Biome checks. Development tooling requires Node 22.18+ or 24.11+ (Babel 8 for ESLint 10).
 
 ## Playwright Visual Tests
 
@@ -51,7 +54,7 @@ CI can be skipped for trivial changes by adding `[skip-ci]` to the commit messag
 
 ## CI
 
-GitHub Actions runs lint, build, and vitest on Node 20/22/24 on every push and PR to `main`. Visual regression tests are manual-only (not in CI).
+GitHub Actions runs lint, build, and vitest on Node 24 on every push and PR to `main`. Visual regression tests are manual-only (not in CI).
 
 ## Environment Variables
 
