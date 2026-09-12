@@ -3,6 +3,10 @@
 Keep this file to repository-specific behavior and safeguards.
 Everything not stated here — project layout, verification commands, commit conventions, and scope boundaries — lives in [CLAUDE.md](CLAUDE.md) and applies unchanged.
 
+## Product claims
+
+Threadbase has no hosted service: the app talks only to streamers the user runs. Several pieces of site copy state that as fact, so before writing or changing anything about relays, hosted backends, self-hosting, or sub-processors, read [docs/no-hosted-service.md](docs/no-hosted-service.md) — it lists every claim that a hosted service would falsify, and says not to hedge them in advance.
+
 ## Issue status updates
 
 Any change traceable to an existing issue ends with a status update on that issue — code, docs, tests, config, a revert, or a deletion all count. The issue is the record; a commit message, a PR body, or a chat reply is not a substitute.
