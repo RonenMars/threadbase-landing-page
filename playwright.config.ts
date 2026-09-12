@@ -1,8 +1,16 @@
 // playwright.config.ts
 import { defineConfig, devices } from "@playwright/test";
 
+// Port the dev server binds and the tests hit. Override when 3000 is taken by
+// another project: `VISUAL_PORT=3111 npm run test:visual`. Passed to `next dev`
+// explicitly so it binds this port or fails, rather than silently falling back
+// to the next free one and leaving Playwright waiting on a port nothing serves.
+const PORT = process.env.VISUAL_PORT ?? "3000";
+const BASE_URL = `http://localhost:${PORT}`;
+
 export default defineConfig({
   testDir: "./tests/visual",
+  globalSetup: "./tests/visual/global-setup.ts",
   fullyParallel: false, // visual tests are flakier in parallel
   forbidOnly: !!process.env.CI,
   // 1 retry as a generic safety margin for transient failures (network blips,
@@ -20,7 +28,7 @@ export default defineConfig({
     toHaveScreenshot: { maxDiffPixelRatio: 0.002 },
   },
   use: {
-    baseURL: "http://localhost:3000",
+    baseURL: BASE_URL,
     trace: "on-first-retry",
   },
   webServer: {
@@ -34,8 +42,11 @@ export default defineConfig({
     //   preload, no image dimensions, etc.). Visual regression against dev
     //   may miss prod-specific bugs, but is sufficient for catching layout
     //   / color / content drift from dep bumps.
-    command: "npm run dev",
-    url: "http://localhost:3000",
+    // Caveat: reuseExistingServer trusts whatever already answers on this
+    //   port. global-setup.ts checks the response really is this app and
+    //   fails loudly if not; set VISUAL_PORT to use a different port.
+    command: `npm run dev -- --port ${PORT}`,
+    url: BASE_URL,
     reuseExistingServer: true,
     timeout: 120_000,
   },
