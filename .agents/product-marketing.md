@@ -20,9 +20,11 @@ Waiting-for-input push · single-choice approvals and questions from the phone �
 
 ## Not claims (yet)
 
-- Model/effort switching from the phone (ships with the current branch; add after release).
 - Plan-mode approvals as rich cards (streamer detection is a follow-up).
 - Per-type notification toggles and quiet hours (the preferences exist in the UI but drive nothing today — do not advertise).
-- Diagnostics wording — after the Anonymous Diagnostics consent spec (v0.1) ships in mobile, the feature is called **Anonymous diagnostics**, is OFF by default, and the SDK is ready at startup without transmitting anything. Never say "no crash reporting"; say what the spec says. Policy text uses "pseudonymous" (random installation ID); product copy may say "anonymous" because reports are never linked to a recognizable person.
+
+## Wording
+
+- Diagnostics — the feature is called **Anonymous diagnostics**, is OFF by default, and the SDK is ready at startup without transmitting anything (shipped in mobile #1015, released in ios-v228 / android-v72). Never say "no crash reporting"; say what the spec says. Policy text uses "pseudonymous" (random installation ID); product copy may say "anonymous" because reports are never linked to a recognizable person.
 
 Source of truth: `docs/plans/threadbase-landing-refresh-brief.md` §1-§2. Feature verification: `../tb-mobile-features/docs/FEATURES.md` (read-only).

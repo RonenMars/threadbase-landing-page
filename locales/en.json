@@ -23,7 +23,7 @@
       },
       "privacy": {
         "title": "Privacy Policy — Threadbase",
-        "description": "How Threadbase handles streamer traffic, push notifications, crash reporting, feedback, screenshots, and diagnostics."
+        "description": "How Threadbase handles streamer traffic, push notifications, anonymous diagnostics, feedback, and screenshots."
       }
     }
   },
@@ -158,7 +158,7 @@
       "cantSee": [
         "Your prompts, transcripts, approvals, and files never touch a Threadbase server — there isn't one.",
         "No analytics.",
-        "Crash reports are off by default and only ever sent because you switched them on.",
+        "Anonymous diagnostics — crash reports and basic stability data — are off by default and only ever sent because you switched them on.",
         "Feedback you write in Settings goes out when you tap send, and nothing else does.",
         "Keys live in the Keychain and Keystore."
       ],
@@ -223,7 +223,7 @@
         },
         {
           "question": "Why is Sentry in the app?",
-          "answer": "Two things you control: the feedback form in Settings, and crash reporting, which is off by default. Nothing is sent until you turn it on or tap send."
+          "answer": "Two things you control: the feedback form in Settings, and Anonymous diagnostics — crash reports and basic stability data tagged with a random installation ID, off by default. Nothing is sent until you turn it on or tap send."
         },
         {
           "question": "What does it cost?",
@@ -282,7 +282,7 @@
         { "label": "Windows" },
         { "label": "Android — closed beta" }
       ],
-      "operatorNote": "Configure Claude CLI flags per machine from the phone, back up and restore streamer metadata, and check server and notification health without opening a terminal."
+      "operatorNote": "Configure Claude CLI flags per machine from the phone, switch model and effort mid-session, back up and restore streamer metadata, and check server and notification health without opening a terminal."
     }
   },
   "pages": {
@@ -421,12 +421,12 @@
       "coreHeading": "1. Core traffic to your streamers",
       "coreBody": "Threadbase connects only to the streamer URLs you configure. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. Threadbase does not route this traffic through any Threadbase-operated server, and it does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
       "pushHeading": "2. Push-notification delivery",
-      "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings deletes its credentials from your device, and recent app versions also ask that streamer to delete its push token — though not if the streamer is unreachable at that moment; to be certain, go to Paired devices in Settings and revoke the device — that deletes the token immediately. Threadbase uses two delivery paths. Ordinary notifications — for example, a session waiting for your input — are delivered through Expo's push relay. That payload carries the project name, which may identify the repository or project, a fixed message, and the session and server identifiers the app needs to open the right screen — the server identifier defaults to that streamer's hostname unless a custom instance ID is configured; it does not include prompts, terminal output, credentials, or conversation content. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials, which Apple issues per developer team. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, the session's start time, a server label that also defaults to the streamer's hostname, and a short, truncated excerpt of recent terminal output. The prompt-derived title and terminal excerpt can contain content from the session, including sensitive text that appeared there.",
-      "crashHeading": "3. Optional crash reporting (Sentry)",
-      "crashIntro": "Threadbase includes optional crash reporting to help diagnose defects, sent through two paths:",
+      "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings deletes its credentials from your device, and asks that streamer to delete its push token — though not if the streamer is unreachable at that moment; to be certain, go to Paired devices in Settings and revoke the device — that deletes the token immediately. Threadbase uses two delivery paths. Ordinary notifications — for example, a session waiting for your input — are delivered through Expo's push relay. That payload carries the project name, which may identify the repository or project, a fixed message, and the session and server identifiers the app needs to open the right screen — the server identifier defaults to that streamer's hostname unless a custom instance ID is configured; it does not include prompts, terminal output, credentials, or conversation content. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials, which Apple issues per developer team. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, the session's start time, a server label that also defaults to the streamer's hostname, and a short, truncated excerpt of recent terminal output. The prompt-derived title and terminal excerpt can contain content from the session, including sensitive text that appeared there.",
+      "crashHeading": "3. Anonymous diagnostics (Sentry)",
+      "crashIntro": "Threadbase can send crash reports and basic stability data to help diagnose defects. This is off by default. Information reaches Sentry through two paths:",
       "automaticReporting": [
-        "Automatic reporting. Disabled by default and opt-in. Nothing is sent automatically unless you turn on \"Share anonymous crash reports\" in Settings -> Crash Reporting. Once enabled, future crashes are sent automatically until you turn it off again.",
-        "Manual, one-time report. If the app crashes, the recovery screen offers a \"Report this crash\" button. Tapping it sends that single crash report even if automatic reporting is off. This is a deliberate action you take, not something the app does on its own. It does not turn on automatic reporting; after sending, the app may ask once whether you'd like to turn automatic reporting on going forward, and remembers your answer so it does not ask again."
+        "Anonymous diagnostics. Off by default and opt-in. Nothing is sent automatically unless you turn on \"Anonymous diagnostics\" — in Settings, on the last onboarding screen if you see the option there, or by checking \"Automatically send future crash reports and diagnostics\" when you report a crash. Once it is on, future crashes, errors, and basic stability information about app sessions are sent automatically until you turn it off again.",
+        "Manual, one-time report. If the app crashes, the recovery screen offers a \"Report this crash\" button. Tapping it sends that single crash report even if Anonymous diagnostics is off. This is a deliberate action you take, not something the app does on its own, and it does not turn on Anonymous diagnostics. After you send feedback, the app may suggest turning it on; declining dismisses that one suggestion, and the suggestion appears at most twice in any 30-day period."
       ],
       "crashSameData": "Automatic and manual JavaScript crash reports use the same in-app sanitization path described below. Native iOS and Android crashes are captured by the platform crash handler and may contain different native diagnostic data; server-side Sentry scrubbing is configured for that path.",
       "crashReportingDetails": [
@@ -439,7 +439,7 @@
         },
         {
           "label": "What is sent.",
-          "body": "Only sanitized technical information: the app version and build number, the platform (iOS or Android), the operating-system major/minor version, the JavaScript engine, the release channel or environment, the Expo runtime version, the EAS update identifier, a generic connection-mode category (local, remote, or unknown), and the type, message, and stack trace of the error. Reports also include an anonymous, randomly generated installation identifier used only to group reports; it is not tied to your identity, your device's advertising identifier, or your streamer credentials."
+          "body": "Only sanitized technical information: the app version and build number, the platform (iOS or Android), the operating-system major/minor version, the JavaScript engine, the release channel or environment, the Expo runtime version, the EAS update identifier, a generic connection-mode category (local, remote, or unknown), and the type, message, and stack trace of the error. When Anonymous diagnostics is on, reports also include basic stability information about app sessions — whether a session ended normally or with an error — used to measure release health. Reports also include an anonymous, randomly generated installation identifier used only to group reports; it is not tied to your identity, your device's advertising identifier, or your streamer credentials."
         },
         {
           "label": "What is excluded.",
@@ -447,15 +447,15 @@
         },
         {
           "label": "A note on absolutes.",
-          "body": "We design crash reporting to exclude the categories above, and we apply sanitization before sending. We cannot, however, describe unexpected behavior in the underlying SDK or platform as an absolute impossibility, which is why crash reporting is opt-in and off by default."
+          "body": "We design crash reporting to exclude the categories above, and we apply sanitization before sending. We cannot, however, describe unexpected behavior in the underlying SDK or platform as an absolute impossibility, which is why Anonymous diagnostics is opt-in and off by default."
         },
         {
           "label": "Your control.",
-          "body": "You can enable or disable crash reporting at any time in Settings. Disabling it stops future reporting immediately and deletes the anonymous installation identifier from your device."
+          "body": "You can enable or disable Anonymous diagnostics at any time in Settings. Disabling it stops future reporting immediately and deletes the anonymous installation identifier from your device."
         },
         {
           "label": "Previously submitted reports.",
-          "body": "Reports already sent before you disable crash reporting remain in Sentry subject to the retention below; disabling does not retroactively delete them."
+          "body": "Reports already sent before you disable Anonymous diagnostics remain in Sentry subject to the retention below; disabling does not retroactively delete them."
         },
         {
           "label": "Retention.",
@@ -540,9 +540,9 @@
       ],
       "controlHeading": "Your control",
       "yourControl": [
-        "Crash reporting is off by default; enable or disable it any time in Settings.",
+        "Anonymous diagnostics is off by default; enable or disable it any time in Settings.",
         "Feedback and diagnostics are only ever sent when you initiate them.",
-        "Removing a server deletes its credentials from your device, and recent app versions also ask that streamer to delete its push token — though not if the streamer is unreachable at that moment. To be certain, go to Paired devices in Settings and revoke the device — that deletes its push token immediately, right from the app.",
+        "Removing a server deletes its credentials from your device, and asks that streamer to delete its push token — though not if the streamer is unreachable at that moment. To be certain, go to Paired devices in Settings and revoke the device — that deletes its push token immediately, right from the app.",
         "Uninstalling the app removes the data stored in its own container; credentials held by the operating system's secure credential storage, such as the iOS Keychain, can survive it — remove a server in the app to delete its credentials.",
         "Contact support@threadbase.sh with any privacy question or deletion request."
       ],
