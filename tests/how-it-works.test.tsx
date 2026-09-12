@@ -7,7 +7,9 @@ describe("HowItWorks", () => {
   it("renders the section heading", () => {
     renderWithIntl(<HowItWorks />);
     expect(
-      screen.getByRole("heading", { name: /run the streamer.*pair your phone/i }),
+      screen.getByRole("heading", {
+        name: /run the streamer.*pair your phone/i,
+      }),
     ).toBeInTheDocument();
   });
 
@@ -42,7 +44,9 @@ describe("HowItWorks", () => {
 
   it("renders the trust note below the cards", () => {
     renderWithIntl(<HowItWorks />);
-    expect(screen.getByText(/Pair more machines whenever you need them/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Pair more machines whenever you need them/i),
+    ).toBeInTheDocument();
     expect(document.body.textContent).not.toMatch(/end-to-end encrypted/i);
   });
 });

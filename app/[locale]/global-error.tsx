@@ -5,11 +5,7 @@ import arTranslations from "@/locales/ar.json";
 import enTranslations from "@/locales/en.json";
 import heTranslations from "@/locales/he.json";
 import ruTranslations from "@/locales/ru.json";
-import {
-  getTextDirection,
-  isLocale,
-  type Locale,
-} from "@/i18n/routing";
+import { getTextDirection, isLocale, type Locale } from "@/i18n/routing";
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };

@@ -9,8 +9,12 @@ describe("SolutionsPage", () => {
       params: Promise.resolve({ locale: "en" }),
     });
     renderWithIntl(page);
-    expect(screen.getByRole("heading", { name: /other surfaces/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /other surfaces/i }),
+    ).toBeInTheDocument();
     expect(screen.getByText(/coming soon/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /back to threadbase/i })).toHaveAttribute("href", "/");
+    expect(
+      screen.getByRole("link", { name: /back to threadbase/i }),
+    ).toHaveAttribute("href", "/");
   });
 });

@@ -32,7 +32,12 @@ export function ServerRack(): React.JSX.Element {
         r="3"
         fill="#63b3ff"
         animate={{ opacity: [1, 0.4, 1] }}
-        transition={{ duration: 1.6, repeat: Infinity, ease: "linear", delay: 0.4 }}
+        transition={{
+          duration: 1.6,
+          repeat: Infinity,
+          ease: "linear",
+          delay: 0.4,
+        }}
       />
     </svg>
   );

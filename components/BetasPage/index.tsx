@@ -1,6 +1,10 @@
 "use client";
 
-import { DeviceMobileCamera, AppleLogo, ArrowSquareOut } from "@phosphor-icons/react";
+import {
+  DeviceMobileCamera,
+  AppleLogo,
+  ArrowSquareOut,
+} from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { PageShell } from "@/components/PageShell";
@@ -31,7 +35,13 @@ export function BetasPage(): React.JSX.Element {
   );
 }
 
-function PlatformCard({ platform, index }: { platform: BetaPlatform; index: number }): React.JSX.Element {
+function PlatformCard({
+  platform,
+  index,
+}: {
+  platform: BetaPlatform;
+  index: number;
+}): React.JSX.Element {
   const Icon = PLATFORM_ICONS[platform.id] ?? DeviceMobileCamera;
   const isExternal = platform.primaryCta.href.startsWith("http");
 
@@ -50,10 +60,14 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
           </span>
         </div>
         <div className="flex flex-col gap-2">
-          <h2 className="text-2xl font-semibold text-primary">{platform.name}</h2>
+          <h2 className="text-2xl font-semibold text-primary">
+            {platform.name}
+          </h2>
           <p className="text-sm font-medium text-accent">{platform.tagline}</p>
         </div>
-        <p className="text-sm leading-relaxed text-secondary">{platform.description}</p>
+        <p className="text-sm leading-relaxed text-secondary">
+          {platform.description}
+        </p>
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row">
@@ -64,7 +78,11 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
           className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground transition-[transform,box-shadow] duration-300 ease-out hover:shadow-[0_12px_32px_-12px_rgba(99,179,255,0.7)] motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary"
         >
           <span>{platform.primaryCta.label}</span>
-          <ArrowSquareOut size={15} weight="bold" className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+          <ArrowSquareOut
+            size={15}
+            weight="bold"
+            className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
+          />
         </Link>
         {platform.secondaryCta ? (
           <Link
@@ -84,7 +102,9 @@ function PlatformCard({ platform, index }: { platform: BetaPlatform; index: numb
             </span>
             <div className="flex flex-col gap-0.5">
               <p className="text-sm font-semibold text-primary">{step.title}</p>
-              <p className="text-sm leading-relaxed text-secondary">{step.body}</p>
+              <p className="text-sm leading-relaxed text-secondary">
+                {step.body}
+              </p>
             </div>
           </li>
         ))}

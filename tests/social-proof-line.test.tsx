@@ -7,7 +7,9 @@ describe("SocialProofLine", () => {
   it("renders the open-source line", () => {
     renderWithIntl(<SocialProofLine />);
     expect(
-      screen.getByText(/open source, mit, built by a developer who runs it every day/i),
+      screen.getByText(
+        /open source, mit, built by a developer who runs it every day/i,
+      ),
     ).toBeInTheDocument();
   });
 });

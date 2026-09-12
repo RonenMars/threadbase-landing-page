@@ -74,9 +74,7 @@ export default async function SupportPage({
 
         <section>
           <SectionHeading>{t("requestHeading")}</SectionHeading>
-          <p className="mt-6 leading-8 text-secondary">
-            {t("requestIntro")}
-          </p>
+          <p className="mt-6 leading-8 text-secondary">{t("requestIntro")}</p>
           <BulletList items={requestDetails} />
         </section>
       </div>

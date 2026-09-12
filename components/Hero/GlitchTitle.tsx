@@ -7,11 +7,7 @@ interface GlitchTitleProps {
 
 export function GlitchTitle({ text, className }: GlitchTitleProps) {
   return (
-    <h1
-      id="hero-headline"
-      className={className}
-      data-text={text}
-    >
+    <h1 id="hero-headline" className={className} data-text={text}>
       {text}
     </h1>
   );

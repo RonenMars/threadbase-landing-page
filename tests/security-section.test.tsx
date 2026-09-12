@@ -23,9 +23,9 @@ describe("SecuritySection", () => {
 
   it("lists what Threadbase can't see", () => {
     renderWithIntl(<SecuritySection />);
+    expect(screen.getByText(/there isn't one/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/there isn't one/i),
+      screen.getByText(/keys live in the keychain and keystore/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/keys live in the keychain and keystore/i)).toBeInTheDocument();
   });
 });

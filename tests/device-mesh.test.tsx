@@ -11,12 +11,16 @@ describe("DeviceMesh", () => {
   it("includes at least one Phone outline (viewBox 0 0 80 160)", () => {
     const { container } = render(<DeviceMesh />);
     const svgs = Array.from(container.querySelectorAll("svg"));
-    expect(svgs.some((s) => s.getAttribute("viewBox") === "0 0 80 160")).toBe(true);
+    expect(svgs.some((s) => s.getAttribute("viewBox") === "0 0 80 160")).toBe(
+      true,
+    );
   });
 
   it("includes at least one Laptop outline (viewBox 0 0 200 130)", () => {
     const { container } = render(<DeviceMesh />);
     const svgs = Array.from(container.querySelectorAll("svg"));
-    expect(svgs.some((s) => s.getAttribute("viewBox") === "0 0 200 130")).toBe(true);
+    expect(svgs.some((s) => s.getAttribute("viewBox") === "0 0 200 130")).toBe(
+      true,
+    );
   });
 });

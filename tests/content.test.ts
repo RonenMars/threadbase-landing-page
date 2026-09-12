@@ -101,9 +101,13 @@ describe("i18n content catalogs", () => {
     const frontPageCopy = JSON.stringify(enTranslations.home).toLowerCase();
 
     expect(frontPageCopy).toContain("codex");
-    expect(frontPageCopy).toContain("permission prompts and questions arrive as cards");
+    expect(frontPageCopy).toContain(
+      "permission prompts and questions arrive as cards",
+    );
     expect(frontPageCopy).toContain("full-text search across every session");
-    expect(frontPageCopy).toContain("adopt a session you started in your terminal");
+    expect(frontPageCopy).toContain(
+      "adopt a session you started in your terminal",
+    );
     expect(frontPageCopy).not.toContain("resume support is still");
     expect(frontPageCopy).not.toContain("native prompt cards");
     // Was a `not.toContain` guard: the homepage listed Live Activities among
@@ -128,7 +132,9 @@ describe("i18n content catalogs", () => {
   it("footer and nav links cover the core surfaces", () => {
     const hrefs = FOOTER_LINK_CONFIG.map((link) => link.href);
     expect(NAV_LINK_CONFIG).toHaveLength(6);
-    expect(hrefs.some((href) => href.includes("github.com/RonenMars/threadbase"))).toBe(true);
+    expect(
+      hrefs.some((href) => href.includes("github.com/RonenMars/threadbase")),
+    ).toBe(true);
     expect(hrefs).toContain("/betas");
     expect(hrefs.some((href) => href.includes("/issues"))).toBe(true);
     expect(hrefs).toContain("/support");
@@ -155,10 +161,16 @@ describe("i18n content catalogs", () => {
     const [group, page] = namespace.split(".");
     for (const [locale, catalog] of Object.entries(translations)) {
       const value = (
-        catalog as unknown as Record<string, Record<string, Record<string, unknown>>>
+        catalog as unknown as Record<
+          string,
+          Record<string, Record<string, unknown>>
+        >
       )[group][page][key];
       expect(Array.isArray(value), `${locale}: ${namespace}.${key}`).toBe(true);
-      expect((value as unknown[]).length, `${locale}: ${namespace}.${key}`).toBeGreaterThan(0);
+      expect(
+        (value as unknown[]).length,
+        `${locale}: ${namespace}.${key}`,
+      ).toBeGreaterThan(0);
     }
   });
 });
@@ -199,8 +211,13 @@ describe("privacy policy — uninstall claim", () => {
     });
 
     it(`${locale}: the "Your control" bullet qualifies it too`, () => {
-      const bullet = privacy.yourControl.find((b) => b.includes(SECURE_STORE_MARKER[locale]));
-      expect(bullet, "no yourControl bullet mentions the secure store").toBeDefined();
+      const bullet = privacy.yourControl.find((b) =>
+        b.includes(SECURE_STORE_MARKER[locale]),
+      );
+      expect(
+        bullet,
+        "no yourControl bullet mentions the secure store",
+      ).toBeDefined();
     });
   }
 });

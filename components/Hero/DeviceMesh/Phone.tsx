@@ -5,7 +5,10 @@ interface PhoneProps {
   screenLit?: boolean;
 }
 
-export function Phone({ children, screenLit = false }: PhoneProps): React.JSX.Element {
+export function Phone({
+  children,
+  screenLit = false,
+}: PhoneProps): React.JSX.Element {
   return (
     <svg viewBox="0 0 80 160" className="h-full w-auto" aria-hidden="true">
       {/* outline */}
@@ -40,9 +43,7 @@ export function Phone({ children, screenLit = false }: PhoneProps): React.JSX.El
       />
       {/* screen content slot */}
       <foreignObject x="8" y="18" width="64" height="124">
-        <div
-          className="h-full w-full font-mono text-[5px] leading-tight text-accent-strong"
-        >
+        <div className="h-full w-full font-mono text-[5px] leading-tight text-accent-strong">
           {children}
         </div>
       </foreignObject>

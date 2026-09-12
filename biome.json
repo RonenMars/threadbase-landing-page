@@ -1,0 +1,86 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,json,jsonc,css}",
+      "!!**/node_modules",
+      "!!**/.next",
+      "!!**/.claude",
+      "!!**/.remember",
+      "!!**/.vercel",
+      "!!**/dist",
+      "!!**/build",
+      "!!**/out",
+      "!!**/scaffold",
+      "!**/next-env.d.ts",
+      "!package-lock.json",
+      "!skills-lock.json"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "correctness": {
+        "useHookAtTopLevel": "error",
+        "useExhaustiveDependencies": "warn",
+        "noUnusedVariables": "warn"
+      },
+      "suspicious": {
+        "noUnusedExpressions": "warn"
+      }
+    }
+  },
+  "assist": {
+    "enabled": false
+  },
+  "overrides": [
+    {
+      "includes": [
+        "app/*/privacy-policy/page.tsx",
+        "components/QuickStart/index.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "warn"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["components/NavMenu/index.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noRedundantRoles": "warn"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["components/QuickStart/index.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useAriaPropsSupportedByRole": "warn"
+          }
+        }
+      }
+    }
+  ]
+}

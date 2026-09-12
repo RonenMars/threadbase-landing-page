@@ -8,9 +8,7 @@ import { getHowItWorksContent } from "@/lib/translated-content";
 import { NumberBadge } from "./NumberBadge";
 
 export function HowItWorks(): React.JSX.Element {
-  const { content } = getHowItWorksContent(
-    useTranslations("home.howItWorks"),
-  );
+  const { content } = getHowItWorksContent(useTranslations("home.howItWorks"));
 
   return (
     <section

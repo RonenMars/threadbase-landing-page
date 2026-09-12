@@ -48,14 +48,18 @@ describe("Hero", () => {
     renderWithIntl(<Hero />);
     expect(screen.getByText(/iOS · TestFlight beta/)).toBeInTheDocument();
     expect(screen.getByText(/Android · closed testing/)).toBeInTheDocument();
-    expect(screen.getByText(/macOS · Linux · Windows streamer/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/macOS · Linux · Windows streamer/),
+    ).toBeInTheDocument();
   });
 
   it("renders both CTAs", () => {
     renderWithIntl(<Hero />);
     const betaCta = screen.getByRole("button", { name: /get the app/i });
     expect(betaCta).toHaveAttribute("href", "https://threadbase.sh/betas");
-    const streamerCta = screen.getByRole("button", { name: /install the streamer/i });
+    const streamerCta = screen.getByRole("button", {
+      name: /install the streamer/i,
+    });
     expect(streamerCta).toHaveAttribute("href", "#quick-start");
   });
 
@@ -78,25 +82,27 @@ describe("Hero", () => {
       maxTouchPoints: 5,
       href: "https://testflight.apple.com/join/FqdM3mFK",
     },
-  ])("routes the beta CTA for $platform", async ({ userAgent, maxTouchPoints, href }) => {
-    Object.defineProperty(navigator, "userAgent", {
-      configurable: true,
-      value: userAgent,
-    });
-    Object.defineProperty(navigator, "maxTouchPoints", {
-      configurable: true,
-      value: maxTouchPoints,
-    });
+  ])(
+    "routes the beta CTA for $platform",
+    async ({ userAgent, maxTouchPoints, href }) => {
+      Object.defineProperty(navigator, "userAgent", {
+        configurable: true,
+        value: userAgent,
+      });
+      Object.defineProperty(navigator, "maxTouchPoints", {
+        configurable: true,
+        value: maxTouchPoints,
+      });
 
-    renderWithIntl(<Hero />);
+      renderWithIntl(<Hero />);
 
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: /get the app/i })).toHaveAttribute(
-        "href",
-        href,
-      );
-    });
-  });
+      await waitFor(() => {
+        expect(
+          screen.getByRole("button", { name: /get the app/i }),
+        ).toHaveAttribute("href", href);
+      });
+    },
+  );
 
   it("does NOT render the old workflow steps or shell stages", () => {
     renderWithIntl(<Hero />);

@@ -173,8 +173,9 @@ export function getFooterContent(t: Translator): FooterContent {
 
 export function getBetasPageContent(t: Translator): BetasPageContent {
   const platforms = rawArray<
-    Omit<BetasPageContent["platforms"][number], "id" | "primaryCta">
-    & { primaryCta: string }
+    Omit<BetasPageContent["platforms"][number], "id" | "primaryCta"> & {
+      primaryCta: string;
+    }
   >(t, "platforms");
 
   return {

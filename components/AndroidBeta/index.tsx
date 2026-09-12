@@ -1,6 +1,12 @@
 "use client";
 
-import { GooglePlayLogo, UsersThree, Clock, DownloadSimple, ArrowSquareOut } from "@phosphor-icons/react";
+import {
+  GooglePlayLogo,
+  UsersThree,
+  Clock,
+  DownloadSimple,
+  ArrowSquareOut,
+} from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { PageShell } from "@/components/PageShell";
@@ -27,7 +33,11 @@ export function AndroidBeta(): React.JSX.Element {
         >
           <UsersThree size={18} weight="bold" />
           <span>{content.groupCta}</span>
-          <ArrowSquareOut size={16} weight="bold" className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+          <ArrowSquareOut
+            size={16}
+            weight="bold"
+            className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
+          />
         </Link>
         <Link
           href={content.playUrl}
@@ -37,7 +47,11 @@ export function AndroidBeta(): React.JSX.Element {
         >
           <GooglePlayLogo size={18} weight="bold" />
           <span>{content.playCta}</span>
-          <ArrowSquareOut size={16} weight="bold" className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5" />
+          <ArrowSquareOut
+            size={16}
+            weight="bold"
+            className="opacity-70 transition-transform duration-200 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
+          />
         </Link>
       </div>
 
@@ -57,8 +71,12 @@ export function AndroidBeta(): React.JSX.Element {
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
                   {content.stepLabel.replace("{number}", String(idx + 1))}
                 </span>
-                <h3 className="text-base font-semibold text-primary">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-secondary">{step.body}</p>
+                <h3 className="text-base font-semibold text-primary">
+                  {step.title}
+                </h3>
+                <p className="text-sm leading-relaxed text-secondary">
+                  {step.body}
+                </p>
               </div>
             </li>
           );
@@ -69,7 +87,9 @@ export function AndroidBeta(): React.JSX.Element {
         <h2 className="text-sm font-semibold uppercase tracking-[0.16em] text-accent-secondary">
           {content.fallback.title}
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-secondary">{content.fallback.body}</p>
+        <p className="mt-2 text-sm leading-relaxed text-secondary">
+          {content.fallback.body}
+        </p>
       </aside>
 
       <p className="mt-8 text-sm leading-7 text-muted">{content.closing}</p>

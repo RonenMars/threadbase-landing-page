@@ -15,20 +15,34 @@ describe("NavMenu", () => {
 
   it("renders a compact language selector before the menu opens", () => {
     renderWithIntl(<NavMenu />);
-    expect(screen.getByRole("button", { name: /change language/i })).toHaveTextContent("🌐EN▾");
+    expect(
+      screen.getByRole("button", { name: /change language/i }),
+    ).toHaveTextContent("🌐EN▾");
   });
 
   it("hides the current language inside the compact dropdown", () => {
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /change language/i }));
-    expect(screen.queryByRole("link", { name: enTranslations.languageSwitcher.localeLabels.en })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: enTranslations.languageSwitcher.localeLabels.ru })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("link", {
+        name: enTranslations.languageSwitcher.localeLabels.en,
+      }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("link", {
+        name: enTranslations.languageSwitcher.localeLabels.ru,
+      }),
+    ).toBeInTheDocument();
   });
 
   it("keeps the current language in the menu selector", () => {
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-    expect(screen.getByRole("link", { name: enTranslations.languageSwitcher.localeLabels.en })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", {
+        name: enTranslations.languageSwitcher.localeLabels.en,
+      }),
+    ).toBeInTheDocument();
   });
 
   it("opens the menu when the hamburger is clicked", () => {
@@ -44,7 +58,11 @@ describe("NavMenu", () => {
     document.cookie = "NEXT_LOCALE=; path=/; max-age=0";
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /change language/i }));
-    fireEvent.click(screen.getByRole("link", { name: enTranslations.languageSwitcher.localeLabels.ru }));
+    fireEvent.click(
+      screen.getByRole("link", {
+        name: enTranslations.languageSwitcher.localeLabels.ru,
+      }),
+    );
     expect(document.cookie).toContain("NEXT_LOCALE=ru");
   });
 
@@ -53,7 +71,10 @@ describe("NavMenu", () => {
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     for (const link of NAV_LINK_CONFIG) {
       const label = enTranslations.nav.links[link.id];
-      expect(screen.getByRole("link", { name: label })).toHaveAttribute("href", link.href);
+      expect(screen.getByRole("link", { name: label })).toHaveAttribute(
+        "href",
+        link.href,
+      );
     }
   });
 
@@ -70,7 +91,9 @@ describe("NavMenu", () => {
     renderWithIntl(<NavMenu />);
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
-    const firstLink = screen.getByRole("link", { name: enTranslations.nav.links.home });
+    const firstLink = screen.getByRole("link", {
+      name: enTranslations.nav.links.home,
+    });
     fireEvent.click(firstLink);
     expect(trigger).toHaveAttribute("aria-expanded", "false");
   });
@@ -89,9 +112,13 @@ describe("NavMenu", () => {
     renderWithIntl(<NavMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     expect(screen.getByRole("link", { name: /home/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /beta programs/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /beta programs/i }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /github/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /report a bug/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /report a bug/i }),
+    ).toBeInTheDocument();
   });
 
   it("keeps Tab focus inside the panel while it is open", () => {

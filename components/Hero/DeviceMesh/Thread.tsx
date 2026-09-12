@@ -13,7 +13,12 @@ interface ThreadProps {
   drawDelay?: number;
 }
 
-export function Thread({ d, id, pulse = false, drawDelay = 0 }: ThreadProps): React.JSX.Element {
+export function Thread({
+  d,
+  id,
+  pulse = false,
+  drawDelay = 0,
+}: ThreadProps): React.JSX.Element {
   return (
     <g>
       <defs>
@@ -31,7 +36,11 @@ export function Thread({ d, id, pulse = false, drawDelay = 0 }: ThreadProps): Re
         strokeLinecap="round"
         initial={{ pathLength: 0 }}
         animate={{ pathLength: 1 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: drawDelay }}
+        transition={{
+          duration: 0.6,
+          ease: [0.16, 1, 0.3, 1],
+          delay: drawDelay,
+        }}
       />
       {pulse ? (
         <motion.path

@@ -33,7 +33,11 @@ export async function generateMetadata({
   };
 }
 
-function PolicyList({ items }: { items: React.ReactNode[] }): React.JSX.Element {
+function PolicyList({
+  items,
+}: {
+  items: React.ReactNode[];
+}): React.JSX.Element {
   return (
     <ul className="mt-6 space-y-3 leading-7 text-secondary">
       {items.map((item, index) => (
@@ -153,7 +157,9 @@ export default async function PrivacyPolicyPage({
   const t = await getTranslations({ locale, namespace: "pages.privacy" });
   const trafficCategories = t.raw("trafficCategories") as string[];
   const automaticReporting = t.raw("automaticReporting") as string[];
-  const crashReportingDetails = t.raw("crashReportingDetails") as PolicyDetail[];
+  const crashReportingDetails = t.raw(
+    "crashReportingDetails",
+  ) as PolicyDetail[];
   const feedbackDetails = t.raw("feedbackDetails") as PolicyDetail[];
   const screenshotAndDiagnosticDetails = t.raw(
     "screenshotAndDiagnosticDetails",
@@ -225,8 +231,12 @@ export default async function PrivacyPolicyPage({
       <PolicyList items={yourControl} />
 
       <footer className="mt-16 border-t border-white/6 pt-6 text-sm leading-7 text-muted">
-        <p>{t("effectiveDateLabel")} {privacyMeta.effectiveDate}</p>
-        <p>{t("lastUpdatedLabel")} {privacyMeta.lastUpdated}</p>
+        <p>
+          {t("effectiveDateLabel")} {privacyMeta.effectiveDate}
+        </p>
+        <p>
+          {t("lastUpdatedLabel")} {privacyMeta.lastUpdated}
+        </p>
         <p className="mt-1">
           {t("contactLabel")}{" "}
           <a

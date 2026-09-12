@@ -32,8 +32,7 @@ function interpolate(message: string, values?: TranslationValues): string {
   if (!values) return message;
 
   return Object.entries(values).reduce(
-    (current, [key, value]) =>
-      current.replaceAll(`{${key}}`, String(value)),
+    (current, [key, value]) => current.replaceAll(`{${key}}`, String(value)),
     message,
   );
 }

@@ -19,7 +19,9 @@ describe("QuickStart", () => {
   it("renders Linux, Windows, and Android inline links below the code block", () => {
     renderWithIntl(<QuickStart />);
     expect(screen.getByRole("link", { name: /^linux$/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /^windows$/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /^windows$/i }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /android.*closed beta/i }),
     ).toBeInTheDocument();
@@ -33,7 +35,9 @@ describe("QuickStart", () => {
   it("keeps the setup summary accurate without an E2EE transport claim", () => {
     renderWithIntl(<QuickStart />);
     expect(
-      screen.getByRole("heading", { name: /run the streamer.*pair your phone/i }),
+      screen.getByRole("heading", {
+        name: /run the streamer.*pair your phone/i,
+      }),
     ).toBeInTheDocument();
     expect(document.body.textContent).not.toMatch(/end-to-end encrypted/i);
   });

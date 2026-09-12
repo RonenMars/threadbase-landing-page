@@ -17,14 +17,19 @@ describe("POST /api/subscribe", () => {
     const fetchMock = vi.fn().mockResolvedValue({ ok: true } as Response);
     vi.stubGlobal("fetch", fetchMock);
 
-    const response = await POST(makeRequest({ email: "test@example.com", name: "Ada" }));
+    const response = await POST(
+      makeRequest({ email: "test@example.com", name: "Ada" }),
+    );
 
     expect(response.status).toBe(200);
     expect(fetchMock).toHaveBeenCalledWith(
       "https://connect.mailerlite.com/api/subscribers",
       expect.objectContaining({
         method: "POST",
-        body: JSON.stringify({ email: "test@example.com", fields: { name: "Ada" } }),
+        body: JSON.stringify({
+          email: "test@example.com",
+          fields: { name: "Ada" },
+        }),
       }),
     );
   });

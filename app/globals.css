@@ -100,8 +100,16 @@ a {
 .app-shell {
   position: relative;
   background:
-    radial-gradient(circle at top left, rgba(99, 179, 255, 0.16), transparent 32%),
-    radial-gradient(circle at top right, rgba(240, 138, 36, 0.12), transparent 22%),
+    radial-gradient(
+      circle at top left,
+      rgba(99, 179, 255, 0.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(240, 138, 36, 0.12),
+      transparent 22%
+    ),
     linear-gradient(180deg, #04070d 0%, #060b12 30%, #060b12 100%);
 }
 
@@ -189,6 +197,8 @@ a {
   background: rgba(36, 48, 58, 0.5);
   overflow: hidden;
   clip: rect(var(--gt, 0px), 9999px, var(--gb, 0px), 0);
-  text-shadow: -3px 0 rgba(255, 50, 50, 0.8), 3px 0 rgba(0, 180, 255, 0.5);
+  text-shadow:
+    -3px 0 rgba(255, 50, 50, 0.8),
+    3px 0 rgba(0, 180, 255, 0.5);
   pointer-events: none;
 }

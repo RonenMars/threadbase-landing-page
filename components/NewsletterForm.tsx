@@ -17,7 +17,9 @@ export function NewsletterForm(): React.JSX.Element {
     name: z.string().max(100).optional().or(z.literal("")),
     email: z.string().min(1, t("emailRequired")).email(t("emailInvalid")),
     company: z.string().optional().or(z.literal("")),
-    consent: z.boolean().refine((value) => value, { message: t("consentRequired") }),
+    consent: z
+      .boolean()
+      .refine((value) => value, { message: t("consentRequired") }),
   });
   type FormValues = z.infer<typeof schema>;
 
@@ -53,7 +55,10 @@ export function NewsletterForm(): React.JSX.Element {
       {status === "done" ? (
         <p className="mt-6 font-medium text-accent-strong">{t("submitted")}</p>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6 flex w-full flex-col gap-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="mt-6 flex w-full flex-col gap-4"
+        >
           <input
             type="text"
             autoComplete="off"
@@ -74,13 +79,19 @@ export function NewsletterForm(): React.JSX.Element {
               inputMode="email"
               dir="ltr"
               placeholder={t("placeholder")}
-              aria-describedby={errors.email ? "newsletter-email-error" : undefined}
+              aria-describedby={
+                errors.email ? "newsletter-email-error" : undefined
+              }
               aria-invalid={Boolean(errors.email)}
               className="w-full rounded-xl border border-border bg-black/30 px-4 py-2.5 text-start text-sm text-primary placeholder:text-muted focus:border-accent/50 focus:outline-none aria-invalid:border-red-400"
               {...register("email")}
             />
             {errors.email && (
-              <p id="newsletter-email-error" role="alert" className="text-start text-xs text-red-400">
+              <p
+                id="newsletter-email-error"
+                role="alert"
+                className="text-start text-xs text-red-400"
+              >
                 {errors.email.message}
               </p>
             )}
@@ -89,7 +100,9 @@ export function NewsletterForm(): React.JSX.Element {
             <label className="flex items-start gap-2 text-start text-xs leading-5 text-muted">
               <input
                 type="checkbox"
-                aria-describedby={errors.consent ? "newsletter-consent-error" : undefined}
+                aria-describedby={
+                  errors.consent ? "newsletter-consent-error" : undefined
+                }
                 aria-invalid={Boolean(errors.consent)}
                 className="mt-0.5 size-3.5 shrink-0 accent-accent-secondary"
                 {...register("consent")}
@@ -106,7 +119,11 @@ export function NewsletterForm(): React.JSX.Element {
               </span>
             </label>
             {errors.consent && (
-              <p id="newsletter-consent-error" role="alert" className="text-start text-xs text-red-400">
+              <p
+                id="newsletter-consent-error"
+                role="alert"
+                className="text-start text-xs text-red-400"
+              >
                 {errors.consent.message}
               </p>
             )}

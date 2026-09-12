@@ -17,12 +17,20 @@ describe("Home page", () => {
       .getAllByRole("heading", { level: 2 })
       .map((h) => h.textContent ?? "");
 
-    const featuresIdx = headings.findIndex((h) => /keep every agent moving/i.test(h));
-    const securityIdx = headings.findIndex((h) => /no threadbase session relay/i.test(h));
+    const featuresIdx = headings.findIndex((h) =>
+      /keep every agent moving/i.test(h),
+    );
+    const securityIdx = headings.findIndex((h) =>
+      /no threadbase session relay/i.test(h),
+    );
     const honestIdx = headings.findIndex((h) => /beta, honestly/i.test(h));
-    const howIdx = headings.findIndex((h) => /run the streamer.*pair your phone/i.test(h));
+    const howIdx = headings.findIndex((h) =>
+      /run the streamer.*pair your phone/i.test(h),
+    );
     const quickIdx = headings.findIndex((h) => /under a minute/i.test(h));
-    const finalCtaIdx = headings.findIndex((h) => /leave the desk.*keep the session/i.test(h));
+    const finalCtaIdx = headings.findIndex((h) =>
+      /leave the desk.*keep the session/i.test(h),
+    );
 
     expect(featuresIdx).toBeGreaterThanOrEqual(0);
     expect(securityIdx).toBeGreaterThan(featuresIdx);
@@ -42,19 +50,27 @@ describe("Home page", () => {
 
   it("renders the brew install command in the quick start", () => {
     renderWithIntl(<Home />);
-    expect(screen.getAllByText(/brew install tb-streamer/).length).toBeGreaterThan(0);
+    expect(
+      screen.getAllByText(/brew install tb-streamer/).length,
+    ).toBeGreaterThan(0);
   });
 
   it("does NOT render any of the old removed sections", () => {
     renderWithIntl(<Home />);
     // No platform picker
-    expect(screen.queryByText(/choose your environment/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/choose your environment/i),
+    ).not.toBeInTheDocument();
     // No screenshots section
     expect(screen.queryByText(/conversation browser/i)).not.toBeInTheDocument();
     // No "AI Session Browser" eyebrow
     expect(screen.queryByText(/^AI Session Browser$/i)).not.toBeInTheDocument();
     // No repeated problem section or detailed roadmap
-    expect(screen.queryByText(/trapped in your laptop/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/what's shipped and what's next/i)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/trapped in your laptop/i),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/what's shipped and what's next/i),
+    ).not.toBeInTheDocument();
   });
 });

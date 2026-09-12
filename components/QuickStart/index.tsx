@@ -92,9 +92,7 @@ export function QuickStart({
               <code className="font-mono">
                 {content.steps.map((line, index) => {
                   if (line.length === 0) {
-                    return (
-                      <span className="block h-4" key={`qs-${index}`} />
-                    );
+                    return <span className="block h-4" key={`qs-${index}`} />;
                   }
                   const lineClassName = line.startsWith("#")
                     ? "text-emerald-300/80"

@@ -29,13 +29,16 @@ function detectPlatform(): "ios" | "android" | "desktop" {
 export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
   const tHero = useTranslations("home.hero");
   const hero = heroProp ?? getHeroContent(tHero);
-  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">("desktop");
+  const [platform, setPlatform] = useState<"ios" | "android" | "desktop">(
+    "desktop",
+  );
   const primaryCta = hero.ctas.find((cta) => cta.variant === "primary");
-  const primaryCtaHref = platform === "android"
-    ? "https://threadbase.sh/android-beta"
-    : platform === "ios"
-      ? (primaryCta?.href ?? "https://testflight.apple.com/join/FqdM3mFK")
-      : "https://threadbase.sh/betas";
+  const primaryCtaHref =
+    platform === "android"
+      ? "https://threadbase.sh/android-beta"
+      : platform === "ios"
+        ? (primaryCta?.href ?? "https://testflight.apple.com/join/FqdM3mFK")
+        : "https://threadbase.sh/betas";
 
   useEffect(() => {
     const platformFrame = window.requestAnimationFrame(() => {
@@ -63,7 +66,10 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
         },
       }}
     >
-      <div className="hero-mesh absolute inset-0 opacity-90" aria-hidden="true" />
+      <div
+        className="hero-mesh absolute inset-0 opacity-90"
+        aria-hidden="true"
+      />
       <div
         className="floating-orb motion-preset-float-sm absolute -left-32 top-24 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(89,191,255,0.3),rgba(89,191,255,0))] blur-3xl"
         aria-hidden="true"

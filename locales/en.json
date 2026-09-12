@@ -522,21 +522,48 @@
       "subProcessorsHeading": "Service providers we use",
       "subProcessorsIntro": "Threadbase relies on the following third parties. Each one processes only the data described in its section above, under its own terms and data-processing agreements.",
       "subProcessors": [
-        { "label": "Expo.", "body": "Delivers ordinary push notifications. Expo receives your push token and the notification payload described in section 2, which carries no session content." },
-        { "label": "Apple.", "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a prompt-derived title, a server label that may be the streamer's hostname, and a truncated excerpt of session output; these may contain sensitive content." },
-        { "label": "Sentry.", "body": "Processes optional crash reports, as described in section 3." },
-        { "label": "MailerLite.", "body": "Processes newsletter subscriptions from the website, as described in section 6." }
+        {
+          "label": "Expo.",
+          "body": "Delivers ordinary push notifications. Expo receives your push token and the notification payload described in section 2, which carries no session content."
+        },
+        {
+          "label": "Apple.",
+          "body": "Delivers Live Activities through the Apple Push Notification service. Apple receives your device's Live Activity token and the payload described in section 2, which includes a prompt-derived title, a server label that may be the streamer's hostname, and a truncated excerpt of session output; these may contain sensitive content."
+        },
+        {
+          "label": "Sentry.",
+          "body": "Processes optional crash reports, as described in section 3."
+        },
+        {
+          "label": "MailerLite.",
+          "body": "Processes newsletter subscriptions from the website, as described in section 6."
+        }
       ],
       "permissionsHeading": "Permissions the app uses",
       "permissionsCaption": "Permissions used by the app",
       "permissionsHeaders": ["Permission", "Why"],
       "permissions": [
-        { "permission": "Camera", "why": "Scanning a QR code to pair with a streamer, and attaching photos to your sessions." },
-        { "permission": "Photo library", "why": "Attaching photos from your library to your sessions, and attaching a screenshot to feedback." },
+        {
+          "permission": "Camera",
+          "why": "Scanning a QR code to pair with a streamer, and attaching photos to your sessions."
+        },
+        {
+          "permission": "Photo library",
+          "why": "Attaching photos from your library to your sessions, and attaching a screenshot to feedback."
+        },
         { "permission": "Microphone", "why": "Dictating prompts by voice." },
-        { "permission": "Speech recognition", "why": "Converting your speech to text. On iOS Threadbase requests on-device recognition, subject to the device's available speech model; on Android it uses the system speech service and may send audio to Google." },
-        { "permission": "Face ID / biometrics", "why": "Optionally locking access to your conversations. Authentication happens entirely on-device through the operating system (iOS Face ID/Touch ID, Android BiometricPrompt); Threadbase only receives a pass/fail result and never accesses, stores, or transmits your biometric data." },
-        { "permission": "Notifications", "why": "Delivering session notifications and iOS Live Activities, if you enable them. Section 2 describes what those messages carry." }
+        {
+          "permission": "Speech recognition",
+          "why": "Converting your speech to text. On iOS Threadbase requests on-device recognition, subject to the device's available speech model; on Android it uses the system speech service and may send audio to Google."
+        },
+        {
+          "permission": "Face ID / biometrics",
+          "why": "Optionally locking access to your conversations. Authentication happens entirely on-device through the operating system (iOS Face ID/Touch ID, Android BiometricPrompt); Threadbase only receives a pass/fail result and never accesses, stores, or transmits your biometric data."
+        },
+        {
+          "permission": "Notifications",
+          "why": "Delivering session notifications and iOS Live Activities, if you enable them. Section 2 describes what those messages carry."
+        }
       ],
       "controlHeading": "Your control",
       "yourControl": [
