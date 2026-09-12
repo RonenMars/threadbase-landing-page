@@ -20,7 +20,6 @@ Waiting-for-input push · single-choice approvals and questions from the phone �
 
 ## Not claims (yet)
 
-- Model/effort switching from the phone (ships with the current branch; add after release).
 - Plan-mode approvals as rich cards (streamer detection is a follow-up).
 - Per-type notification toggles and quiet hours (the preferences exist in the UI but drive nothing today — do not advertise).
 

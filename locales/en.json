@@ -282,7 +282,7 @@
         { "label": "Windows" },
         { "label": "Android — closed beta" }
       ],
-      "operatorNote": "Configure Claude CLI flags per machine from the phone, back up and restore streamer metadata, and check server and notification health without opening a terminal."
+      "operatorNote": "Configure Claude CLI flags per machine from the phone, switch model and effort mid-session, back up and restore streamer metadata, and check server and notification health without opening a terminal."
     }
   },
   "pages": {
