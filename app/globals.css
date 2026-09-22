@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
 
 @custom-variant dark (&:is(.dark *));
 @plugin "tailwindcss-motion";
@@ -201,4 +203,18 @@ a {
     -3px 0 rgba(255, 50, 50, 0.8),
     3px 0 rgba(0, 180, 255, 0.5);
   pointer-events: none;
+}
+
+/* Fumadocs (/docs) picks up the site palette; the site is always dark. */
+.dark {
+  --color-fd-background: var(--bg-primary);
+  --color-fd-card: var(--bg-secondary);
+  --color-fd-popover: var(--bg-secondary);
+  --color-fd-secondary: var(--bg-tertiary);
+  --color-fd-muted: var(--bg-tertiary);
+  --color-fd-foreground: var(--text-primary);
+  --color-fd-muted-foreground: var(--text-secondary);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--accent);
+  --color-fd-ring: var(--accent);
 }

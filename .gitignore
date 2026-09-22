@@ -50,3 +50,6 @@ next-env.d.ts
 # Playwright runtime artifacts (snapshots are committed; reports + traces are not)
 playwright-report/
 test-results/
+
+# fumadocs-mdx generated collections
+.source/
