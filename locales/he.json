@@ -61,7 +61,7 @@
     "productName": "Threadbase",
     "licenseText": "רישיון MIT",
     "tagline": "נבנה למפתחים שלא רוצים להיות כבולים לשולחן.",
-    "disclaimer": "אין קשר ל-Anthropic. Claude Code הוא מוצר של Anthropic.",
+    "disclaimer": "Threadbase הוא פרויקט עצמאי, ללא קשר ל-Anthropic, ל-OpenAI, ל-Cursor או לכל ספק אחר של כלי AI, ואינו מאושר על ידם. Claude Code, Codex, Cursor ושמות מוצרים אחרים הם סימנים מסחריים של בעליהם.",
     "links": {
       "home": "בית",
       "betas": "תוכניות בטא",

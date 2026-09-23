@@ -128,6 +128,14 @@ describe("i18n content catalogs", () => {
     );
   });
 
+  it("disclaims every AI tool vendor the product names, in every locale", () => {
+    for (const [locale, catalog] of Object.entries(translations)) {
+      for (const vendor of ["Anthropic", "OpenAI", "Cursor"]) {
+        expect(catalog.footer.disclaimer, locale).toContain(vendor);
+      }
+    }
+  });
+
   it("footer and nav links cover the core surfaces", () => {
     const hrefs = FOOTER_LINK_CONFIG.map((link) => link.href);
     expect(NAV_LINK_CONFIG).toHaveLength(7);
