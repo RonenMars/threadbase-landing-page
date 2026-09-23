@@ -5,7 +5,8 @@
 A dark-themed, developer-focused product landing page for **Threadbase**, an AI session browser. The design follows a cinematic tech aesthetic — deep blue-black backgrounds, sky-blue and warm-orange accent colors, and motion-rich interactions that evoke the feeling of a code editor or terminal UI.
 
 **Stack:** Next.js + Tailwind CSS + Framer Motion
-**Font:** Geist (Google Fonts), a clean geometric sans-serif
+**Fonts:** Inter (sans) and JetBrains Mono (code), self-hosted through `next/font` in `lib/fonts.ts`. Inter covers Latin and Cyrillic; Hebrew and Arabic fall through to system fonts.
+**Source of truth:** the [Threadbase Design System](https://claude.ai/design/p/b841e42d-5143-4b62-b148-350537f4b972) (`colors_and_type.css`). The tokens below mirror it; change the design system first, then `app/globals.css`, then this table.
 
 ---
 
@@ -14,15 +15,17 @@ A dark-themed, developer-focused product landing page for **Threadbase**, an AI 
 | Token | Value | Usage |
 |---|---|---|
 | Background Primary | `#070b11` | Page base — near-black with blue undertone |
-| Background Secondary | `#0b1320` | Section alternation, footer |
-| Background Tertiary | `#111c2d` | Card interiors, inputs |
-| Text Primary | `#f4f8ff` | Headlines, body |
-| Text Secondary | `#9fb0c9` | Descriptions, secondary copy |
-| Text Muted | `#607089` | Labels, timestamps |
-| Accent Primary | `#63b3ff` | CTAs, active states, links |
-| Accent Strong | `#b5e3ff` | Icons, highlights |
+| Background Secondary | `#0b1220` | Section alternation, footer |
+| Background Tertiary | `#0f1a2c` | Card interiors, inputs |
+| Text Primary | `#f4f7fb` | Headlines, body |
+| Text Secondary | `#9fb0c8` | Descriptions, secondary copy |
+| Text Muted | `#6c809b` | Labels, timestamps |
+| Accent Primary | `#63b3ff` | CTAs, active states, links (hover `#7fb6ff`) |
+| Accent Strong | `#a3c9ff` | Icons, highlights |
 | Accent Secondary | `#f08a24` | Orange — badges, roadmap "soon" status |
-| Border | `rgba(116,151,199,0.18)` | Card edges, dividers |
+| Border | `#1a2d47` | Card edges, dividers, inputs |
+| Border Strong | `#243a59` | Emphasised edges |
+| Destructive | `#ff6b6b` | Errors |
 
 Radius scale ranges from 6px (sm) to 28px (7xl), giving everything softly rounded edges.
 

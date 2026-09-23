@@ -19,6 +19,12 @@ export default defineConfig({
         ),
       },
       {
+        find: /^next\/font\/google$/,
+        replacement: fileURLToPath(
+          new URL("./tests/mocks/next-font-google.ts", import.meta.url),
+        ),
+      },
+      {
         find: /^next-intl\/server$/,
         replacement: fileURLToPath(
           new URL("./tests/mocks/next-intl-server.ts", import.meta.url),

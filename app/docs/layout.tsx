@@ -1,6 +1,7 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { source } from "@/lib/source";
+import { fontVariables } from "@/lib/fonts";
 
 type DocsLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -16,7 +17,7 @@ export default function Layout({
   children,
 }: DocsLayoutProps): React.JSX.Element {
   return (
-    <html className="dark font-sans" dir="ltr" lang="en">
+    <html className={`dark font-sans ${fontVariables}`} dir="ltr" lang="en">
       <body className="flex min-h-screen flex-col bg-bg-primary font-sans text-primary antialiased">
         <RootProvider theme={{ enabled: false }}>
           <DocsLayout

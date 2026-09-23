@@ -6,6 +6,7 @@ import enTranslations from "@/locales/en.json";
 import heTranslations from "@/locales/he.json";
 import ruTranslations from "@/locales/ru.json";
 import { getTextDirection, isLocale, type Locale } from "@/i18n/routing";
+import { fontVariables } from "@/lib/fonts";
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -34,7 +35,11 @@ export default function GlobalError({
   const homeHref = locale === "en" ? "/" : `/${locale}`;
 
   return (
-    <html className="dark" dir={getTextDirection(locale)} lang={locale}>
+    <html
+      className={`dark ${fontVariables}`}
+      dir={getTextDirection(locale)}
+      lang={locale}
+    >
       <body className="bg-bg-primary font-sans text-primary antialiased">
         <div className="app-shell min-h-screen">
           <main className="container-shell flex min-h-screen items-center justify-center px-6 py-24 sm:px-8 lg:px-10">
