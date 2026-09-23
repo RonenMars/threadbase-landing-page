@@ -28,7 +28,19 @@ npm run test:visual:update  # update Playwright snapshots after intentional visu
 - `components/` — shared React components
 - `lib/` — utilities and content data
 - `tests/` — unit tests (vitest) and visual regression (Playwright)
+- `app/docs/` + `content/docs/` — the Fumadocs docs site at `/docs` (see below)
 - Path alias `@/*` maps to the **project root**, not `src/`
+
+## Docs site (`/docs`)
+
+User documentation at `threadbase.sh/docs`, built with Fumadocs (`fumadocs-core`, `fumadocs-ui`, `fumadocs-mdx`) inside this app.
+
+- **Content** is MDX in `content/docs/`. Sidebar order comes from `content/docs/meta.json`; a new page is not listed until it is added there. `source.config.ts` defines the collection, and `fumadocs-mdx` generates `.source/` (gitignored) at build and dev time.
+- **English-only, outside `app/[locale]`.** `app/docs/layout.tsx` supplies its own `<html>`/`<body>`, `proxy.ts` excludes `docs` from the next-intl matcher, and `next.config.ts` redirects `/{locale}/docs/*` to `/docs/*`. Moving docs under `[locale]` brings back RTL layout on English pages and the floating `NavMenu` over the docs sidebar.
+- **MDX components** are registered in `app/docs/[[...slug]]/page.tsx`. The defaults cover `Callout`, `Cards` and `Card`; anything else (e.g. `Tabs`/`Tab`) must be added there or the prerender fails with "Expected component … to be defined".
+- **Search** is served locally by `app/api/search/route.ts`.
+- **Styling:** the Fumadocs CSS is imported in `app/globals.css`, and its `--color-fd-*` tokens are mapped to the site palette at the bottom of that file.
+- **Facts come from the code.** Check commands, flags, paths and defaults against the `tb-streamer` and `tb-mobile` sources before writing them — the landing copy is not a reliable source (its QuickStart still presents `tb-streamer set-key` as required, though `serve` creates the key).
 
 ## Tailwind v4
 

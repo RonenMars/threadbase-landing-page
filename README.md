@@ -11,6 +11,11 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Docs
+
+User documentation is served from this app at [threadbase.sh/docs](https://threadbase.sh/docs), built with [Fumadocs](https://fumadocs.dev).
+Pages are MDX files in [`content/docs/`](content/docs), and `npm run dev` serves them at [http://localhost:3000/docs](http://localhost:3000/docs).
+
 ## Build
 
 ```sh

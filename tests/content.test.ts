@@ -131,11 +131,12 @@ describe("i18n content catalogs", () => {
 
   it("footer and nav links cover the core surfaces", () => {
     const hrefs = FOOTER_LINK_CONFIG.map((link) => link.href);
-    expect(NAV_LINK_CONFIG).toHaveLength(6);
+    expect(NAV_LINK_CONFIG).toHaveLength(7);
     expect(
       hrefs.some((href) => href.includes("github.com/RonenMars/threadbase")),
     ).toBe(true);
     expect(hrefs).toContain("/betas");
+    expect(hrefs).toContain("/docs");
     expect(hrefs.some((href) => href.includes("/issues"))).toBe(true);
     expect(hrefs).toContain("/support");
     expect(hrefs).toContain("/privacy-policy");
