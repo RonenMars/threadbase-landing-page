@@ -40,7 +40,7 @@ User documentation at `threadbase.sh/docs`, built with Fumadocs (`fumadocs-core`
 - **MDX components** are registered in `app/docs/[[...slug]]/page.tsx`. The defaults cover `Callout`, `Cards` and `Card`; anything else (e.g. `Tabs`/`Tab`) must be added there or the prerender fails with "Expected component … to be defined".
 - **Search** is served locally by `app/api/search/route.ts`.
 - **Styling:** the Fumadocs CSS is imported in `app/globals.css`, and its `--color-fd-*` tokens are mapped to the site palette at the bottom of that file. Code blocks use `lib/shiki-theme.ts`, the design system's code colors, wired in through `source.config.ts`.
-- **Facts come from the code.** Check commands, flags, paths and defaults against the `tb-streamer` and `tb-mobile` sources before writing them — the landing copy is not a reliable source (its QuickStart still presents `tb-streamer set-key` as required, though `serve` creates the key).
+- **Facts come from the code.** Check commands, flags, paths and defaults against the `tb-streamer` and `tb-mobile` sources before writing them; the landing copy has been wrong before (its QuickStart listed `tb-streamer set-key` as required, though `serve` creates the key).
 
 ## Design tokens and fonts
 

@@ -90,9 +90,8 @@ describe("i18n content catalogs", () => {
       expect(catalog.home.quickStart.steps).toContain(
         "brew install tb-streamer",
       );
-      expect(catalog.home.quickStart.steps).toContain(
-        "tb-streamer set-key <YOUR_API_KEY>",
-      );
+      // `serve` creates the API key on first run, so the old `set-key` step is gone.
+      expect(catalog.home.quickStart.steps.join("\n")).not.toContain("set-key");
       expect(catalog.home.quickStart.steps).toContain("tb-streamer serve");
     }
   });
