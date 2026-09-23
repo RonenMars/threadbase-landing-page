@@ -27,7 +27,7 @@ A dark-themed, developer-focused product landing page for **Threadbase**, an AI 
 | Border Strong | `#243a59` | Emphasised edges |
 | Destructive | `#ff6b6b` | Errors |
 
-Radius scale ranges from 6px (sm) to 28px (7xl), giving everything softly rounded edges.
+Radius follows the design system: 4px (xs), 6px (sm), 8px (md), 12px (lg), 16px (xl) and 20px (2xl), plus full rounding for pills. Cards and panels use 2xl.
 
 ---
 

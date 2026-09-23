@@ -50,7 +50,7 @@ export default async function SupportPage({
         </>
       }
     >
-      <div className="mt-8 rounded-4-5xl border border-white/6 bg-white/2 p-6">
+      <div className="mt-8 rounded-2xl border border-white/6 bg-white/2 p-6">
         <h2 className="text-xl font-semibold tracking-[-0.03em] text-primary">
           {t("contactHeading")}
         </h2>

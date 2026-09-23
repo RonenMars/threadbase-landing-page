@@ -47,7 +47,7 @@ export function NewsletterForm(): React.JSX.Element {
   }
 
   return (
-    <div className="rounded-4xl border border-[rgba(240,138,36,0.18)] bg-[linear-gradient(135deg,rgba(240,138,36,0.06),rgba(99,179,255,0.03))] p-7 text-start sm:p-8">
+    <div className="rounded-2xl border border-[rgba(240,138,36,0.18)] bg-[linear-gradient(135deg,rgba(240,138,36,0.06),rgba(99,179,255,0.03))] p-7 text-start sm:p-8">
       <h3 className="text-xl font-semibold tracking-[-0.03em] text-primary">
         {t("heading")}
       </h3>
