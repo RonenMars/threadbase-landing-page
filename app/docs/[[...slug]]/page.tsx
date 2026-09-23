@@ -24,7 +24,13 @@ export default async function Page({
   const MDX = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      // Fumadocs goes full-width when a page has only a previous or only a next link.
+      // Keep half-width cards, with a lone "next" (the `text-end` card) in the right column.
+      footer={{ className: "grid-cols-2 @lg:[&>.text-end]:col-start-2" }}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
