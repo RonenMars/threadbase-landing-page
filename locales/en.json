@@ -46,6 +46,7 @@
     "links": {
       "home": "Home",
       "betas": "Beta Programs",
+      "docs": "Docs",
       "github": "GitHub",
       "privacy": "Privacy Policy",
       "support": "Support",
@@ -64,6 +65,7 @@
     "links": {
       "home": "Home",
       "betas": "Beta Programs",
+      "docs": "Docs",
       "github": "GitHub",
       "privacy": "Privacy Policy",
       "support": "Support",
@@ -263,8 +265,7 @@
         "brew tap RonenMars/threadbase",
         "brew install tb-streamer",
         "",
-        "# 2. One-time setup, then start it",
-        "tb-streamer set-key <YOUR_API_KEY>",
+        "# 2. Start it",
         "tb-streamer serve",
         "",
         "# Homebrew service mode also starts on login",

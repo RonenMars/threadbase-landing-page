@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { createMDX } from "fumadocs-mdx/next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 import { locales } from "./i18n/locales";
@@ -23,10 +24,18 @@ const nextConfig: NextConfig = {
         destination: "/:locale/privacy-policy",
         permanent: true,
       },
+      // Docs are English-only and unprefixed; see app/docs/layout.tsx.
+      {
+        source: `/:locale(${locales.join("|")})/docs/:path*`,
+        destination: "/docs/:path*",
+        permanent: false,
+      },
     ];
   },
 };
 
 const withNextIntl = createNextIntlPlugin();
 
-export default withNextIntl(nextConfig);
+const withMDX = createMDX();
+
+export default withMDX(withNextIntl(nextConfig));

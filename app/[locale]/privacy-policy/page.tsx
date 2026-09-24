@@ -105,7 +105,7 @@ function DataTable({
   rows: string[][];
 }): React.JSX.Element {
   return (
-    <div className="mt-6 rounded-4-5xl border border-white/6 bg-white/2">
+    <div className="mt-6 rounded-2xl border border-white/6 bg-white/2">
       <table className="block w-full border-collapse text-start text-sm md:table">
         <caption className="sr-only">{caption}</caption>
         <thead className="sr-only md:not-sr-only md:table-header-group">

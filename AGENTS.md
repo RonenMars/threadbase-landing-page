@@ -7,6 +7,12 @@ Everything not stated here — project layout, verification commands, commit con
 
 Threadbase has no hosted service: the app talks only to streamers the user runs. Several pieces of site copy state that as fact, so before writing or changing anything about relays, hosted backends, self-hosting, or sub-processors, read [docs/no-hosted-service.md](docs/no-hosted-service.md) — it lists every claim that a hosted service would falsify, and says not to hedge them in advance.
 
+## Docs site
+
+`/docs` is English-only and lives outside `app/[locale]` on purpose; do not move it under the locale segment.
+Check every command, flag, path and default in `content/docs/` against the `tb-streamer` and `tb-mobile` sources, not against the landing copy.
+Details are in the "Docs site" section of [CLAUDE.md](CLAUDE.md).
+
 ## Issue status updates
 
 Any change traceable to an existing issue ends with a status update on that issue — code, docs, tests, config, a revert, or a deletion all count. The issue is the record; a commit message, a PR body, or a chat reply is not a substitute.

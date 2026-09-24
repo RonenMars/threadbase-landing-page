@@ -6,6 +6,7 @@ import enTranslations from "@/locales/en.json";
 import heTranslations from "@/locales/he.json";
 import ruTranslations from "@/locales/ru.json";
 import { getTextDirection, isLocale, type Locale } from "@/i18n/routing";
+import { fontVariables } from "@/lib/fonts";
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };
@@ -34,11 +35,15 @@ export default function GlobalError({
   const homeHref = locale === "en" ? "/" : `/${locale}`;
 
   return (
-    <html className="dark" dir={getTextDirection(locale)} lang={locale}>
+    <html
+      className={`dark ${fontVariables}`}
+      dir={getTextDirection(locale)}
+      lang={locale}
+    >
       <body className="bg-bg-primary font-sans text-primary antialiased">
         <div className="app-shell min-h-screen">
           <main className="container-shell flex min-h-screen items-center justify-center px-6 py-24 sm:px-8 lg:px-10">
-            <section className="screenshot-shell relative w-full max-w-3xl overflow-hidden rounded-4xl border border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-8 text-center shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:p-12">
+            <section className="screenshot-shell relative w-full max-w-3xl overflow-hidden rounded-2xl border border-border-strong bg-[linear-gradient(180deg,rgba(8,12,20,0.96),rgba(11,18,31,0.92))] p-8 text-center shadow-[0_28px_80px_rgba(3,7,14,0.56)] sm:p-12">
               <div className="app-grid absolute inset-0 opacity-20" />
               <div className="relative space-y-6">
                 <p className="text-xs uppercase tracking-[0.26em] text-accent-secondary">

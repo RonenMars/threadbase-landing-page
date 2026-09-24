@@ -6,7 +6,7 @@ A hosted service is considered likely at some point. When it ships, it does not 
 
 ## What breaks the day a hosted service exists
 
-Each of these is currently true and would stop being true. All live in `locales/*.json` unless noted, and every one has he/ar/ru counterparts that must change together.
+Each of these is currently true and would stop being true. All live in `locales/*.json` unless noted, and every locale entry has he/ar/ru counterparts that must change together (the docs are English-only).
 
 | Key | Claim |
 |---|---|
@@ -15,6 +15,7 @@ Each of these is currently true and would stop being true. All live in `locales/
 | `home.security.cantSee[0]` | "Your prompts, transcripts, approvals, and files never touch a Threadbase server — there isn't one." |
 | `home.faq.items[5].answer` | "Self-host the streamer on your own machines." |
 | `pages.support.privacyBeforeLink` | "Threadbase is a thin client for self-hosted streamers." |
+| `content/docs/index.mdx` | "There is no hosted service" callout: "The app talks only to streamers you run. Your sessions and history stay on your machines." |
 | `.agents/product-marketing.md` | "no relay" in the Product line; "self-hosted, no relay, no analytics" in the ranked proof points |
 
 Outside this repo:

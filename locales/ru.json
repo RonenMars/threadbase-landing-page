@@ -46,6 +46,7 @@
     "links": {
       "home": "Главная",
       "betas": "Бета-программы",
+      "docs": "Документация",
       "github": "GitHub",
       "privacy": "Политика конфиденциальности",
       "support": "Поддержка",
@@ -64,6 +65,7 @@
     "links": {
       "home": "Главная",
       "betas": "Бета-программы",
+      "docs": "Документация",
       "github": "GitHub",
       "privacy": "Политика конфиденциальности",
       "support": "Поддержка",
@@ -263,8 +265,7 @@
         "brew tap RonenMars/threadbase",
         "brew install tb-streamer",
         "",
-        "# 2. Разовая настройка, затем запуск",
-        "tb-streamer set-key <YOUR_API_KEY>",
+        "# 2. Запуск",
         "tb-streamer serve",
         "",
         "# В режиме Homebrew-сервиса streamer также запускается при входе в систему",

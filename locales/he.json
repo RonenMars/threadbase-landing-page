@@ -46,6 +46,7 @@
     "links": {
       "home": "בית",
       "betas": "תוכניות בטא",
+      "docs": "תיעוד",
       "github": "GitHub",
       "privacy": "מדיניות פרטיות",
       "support": "תמיכה",
@@ -64,6 +65,7 @@
     "links": {
       "home": "בית",
       "betas": "תוכניות בטא",
+      "docs": "תיעוד",
       "github": "GitHub",
       "privacy": "מדיניות פרטיות",
       "support": "תמיכה",
@@ -263,8 +265,7 @@
         "brew tap RonenMars/threadbase",
         "brew install tb-streamer",
         "",
-        "# 2. הגדרה חד-פעמית, ואז הרצה",
-        "tb-streamer set-key <YOUR_API_KEY>",
+        "# 2. הרצה",
         "tb-streamer serve",
         "",
         "# מצב שירות של Homebrew מופעל גם בכניסה למערכת",

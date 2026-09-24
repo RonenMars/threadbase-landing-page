@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { NotFoundContent } from "@/components/NotFoundContent";
 import { defaultLocale, getTextDirection } from "@/i18n/routing";
 import translations from "@/locales/en.json";
+import { fontVariables } from "@/lib/fonts";
 
 /**
  * Root 404 — serves requests that never reach a locale segment, and so have no
@@ -22,7 +23,7 @@ import translations from "@/locales/en.json";
 export default function RootNotFound(): React.JSX.Element {
   return (
     <html
-      className="dark font-sans"
+      className={`dark font-sans ${fontVariables}`}
       dir={getTextDirection(defaultLocale)}
       lang={defaultLocale}
     >
