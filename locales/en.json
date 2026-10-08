@@ -1,17 +1,17 @@
 {
   "metadata": {
     "site": {
-      "title": "Threadbase — Keep Claude Code and Codex moving",
-      "description": "Watch, resume, approve, search, and respond to Claude Code and Codex sessions from your phone across every machine you pair."
+      "title": "Threadbase — Keep Claude Code, Codex, and GitHub Copilot moving",
+      "description": "Watch, resume, approve, search, and respond to Claude Code, Codex, and GitHub Copilot sessions from your phone across every machine you pair."
     },
     "routes": {
       "betas": {
         "title": "Threadbase — Beta Programs",
-        "description": "Join the Threadbase beta on iOS via TestFlight or Android via Google Play. Get early access to the mobile companion for Claude Code and Codex."
+        "description": "Join the Threadbase beta on iOS via TestFlight or Android via Google Play. Get early access to the mobile companion for Claude Code, Codex, and GitHub Copilot."
       },
       "androidBeta": {
         "title": "Threadbase — Android beta",
-        "description": "Join the Threadbase Android closed-alpha beta on Google Play. Two clicks, a short wait, and you're testing the mobile companion to Claude Code and Codex."
+        "description": "Join the Threadbase Android closed-alpha beta on Google Play. Two clicks, a short wait, and you're testing the mobile companion to Claude Code, Codex, and GitHub Copilot."
       },
       "solutions": {
         "title": "Threadbase — Other Surfaces",
@@ -61,7 +61,7 @@
     "productName": "Threadbase",
     "licenseText": "MIT License",
     "tagline": "Built for developers who don't want to be chained to their desks.",
-    "disclaimer": "Threadbase is an independent project, not affiliated with or endorsed by Anthropic, OpenAI, Cursor or any other AI tool vendor. Claude Code, Codex, Cursor and other product names are trademarks of their respective owners.",
+    "disclaimer": "Threadbase is an independent project, not affiliated with or endorsed by Anthropic, OpenAI, Cursor or any other AI tool vendor. Claude Code, Codex, GitHub Copilot, Cursor and other product names are trademarks of their respective owners.",
     "links": {
       "home": "Home",
       "betas": "Beta Programs",
@@ -77,9 +77,9 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Claude Code + Codex CLI, away from your desk",
+      "eyebrow": "Claude Code, Codex, and GitHub Copilot, away from your desk",
       "headline": "Leave the desk. Keep the agent working.",
-      "subheadline": "Threadbase streams Claude Code and Codex sessions from your own machines to your phone. Approve, answer, queue the next prompt, or start a fresh session from anywhere. End-to-end encrypted. Nothing leaves your machines.",
+      "subheadline": "Threadbase streams Claude Code, Codex, and GitHub Copilot sessions from your own machines to your phone. Approve, answer, queue the next prompt, or start a fresh session from anywhere. End-to-end encrypted. Nothing leaves your machines.",
       "primaryButtonLabel": "Get the app",
       "imageAlt": "Threadbase approval card on iPhone, next to a terminal session",
       "badges": [
@@ -179,7 +179,7 @@
       "items": [
         {
           "title": "Provider details differ",
-          "description": "Claude Code and Codex are both supported, but approvals, recovery, and resume behavior can differ by provider."
+          "description": "Claude Code, Codex, and GitHub Copilot are all supported, but approvals, recovery, and resume behavior can differ by provider."
         },
         {
           "title": "You run the streamer",
@@ -209,7 +209,7 @@
       "items": [
         {
           "question": "Does it work with Codex?",
-          "answer": "Yes. Claude Code and Codex sessions run side by side, with per-provider health and capability differences shown in the app."
+          "answer": "Yes. Claude Code, Codex, and GitHub Copilot sessions run side by side, with per-provider health and capability differences shown in the app."
         },
         {
           "question": "Do I have to open ports?",
@@ -290,7 +290,7 @@
     "betas": {
       "kicker": "Threadbase beta programs",
       "headline": "Join the Beta",
-      "intro": "Threadbase is available in early access on both iOS and Android. Pick your platform and get the mobile companion for Claude Code and Codex on your device.",
+      "intro": "Threadbase is available in early access on both iOS and Android. Pick your platform and get the mobile companion for Claude Code, Codex, and GitHub Copilot on your device.",
       "platforms": [
         {
           "eyebrow": "iOS · TestFlight",
@@ -407,7 +407,7 @@
     "privacy": {
       "kicker": "Threadbase privacy",
       "heading": "Privacy Policy",
-      "description": "Threadbase is a thin client for the Claude Code sessions you run on your own computer, reached through a Threadbase streamer instance that you operate. Threadbase is local-first by design: your prompts, session content, and credentials stay on your device and on the streamers you configure.",
+      "description": "Threadbase is a thin client for the Claude Code, Codex, and GitHub Copilot sessions you run on your own computer, reached through a Threadbase streamer instance that you operate. Threadbase is local-first by design: your prompts, session content, and credentials stay on your device and on the streamers you configure.",
       "intro": "This policy describes the specific, limited cases in which data leaves your device, and the controls you have over each.",
       "trafficHeading": "The kinds of network traffic Threadbase uses",
       "trafficIntro": "Threadbase separates its traffic into six distinct categories. Each is described in its own section below.",
@@ -512,7 +512,7 @@
       "staysHeading": "What stays on your device",
       "staysOnDevice": [
         "Your prompts and draft prompts.",
-        "Claude Code, Codex, and other agent conversation content.",
+        "Claude Code, Codex, GitHub Copilot, and other agent conversation content.",
         "Terminal output and session content, apart from the prompt-derived title and truncated terminal excerpt an iOS Live Activity carries, described in section 2.",
         "Your streamer URLs, API keys, and pairing credentials (in the iOS Keychain / Android Keystore).",
         "Your session names, favorites, and app settings."
