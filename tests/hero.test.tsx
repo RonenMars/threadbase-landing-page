@@ -40,7 +40,9 @@ describe("Hero", () => {
   it("renders the eyebrow", () => {
     renderWithIntl(<Hero />);
     expect(
-      screen.getByText(/claude code, codex, and github copilot, away from your desk/i),
+      screen.getByText(
+        /claude code, codex, and github copilot, away from your desk/i,
+      ),
     ).toBeInTheDocument();
   });
 
