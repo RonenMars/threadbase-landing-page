@@ -1,17 +1,17 @@
 {
   "metadata": {
     "site": {
-      "title": "Threadbase — ממשיכים עם Claude Code ו-Codex",
-      "description": "צפו, חדשו, אשרו, חפשו והגיבו לסשנים של Claude Code ו-Codex מהטלפון — בכל המכונות שחוברו."
+      "title": "Threadbase — ממשיכים עם Claude Code, Codex, ו-GitHub Copilot",
+      "description": "צפו, חדשו, אשרו, חפשו והגיבו לסשנים של Claude Code, Codex, ו-GitHub Copilot מהטלפון — בכל המכונות שחוברו."
     },
     "routes": {
       "betas": {
         "title": "Threadbase — תוכניות בטא",
-        "description": "הצטרפו לבטא של Threadbase ב-iOS דרך TestFlight או ב-Android דרך Google Play. קבלו גישה מוקדמת לאפליקציית הליווי הניידת של Claude Code ו-Codex."
+        "description": "הצטרפו לבטא של Threadbase ב-iOS דרך TestFlight או ב-Android דרך Google Play. קבלו גישה מוקדמת לאפליקציית הליווי הניידת של Claude Code, Codex, ו-GitHub Copilot."
       },
       "androidBeta": {
         "title": "Threadbase — בטא Android",
-        "description": "הצטרפו לבטא הסגורה של Threadbase ל-Android ב-Google Play. שני קליקים, המתנה קצרה, ואפשר להתחיל לבדוק את אפליקציית הליווי הניידת של Claude Code ו-Codex."
+        "description": "הצטרפו לבטא הסגורה של Threadbase ל-Android ב-Google Play. שני קליקים, המתנה קצרה, ואפשר להתחיל לבדוק את אפליקציית הליווי הניידת של Claude Code, Codex, ו-GitHub Copilot."
       },
       "solutions": {
         "title": "Threadbase — משטחים נוספים",
@@ -61,7 +61,7 @@
     "productName": "Threadbase",
     "licenseText": "רישיון MIT",
     "tagline": "נבנה למפתחים שלא רוצים להיות כבולים לשולחן.",
-    "disclaimer": "Threadbase הוא פרויקט עצמאי, ללא קשר ל-Anthropic, ל-OpenAI, ל-Cursor או לכל ספק אחר של כלי AI, ואינו מאושר על ידם. Claude Code, Codex, Cursor ושמות מוצרים אחרים הם סימנים מסחריים של בעליהם.",
+    "disclaimer": "Threadbase הוא פרויקט עצמאי, ללא קשר ל-Anthropic, ל-OpenAI, ל-Cursor או לכל ספק אחר של כלי AI, ואינו מאושר על ידם. Claude Code, Codex, GitHub Copilot, Cursor ושמות מוצרים אחרים הם סימנים מסחריים של בעליהם.",
     "links": {
       "home": "בית",
       "betas": "תוכניות בטא",
@@ -77,9 +77,9 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Claude Code + Codex CLI, גם הרחק משולחן העבודה",
+      "eyebrow": "Claude Code, Codex, ו-GitHub Copilot, גם הרחק משולחן העבודה",
       "headline": "תעזבו את השולחן. תשאירו את הסוכן עובד.",
-      "subheadline": "Threadbase משדר סשנים של Claude Code ו-Codex מהמכונות שלכם לטלפון. אשרו, השיבו, הוסיפו את ההנחיה הבאה לתור, או התחילו סשן חדש מכל מקום. מוצפן מקצה לקצה. שום דבר לא יוצא מהמכונות שלכם.",
+      "subheadline": "Threadbase משדר סשנים של Claude Code, Codex, ו-GitHub Copilot מהמכונות שלכם לטלפון. אשרו, השיבו, הוסיפו את ההנחיה הבאה לתור, או התחילו סשן חדש מכל מקום. מוצפן מקצה לקצה. שום דבר לא יוצא מהמכונות שלכם.",
       "primaryButtonLabel": "קבלו את האפליקציה",
       "imageAlt": "כרטיס אישור של Threadbase באייפון, לצד סשן טרמינל",
       "badges": [
@@ -179,7 +179,7 @@
       "items": [
         {
           "title": "יש הבדלים בין הספקים",
-          "description": "Claude Code ו-Codex נתמכים, אבל אישורים, התאוששות וחידוש סשן עשויים לעבוד אחרת בכל ספק."
+          "description": "Claude Code, Codex, ו-GitHub Copilot נתמכים, אבל אישורים, התאוששות וחידוש סשן עשויים לעבוד אחרת בכל ספק."
         },
         {
           "title": "ה-streamer בשליטתכם",
@@ -209,7 +209,7 @@
       "items": [
         {
           "question": "זה עובד עם Codex?",
-          "answer": "כן. סשנים של Claude Code ו-Codex רצים זה לצד זה, כאשר הבדלי בריאות ויכולות בין הספקים מוצגים באפליקציה."
+          "answer": "כן. סשנים של Claude Code, Codex, ו-GitHub Copilot רצים זה לצד זה, כאשר הבדלי בריאות ויכולות בין הספקים מוצגים באפליקציה."
         },
         {
           "question": "צריך לפתוח פורטים?",
@@ -290,7 +290,7 @@
     "betas": {
       "kicker": "תוכניות הבטא של Threadbase",
       "headline": "הצטרפו לבטא",
-      "intro": "Threadbase זמין בגישה מוקדמת גם ב-iOS וגם ב-Android. בחרו פלטפורמה וקבלו את אפליקציית הליווי הניידת של Claude Code ו-Codex למכשיר.",
+      "intro": "Threadbase זמין בגישה מוקדמת גם ב-iOS וגם ב-Android. בחרו פלטפורמה וקבלו את אפליקציית הליווי הניידת של Claude Code, Codex, ו-GitHub Copilot למכשיר.",
       "platforms": [
         {
           "eyebrow": "iOS · TestFlight",
@@ -407,7 +407,7 @@
     "privacy": {
       "kicker": "פרטיות Threadbase",
       "heading": "מדיניות פרטיות",
-      "description": "Threadbase הוא לקוח דק לסשנים של Claude Code שאתם מריצים על המחשב שלכם, ומגיעים אליהם דרך מופע Threadbase streamer שאתם מפעילים. Threadbase מתוכנן מלכתחילה כך שהנתונים יישארו אצלכם: הפרומפטים, תוכן הסשנים ופרטי הגישה נשארים על המכשיר שלכם ועל ה-streamers שהגדרתם.",
+      "description": "Threadbase הוא לקוח דק לסשנים של Claude Code, Codex, ו-GitHub Copilot שאתם מריצים על המחשב שלכם, ומגיעים אליהם דרך מופע Threadbase streamer שאתם מפעילים. Threadbase מתוכנן מלכתחילה כך שהנתונים יישארו אצלכם: הפרומפטים, תוכן הסשנים ופרטי הגישה נשארים על המכשיר שלכם ועל ה-streamers שהגדרתם.",
       "intro": "המדיניות הזו מתארת את המקרים המסוימים והמוגבלים שבהם נתונים יוצאים מהמכשיר שלכם, ואת השליטה שיש לכם בכל אחד מהם.",
       "trafficHeading": "סוגי תעבורת הרשת שבהם Threadbase משתמש",
       "trafficIntro": "Threadbase מפריד את התעבורה שלו לשש קטגוריות נפרדות. כל אחת מתוארת בסעיף משלה בהמשך.",
@@ -512,7 +512,7 @@
       "staysHeading": "מה נשאר על המכשיר שלך",
       "staysOnDevice": [
         "הפרומפטים שלכם וטיוטות פרומפטים.",
-        "תוכן שיחות של Claude Code, Codex וסוכנים אחרים.",
+        "תוכן שיחות של Claude Code, Codex, GitHub Copilot וסוכנים אחרים.",
         "פלט טרמינל ותוכן סשנים, למעט הכותרת הנגזרת מהפרומפט וקטע פלט הטרמינל הקטום ש-Live Activity ב-iOS נושא, כמתואר בסעיף 2.",
         "כתובות ה-streamer שלכם, מפתחות API ופרטי pairing (ב-iOS Keychain / Android Keystore).",
         "שמות הסשנים, המועדפים והגדרות האפליקציה שלכם."

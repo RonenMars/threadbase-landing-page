@@ -25,7 +25,7 @@ describe("Hero", () => {
       "Leave the desk. Keep the agent working.",
     );
     expect(root.textContent).toContain(
-      "Threadbase streams Claude Code and Codex sessions from your own machines to your phone.",
+      "Threadbase streams Claude Code, Codex, and GitHub Copilot sessions from your own machines to your phone.",
     );
   });
 
@@ -40,7 +40,7 @@ describe("Hero", () => {
   it("renders the eyebrow", () => {
     renderWithIntl(<Hero />);
     expect(
-      screen.getByText(/claude code \+ codex cli, away from your desk/i),
+      screen.getByText(/claude code, codex, and github copilot, away from your desk/i),
     ).toBeInTheDocument();
   });
 

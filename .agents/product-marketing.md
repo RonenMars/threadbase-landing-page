@@ -4,7 +4,7 @@ Voice: the site's own — short sentences, developer-to-developer, candid (Hones
 
 ## Product
 
-Threadbase is the phone companion for Claude Code and Codex sessions running on your own machines. A streamer you install on each machine, an app on your phone, end-to-end encrypted between them, no relay.
+Threadbase is the phone companion for Claude Code, Codex, and GitHub Copilot sessions running on your own machines. A streamer you install on each machine, an app on your phone, end-to-end encrypted between them, no relay.
 
 ## Audience
 
@@ -16,7 +16,7 @@ Not "watch your agent" — *keep it working*. Leave the desk, answer when it ask
 
 ## Proof points, ranked
 
-Waiting-for-input push · single-choice approvals and questions from the phone · live terminal and chat view · prompt queue · voice dictation · start a session from the phone (project picker) · adopt and take over terminal-started sessions · cross-session full-text search · multi-machine · E2EE by default with per-device credentials · self-hosted, no relay, no analytics · Claude Code + Codex · four languages with RTL · MIT.
+Waiting-for-input push · single-choice approvals and questions from the phone · live terminal and chat view · prompt queue · voice dictation · start a session from the phone (project picker) · adopt and take over terminal-started sessions · cross-session full-text search · multi-machine · E2EE by default with per-device credentials · self-hosted, no relay, no analytics · Claude Code + Codex + GitHub Copilot · four languages with RTL · MIT.
 
 ## Not claims (yet)
 

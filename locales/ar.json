@@ -1,17 +1,17 @@
 {
   "metadata": {
     "site": {
-      "title": "Threadbase — واصلوا العمل مع Claude Code وCodex",
-      "description": "راقبوا سيشنات Claude Code وCodex واستأنفوها، ووافقوا وابحثوا وردّوا من الهاتف عبر كل جهاز تم إقرانه."
+      "title": "Threadbase — واصلوا العمل مع Claude Code وCodex وGitHub Copilot",
+      "description": "راقبوا سيشنات Claude Code وCodex وGitHub Copilot واستأنفوها، ووافقوا وابحثوا وردّوا من الهاتف عبر كل جهاز تم إقرانه."
     },
     "routes": {
       "betas": {
         "title": "Threadbase — برامج الإصدارات التجريبية",
-        "description": "انضمّوا إلى الإصدار التجريبي من Threadbase على iOS عبر TestFlight أو على Android عبر Google Play. احصلوا على وصول مبكر إلى التطبيق المرافق لـ Claude Code وCodex على الهاتف."
+        "description": "انضمّوا إلى الإصدار التجريبي من Threadbase على iOS عبر TestFlight أو على Android عبر Google Play. احصلوا على وصول مبكر إلى التطبيق المرافق لـ Claude Code وCodex وGitHub Copilot على الهاتف."
       },
       "androidBeta": {
         "title": "Threadbase — الإصدار التجريبي لـ Android",
-        "description": "انضمّوا إلى إصدار Threadbase التجريبي المغلق في مرحلة ألفا على Android عبر Google Play. نقرتان وانتظار قصير، وتصبحون من مختبري التطبيق المرافق لـ Claude Code وCodex على الهاتف."
+        "description": "انضمّوا إلى إصدار Threadbase التجريبي المغلق في مرحلة ألفا على Android عبر Google Play. نقرتان وانتظار قصير، وتصبحون من مختبري التطبيق المرافق لـ Claude Code وCodex وGitHub Copilot على الهاتف."
       },
       "solutions": {
         "title": "Threadbase — واجهات أخرى",
@@ -61,7 +61,7 @@
     "productName": "Threadbase",
     "licenseText": "رخصة MIT",
     "tagline": "صُمم للمطورين الذين لا يريدون البقاء مقيدين بمكاتبهم.",
-    "disclaimer": "Threadbase مشروع مستقل، غير تابع لـ Anthropic أو OpenAI أو Cursor أو أي مزوّد آخر لأدوات الذكاء الاصطناعي، ولا يحظى بتأييدهم. Claude Code وCodex وCursor وأسماء المنتجات الأخرى علامات تجارية لأصحابها.",
+    "disclaimer": "Threadbase مشروع مستقل، غير تابع لـ Anthropic أو OpenAI أو Cursor أو أي مزوّد آخر لأدوات الذكاء الاصطناعي، ولا يحظى بتأييدهم. Claude Code وCodex وGitHub Copilot وCursor وأسماء المنتجات الأخرى علامات تجارية لأصحابها.",
     "links": {
       "home": "الرئيسية",
       "betas": "برامج الإصدارات التجريبية",
@@ -77,9 +77,9 @@
   },
   "home": {
     "hero": {
-      "eyebrow": "Claude Code + Codex CLI بعيدًا عن المكتب",
+      "eyebrow": "Claude Code وCodex وGitHub Copilot بعيدًا عن المكتب",
       "headline": "ابتعدوا عن المكتب. أبقوا الوكيل يعمل.",
-      "subheadline": "يبث Threadbase سيشنات Claude Code وCodex من أجهزتكم إلى هاتفكم. وافقوا، أجيبوا، أضيفوا التوجيه التالي إلى قائمة الانتظار، أو ابدأوا سيشن جديدة من أي مكان. مشفّر من طرف إلى طرف. لا شيء يغادر أجهزتكم.",
+      "subheadline": "يبث Threadbase سيشنات Claude Code وCodex وGitHub Copilot من أجهزتكم إلى هاتفكم. وافقوا، أجيبوا، أضيفوا التوجيه التالي إلى قائمة الانتظار، أو ابدأوا سيشن جديدة من أي مكان. مشفّر من طرف إلى طرف. لا شيء يغادر أجهزتكم.",
       "primaryButtonLabel": "احصلوا على التطبيق",
       "imageAlt": "بطاقة موافقة Threadbase على آيفون، بجانب سيشن طرفية",
       "badges": [
@@ -179,7 +179,7 @@
       "items": [
         {
           "title": "السلوك يختلف باختلاف المزوّد",
-          "description": "يدعم Threadbase كلًا من Claude Code وCodex، لكن الموافقات والاسترداد واستئناف السيشن قد تختلف باختلاف المزوّد."
+          "description": "يدعم Threadbase كلًا من Claude Code وCodex وGitHub Copilot، لكن الموافقات والاسترداد واستئناف السيشن قد تختلف باختلاف المزوّد."
         },
         {
           "title": "أنتم تشغّلون streamer",
@@ -209,7 +209,7 @@
       "items": [
         {
           "question": "هل يعمل مع Codex؟",
-          "answer": "نعم. تعمل سيشنات Claude Code وCodex جنبًا إلى جنب، مع عرض فروقات الصحة والقدرات الخاصة بكل مزوّد داخل التطبيق."
+          "answer": "نعم. تعمل سيشنات Claude Code وCodex وGitHub Copilot جنبًا إلى جنب، مع عرض فروقات الصحة والقدرات الخاصة بكل مزوّد داخل التطبيق."
         },
         {
           "question": "هل يجب فتح منافذ؟",
@@ -290,7 +290,7 @@
     "betas": {
       "kicker": "برامج Threadbase التجريبية",
       "headline": "انضمّوا إلى الإصدار التجريبي",
-      "intro": "يتوفر Threadbase بوصول مبكر على iOS وAndroid. اختاروا منصتكم واحصلوا على التطبيق المرافق لـ Claude Code وCodex على الهاتف.",
+      "intro": "يتوفر Threadbase بوصول مبكر على iOS وAndroid. اختاروا منصتكم واحصلوا على التطبيق المرافق لـ Claude Code وCodex وGitHub Copilot على الهاتف.",
       "platforms": [
         {
           "eyebrow": "iOS · TestFlight",
@@ -407,7 +407,7 @@
     "privacy": {
       "kicker": "خصوصية Threadbase",
       "heading": "سياسة الخصوصية",
-      "description": "Threadbase عميل خفيف لجلسات Claude Code التي تشغّلونها على حاسوبكم، ويصل إليها عبر مثيل من مكوّن streamer في Threadbase تديرونه بأنفسكم. صُمم Threadbase وفق نهج يعطي الأولوية للتشغيل المحلي: تبقى مطالباتكم ومحتوى الجلسات وبيانات الاعتماد على جهازكم وعلى مكوّنات streamer التي تهيئونها.",
+      "description": "Threadbase عميل خفيف لجلسات Claude Code وCodex وGitHub Copilot التي تشغّلونها على حاسوبكم، ويصل إليها عبر مثيل من مكوّن streamer في Threadbase تديرونه بأنفسكم. صُمم Threadbase وفق نهج يعطي الأولوية للتشغيل المحلي: تبقى مطالباتكم ومحتوى الجلسات وبيانات الاعتماد على جهازكم وعلى مكوّنات streamer التي تهيئونها.",
       "intro": "تصف هذه السياسة الحالات المحددة والمحدودة التي تغادر فيها البيانات جهازكم، والضوابط المتاحة لكم في كل حالة.",
       "trafficHeading": "أنواع حركة الشبكة التي يستخدمها Threadbase",
       "trafficIntro": "يفصل Threadbase حركة المرور الخاصة به إلى ست فئات مميزة. كل فئة موضحة في قسمها أدناه.",
@@ -512,7 +512,7 @@
       "staysHeading": "ما يبقى على جهازكم",
       "staysOnDevice": [
         "مطالباتكم ومسودات المطالبات.",
-        "محتوى محادثات Claude Code وCodex والوكلاء الآخرين.",
+        "محتوى محادثات Claude Code وCodex وGitHub Copilot والوكلاء الآخرين.",
         "مخرجات الطرفية ومحتوى الجلسات، باستثناء العنوان المشتق من المطالبة والمقتطف المقتطع الذي تحمله Live Activity على iOS، الموضحين في القسم 2.",
         "عناوين URL لمكوّنات streamer ومفاتيح API وبيانات اعتماد الإقران الخاصة بكم (في iOS Keychain / Android Keystore).",
         "أسماء جلساتكم والمفضلات وإعدادات التطبيق."
