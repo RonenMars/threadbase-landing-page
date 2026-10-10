@@ -164,6 +164,7 @@ export default async function PrivacyPolicyPage({
   const screenshotAndDiagnosticDetails = t.raw(
     "screenshotAndDiagnosticDetails",
   ) as PolicyDetail[];
+  const relayDetails = t.raw("relayDetails") as PolicyDetail[];
   const staysOnDevice = t.raw("staysOnDevice") as string[];
   const subProcessors = t.raw("subProcessors") as PolicyDetail[];
   const permissionsHeaders = t.raw("permissionsHeaders") as string[];
@@ -209,6 +210,10 @@ export default async function PrivacyPolicyPage({
       <SectionHeading>{t("newsletterHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("newsletterBody")}</p>
 
+      <SectionHeading>{t("relayHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("relayIntro")}</p>
+      <PolicyDetailList items={relayDetails} />
+
       <SectionHeading>{t("staysHeading")}</SectionHeading>
       <PolicyList items={staysOnDevice} />
       <p className="mt-6 leading-8 text-secondary">{t("uninstallBody")}</p>
@@ -237,13 +242,14 @@ export default async function PrivacyPolicyPage({
         <p>
           {t("lastUpdatedLabel")} {privacyMeta.lastUpdated}
         </p>
+        <p className="mt-1">{t("operatorBody")}</p>
         <p className="mt-1">
           {t("contactLabel")}{" "}
           <a
             className="text-accent transition-colors hover:text-accent-hover"
-            href="mailto:support@threadbase.sh"
+            href="mailto:privacy@threadbase.sh"
           >
-            support@threadbase.sh
+            privacy@threadbase.sh
           </a>
         </p>
       </footer>

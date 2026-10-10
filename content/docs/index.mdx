@@ -12,10 +12,12 @@ Threadbase has two parts:
 
 - **The streamer** (`tb-streamer`) runs on each machine where your agents run — macOS, Linux, or Windows.
   It starts and manages agent sessions and serves them to your phone.
-- **The app** runs on iOS and Android and connects directly to the streamers you pair it with.
+- **The app** runs on iOS and Android and connects to the streamers you pair it with — directly by default.
 
-<Callout title="There is no hosted service">
-  The app talks only to streamers you run.
+<Callout title="Your sessions stay on your machines">
+  The app talks to streamers you run, and by default nothing sits in between.
+  An optional relay, off by default, can carry that traffic if you would rather not set up remote access yourself.
+  It only ever sees encrypted bytes and connection metadata, never your sessions.
   Your sessions and history stay on your machines.
 </Callout>
 
