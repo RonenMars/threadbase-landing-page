@@ -80,7 +80,7 @@ Copy `.env.example` to `.env.local` and fill in values. `MAILERLITE_API_KEY` is 
 
 ## Product claims
 
-Threadbase has no hosted service: the app talks only to streamers the user runs. Several pieces of site copy state that as fact, so before writing or changing anything about relays, hosted backends, self-hosting, or sub-processors, read [docs/no-hosted-service.md](docs/no-hosted-service.md) — it lists every claim that a hosted service would falsify, and says not to hedge them in advance.
+By default Threadbase has no hosted service: the app talks only to streamers the user runs, and the site leads with "Nothing leaves your machines." An optional relay exists as a side service, off by default. Several pieces of site copy state the boundary as fact, so before writing or changing anything about relays, hosted backends, self-hosting, or sub-processors, read [docs/no-hosted-service.md](docs/no-hosted-service.md) — it lists where those claims live and the rule for wording them.
 
 ## Issue status updates
 

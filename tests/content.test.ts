@@ -123,8 +123,13 @@ describe("i18n content catalogs", () => {
     expect(frontPageCopy).toContain("end-to-end encrypted by default");
     expect(frontPageCopy).toContain("noise ik");
     expect(frontPageCopy).not.toContain("never talks to a threadbase server");
+    // The relay is optional and off by default, so the default story stays
+    // "no Threadbase server in the path"; the claim is scoped, not dropped.
     expect(enTranslations.home.security.description).toContain(
-      "does not relay your coding-agent session through a Threadbase-hosted session backend",
+      "by default your phone talks straight to it — no Threadbase server in between",
+    );
+    expect(enTranslations.home.security.heading).not.toMatch(
+      /no threadbase session relay/i,
     );
   });
 
@@ -160,6 +165,7 @@ describe("i18n content catalogs", () => {
     ["pages.privacy", "feedbackDetails"],
     ["pages.privacy", "permissions"],
     ["pages.privacy", "permissionsHeaders"],
+    ["pages.privacy", "relayDetails"],
     ["pages.privacy", "staysOnDevice"],
     ["pages.privacy", "trafficCategories"],
     ["pages.privacy", "yourControl"],

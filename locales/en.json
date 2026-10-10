@@ -154,17 +154,17 @@
       ]
     },
     "security": {
-      "heading": "Your streamer. Your machines. No Threadbase session relay.",
-      "description": "Threadbase does not relay your coding-agent session through a Threadbase-hosted session backend. Sessions are end-to-end encrypted by default — Noise IK, X25519 and ChaCha20-Poly1305 — between your phone and each streamer. Every phone gets its own scoped credentials. Revoke one, and it's gone. Verify a machine's fingerprint with tb-streamer identity before you trust it.",
+      "heading": "Your streamer. Nothing leaves your machines.",
+      "description": "Threadbase runs on a streamer you install, and by default your phone talks straight to it — no Threadbase server in between. Sessions are end-to-end encrypted by default — Noise IK, X25519 and ChaCha20-Poly1305 — between your phone and each streamer. Every phone gets its own scoped credentials. Revoke one, and it's gone. Verify a machine's fingerprint with tb-streamer identity before you trust it.",
       "cantSeeHeading": "What we can't see",
       "cantSee": [
-        "Your prompts, transcripts, approvals, and files never touch a Threadbase server — there isn't one.",
+        "Your prompts, transcripts, approvals, and files are never readable by Threadbase. They don't touch a Threadbase server unless you turn on the optional relay, and even then they pass through it only as encrypted bytes.",
         "No analytics.",
         "Anonymous diagnostics — crash reports and basic stability data — are off by default and only ever sent because you switched them on.",
         "Feedback you write in Settings goes out when you tap send, and nothing else does.",
         "Keys live in the Keychain and Keystore."
       ],
-      "scopeNote": "This boundary describes the coding-session path. Pairing, notification delivery, and the local coding-agent process are separate parts of the architecture.",
+      "scopeNote": "This boundary describes the coding-session path. Pairing, notification delivery, and the local coding-agent process are separate parts of the architecture. The optional Threadbase Relay is a side service for people who want the simplest setup, with no tunnel, port forwarding, or VPN; it is off by default. If you turn it on, it can see that a connection happened — your IP address, timing, and sizes — but not what is inside it. The privacy policy has the details.",
       "highlights": [
         "End-to-end encrypted by default",
         "Per-device credentials, one-tap revoke",
@@ -399,7 +399,7 @@
         "Whether the issue happens every time or only sometimes"
       ],
       "privacyHeading": "Privacy and data",
-      "privacyBeforeLink": "Threadbase is a thin client for self-hosted streamers. The app does not run its own analytics, crash-reporting, or telemetry service. Read the",
+      "privacyBeforeLink": "Threadbase is a thin client for streamers you host yourself. By default the app connects straight to them; an optional relay is available if you turn it on. The app does not run its own analytics, crash-reporting, or telemetry service. Read the",
       "privacyLink": "privacy policy",
       "privacyAfterLink": "for the full data handling summary.",
       "supportEmailLabel": "Support email:"
@@ -410,17 +410,18 @@
       "description": "Threadbase is a thin client for the Claude Code, Codex, and GitHub Copilot sessions you run on your own computer, reached through a Threadbase streamer instance that you operate. Threadbase is local-first by design: your prompts, session content, and credentials stay on your device and on the streamers you configure.",
       "intro": "This policy describes the specific, limited cases in which data leaves your device, and the controls you have over each.",
       "trafficHeading": "The kinds of network traffic Threadbase uses",
-      "trafficIntro": "Threadbase separates its traffic into six distinct categories. Each is described in its own section below.",
+      "trafficIntro": "Threadbase separates its traffic into seven distinct categories. Each is described in its own section below.",
       "trafficCategories": [
         "Core traffic to your streamers — the app's normal function.",
         "Push-notification delivery — optional notifications, including iOS Live Activities.",
         "Crash reporting (Sentry) — automatic reporting is off by default and opt-in; a single crash can also be reported manually at any time.",
         "User-initiated feedback submissions — only when you send feedback.",
         "Optional screenshots or diagnostics you explicitly select — only when you choose to include them.",
-        "Newsletter subscription (MailerLite) — only when you opt in on the website."
+        "Newsletter subscription (MailerLite) — only when you opt in on the website.",
+        "Optional Threadbase Relay — only if you turn it on; it carries end-to-end encrypted traffic and sees connection metadata."
       ],
       "coreHeading": "1. Core traffic to your streamers",
-      "coreBody": "Threadbase connects only to the streamer URLs you configure. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. Threadbase does not route this traffic through any Threadbase-operated server, and it does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
+      "coreBody": "Threadbase connects only to the streamers you pair it with. By default it reaches them at the addresses you configure. If you have turned on the optional Threadbase Relay for a streamer (section 7), the app can also reach that streamer through the relay address the streamer provides. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. By default, Threadbase does not route this traffic through any Threadbase-operated server. If you turn on the relay, the traffic passes through it only as end-to-end encrypted data the relay cannot read, and Threadbase does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
       "pushHeading": "2. Push-notification delivery",
       "pushBody": "If you enable notifications, Threadbase registers a push token with each streamer you have paired, so that streamer can notify you when a session needs attention. The token itself is an opaque delivery address and does not contain your session content. Removing a server in Settings deletes its credentials from your device, and asks that streamer to delete its push token — though not if the streamer is unreachable at that moment; to be certain, go to Paired devices in Settings and revoke the device — that deletes the token immediately. Threadbase uses two delivery paths. Ordinary notifications — for example, a session waiting for your input — are delivered through Expo's push relay. That payload carries the project name, which may identify the repository or project, a fixed message, and the session and server identifiers the app needs to open the right screen — the server identifier defaults to that streamer's hostname unless a custom instance ID is configured; it does not include prompts, terminal output, credentials, or conversation content. Live Activities — the iOS lock-screen and Dynamic Island session status — are sent directly to Apple's push service (api.push.apple.com) by a streamer configured with Apple push credentials, which Apple issues per developer team. The Live Activity payload carries the session status, the project name, a title derived from your first message in that session, the session's start time, a server label that also defaults to the streamer's hostname, and a short, truncated excerpt of recent terminal output. The prompt-derived title and terminal excerpt can contain content from the session, including sensitive text that appeared there.",
       "crashHeading": "3. Anonymous diagnostics (Sentry)",
@@ -509,6 +510,45 @@
       "screenshotReview": "Screenshots and manually entered feedback may contain content you choose to include. Please review anything you attach before submitting.",
       "newsletterHeading": "6. Newsletter subscription (MailerLite)",
       "newsletterBody": "The Threadbase website offers an opt-in email newsletter for product news and updates. This is separate from the mobile app and only applies if you subscribe on the website. If you do, the email address you provide (and your name, if you choose to give one) is sent to MailerLite, our email service provider, which processes it under its own terms and data-processing agreements to send you the newsletter and manage your subscription, including confirmation and unsubscribe. Subscribing requires an explicit, unchecked consent checkbox — there is no pre-ticked opt-in. Every newsletter email includes an unsubscribe link; unsubscribing stops future emails and removes you from the list.",
+      "relayHeading": "7. Optional Threadbase Relay",
+      "relayIntro": "The Threadbase Relay is an optional hosted service for people who want remote access without setting up a tunnel, port forwarding, or a VPN. It is off by default. Your streamer connects to it only if you turn it on, and the app uses a relay address only for a streamer you have paired. If you never turn it on, nothing in this section applies and your sessions do not pass through any Threadbase-operated server.",
+      "relayDetails": [
+        {
+          "label": "What it carries.",
+          "body": "Traffic between your phone and a streamer is end-to-end encrypted before it reaches the relay, using the keys of the phone and the streamer. The relay forwards encrypted bytes. It cannot read your prompts, transcripts, approvals, files, or terminal output, and it holds no key that could. It refuses unencrypted credentials rather than carrying them."
+        },
+        {
+          "label": "What it can see.",
+          "body": "Connection metadata, while the traffic passes through: your IP address, a route identifier derived from your streamer's public key, the request method and path (which can include session identifiers), and the timing and size of each message. Because an IP address can identify a person, we treat this metadata as personal data."
+        },
+        {
+          "label": "What it records.",
+          "body": "The relay's application logs record only a hashed route identifier, a connection identifier, byte counts, durations, and close codes. They do not record IP addresses, request paths, query strings, headers, or message bodies. To limit abuse, the relay holds a salted hash of a client's address in memory only, which does not survive a restart. The relay does not use this data for advertising, analytics, or profiling."
+        },
+        {
+          "label": "Why we process it.",
+          "body": "We process this metadata to deliver the connection and to keep the relay secure and working, including preventing abuse. Where the GDPR or the UK GDPR applies, our legal basis is our legitimate interest in running a secure, working service (Article 6(1)(f))."
+        },
+        {
+          "label": "Where it runs.",
+          "body": "The relay runs on Fly.io, in its Amsterdam region in the Netherlands. Fly.io acts as our hosting provider and, in running the infrastructure, may process IP addresses and connection logs. It is listed under service providers below."
+        },
+        {
+          "label": "Retention.",
+          "body": "The relay stores no session content and has no accounts. The log fields above contain no IP address or content and are kept only for as long as our hosting provider retains application logs."
+        },
+        {
+          "label": "Your control.",
+          "body": "The relay is off by default. You turn it on or off on your streamer, and with it off the app reaches your streamer at its own address, as before. Contact support@threadbase.sh to ask about, or request deletion of, any data connected to you."
+        },
+        {
+          "label": "Open source.",
+          "bodyBeforeLink": "The relay's code is public at",
+          "linkText": "github.com/RonenMars/threadbase-relay",
+          "linkHref": "https://github.com/RonenMars/threadbase-relay",
+          "bodyAfterLink": ", so these statements can be checked against it."
+        }
+      ],
       "staysHeading": "What stays on your device",
       "staysOnDevice": [
         "Your prompts and draft prompts.",
@@ -519,7 +559,7 @@
       ],
       "uninstallBody": "Uninstalling the app removes the Threadbase data stored in the app's own container. Some credentials held by the operating system's secure credential storage — such as the iOS Keychain — can survive an uninstall and be restored if you reinstall; to delete a server's credentials, remove that server inside the app first. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
       "notCollectHeading": "What we do not collect",
-      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct, the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above. Separately, when Live Activities are enabled, the streamer sends the prompt-derived title and terminal excerpt described in section 2 to Apple's push service; that data travels from your streamer, not from your device.",
+      "notCollectBody": "Threadbase does not use advertising, tracking, fingerprinting, or behavioral telemetry. It does not include a product-analytics SDK. It does not automatically capture your screen, console output, or network requests. The only data that leaves your device is the core streamer traffic you direct (which, if you turn on the optional relay, passes through it end-to-end encrypted, as described in section 7), the optional push-notification token, and only with your action or opt-in consent, the crash reports, feedback, screenshots, diagnostics, and newsletter subscription described above. Separately, when Live Activities are enabled, the streamer sends the prompt-derived title and terminal excerpt described in section 2 to Apple's push service; that data travels from your streamer, not from your device.",
       "subProcessorsHeading": "Service providers we use",
       "subProcessorsIntro": "Threadbase relies on the following third parties. Each one processes only the data described in its section above, under its own terms and data-processing agreements.",
       "subProcessors": [
@@ -538,6 +578,10 @@
         {
           "label": "MailerLite.",
           "body": "Processes newsletter subscriptions from the website, as described in section 6."
+        },
+        {
+          "label": "Fly.io.",
+          "body": "Hosts the optional Threadbase Relay. Fly.io's infrastructure handles your connection only if you turn the relay on, and may then process IP addresses and connection logs, as described in section 7. It cannot read the content, which is end-to-end encrypted."
         }
       ],
       "permissionsHeading": "Permissions the app uses",
@@ -572,6 +616,7 @@
         "Feedback and diagnostics are only ever sent when you initiate them.",
         "Removing a server deletes its credentials from your device, and asks that streamer to delete its push token — though not if the streamer is unreachable at that moment. To be certain, go to Paired devices in Settings and revoke the device — that deletes its push token immediately, right from the app.",
         "Uninstalling the app removes the data stored in its own container; credentials held by the operating system's secure credential storage, such as the iOS Keychain, can survive it — remove a server in the app to delete its credentials.",
+        "The optional Threadbase Relay is off by default. You turn it on or off on your streamer, and with it off the app reaches your streamer at its own address.",
         "Contact support@threadbase.sh with any privacy question or deletion request."
       ],
       "effectiveDateLabel": "Effective date:",

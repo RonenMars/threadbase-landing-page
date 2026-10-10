@@ -164,6 +164,7 @@ export default async function PrivacyPolicyPage({
   const screenshotAndDiagnosticDetails = t.raw(
     "screenshotAndDiagnosticDetails",
   ) as PolicyDetail[];
+  const relayDetails = t.raw("relayDetails") as PolicyDetail[];
   const staysOnDevice = t.raw("staysOnDevice") as string[];
   const subProcessors = t.raw("subProcessors") as PolicyDetail[];
   const permissionsHeaders = t.raw("permissionsHeaders") as string[];
@@ -208,6 +209,10 @@ export default async function PrivacyPolicyPage({
 
       <SectionHeading>{t("newsletterHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("newsletterBody")}</p>
+
+      <SectionHeading>{t("relayHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("relayIntro")}</p>
+      <PolicyDetailList items={relayDetails} />
 
       <SectionHeading>{t("staysHeading")}</SectionHeading>
       <PolicyList items={staysOnDevice} />
