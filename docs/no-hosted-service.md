@@ -46,3 +46,13 @@ Outside this repo, still to be changed when the app ships the relay (reported, n
 - **Sentry's IP setting is per-project.** The `threadbase` project has "Prevent Storing of IP Addresses" enabled. A relay reporting into a *new* Sentry project starts without it, so turn it on at project creation; it only affects events ingested afterwards.
 - **The web-version diagnostics sentence stays unwritten.** The Anonymous Diagnostics spec (§17) has a clause about Sentry not using a visitor's IP as a substitute identity on web. It is absent from the policy because there is no web version to describe.
 - **Re-check the facts before each change.** The relay's logging and hosting are defined by `threadbase-relay` (`src/`, `fly.toml`) and `tb-streamer/docs/architecture/2026-10-04-threadbase-relay.md` (sections 4, 6, 7, 9). Copy comes from there, not from memory.
+
+## Before the relay-copy PR can merge
+
+- **Fill the placeholder.** The policy footer carries `[mailing address to be added]` (`pages.privacy.operatorBody`, all four locales) until a mailing address exists. Do not merge with it in place.
+- **Operator identity.** The policy names the operator as an individual, Ronen Mars, with no company and `privacy@threadbase.sh` as the contact. Other pages keep `support@threadbase.sh`.
+- **Lawyer items, still open:** whether an EU representative is needed (GDPR Art. 27) and whether the DSA trader rules apply; the controller role for the relay; the retention figures; Israeli privacy law, including Amendment 13; the App Store and Google Play data labels.
+- **Fly.io DPA** has been requested and is not yet answered. The policy cites the EU–US Data Privacy Framework certification, not a DPA.
+- **Retention figures are the hosting provider's:** application logs up to 7 days, managed metrics up to about 15 days. Re-check them with `fly` before merging.
+- **Re-check the relay facts** against `threadbase-relay` main (last checked at `7b9cccf`). The deployed Fly build predates the logging changes in #7–#9 and #12, so the policy describes the build that has to be deployed first.
+- **The relay is free and the FAQ is unchanged.**
