@@ -242,13 +242,14 @@ export default async function PrivacyPolicyPage({
         <p>
           {t("lastUpdatedLabel")} {privacyMeta.lastUpdated}
         </p>
+        <p className="mt-1">{t("operatorBody")}</p>
         <p className="mt-1">
           {t("contactLabel")}{" "}
           <a
             className="text-accent transition-colors hover:text-accent-hover"
-            href="mailto:support@threadbase.sh"
+            href="mailto:privacy@threadbase.sh"
           >
-            support@threadbase.sh
+            privacy@threadbase.sh
           </a>
         </p>
       </footer>

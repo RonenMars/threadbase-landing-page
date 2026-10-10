@@ -465,7 +465,7 @@
         },
         {
           "label": "Deletion requests.",
-          "body": "To request deletion of reports associated with your anonymous installation identifier where feasible, contact support@threadbase.sh."
+          "body": "To request deletion of reports associated with your anonymous installation identifier where feasible, contact privacy@threadbase.sh."
         },
         {
           "label": "Processing location.",
@@ -523,7 +523,7 @@
         },
         {
           "label": "What it records.",
-          "body": "The relay's application logs record only a hashed route identifier, a connection identifier, byte counts, durations, and close codes. They do not record IP addresses, request paths, query strings, headers, or message bodies. To limit abuse, the relay holds a salted hash of a client's address in memory only, which does not survive a restart. The relay does not use this data for advertising, analytics, or profiling."
+          "body": "The relay's application logs record only event names (for example a connection opening or closing), a connection identifier, a shortened route identifier, and close codes. The route identifier is the first characters of an identifier derived from your streamer's public key. The logs do not record IP addresses, request paths, query strings, headers, or message bodies, and the relay writes no log line for each request. The relay also keeps aggregate counters, such as the number of requests, bytes relayed, and refusals, with no IP address, route, or connection identifier attached. To limit abuse, the relay holds a salted one-way hash of a client's address in memory only, which does not survive a restart. It also passes that hash, over the encrypted tunnel, to the streamer that receives the request. The relay does not use this data for advertising, behavioural analytics, or profiling."
         },
         {
           "label": "Why we process it.",
@@ -531,15 +531,15 @@
         },
         {
           "label": "Where it runs.",
-          "body": "The relay runs on Fly.io, in its Amsterdam region in the Netherlands. Fly.io acts as our hosting provider and, in running the infrastructure, may process IP addresses and connection logs. It is listed under service providers below."
+          "body": "The relay runs on Fly.io, in its Amsterdam region in the Netherlands. Fly.io acts as our hosting provider and, in running the infrastructure, may process IP addresses and connection logs. Its infrastructure may also keep short-lived technical records of its own, for example about requests it could not complete. It is listed under service providers below."
         },
         {
           "label": "Retention.",
-          "body": "The relay stores no session content and has no accounts. The log fields above contain no IP address or content and are kept only for as long as our hosting provider retains application logs."
+          "body": "The relay stores no session content and has no accounts. Application logs are kept for up to 7 days, and aggregate counters for up to about 15 days, by our hosting provider. They contain no IP address and no session content."
         },
         {
           "label": "Your control.",
-          "body": "The relay is off by default. You turn it on or off on your streamer, and with it off the app reaches your streamer at its own address, as before. Contact support@threadbase.sh to ask about, or request deletion of, any data connected to you."
+          "body": "The relay is off by default. You turn it on or off on your streamer, and with it off the app reaches your streamer at its own address, as before. Contact privacy@threadbase.sh to ask about, or request deletion of, any data connected to you."
         },
         {
           "label": "Open source.",
@@ -581,7 +581,7 @@
         },
         {
           "label": "Fly.io.",
-          "body": "Hosts the optional Threadbase Relay. Fly.io's infrastructure handles your connection only if you turn the relay on, and may then process IP addresses and connection logs, as described in section 7. It cannot read the content, which is end-to-end encrypted."
+          "body": "Hosts the optional Threadbase Relay. Fly.io's infrastructure handles your connection only if you turn the relay on, and may then process IP addresses and connection logs, as described in section 7. It cannot read the content, which is end-to-end encrypted. Fly.io is a US company certified under the EU–US Data Privacy Framework, with the UK and Swiss extensions."
         }
       ],
       "permissionsHeading": "Permissions the app uses",
@@ -617,11 +617,12 @@
         "Removing a server deletes its credentials from your device, and asks that streamer to delete its push token — though not if the streamer is unreachable at that moment. To be certain, go to Paired devices in Settings and revoke the device — that deletes its push token immediately, right from the app.",
         "Uninstalling the app removes the data stored in its own container; credentials held by the operating system's secure credential storage, such as the iOS Keychain, can survive it — remove a server in the app to delete its credentials.",
         "The optional Threadbase Relay is off by default. You turn it on or off on your streamer, and with it off the app reaches your streamer at its own address.",
-        "Contact support@threadbase.sh with any privacy question or deletion request."
+        "Contact privacy@threadbase.sh with any privacy question or deletion request."
       ],
       "effectiveDateLabel": "Effective date:",
       "lastUpdatedLabel": "Last updated:",
-      "contactLabel": "Contact:"
+      "contactLabel": "Contact:",
+      "operatorBody": "Threadbase is operated by Ronen Mars, an individual. Mailing address: [mailing address to be added]."
     },
     "notFound": {
       "eyebrow": "404",
