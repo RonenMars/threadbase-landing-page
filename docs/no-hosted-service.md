@@ -49,7 +49,7 @@ Outside this repo, still to be changed when the app ships the relay (reported, n
 
 ## Before the relay-copy PR can merge
 
-- **Fill the placeholder.** The policy footer carries `[mailing address to be added]` (`pages.privacy.operatorBody`, all four locales) until a mailing address exists. Do not merge with it in place.
+- **No mailing address is published.** The footer names the operator and gives `privacy@threadbase.sh` only (`pages.privacy.operatorBody`, all four locales). Whether that is enough is a lawyer item below, so do not merge before it is answered.
 - **Operator identity.** The policy names the operator as an individual, Ronen Mars, with no company and `privacy@threadbase.sh` as the contact. Other pages keep `support@threadbase.sh`.
 - **Lawyer items, still open:** whether an EU representative is needed (GDPR Art. 27) and whether the DSA trader rules apply; the controller role for the relay; the retention figures; Israeli privacy law, including Amendment 13; the App Store and Google Play data labels.
 - **Fly.io DPA** has been requested and is not yet answered. The policy cites the EU–US Data Privacy Framework certification, not a DPA.
