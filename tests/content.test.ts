@@ -168,6 +168,7 @@ describe("i18n content catalogs", () => {
     ["pages.privacy", "relayDetails"],
     ["pages.privacy", "staysOnDevice"],
     ["pages.privacy", "trafficCategories"],
+    ["pages.privacy", "webDetails"],
     ["pages.privacy", "yourControl"],
     ["pages.support", "requestDetails"],
     ["pages.support", "topics"],

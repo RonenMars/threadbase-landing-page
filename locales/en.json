@@ -410,7 +410,7 @@
       "description": "Threadbase is a thin client for the Claude Code, Codex, and GitHub Copilot sessions you run on your own computer, reached through a Threadbase streamer instance that you operate. Threadbase is local-first by design: your prompts, session content, and credentials stay on your device and on the streamers you configure.",
       "intro": "This policy describes the specific, limited cases in which data leaves your device, and the controls you have over each.",
       "trafficHeading": "The kinds of network traffic Threadbase uses",
-      "trafficIntro": "Threadbase separates its traffic into seven distinct categories. Each is described in its own section below.",
+      "trafficIntro": "Threadbase separates its traffic into eight distinct categories. Each is described in its own section below.",
       "trafficCategories": [
         "Core traffic to your streamers — the app's normal function.",
         "Push-notification delivery — optional notifications, including iOS Live Activities.",
@@ -418,7 +418,8 @@
         "User-initiated feedback submissions — only when you send feedback.",
         "Optional screenshots or diagnostics you explicitly select — only when you choose to include them.",
         "Newsletter subscription (MailerLite) — only when you opt in on the website.",
-        "Optional Threadbase Relay — only if you turn it on; it carries end-to-end encrypted traffic and sees connection metadata."
+        "Optional Threadbase Relay — only if you turn it on; it carries end-to-end encrypted traffic and sees connection metadata.",
+        "The Threadbase web app — only if you open it in a browser; its files are served by Vercel, which sees your IP address and request details."
       ],
       "coreHeading": "1. Core traffic to your streamers",
       "coreBody": "Threadbase connects only to the streamers you pair it with. By default it reaches them at the addresses you configure. If you have turned on the optional Threadbase Relay for a streamer (section 7), the app can also reach that streamer through the relay address the streamer provides. Session content, prompts, provider metadata, file attachments you send, and status events go solely to those streamers. By default, Threadbase does not route this traffic through any Threadbase-operated server. If you turn on the relay, the traffic passes through it only as end-to-end encrypted data the relay cannot read, and Threadbase does not copy it anywhere else. Your API keys and server credentials are stored on your device (in the iOS Keychain / Android Keystore) and are used only to authenticate to your own streamers.",
@@ -531,7 +532,7 @@
         },
         {
           "label": "Where it runs.",
-          "body": "The relay runs on Fly.io, in its Amsterdam region in the Netherlands. Fly.io acts as our hosting provider and, in running the infrastructure, may process IP addresses and connection logs. Its infrastructure may also keep short-lived technical records of its own, for example about requests it could not complete. It is listed under service providers below."
+          "body": "The relay runs on Fly.io, in its Amsterdam region in the Netherlands. Fly.io acts as our hosting provider and, in running the infrastructure, may process IP addresses and connection logs. Its infrastructure may also keep short-lived technical records of its own, for example about requests it could not complete. Its edge proxy also exports sampled request traces, which carry request metadata such as the hostname and path but not message bodies, to an observability service provider of its own. Fly.io does not publish a retention period for them. It is listed under service providers below."
         },
         {
           "label": "Retention.",
@@ -549,12 +550,32 @@
           "bodyAfterLink": ", so these statements can be checked against it."
         }
       ],
+      "webHeading": "8. The Threadbase web app",
+      "webIntro": "The web app at app.threadbase.sh is the Threadbase app running in a browser instead of on your phone. It is optional. Everything above applies to it unless this section says otherwise, and if you never open it, nothing in this section applies.",
+      "webDetails": [
+        {
+          "label": "Where it runs.",
+          "body": "The web app is a set of files served by Vercel, which hosts it for us. When you open it, Vercel receives your IP address and the details of your request, as any web host does, and may keep them in its own server logs. Vercel does not receive your session content."
+        },
+        {
+          "label": "Your connection to your streamers.",
+          "body": "Your browser connects directly to the streamers you pair, as the phone app does. Session traffic does not pass through Vercel or through any Threadbase-operated server, unless you turn on the optional relay. A streamer accepts a web page only if its operator has allowed the web app's address, which is off by default."
+        },
+        {
+          "label": "What is stored in your browser.",
+          "body": "The web app stores your streamer URLs, API keys, and pairing credentials in your browser's local storage on your device. Browser local storage is not a secure credential store: the operating system's secure credential storage does not protect it, and other software or people with access to your browser profile may be able to read it. Pairing methods that need a secure device key are not available in the web app."
+        },
+        {
+          "label": "Your control.",
+          "body": "Remove a server in the app, or clear this site's data in your browser, to delete the credentials the web app holds."
+        }
+      ],
       "staysHeading": "What stays on your device",
       "staysOnDevice": [
         "Your prompts and draft prompts.",
         "Claude Code, Codex, GitHub Copilot, and other agent conversation content.",
         "Terminal output and session content, apart from the prompt-derived title and truncated terminal excerpt an iOS Live Activity carries, described in section 2.",
-        "Your streamer URLs, API keys, and pairing credentials (in the iOS Keychain / Android Keystore).",
+        "Your streamer URLs, API keys, and pairing credentials (in the iOS Keychain / Android Keystore). In the web app they are kept in your browser's local storage instead, which is not a secure credential store (section 8).",
         "Your session names, favorites, and app settings."
       ],
       "uninstallBody": "Uninstalling the app removes the Threadbase data stored in the app's own container. Some credentials held by the operating system's secure credential storage — such as the iOS Keychain — can survive an uninstall and be restored if you reinstall; to delete a server's credentials, remove that server inside the app first. Crash reports or feedback you submitted before uninstalling are not stored on your device and are governed by the retention terms above.",
@@ -584,6 +605,10 @@
         {
           "label": "Fly.io.",
           "body": "Hosts the optional Threadbase Relay. Fly.io's infrastructure handles your connection only if you turn the relay on, and may then process IP addresses and connection logs, as described in section 7. It cannot read the content, which is end-to-end encrypted. Fly.io is a US company certified under the EU–US Data Privacy Framework, with the UK and Swiss extensions."
+        },
+        {
+          "label": "Vercel.",
+          "body": "Hosts the web app's files, as described in section 8. Vercel receives the IP address and request details of anyone who opens the web app, and may keep them in its own logs. It does not receive session content."
         }
       ],
       "permissionsHeading": "Permissions the app uses",
