@@ -216,6 +216,9 @@ export default async function PrivacyPolicyPage({
       <SectionHeading>{t("notCollectHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("notCollectBody")}</p>
 
+      <SectionHeading>{t("localLogsHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("localLogsBody")}</p>
+
       <SectionHeading>{t("subProcessorsHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("subProcessorsIntro")}</p>
       <PolicyDetailList items={subProcessors} />
