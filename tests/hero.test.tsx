@@ -27,6 +27,9 @@ describe("Hero", () => {
     expect(root.textContent).toContain(
       "Threadbase streams Claude Code, Codex, and GitHub Copilot sessions from your own machines to your phone.",
     );
+    expect(root.textContent).toContain(
+      "End-to-end encrypted by default between your phone and your machines. Threadbase can't read your sessions.",
+    );
   });
 
   it("renders the approval-card screenshot", () => {

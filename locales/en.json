@@ -79,7 +79,7 @@
     "hero": {
       "eyebrow": "Claude Code, Codex, and GitHub Copilot, away from your desk",
       "headline": "Leave the desk. Keep the agent working.",
-      "subheadline": "Threadbase streams Claude Code, Codex, and GitHub Copilot sessions from your own machines to your phone. Approve, answer, queue the next prompt, or start a fresh session from anywhere. End-to-end encrypted. Nothing leaves your machines.",
+      "subheadline": "Threadbase streams Claude Code, Codex, and GitHub Copilot sessions from your own machines to your phone. Approve, answer, queue the next prompt, or start a fresh session from anywhere. End-to-end encrypted by default between your phone and your machines. Threadbase can't read your sessions.",
       "primaryButtonLabel": "Get the app",
       "imageAlt": "Threadbase approval card on iPhone, next to a terminal session",
       "badges": [
@@ -154,7 +154,7 @@
       ]
     },
     "security": {
-      "heading": "Your streamer. Nothing leaves your machines.",
+      "heading": "Your streamer. Threadbase can't read your sessions.",
       "description": "Threadbase runs on a streamer you install, and by default your phone talks straight to it — no Threadbase server in between. Sessions are end-to-end encrypted by default — Noise IK, X25519 and ChaCha20-Poly1305 — between your phone and each streamer. Every phone gets its own scoped credentials. Revoke one, and it's gone. Verify a machine's fingerprint with tb-streamer identity before you trust it.",
       "cantSeeHeading": "What we can't see",
       "cantSee": [

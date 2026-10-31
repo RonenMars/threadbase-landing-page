@@ -4,11 +4,13 @@ import { SecuritySection } from "@/components/SecuritySection";
 import { renderWithIntl } from "@/tests/test-utils";
 
 describe("SecuritySection", () => {
-  it("leads with nothing leaving your machines, states the relay boundary and names the E2EE primitives", () => {
+  it("leads with what Threadbase cannot read, states the relay boundary and names the E2EE primitives", () => {
     renderWithIntl(<SecuritySection />);
 
     expect(
-      screen.getByRole("heading", { name: /nothing leaves your machines/i }),
+      screen.getByRole("heading", {
+        name: /threadbase can't read your sessions/i,
+      }),
     ).toBeInTheDocument();
     // By default there is no Threadbase server in the path; the optional relay
     // is described as a side service, off by default, that sees metadata only.
