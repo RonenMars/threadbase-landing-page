@@ -1,4 +1,4 @@
-# Hosted services and the "nothing leaves your machines" claim
+# Hosted services and the "Threadbase can't read your sessions" claim
 
 **Status as of 2026-10-08: there is an optional hosted service, the Threadbase Relay, and it is off by default.** By default the app talks only to streamers the user runs, and nothing routes through a Threadbase-operated server.
 The relay is a side service for people who want the simplest setup, with no tunnel, port forwarding or VPN.
@@ -10,7 +10,8 @@ It stays as the checklist for the next change in this area: anything that adds a
 
 ## The rule
 
-The site leads with **"Nothing leaves your machines."** and the default story is self-hosting.
+The site leads with **"Threadbase can't read your sessions."** and the default story is self-hosting.
+It replaced "Nothing leaves your machines.", which was never true as an absolute: sessions stream to the phone, push tokens go to Expo, and the relay carries encrypted traffic for anyone who turns it on.
 Every statement about the relay has to stay true for both kinds of user, the one who never turns it on and the one who does.
 
 - Say **"by default"** or **"unless you turn on the optional relay"** rather than an absolute the relay breaks.
@@ -24,7 +25,8 @@ All in `locales/*.json` unless noted, with he/ar/ru counterparts that must chang
 
 | Key | What it says now |
 |---|---|
-| `home.security.heading` | Leads with "Nothing leaves your machines." |
+| `home.hero.subheadline` | Ends with "End-to-end encrypted by default between your phone and your machines. Threadbase can't read your sessions." |
+| `home.security.heading` | Leads with "Threadbase can't read your sessions." |
 | `home.security.description` | By default the phone talks straight to the streamer; no Threadbase server in between. |
 | `home.security.cantSee[0]` | Never readable by Threadbase; touches a Threadbase server only if the optional relay is on, and then only as encrypted bytes. |
 | `home.security.scopeNote` | Describes the relay as an optional, off-by-default side service and what it can see. |
