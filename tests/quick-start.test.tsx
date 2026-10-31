@@ -7,7 +7,9 @@ describe("QuickStart", () => {
   it("renders the single code block with the new heading", () => {
     renderWithIntl(<QuickStart />);
     expect(
-      screen.getByRole("heading", { name: /under a minute/i }),
+      screen.getByRole("heading", {
+        name: "Get the streamer running in under a minute.",
+      }),
     ).toBeInTheDocument();
   });
 

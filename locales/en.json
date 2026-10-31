@@ -256,7 +256,7 @@
     },
     "quickStart": {
       "eyebrow": "Installation",
-      "heading": "Get up and running in under a minute.",
+      "heading": "Get the streamer running in under a minute.",
       "steps": [
         "# 1. Install the streamer",
         "npm install -g @threadbase-sh/streamer",
@@ -399,7 +399,7 @@
         "Whether the issue happens every time or only sometimes"
       ],
       "privacyHeading": "Privacy and data",
-      "privacyBeforeLink": "Threadbase is a thin client for streamers you host yourself. By default the app connects straight to them; an optional relay is available if you turn it on. The app does not run its own analytics, crash-reporting, or telemetry service. Read the",
+      "privacyBeforeLink": "Threadbase is a thin client for streamers you host yourself. By default the app connects straight to them; an optional relay is in beta, and stable streamer releases keep it off. The app does not run its own analytics, crash-reporting, or telemetry service. Read the",
       "privacyLink": "privacy policy",
       "privacyAfterLink": "for the full data handling summary.",
       "supportEmailLabel": "Support email:"
