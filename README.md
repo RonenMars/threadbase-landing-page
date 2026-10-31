@@ -1,4 +1,4 @@
-# threadbase-landing-page
+# threadbase-website
 
 Marketing site for the [Threadbase](https://threadbase.sh/) project. Built with [Next.js](https://nextjs.org/).
 
