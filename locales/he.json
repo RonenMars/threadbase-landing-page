@@ -79,7 +79,7 @@
     "hero": {
       "eyebrow": "Claude Code, Codex, ו-GitHub Copilot, גם הרחק משולחן העבודה",
       "headline": "תעזבו את השולחן. תשאירו את הסוכן עובד.",
-      "subheadline": "Threadbase משדר סשנים של Claude Code, Codex, ו-GitHub Copilot מהמכונות שלכם לטלפון. אשרו, השיבו, הוסיפו את ההנחיה הבאה לתור, או התחילו סשן חדש מכל מקום. מוצפן מקצה לקצה. שום דבר לא יוצא מהמכונות שלכם.",
+      "subheadline": "Threadbase משדר סשנים של Claude Code, Codex, ו-GitHub Copilot מהמכונות שלכם לטלפון. אשרו, השיבו, הוסיפו את ההנחיה הבאה לתור, או התחילו סשן חדש מכל מקום. מוצפן מקצה לקצה כברירת מחדל בין הטלפון למכונות שלכם. Threadbase לא יכול לקרוא את הסשנים שלכם.",
       "primaryButtonLabel": "קבלו את האפליקציה",
       "imageAlt": "כרטיס אישור של Threadbase באייפון, לצד סשן טרמינל",
       "badges": [
@@ -154,7 +154,7 @@
       ]
     },
     "security": {
-      "heading": "ה-streamer שלכם. שום דבר לא עוזב את המכונות שלכם.",
+      "heading": "ה-streamer שלכם. Threadbase לא יכול לקרוא את הסשנים שלכם.",
       "description": "Threadbase רץ על streamer שאתם מתקינים, וכברירת מחדל הטלפון מדבר ישירות איתו — בלי שרת של Threadbase באמצע. הסשנים מוצפנים מקצה לקצה כברירת מחדל — Noise IK,‏ X25519 ו-ChaCha20-Poly1305 — בין הטלפון לכל streamer. לכל טלפון פרטי הזדהות מוגבלים משלו. מבטלים אחד, והוא נעלם. מאמתים את טביעת האצבע של מכונה עם tb-streamer identity לפני שסומכים עליה.",
       "cantSeeHeading": "מה שאנחנו לא רואים",
       "cantSee": [

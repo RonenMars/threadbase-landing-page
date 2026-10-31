@@ -5,7 +5,7 @@ Everything not stated here — project layout, verification commands, commit con
 
 ## Product claims
 
-By default Threadbase has no hosted service: the app talks only to streamers the user runs, and the site leads with "Nothing leaves your machines." An optional relay exists as a side service, off by default. Several pieces of site copy state the boundary as fact, so before writing or changing anything about relays, hosted backends, self-hosting, or sub-processors, read [docs/no-hosted-service.md](docs/no-hosted-service.md) — it lists where those claims live and the rule for wording them.
+By default Threadbase has no hosted service: the app talks only to streamers the user runs, and the site leads with "Threadbase can't read your sessions." An optional relay exists as a side service, off by default. Several pieces of site copy state the boundary as fact, so before writing or changing anything about relays, hosted backends, self-hosting, or sub-processors, read [docs/no-hosted-service.md](docs/no-hosted-service.md) — it lists where those claims live and the rule for wording them.
 
 ## Docs site
 
