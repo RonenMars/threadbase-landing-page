@@ -3,6 +3,7 @@
 **Status as of 2026-10-08: there is an optional hosted service, the Threadbase Relay, and it is off by default.** By default the app talks only to streamers the user runs, and nothing routes through a Threadbase-operated server.
 The relay is a side service for people who want the simplest setup, with no tunnel, port forwarding or VPN.
 It only exists for a user who turns it on.
+That holds for stable streamer releases only: the `next` channel turned the relay on by default in [streamer #1067](https://github.com/RonenMars/threadbase-streamer/pull/1067), and the app's per-server relay switch is on by default, so every "by default" and "turn it on" claim listed here must change before #1067 reaches the streamer's `main`.
 
 This file used to list the claims a hosted service would falsify, and said not to hedge them early.
 The relay is that event, so the claims below were changed together in one pass.
@@ -31,15 +32,14 @@ All in `locales/*.json` unless noted, with he/ar/ru counterparts that must chang
 | `home.security.cantSee[0]` | Never readable by Threadbase; touches a Threadbase server only if the optional relay is on, and then only as encrypted bytes. |
 | `home.security.scopeNote` | Describes the relay as an optional, off-by-default side service and what it can see. |
 | `home.faq.items[5].answer` | "Self-host the streamer on your own machines." Still true as written; revisit when the relay's pricing or limits are decided. |
-| `pages.support.privacyBeforeLink` | Thin client for streamers you host; connects straight to them by default; optional relay. |
+| `pages.support.privacyBeforeLink` | Thin client for streamers you host; connects straight to them by default; optional relay in beta, off in stable streamer releases. |
 | `pages.privacy` | Section 7 covers the relay; Fly.io is listed as a sub-processor; section 1, the traffic list and "What we do not collect" are scoped to "by default". |
 | `content/docs/index.mdx` | Callout describes the optional relay and what it sees. |
 | `.agents/product-marketing.md` | "self-hosted by default (optional relay)" in the proof points. |
 
-Outside this repo, still to be changed when the app ships the relay (reported, not edited from here):
+Outside this repo, kept in step with this file (reported, not edited from here):
 
-- `docs/FEATURES.md` (threadbase-mobile) — "No hosted relay — session traffic goes directly to your own streamers; nothing routes through a Threadbase-run server."
-- `README.md` (threadbase-mobile), privacy section — "a thin client for self-hosted streamers".
+- `docs/FEATURES.md`, `README.md` and `docs/no-hosted-service.md` (threadbase-mobile) describe the relay as a beta and must change in the same pass.
 
 ## What else the relay drags in
 
