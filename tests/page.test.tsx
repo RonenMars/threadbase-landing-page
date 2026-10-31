@@ -21,7 +21,7 @@ describe("Home page", () => {
       /keep every agent moving/i.test(h),
     );
     const securityIdx = headings.findIndex((h) =>
-      /no threadbase session relay/i.test(h),
+      /nothing leaves your machines/i.test(h),
     );
     const honestIdx = headings.findIndex((h) => /beta, honestly/i.test(h));
     const howIdx = headings.findIndex((h) =>
