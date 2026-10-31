@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Home,
   Beaker,
+  BookOpen,
   Shield,
   GitBranch,
   LifeBuoy,
@@ -62,6 +63,7 @@ function getItemVariants(isRtl: boolean) {
 const LINK_ICONS: Record<NavLink["id"], React.ElementType> = {
   home: Home,
   betas: Beaker,
+  docs: BookOpen,
   github: GitBranch,
   privacy: Shield,
   support: LifeBuoy,

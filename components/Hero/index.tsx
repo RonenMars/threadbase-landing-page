@@ -184,7 +184,7 @@ export function Hero({ hero: heroProp }: HeroProps): React.JSX.Element {
         >
           <Image
             alt={hero.imageAlt}
-            className="mx-auto mt-4 h-auto w-full max-w-70 rounded-3xl border border-border-strong shadow-2xl"
+            className="mx-auto mt-4 h-auto w-full max-w-70 rounded-2xl border border-border-strong shadow-2xl"
             height={2532}
             priority
             src="/screenshots/hero-approval-card.png"

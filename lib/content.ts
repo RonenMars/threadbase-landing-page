@@ -109,7 +109,7 @@ export interface SectionContent {
 }
 
 export interface NavLinkConfig {
-  id: "home" | "betas" | "github" | "privacy" | "support" | "issues";
+  id: "home" | "betas" | "docs" | "github" | "privacy" | "support" | "issues";
   href: string;
   external?: boolean;
   separatorBefore?: boolean;
@@ -197,6 +197,7 @@ export const QUICK_START_LINK_CONFIG = [
 export const NAV_LINK_CONFIG = [
   { id: "home", href: "/" },
   { id: "betas", href: "/betas", betaIcons: true },
+  { id: "docs", href: "/docs" },
   {
     id: "github",
     href: "https://github.com/RonenMars/threadbase-mobile",

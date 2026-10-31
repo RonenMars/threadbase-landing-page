@@ -105,7 +105,7 @@ function DataTable({
   rows: string[][];
 }): React.JSX.Element {
   return (
-    <div className="mt-6 rounded-4-5xl border border-white/6 bg-white/2">
+    <div className="mt-6 rounded-2xl border border-white/6 bg-white/2">
       <table className="block w-full border-collapse text-start text-sm md:table">
         <caption className="sr-only">{caption}</caption>
         <thead className="sr-only md:not-sr-only md:table-header-group">
@@ -164,6 +164,8 @@ export default async function PrivacyPolicyPage({
   const screenshotAndDiagnosticDetails = t.raw(
     "screenshotAndDiagnosticDetails",
   ) as PolicyDetail[];
+  const relayDetails = t.raw("relayDetails") as PolicyDetail[];
+  const webDetails = t.raw("webDetails") as PolicyDetail[];
   const staysOnDevice = t.raw("staysOnDevice") as string[];
   const subProcessors = t.raw("subProcessors") as PolicyDetail[];
   const permissionsHeaders = t.raw("permissionsHeaders") as string[];
@@ -209,12 +211,23 @@ export default async function PrivacyPolicyPage({
       <SectionHeading>{t("newsletterHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("newsletterBody")}</p>
 
+      <SectionHeading>{t("relayHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("relayIntro")}</p>
+      <PolicyDetailList items={relayDetails} />
+
+      <SectionHeading>{t("webHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("webIntro")}</p>
+      <PolicyDetailList items={webDetails} />
+
       <SectionHeading>{t("staysHeading")}</SectionHeading>
       <PolicyList items={staysOnDevice} />
       <p className="mt-6 leading-8 text-secondary">{t("uninstallBody")}</p>
 
       <SectionHeading>{t("notCollectHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("notCollectBody")}</p>
+
+      <SectionHeading>{t("localLogsHeading")}</SectionHeading>
+      <p className="mt-6 leading-8 text-secondary">{t("localLogsBody")}</p>
 
       <SectionHeading>{t("subProcessorsHeading")}</SectionHeading>
       <p className="mt-6 leading-8 text-secondary">{t("subProcessorsIntro")}</p>
@@ -237,13 +250,14 @@ export default async function PrivacyPolicyPage({
         <p>
           {t("lastUpdatedLabel")} {privacyMeta.lastUpdated}
         </p>
+        <p className="mt-1">{t("operatorBody")}</p>
         <p className="mt-1">
           {t("contactLabel")}{" "}
           <a
             className="text-accent transition-colors hover:text-accent-hover"
-            href="mailto:support@threadbase.sh"
+            href="mailto:privacy@threadbase.sh"
           >
-            support@threadbase.sh
+            privacy@threadbase.sh
           </a>
         </p>
       </footer>

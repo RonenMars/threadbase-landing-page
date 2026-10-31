@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import "../globals.css";
 import { getTextDirection, routing, type Locale } from "@/i18n/routing";
 import { NavMenu } from "@/components/NavMenu";
+import { fontVariables } from "@/lib/fonts";
 
 type LocaleLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -73,7 +74,7 @@ export default async function LocaleLayout({
 
   return (
     <html
-      className="dark font-sans"
+      className={`dark font-sans ${fontVariables}`}
       dir={getTextDirection(locale)}
       lang={locale}
     >

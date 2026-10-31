@@ -1,0 +1,64 @@
+---
+title: Getting started
+description: Install the streamer, start it, and pair your phone.
+---
+
+## Requirements
+
+- A machine running macOS, Linux, or Windows, with Claude Code or Codex installed.
+- Node.js 22 or 24 if you install with npm.
+- The Threadbase app on your phone — see [Beta programs](/betas).
+
+## 1. Install the streamer
+
+<Tabs items={["npm", "Homebrew (macOS + Linux)"]}>
+  <Tab value="npm">
+    ```bash
+    npm install -g @threadbase-sh/streamer
+    ```
+  </Tab>
+  <Tab value="Homebrew (macOS + Linux)">
+    ```bash
+    brew tap RonenMars/threadbase
+    brew install tb-streamer
+    ```
+  </Tab>
+</Tabs>
+
+## 2. Start it
+
+<Tabs items={["npm", "Homebrew (macOS + Linux)"]}>
+  <Tab value="npm">
+    ```bash
+    tb-streamer serve
+    ```
+  </Tab>
+  <Tab value="Homebrew (macOS + Linux)">
+    ```bash
+    brew services start tb-streamer   # also starts on login
+    ```
+  </Tab>
+</Tabs>
+
+On first run the streamer creates an API key and stores it in `~/.threadbase/server.yaml`.
+It listens on port `8766`.
+
+## 3. Pair your phone
+
+Open the Threadbase app, tap **Pair**, and scan the QR code the streamer prints in your terminal.
+
+If the QR code has scrolled away, or the streamer runs as a background service, print it again:
+
+```bash
+tb-streamer pair
+```
+
+## 4. Pair more machines (optional)
+
+Run the streamer on each machine you want to reach — a Linux box, a Windows PC, or a second Mac — and pair each one from the same app.
+
+<Callout type="warn" title="The API key is equivalent to a shell on this machine">
+  Anyone holding it can run commands as your user.
+  By default the streamer listens on every network interface, so any device on your LAN can reach it.
+  On untrusted networks, bind it to this machine only with `tb-streamer serve --host 127.0.0.1`.
+</Callout>

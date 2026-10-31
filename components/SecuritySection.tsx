@@ -25,7 +25,7 @@ export function SecuritySection({
       initial={false}
       variants={fadeUp}
     >
-      <div className="container-shell overflow-hidden rounded-7xl border border-border-strong bg-[linear-gradient(135deg,rgba(99,179,255,0.12),rgba(11,19,32,0.94)_46%,rgba(240,138,36,0.08))] p-7 shadow-[0_24px_70px_rgba(3,8,16,0.42)] sm:p-10 lg:p-12">
+      <div className="container-shell overflow-hidden rounded-2xl border border-border-strong bg-[linear-gradient(135deg,rgba(99,179,255,0.12),rgba(11,19,32,0.94)_46%,rgba(240,138,36,0.08))] p-7 shadow-[0_24px_70px_rgba(3,8,16,0.42)] sm:p-10 lg:p-12">
         <div className="grid gap-8 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-10">
           <span className="flex size-14 items-center justify-center rounded-2xl border border-border-strong bg-accent/12 text-accent-strong">
             <ShieldCheck size={28} weight="regular" aria-hidden="true" />
